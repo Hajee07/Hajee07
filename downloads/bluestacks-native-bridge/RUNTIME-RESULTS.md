@@ -125,4 +125,17 @@ Cloud checks passed syntax parsing, Linux boot-header/version extraction, ELF
 banner extraction across a read boundary, rejection of the wrong architecture,
 archive content verification, and rejection of a source changed before archiving.
 Header fields were checked against Linux v4.19.195 `Documentation/x86/boot.txt`.
-Live Windows discovery of the kernel image remains pending.
+The user's subsequent discovery and image-inspection results follow.
+
+## Subsequent fastboot image inspection
+
+Standalone image discovery found no candidate. The user listed Pie64's attached
+VDI/VHD/VHDX media and supplied the 11 MiB `fastboot.vdi` inside a CRC-valid ZIP.
+It contains the matching Linux 4.19.195 boot image and initrd. The full kernel
+banner agrees with the live report. Embedded kallsyms recovery produced 87,332
+symbols; an independent comparison against 9,889 exported symbols matched.
+
+The derived task/mm fields are now used by a separate
+[read-only process-mapping probe](../bluestacks-process-map/README.md). It passed
+16 offline reader checks with real kernel anchors and synthetic process/VMA
+records. Live process discovery and game-library reads remain unverified.

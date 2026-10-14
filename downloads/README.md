@@ -11,5 +11,11 @@ now passed its Windows one-byte guest physical read probe, including plug-in
 loading and cleanup. See its [runtime results](bluestacks-native-bridge/RUNTIME-RESULTS.md).
 
 [Get-GuestMappingContext.ps1](bluestacks-native-bridge/Get-GuestMappingContext.ps1)
-collects the next kernel-layout and paging prerequisites. It needs a live run on
-the user's Windows PC; no Free Fire process mapper or aim writer is implemented.
+collects kernel-layout and paging prerequisites on the user's Windows PC.
+Aim-control writes remain unimplemented.
+
+The uploaded fastboot disk subsequently supplied the matching kernel image and
+87,332 recoverable kernel symbols. A [read-only process-mapping probe](bluestacks-process-map/README.md)
+now implements kernel identity checks, process page-table discovery, and a
+bounded ARM64 IL2CPP header read. Sixteen offline checks passed. Live Windows
+validation and entity/head/aim integration remain outstanding.
