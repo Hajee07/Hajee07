@@ -79,8 +79,8 @@ needed, then verifies `get-state` independently of the `connect` exit status.
 If it remains unavailable, Android queries are skipped and the device list and
 port-check guidance are recorded while debugger queries continue. It selects
 CPU IDs from the actual debugger paging report, falling back to the configured
-count only when no runtime CPU IDs were reported. Live Windows validation of
-these changes is pending.
+count only when no runtime CPU IDs were reported. The subsequent Windows result
+for these changes is recorded below.
 
 Version 2 cloud validation passed syntax parsing and subprocess-fixture checks
 for an already connected endpoint, reconnection after a missing-device error,
@@ -88,3 +88,41 @@ rejection of a failed connection even when `adb connect` exits zero, and no
 implicit switch to another device. CPU enumeration was checked against the
 user's actual four-CPU report, configured-count fallback, and an invalid CPU ID.
 The fixtures validate runner behavior, not a live BlueStacks connection.
+
+## Mapping context version 2: user-reported Windows result
+
+The user ran version 2 from commit
+`c6456283672e1323481e70a9377b1e002fdcb2e5`. The explicit localhost ADB reconnect
+succeeded, and the collector queried all four debugger-reported CPU IDs. Shared
+session cleanup succeeded. The one unavailable query was `/proc/kallsyms`, which
+returned `Permission denied`.
+
+Verified guest observations:
+
+- Kernel: Linux 4.19.195 x86_64, build `#1 SMP PREEMPT Fri Oct 17 10:22:49 IST 2025`.
+- Android 9 / SDK 28, guest ABI x86_64, native bridge `libnb.so`.
+- Free Fire 1.132.1, package ABI arm64-v8a, PID 3806 at both collection checks.
+- `/sys/kernel/btf/vmlinux` and `/proc/config.gz` were not readable/available.
+- The two distinct sampled CR3 bases, after removing PCID bits, were
+  `0x0220e000` and `0x9e388000`. Neither base is attributed to Free Fire.
+- Kernel symbols, process/task layouts, the game's page-table root, game
+  entities, and aim-control interfaces remain unestablished.
+
+Repeating these queries will not supply the unavailable kernel layouts. The
+next helper, `Export-KernelCandidate.ps1`, searches installed BlueStacks/selected
+VM directories and kernel-related SDK path settings for standalone Linux images.
+It checks x86-64 boot/ELF headers and release 4.19.195, deduplicates by SHA-256,
+and creates a ZIP with a manifest. It then verifies each archived image's length
+and SHA-256. The manifest omits full host paths. A release match is a candidate,
+not proof of exact identity with the running kernel or presence of debug types.
+
+The helper leaves VM disks and settings unchanged and does not query restricted
+guest symbols again. If the image is only inside a VM disk, it reports that no
+standalone candidate was found. It does not mount or modify disks. Candidate
+images are limited to 128 MiB each and at most four distinct images per export.
+
+Cloud checks passed syntax parsing, Linux boot-header/version extraction, ELF
+banner extraction across a read boundary, rejection of the wrong architecture,
+archive content verification, and rejection of a source changed before archiving.
+Header fields were checked against Linux v4.19.195 `Documentation/x86/boot.txt`.
+Live Windows discovery of the kernel image remains pending.

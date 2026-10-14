@@ -90,7 +90,10 @@ cleanup passed, but the selected ADB endpoint was disconnected. Version 2 adds
 one reconnect attempt to that explicit localhost endpoint and verifies it before
 running Android queries. It uses CPU IDs from the debugger paging report,
 because that report listed four CPUs while the configured CPU count was two.
-The cloud cannot execute the live Windows queries; version 2 needs a local run.
+The user subsequently ran version 2 successfully through ADB reconnect and all
+four CPU queries. Kernel 4.19.195 / Android 9 were identified. Kernel-symbol
+access was denied, and BTF/config sources were unavailable. See the runtime
+report for the exact remaining gaps.
 
 An unavailable query is recorded and other independent queries continue. Exit
 code 1 means at least one query or collection step failed; share the full report
@@ -99,6 +102,20 @@ associated with the game process. See `RUNTIME-RESULTS.md` for interpretation.
 
 The original tested ZIP and native DLL are unchanged. This collector and the
 updated reports are available separately in the repository.
+
+## Export a kernel image candidate
+
+`Export-KernelCandidate.ps1` searches the installed BlueStacks and selected VM
+directories for a standalone x86-64 Linux 4.19.195 kernel image. Run it in 64-bit
+Windows PowerShell on the BlueStacks PC. It prints an `ArchiveFile` path after
+header/version checks, SHA-256 deduplication, and ZIP content verification.
+Share that ZIP for static inspection. A candidate with the same release may
+still be a different build or lack the symbol/type data required for mapping.
+
+If no matching image is found, share its `ResultFile` search report. An explicit
+image can be selected with `-KernelPath 'C:\path\to\kernel'`. The helper does not
+mount VM disks or alter settings. Discovery on the actual Windows installation
+has not yet been tested.
 
 Rebuild on Linux with C++17 and a MinGW x64 compiler:
 
