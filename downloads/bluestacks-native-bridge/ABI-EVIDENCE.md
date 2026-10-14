@@ -55,11 +55,14 @@ use the external read path that may invoke MMIO access handlers.
 Oracle's checksum-verified 6.1.36 source supplies reference semantics for the
 info callback, address type, execution-thread dispatch, loader and cleanup.
 The uploaded fork's disassembly independently confirms the contracts used here.
-Only runtime execution can establish this package's behavior on the user's PC.
+The user's subsequent Windows probe exercised these contracts successfully for
+one physical byte read and cleanup; see `RUNTIME-RESULTS.md` for its scope.
 
 ## Prior runtime evidence
 
 The user's diagnostic version 3 confirms the installed BlueStacks type library,
 Running=6, Shared=1, successful debugger access and successful `Info("help", "")`.
 Both COM memory-read methods return E_NOTIMPL. The `plugins` help handler is
-present. Successful custom plug-in loading and native memory reads are pending.
+present. A subsequent native bridge run loaded `VBoxDbgHeadAimBridge`, reported
+READY, read one byte successfully, unloaded, removed its handler, and released
+the shared session. The reported host PID was 11068; it is not a fixed target.

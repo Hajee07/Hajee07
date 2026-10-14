@@ -4,4 +4,12 @@ Download `head-aim-dll-x64.zip` and extract it on Windows. The archive contains 
 
 This is a mathematical core that accepts caller-supplied head positions and calculates directions. It has no live Free Fire data provider or aim-control integration. It is not a working Free Fire aim-lock.
 
-Validation: 57 native tests passed; native shared-library C ABI loading passed; Windows x64 cross-compilation and export inspection passed. Windows/BlueStacks execution remains untested. See the archive's README.md and VALIDATION.md for details.
+Validation: 57 native tests passed; native shared-library C ABI loading passed; Windows x64 cross-compilation and export inspection passed. The user subsequently ran the Windows smoke loader successfully. Game integration remains incomplete.
+
+The separate [native BlueStacks bridge](bluestacks-native-bridge/README.md) has
+now passed its Windows one-byte guest physical read probe, including plug-in
+loading and cleanup. See its [runtime results](bluestacks-native-bridge/RUNTIME-RESULTS.md).
+
+[Get-GuestMappingContext.ps1](bluestacks-native-bridge/Get-GuestMappingContext.ps1)
+collects the next kernel-layout and paging prerequisites. It needs a live run on
+the user's Windows PC; no Free Fire process mapper or aim writer is implemented.

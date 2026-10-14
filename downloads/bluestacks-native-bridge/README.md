@@ -6,9 +6,11 @@ receive the live VM context, registers a `headbridge` info handler, and reads
 through native `DBGFR3AddrFromPhys` / `DBGFR3MemRead` exports. The COM
 `readPhysicalMemory` and `readVirtualMemory` stubs are not called.
 
-**Windows/BlueStacks execution is pending. This is not a completed Free Fire
-aim-lock DLL.** It has no player/head/visibility mappings or aim-control writes.
-A successful probe establishes one native guest physical read only.
+**The user-reported Windows probe passed:** plug-in loading, one native physical
+byte read, unloading, handler cleanup, and shared-session release. See
+[runtime results](RUNTIME-RESULTS.md). Player/head/visibility mappings and
+aim-control writes remain unimplemented; this is not a completed Free Fire
+aim-lock DLL.
 
 ## Run the probe
 
@@ -29,7 +31,7 @@ Expected successful stages include:
 
 ```text
 Preflight=PASS ...
-PluginLoad=PASS Name=HeadAimBridge
+PluginLoad=PASS Name=VBoxDbgHeadAimBridge
 BridgeStatus=READY Protocol=1 ReadOnly=1 MaximumRead=4096
 BridgeProbe=PASS BytesRead=1 Contents=OMITTED
 PluginUnload=PASS
@@ -39,7 +41,7 @@ SharedSession=RELEASED
 
 The supported loader may reject the plug-in; its exact error is reported. The
 runner does not change loading policy. Exit code 1 means a stage failed. The
-native code is experimental and runs inside HD-Player; live stability and
+native code is experimental and runs inside HD-Player; repeated runs and
 concurrent shutdown behavior have not been tested.
 
 ## Implemented interface
@@ -73,7 +75,26 @@ plug-in module is supported in this first build.
 - PE inspection confirms `DbgPlugInEntry` and dependencies on ADVAPI32,
   KERNEL32, and msvcrt only.
 - The target ABI was checked against the uploaded DLL's disassembly; see
-  `ABI-EVIDENCE.md`. These checks do not replace a Windows runtime test.
+  `ABI-EVIDENCE.md`.
+- The user ran the Windows probe successfully on Pie64, with matching VMM digest.
+  That test read one physical byte; game address translation remains unverified.
+
+## Collect the next mapping prerequisites
+
+Run `Get-GuestMappingContext.ps1` in 64-bit Administrator PowerShell with Pie64
+and Free Fire open. It writes `guest-mapping-context-<id>.txt` beside the script.
+It collects kernel version/layout-source availability, selected kernel symbol
+addresses, game PID, RAM ranges, paging mode, and paging-register samples.
+It does not require the plug-in DLL. The cloud cannot execute these live Windows
+queries; the collector still needs validation on the user's PC.
+
+An unavailable query is recorded and other independent queries continue. Exit
+code 1 means at least one query or collection step failed; share the full report
+even then. An all-zero symbol address is unusable. CPU CR3 samples have not been
+associated with the game process. See `RUNTIME-RESULTS.md` for interpretation.
+
+The original tested ZIP and native DLL are unchanged. This collector and the
+updated reports are available separately in the repository.
 
 Rebuild on Linux with C++17 and a MinGW x64 compiler:
 

@@ -29,11 +29,10 @@ The physical-read error is `E_NOTIMPL`, not a missing administrator permission
 or an invalid read address. Repeating the same physical call with a different
 address cannot implement that method.
 
-The management and debugger connections work, but no live guest memory read has
-been demonstrated. Native VMM export names are separate from this unimplemented
-COM method; invoking them still requires valid process-local contexts and a
-matching ABI/lifetime/thread contract. Free Fire entity/head/visibility mappings
-and game aim writes remain unimplemented and unverified.
+At this stage the management and debugger connections worked, but a live guest
+read had not yet been demonstrated. The subsequent native result below establishes
+a one-byte physical read using a different interface. Free Fire entity/head/
+visibility mappings and game aim writes remain unimplemented and unverified.
 
 Version 3 adds independently selectable `-ProbeVirtual` and `-ListInfo` checks.
 The former calls the other declared read method once (CPU 0, virtual address 0,
@@ -47,6 +46,7 @@ succeeded and listed the registered handlers, including `phys`, `pgmcr3`,
 These handlers expose diagnostics; their presence does not establish a live
 Free Fire object API. The two tested COM read methods are unavailable. A native
 debugger plug-in route was subsequently researched and implemented as an
-experimental package in `../bluestacks-native-bridge`; its Windows runtime test
-is pending. It obtains its UVM from the plug-in entry rather than treating
-remote numeric pointers as callable process-local contexts.
+experimental package in `../bluestacks-native-bridge`. Its user-reported Windows
+test passed loading, one native physical byte read, unload, handler cleanup, and
+shared-session release. It obtains its UVM from the plug-in entry. See
+[native runtime results](../bluestacks-native-bridge/RUNTIME-RESULTS.md).
