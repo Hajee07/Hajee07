@@ -25,6 +25,21 @@ Example:
 & .\Test-BlueStacksSdk.ps1 -MachineName Pie64 -ProbeRead
 ```
 
+Version 3 adds `-ProbeVirtual` (one byte at CPU 0 / guest virtual address zero)
+and `-ListInfo` (registered debugger info-handler names/descriptions). Each check
+is opt-in. To investigate the remaining declared read route without repeating the
+already unimplemented physical read:
+
+```powershell
+& .\Test-BlueStacksSdk.ps1 -MachineName Pie64 -ProbeVirtual -ListInfo
+```
+
+Exit code 1 means a requested check or session cleanup failed; 2 means the Shared
+lock value could not be resolved. Individual output lines identify which check
+failed. Even a successful virtual read does not identify the Free Fire address
+space. A failed read at zero without E_NOTIMPL may reflect an unmapped address;
+it does not by itself prove the whole method is unimplemented.
+
 Oracle VirtualBox 6.1.36 declares this read method but leaves its implementation
 as `ReturnComNotImplemented()`. BlueStacks is a fork: this probe distinguishes
 a successful SDK metadata query from an actually usable read method. A successful
@@ -37,6 +52,10 @@ internal VM pointer, inject a DLL, or write guest/game memory or aim data.
 Validation status: the user ran version 1 on Windows. COM activation, Add-Type
 compilation, and type-library enumeration reached the enum-selection step, which
 failed because the script assumed exact enum type names. No debugger attachment
-or memory probe ran. Version 2 was reviewed against the exact Oracle 6.1.36 IDL
-and .NET COM type-info contracts; its Windows execution is pending. The cloud
-workspace is Linux and cannot run the user's installed BlueStacks COM servers.
+or memory probe ran. Version 2 subsequently ran successfully through enum
+resolution, metadata, shared attachment, debugger discovery, and session release;
+the physical memory read explicitly failed with E_NOTIMPL. See
+[runtime results](RUNTIME-RESULTS.md). Version 3's added virtual-read and info-help
+checks were reviewed against the exact upstream signatures; Windows execution
+is pending. The cloud workspace is Linux and cannot run the user's installed
+BlueStacks COM servers.

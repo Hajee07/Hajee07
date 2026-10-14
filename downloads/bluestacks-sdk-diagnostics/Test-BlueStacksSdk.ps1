@@ -1,9 +1,11 @@
-# Read the installed COM type library; optionally test one guest physical byte.
+# Read the installed COM type library and opt-in guest read/info API checks.
 # Requires 64-bit Windows PowerShell. No settings, game memory, or aim writes.
 [CmdletBinding()]
 param(
     [string] $MachineName = 'Pie64',
-    [switch] $ProbeRead
+    [switch] $ProbeRead,
+    [switch] $ProbeVirtual,
+    [switch] $ListInfo
 )
 
 Set-StrictMode -Version 2.0
@@ -21,7 +23,7 @@ if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or
     -not [Environment]::Is64BitProcess) {
     throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
 }
-Write-Output 'DiagnosticVersion=2'
+Write-Output 'DiagnosticVersion=3'
 
 # Avoid activating a separately installed Oracle VirtualBox client.
 $classId = (Get-Item -LiteralPath 'Registry::HKEY_CLASSES_ROOT\VirtualBox.VirtualBoxClient\CLSID').GetValue('')
@@ -236,13 +238,13 @@ $stateNames = @($constants | Where-Object {
     SessionPID = $machine.SessionPID
 } | Format-List
 
-if (-not $ProbeRead) { return }
+if (-not $ProbeRead -and -not $ProbeVirtual -and -not $ListInfo) { return }
 
 $shared = @($constants | Where-Object {
     $_.EnumName -eq 'LockType' -and $_.Name -match '(^|_)Shared$'
 })
 if ($shared.Count -ne 1) {
-    Write-Output 'PhysicalReadProbe=SKIPPED (installed Shared lock value unresolved)'
+    Write-Output 'DebuggerChecks=SKIPPED (installed Shared lock value unresolved)'
     if ($constants.Count -gt 0) {
         $report.Types | Format-Table Name, Kind -AutoSize
     }
@@ -255,6 +257,7 @@ if ($hostProcess.ProcessName -ine 'HD-Player') {
 
 $session = New-Object -ComObject 'VirtualBox.Session'
 $locked = $false
+$probeFailed = $false
 try {
     # Attach to the existing session; never launch, pause, resume, or reconfigure.
     $machine.LockMachine($session, [int]($shared[0].Value))
@@ -262,17 +265,48 @@ try {
     $debugger = $session.Console.Debugger
     if ($null -eq $debugger) { throw 'Console debugger object is unavailable.' }
     Write-Output 'DebuggerObject=AVAILABLE'
-    try {
-        # Physical address 0 is a capability probe, not a Free Fire address.
-        $bytes = @($debugger.ReadPhysicalMemory([long]0, [uint32]1))
-        if ($bytes.Count -ne 1 -or $bytes[0] -isnot [byte]) {
-            throw 'The API did not return exactly one byte.'
+    if ($ProbeRead) {
+        try {
+            # Physical address 0 is a capability probe, not a Free Fire address.
+            $bytes = @($debugger.ReadPhysicalMemory([long]0, [uint32]1))
+            if ($bytes.Count -ne 1 -or $bytes[0] -isnot [byte]) {
+                throw 'The API did not return exactly one byte.'
+            }
+            Write-Output 'PhysicalReadProbe=PASS (one byte returned; contents omitted)'
+        } catch {
+            $probeFailed = $true
+            Write-DiagnosticError -Stage 'PhysicalReadProbe' -Exception $_.Exception
         }
-        Write-Output 'PhysicalReadProbe=PASS (one byte returned; contents omitted)'
-    } catch {
-        Write-DiagnosticError -Stage 'PhysicalReadProbe' -Exception $_.Exception
+    }
+    if ($ProbeVirtual) {
+        try {
+            # CPU 0 / address 0 tests the declared method, not a game mapping.
+            $bytes = @($debugger.ReadVirtualMemory([uint32]0, [long]0, [uint32]1))
+            if ($bytes.Count -ne 1 -or $bytes[0] -isnot [byte]) {
+                throw 'The API did not return exactly one byte.'
+            }
+            Write-Output 'VirtualReadProbe=PASS (one byte returned; contents omitted)'
+        } catch {
+            $probeFailed = $true
+            Write-DiagnosticError -Stage 'VirtualReadProbe' -Exception $_.Exception
+        }
+    }
+    if ($ListInfo) {
+        try {
+            # Upstream DBGF registers help to list handler names/descriptions.
+            $items = [string]$debugger.Info('help', '')
+            if ([string]::IsNullOrWhiteSpace($items)) {
+                throw 'The debugger returned no info-handler list.'
+            }
+            Write-Output 'DebuggerInfoHelp=AVAILABLE'
+            Write-Output $items
+        } catch {
+            $probeFailed = $true
+            Write-DiagnosticError -Stage 'DebuggerInfoHelp' -Exception $_.Exception
+        }
     }
 } catch {
+    $probeFailed = $true
     Write-DiagnosticError -Stage 'DebuggerAttach' -Exception $_.Exception
 } finally {
     if ($locked) {
@@ -280,7 +314,9 @@ try {
             $session.UnlockMachine()
             Write-Output 'SharedSession=RELEASED'
         } catch {
+            $probeFailed = $true
             Write-DiagnosticError -Stage 'SharedSessionRelease' -Exception $_.Exception
         }
     }
 }
+if ($probeFailed) { exit 1 }
