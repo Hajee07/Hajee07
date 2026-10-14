@@ -38,12 +38,15 @@ namespace HeadBridge.Mapping
         public ulong End;
         public ulong FilePageOffset;
         public bool Arm64ElfHeader;
+        public bool Revalidated;
     }
     public sealed class LibraryResult
     {
         public int VmasVisited;
         public int FilesInspected;
         public int RepeatedFilesSkipped;
+        public string StopReason = "INCOMPLETE";
+        public bool CompleteVmaList;
         public readonly List<LibraryMapping> Mappings = new List<LibraryMapping>();
     }
     public sealed class Reader
@@ -283,6 +286,48 @@ namespace HeadBridge.Mapping
         public LibraryResult Libraries(KernelContext kernel, GameProcess game)
         { return Libraries(kernel, game, null); }
         public LibraryResult Libraries(KernelContext kernel, GameProcess game, Action<string> progress)
+        { return ScanLibraries(kernel, game, progress, false); }
+        public LibraryResult ProbeLibrary(KernelContext kernel, GameProcess game, Action<string> progress)
+        { return ScanLibraries(kernel, game, progress, true); }
+        private void RecheckVma(KernelContext kernel, GameProcess game, ulong node, byte[] expected)
+        {
+            byte[] current = Virtual(kernel.Root, node, 0xa8);
+            foreach (int offset in new int[] { 0, 8, 0x10, 0x18, 0x98, 0xa0 })
+                if (BitConverter.ToUInt64(current, offset) != BitConverter.ToUInt64(expected, offset))
+                    throw new InvalidOperationException("Target VMA changed during verification.");
+            ulong previous = BitConverter.ToUInt64(current, 0x18), next = BitConverter.ToUInt64(current, 0x10);
+            if (previous == 0)
+            {
+                if (U64(kernel.Root, game.Mm) != node)
+                    throw new InvalidOperationException("Target VMA is no longer the process list head.");
+            }
+            else
+            {
+                KernelPointer(previous);
+                if (U64(kernel.Root, previous + 0x10UL) != node)
+                    throw new InvalidOperationException("Target VMA predecessor no longer links to it.");
+            }
+            if (next != 0)
+            {
+                KernelPointer(next);
+                if (U64(kernel.Root, next + 0x18UL) != node)
+                    throw new InvalidOperationException("Target VMA successor no longer links to it.");
+            }
+        }
+        private void VerifyTarget(KernelContext kernel, GameProcess game, ulong node, byte[] area, LibraryMapping mapping, byte[] header)
+        {
+            Recheck(kernel, game);
+            RecheckVma(kernel, game, node, area);
+            if (FileName(kernel.Root, BitConverter.ToUInt64(area, 0xa0)) != mapping.Name)
+                throw new InvalidOperationException("Target library filename changed during verification.");
+            byte[] current = Virtual(game.Root, mapping.Start, header.Length);
+            for (int i = 0; i < header.Length; i++)
+                if (current[i] != header[i]) throw new InvalidOperationException("Target library ELF header changed during verification.");
+            RecheckVma(kernel, game, node, area);
+            Recheck(kernel, game);
+            mapping.Revalidated = true;
+        }
+        private LibraryResult ScanLibraries(KernelContext kernel, GameProcess game, Action<string> progress, bool stopAfterTarget)
         {
             Recheck(kernel, game);
             LibraryResult result = new LibraryResult();
@@ -321,14 +366,22 @@ namespace HeadBridge.Mapping
                         matchedFiles[file] = name;
                         ulong offset = BitConverter.ToUInt64(area, 0x98);
                         bool arm64 = false;
+                        byte[] header = null;
                         if (offset == 0 && end - start >= 20)
                         {
-                            byte[] header = Virtual(game.Root, start, 20);
+                            header = Virtual(game.Root, start, 20);
                             arm64 = header[0] == 0x7f && header[1] == 69 && header[2] == 76 && header[3] == 70 &&
                                     header[4] == 2 && header[5] == 1 && BitConverter.ToUInt16(header, 18) == 183;
                         }
-                        result.Mappings.Add(new LibraryMapping { Name = name, Start = start, End = end, FilePageOffset = offset, Arm64ElfHeader = arm64 });
+                        LibraryMapping mapping = new LibraryMapping { Name = name, Start = start, End = end, FilePageOffset = offset, Arm64ElfHeader = arm64 };
+                        result.Mappings.Add(mapping);
                         if (progress != null && (arm64 || result.Mappings.Count == 1)) progress("LibraryCandidate Name=" + name + " Start=0x" + start.ToString("x") + " End=0x" + end.ToString("x") + " Arm64ElfHeader=" + arm64 + " Status=PENDING_RECHECK");
+                        if (stopAfterTarget && name == "libil2cpp.so" && arm64)
+                        {
+                            VerifyTarget(kernel, game, node, area, mapping, header);
+                            result.StopReason = "TARGET_VERIFIED";
+                            return result;
+                        }
                     }
                 }
                 previous = node; previousEnd = end; node = BitConverter.ToUInt64(area, 0x10);
@@ -337,6 +390,8 @@ namespace HeadBridge.Mapping
                 if (FileName(kernel.Root, file.Key) != file.Value)
                     throw new InvalidOperationException("Matched library file identity changed during the scan.");
             Recheck(kernel, game);
+            result.StopReason = "END_OF_LIST";
+            result.CompleteVmaList = true;
             return result;
         }
     }

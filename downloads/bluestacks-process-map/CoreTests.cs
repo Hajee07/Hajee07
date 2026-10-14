@@ -88,7 +88,134 @@ namespace HeadBridge.Mapping.Tests
             bool failed = false; try { action(); } catch { failed = true; }
             Assert(failed, name);
         }
+        private static void RejectMessage(Action action, string expected, string name)
+        {
+            bool failed = false;
+            try { action(); }
+            catch (InvalidOperationException error) { failed = error.Message.Contains(expected); }
+            Assert(failed, name);
+        }
         private static Reader ReaderFor(Memory memory) { return new Reader(memory.Transport, new RamRange[] { new RamRange(0, 0xffffffffUL) }); }
+        private static void TargetedChecks(Memory live, KernelContext kernel, GameProcess game, byte[] header)
+        {
+            const ulong direct = 0xffff888000000000UL, arenaPhysical = 0x5100000;
+            ulong arena = direct + 0x100000;
+            const int total = 4500, targetIndex = 799;
+            for (ulong offset = 0; offset < (ulong)total * 256UL; offset += 4096)
+                live.Map4K(kernel.Root, arena + offset, arenaPhysical + offset);
+            for (int i = 0; i < total; i++)
+            {
+                ulong physical = arenaPhysical + (ulong)i * 256UL;
+                live.Put64(physical, 0x10000000UL + (ulong)i * 4096UL);
+                live.Put64(physical + 8, 0x10001000UL + (ulong)i * 4096UL);
+                live.Put64(physical + 0x10, i == total - 1 ? 0 : arena + (ulong)(i + 1) * 256UL);
+                live.Put64(physical + 0x18, i == 0 ? 0 : arena + (ulong)(i - 1) * 256UL);
+                live.Put64(physical + 0x98, 0);
+                live.Put64(physical + 0xa0, direct + (i == targetIndex ? 0xa000UL : 0xd000UL));
+            }
+            ulong targetPhysical = arenaPhysical + (ulong)targetIndex * 256UL;
+            ulong targetNode = arena + (ulong)targetIndex * 256UL;
+            ulong targetStart = 0x10000000UL + (ulong)targetIndex * 4096UL;
+            live.Map4K(game.Root, targetStart, 0x6000000);
+            live.Put64(0x5006000, arena);
+            bool tailRead = false;
+            live.AfterRead = delegate(ulong address, int length)
+            {
+                if (address > targetPhysical && address < arenaPhysical + (ulong)total * 256UL && length == 0xa8)
+                    tailRead = true;
+            };
+            Reader targeted = ReaderFor(live);
+            LibraryResult result = targeted.ProbeLibrary(kernel, game, null);
+            Assert(result.StopReason == "TARGET_VERIFIED" && !result.CompleteVmaList && result.VmasVisited == 800,
+                   "targeted scan stops after the 800th VMA in a 4500-VMA list");
+            Assert(result.Mappings.Count == 1 && result.Mappings[0].Revalidated && !tailRead && targeted.PhysicalCalls < 10000,
+                   "target is revalidated without traversing the remaining list");
+            Console.WriteLine("TARGETED_FIXTURE_READ_CALLS=" + targeted.PhysicalCalls + " VMAS=" + result.VmasVisited + " TOTAL_VMAs=" + total);
+            live.AfterRead = null;
+
+            // Mutate the candidate between initial discovery and its final checks.
+            // Keep the length consistent so failure specifically tests filename equality.
+            Action<string> rename = delegate(string line)
+            {
+                if (line.Contains("LibraryCandidate")) live.Write(0x500c000, Encoding.ASCII.GetBytes(new string('x', "libil2cpp.so".Length) + "\0"));
+            };
+            Reader renamed = ReaderFor(live);
+            RejectMessage(delegate { renamed.ProbeLibrary(kernel, game, rename); }, "filename changed", "target filename changes reject early success");
+            Assert(renamed.LastLibraries.StopReason == "INCOMPLETE" && !renamed.LastLibraries.Mappings[0].Revalidated,
+                   "failed target revalidation retains provisional status");
+            live.Write(0x500c000, Encoding.ASCII.GetBytes("libil2cpp.so\0"));
+
+            Action<string> replace = delegate(string line)
+            {
+                if (line.Contains("LibraryCandidate")) live.Put64(targetPhysical + 0xa0, direct + 0xd000);
+            };
+            RejectMessage(delegate { ReaderFor(live).ProbeLibrary(kernel, game, replace); }, "Target VMA changed", "changed target VMA file object is rejected");
+            live.Put64(targetPhysical + 0xa0, direct + 0xa000);
+            Action<string> unlink = delegate(string line)
+            {
+                if (line.Contains("LibraryCandidate")) live.Put64(targetPhysical - 256UL + 0x10UL, 0);
+            };
+            RejectMessage(delegate { ReaderFor(live).ProbeLibrary(kernel, game, unlink); }, "predecessor", "detached target is rejected by neighbor link checks");
+            live.Put64(targetPhysical - 256UL + 0x10UL, targetNode);
+            Action<string> successor = delegate(string line)
+            {
+                if (line.Contains("LibraryCandidate")) live.Put64(targetPhysical + 256UL + 0x18UL, 0);
+            };
+            RejectMessage(delegate { ReaderFor(live).ProbeLibrary(kernel, game, successor); }, "successor", "changed successor backlink is rejected");
+            live.Put64(targetPhysical + 256UL + 0x18UL, targetNode);
+            Action<string> headerChange = delegate(string line)
+            {
+                if (line.Contains("LibraryCandidate")) live.Write(0x6000000, new byte[] { 0 });
+            };
+            RejectMessage(delegate { ReaderFor(live).ProbeLibrary(kernel, game, headerChange); }, "ELF header changed", "changed target ELF bytes reject early success");
+            live.Write(0x6000000, header);
+            Action<string> identityChange = delegate(string line)
+            {
+                if (line.Contains("LibraryCandidate")) live.Put64(0x50044c0, direct + 0x7000);
+            };
+            RejectMessage(delegate { ReaderFor(live).ProbeLibrary(kernel, game, identityChange); }, "Game identity", "changed process mm rejects early success");
+            live.Put64(0x50044c0, game.Mm);
+            int headerReads = 0;
+            live.AfterRead = delegate(ulong address, int length)
+            {
+                if (address == 0x6000000 && length == 20 && ++headerReads == 2)
+                    live.Put64(targetPhysical + 8, targetStart + 8192UL);
+            };
+            RejectMessage(delegate { ReaderFor(live).ProbeLibrary(kernel, game, null); }, "Target VMA changed", "VMA mutation during final header read is detected");
+            live.AfterRead = null;
+            live.Put64(targetPhysical + 8, targetStart + 4096UL);
+
+            // A one-element list covers end-of-list and list-head rechecks.
+            live.Put64(0x5006000, targetNode);
+            live.Put64(targetPhysical + 0x18, 0); live.Put64(targetPhysical + 0x10, 0);
+            Action<string> headChange = delegate(string line)
+            {
+                if (line.Contains("LibraryCandidate")) live.Put64(0x5006000, arena);
+            };
+            RejectMessage(delegate { ReaderFor(live).ProbeLibrary(kernel, game, headChange); }, "list head", "detached head VMA is rejected");
+            live.Put64(0x5006000, targetNode);
+            live.Write(0x6000012, new byte[] { 62 });
+            LibraryResult wrongArchitecture = ReaderFor(live).ProbeLibrary(kernel, game, null);
+            Assert(wrongArchitecture.StopReason == "END_OF_LIST" && wrongArchitecture.CompleteVmaList && !wrongArchitecture.Mappings[0].Revalidated,
+                   "wrong ELF architecture reaches end without target verification");
+            live.Write(0x6000000, header);
+            live.Put64(targetPhysical + 0x98, 1);
+            LibraryResult nonzeroOffset = ReaderFor(live).ProbeLibrary(kernel, game, null);
+            Assert(nonzeroOffset.StopReason == "END_OF_LIST" && !nonzeroOffset.Mappings[0].Arm64ElfHeader,
+                   "nonzero file offset cannot satisfy the ELF header probe");
+            live.Put64(targetPhysical + 0x98, 0);
+            live.Write(0x500c000, Encoding.ASCII.GetBytes("libunity.so\0"));
+            live.Write(0x500b024, BitConverter.GetBytes("libunity.so".Length));
+            // A different ARM64 library cannot satisfy the IL2CPP goal.
+            LibraryResult unity = ReaderFor(live).ProbeLibrary(kernel, game, null);
+            Assert(unity.StopReason == "END_OF_LIST" && unity.Mappings[0].Arm64ElfHeader && !unity.Mappings[0].Revalidated,
+                   "Unity ARM64 header alone does not satisfy the IL2CPP goal");
+            live.Write(0x500c000, Encoding.ASCII.GetBytes("libil2cpp.so\0"));
+            live.Write(0x500b024, BitConverter.GetBytes("libil2cpp.so".Length));
+            LibraryResult first = ReaderFor(live).ProbeLibrary(kernel, game, null);
+            Assert(first.StopReason == "TARGET_VERIFIED" && first.Mappings[0].Revalidated,
+                   "single head VMA passes targeted verification");
+        }
         public static void Run(string elfPath)
         {
             Memory simple = new Memory(); Reader r = ReaderFor(simple);
@@ -217,6 +344,7 @@ namespace HeadBridge.Mapping.Tests
                    "partial scan progress survives a final identity failure");
             live.AfterRead = null;
             live.Write(0x500b024, BitConverter.GetBytes(name.Length - 1)); live.Write(0x500c000, name);
+            TargetedChecks(live, largeKernel, largeGame, header);
             Reject(delegate { mapper.FindProcess(kernel, 3806, "wrong-name"); }, "PID command-name mismatch rejected");
             live.Put64(0x50044c0, direct + 0x7000);
             Reject(delegate { mapper.Recheck(kernel, game); }, "changed game memory context rejected");

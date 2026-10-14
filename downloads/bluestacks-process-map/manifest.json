@@ -4,6 +4,6 @@
   "vmm_sha256": "09fcc9048aaeb610104110a1cf7a533603e423eb681f2e3db61d601869cd095a",
   "abi_version": "0x60001",
   "info_handler": "headbridge",
-  "mapping_source_sha256": "9acb37f857b3d9a6bbf8ef495ea1a50b716c99e904551d6cdf512af0280654e0",
+  "mapping_source_sha256": "f64f595abaf9b3fe79928fbd72f36ad88ce28f7faaf52129648d55c7030b45be",
   "kernel_elf_sha256": "ef91958406d5fa8e57b9e1098c4227ca4eaea91c32e47c8031fa6649084458d3"
 }

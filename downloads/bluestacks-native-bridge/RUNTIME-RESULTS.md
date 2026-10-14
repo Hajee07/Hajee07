@@ -170,3 +170,25 @@ completed in 9663 physical reads; cached mapping changes, unmapping, root
 separation, and matched-file renames are covered. These fixture results do not
 establish live Windows performance. Version 3's Windows library scan remains
 pending, and entity/head/visibility mappings and aim writes are unimplemented.
+
+## Process mapping version 3: user-reported Windows result
+
+Kernel identity and process discovery passed again. Version 3 read ARM64 Unity
+and IL2CPP header candidates. The first IL2CPP candidate was observed between
+VMAs 768 and 896, starting at 0x7f96b9e6b000 in that run. The probe continued its
+full VMA scan and reached its unchanged 30,000-call limit at VMA 3300. It had
+inspected 915 file objects, skipped 571 repeated file lookups, and recorded 4877
+translation cache hits. Final library rechecks did not execute, so candidates
+remained provisional and `GameLibraryRead=FAIL` was correct. Plugin unload,
+handler cleanup, and shared-session release passed.
+
+Version 4 revalidates the first IL2CPP target's VMA, neighboring links or list
+head, filename, exact header bytes, and process identity before stopping. The
+Windows runner then repeats its ADB PID/process checks before final success.
+The report explicitly marks that the remaining VMA list was not enumerated.
+The native DLL and read/time budgets are unchanged.
+
+Forty-six offline checks passed, including mutation regressions and a 4500-VMA
+fixture whose target at VMA 800 is verified in 4372 physical reads. Live version
+4 verification remains pending. Head/entity/visibility mapping and aim writes
+remain unimplemented.

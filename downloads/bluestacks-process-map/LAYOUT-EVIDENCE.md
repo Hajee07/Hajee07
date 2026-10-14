@@ -114,6 +114,32 @@ objects and a final ARM64 library uses 9663 physical reads. Additional regressio
 cover changed/unmapped cached translations, root separation, renamed matched
 files, and failure progress. Live version 3 scan performance remains unverified.
 
-Live game ELF reads, entity/head layouts, and aim updates remain unverified.
-Offline fixtures contain synthetic process/VMA records and do not demonstrate
-a working aim-control integration.
+The subsequent live result is recorded below. Offline fixtures contain synthetic
+process/VMA records and do not demonstrate a working aim-control integration.
+
+## User-reported version 3 result and version 4 targeted verification
+
+Version 3 again passed kernel and process discovery. It observed an ARM64 Unity
+header early, then two ARM64 IL2CPP header candidates between VMAs 768 and 896.
+The first IL2CPP mapping started at 0x7f96b9e6b000 in this run. These are observed
+addresses, not reusable constants or a verified module load bias.
+
+The full scan continued until 30,000 physical calls at VMA 3300, with 915 file
+objects inspected, 571 repeated file lookups skipped, and 4877 translation cache
+hits. Candidate headers were read, but final filename/process checks did not
+complete. Thus the report is evidence of provisional game-space reads and not a
+completed `GameLibraryRead=PASS`. All three cleanup steps passed.
+
+Version 4 uses targeted verification. At the first zero-offset ARM64 IL2CPP
+header it rechecks the process identity, VMA fields and neighboring links (or mm
+list head), filename, and exact header bytes, then checks the VMA/process again.
+Only a revalidated candidate satisfies the runner. It records that the remaining
+VMA list was not enumerated. The ADB PID and process rechecks before final success
+remain in place, as do the native DLL and read/time/task/VMA budgets.
+
+Forty-six offline checks pass. A 4500-VMA fixture with a target at VMA 800 returns
+after 4372 reads without traversing the tail. Mutation tests cover target-file,
+filename, ELF bytes, mm identity, VMA bounds, list head, and neighboring links.
+The first three versions' results do not establish these new final rechecks on
+Windows; version 4's live result remains pending. Entity/head/visibility layouts
+and aim-control writes remain unimplemented.

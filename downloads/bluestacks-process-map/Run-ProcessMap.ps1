@@ -78,7 +78,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=3 ReadOnly=1'
+Record 'ProcessMapVersion=4 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -186,15 +186,16 @@ try {
     $game = $reader.FindProcess($kernel, [int]$gameProcessId, $gameName)
     Record "ProcessMap=PASS GuestPID=$($game.Pid) Task=0x$($game.Task.ToString('x')) MM=0x$($game.Mm.ToString('x')) CR3=0x$($game.Root.ToString('x')) TasksVisited=$($game.TasksVisited)"
     $stage = 'GameLibraryRead'
+    Record 'LibraryScanMode=TARGETED Target=libil2cpp.so'
     $progress = [Action[string]]{ param([string]$message) Record $message }
-    $libraries = $reader.Libraries($kernel, $game, $progress)
+    $libraries = $reader.ProbeLibrary($kernel, $game, $progress)
     $il2cpp = $false
     foreach ($mapping in $libraries.Mappings) {
-        Record "LibraryMapping Name=$($mapping.Name) Start=0x$($mapping.Start.ToString('x')) End=0x$($mapping.End.ToString('x')) FilePageOffset=$($mapping.FilePageOffset) Arm64ElfHeader=$($mapping.Arm64ElfHeader)"
-        if ($mapping.Name -ceq 'libil2cpp.so' -and $mapping.Arm64ElfHeader) { $il2cpp = $true }
+        Record "LibraryMapping Name=$($mapping.Name) Start=0x$($mapping.Start.ToString('x')) End=0x$($mapping.End.ToString('x')) FilePageOffset=$($mapping.FilePageOffset) Arm64ElfHeader=$($mapping.Arm64ElfHeader) Revalidated=$($mapping.Revalidated)"
+        if ($mapping.Name -ceq 'libil2cpp.so' -and $mapping.Arm64ElfHeader -and $mapping.Revalidated) { $il2cpp = $true }
     }
     Record "VmasVisited=$($libraries.VmasVisited)"
-    if (-not $il2cpp) { throw 'An ARM64 libil2cpp ELF header was not verified in the game address space.' }
+    if (-not $il2cpp -or $libraries.StopReason -cne 'TARGET_VERIFIED') { throw 'An ARM64 libil2cpp ELF header was not revalidated in the game address space.' }
     if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during the probe.' }
     $reader.Recheck($kernel, $game)
     Record 'GameLibraryRead=PASS Name=libil2cpp.so Architecture=ARM64'
@@ -205,6 +206,7 @@ finally {
         Record "PhysicalReadCalls=$($reader.PhysicalCalls) TranslationCacheHits=$($reader.TranslationCacheHits)"
         if ($null -ne $reader.LastLibraries) {
             Record "LibraryScanTotals VmasVisited=$($reader.LastLibraries.VmasVisited) FilesInspected=$($reader.LastLibraries.FilesInspected) RepeatedFilesSkipped=$($reader.LastLibraries.RepeatedFilesSkipped)"
+            Record "LibraryScanStop Reason=$($reader.LastLibraries.StopReason) CompleteVmaList=$($reader.LastLibraries.CompleteVmaList)"
         }
     }
     if ($loaded) {
