@@ -1,0 +1,7 @@
+{
+  "plugin": "VBoxDbgHeadAimBridge.dll",
+  "sha256": "ff00d9e49cd11f76582b3476b7efd01107f115518fd4dbf9f7be38534a912ee3",
+  "vmm_sha256": "09fcc9048aaeb610104110a1cf7a533603e423eb681f2e3db61d601869cd095a",
+  "abi_version": "0x60001",
+  "info_handler": "headbridge"
+}

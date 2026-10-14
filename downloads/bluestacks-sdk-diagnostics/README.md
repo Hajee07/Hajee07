@@ -55,7 +55,8 @@ failed because the script assumed exact enum type names. No debugger attachment
 or memory probe ran. Version 2 subsequently ran successfully through enum
 resolution, metadata, shared attachment, debugger discovery, and session release;
 the physical memory read explicitly failed with E_NOTIMPL. See
-[runtime results](RUNTIME-RESULTS.md). Version 3's added virtual-read and info-help
-checks were reviewed against the exact upstream signatures; Windows execution
-is pending. The cloud workspace is Linux and cannot run the user's installed
-BlueStacks COM servers.
+[runtime results](RUNTIME-RESULTS.md). The user then ran version 3: the virtual
+read also explicitly returned E_NOTIMPL, while the info-help listing and shared
+session release succeeded. Neither tested COM read method provides a live read.
+The cloud workspace is Linux and cannot run the user's installed BlueStacks COM
+servers directly.

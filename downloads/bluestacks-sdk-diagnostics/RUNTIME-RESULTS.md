@@ -39,7 +39,14 @@ Version 3 adds independently selectable `-ProbeVirtual` and `-ListInfo` checks.
 The former calls the other declared read method once (CPU 0, virtual address 0,
 one byte). The latter calls `Info("help", "")` to list registered info-handler
 names/descriptions. It does not collect full VM dumps or query internal VM
-pointers. These new checks have not yet been run on the user's Windows machine.
-Upstream 6.1.36 leaves the virtual-read method unimplemented too, while it
-implements the info dispatch and registers the help handler. The fork's actual
-result is still needed; method declarations alone do not establish support.
+pointers. The user subsequently ran version 3: `readVirtualMemory` also returned
+`0x80004001`, explicitly stating it is not implemented. `Info("help", "")`
+succeeded and listed the registered handlers, including `phys`, `pgmcr3`,
+`cpumguest`, `plugins`, and `help`. The shared session was released.
+
+These handlers expose diagnostics; their presence does not establish a live
+Free Fire object API. The two tested COM read methods are unavailable. A native
+debugger plug-in route was subsequently researched and implemented as an
+experimental package in `../bluestacks-native-bridge`; its Windows runtime test
+is pending. It obtains its UVM from the plug-in entry rather than treating
+remote numeric pointers as callable process-local contexts.
