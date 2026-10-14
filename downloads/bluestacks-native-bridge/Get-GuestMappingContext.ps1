@@ -12,6 +12,9 @@ $locked = $false
 $issues = 0
 $completed = $false
 $adb = $null
+$adbReady = $false
+$gameProcessId = $null
+$pagingMode = ''
 function Record([string] $Text) { $lines.Add($Text); Write-Host $Text }
 function Query([string] $Label, [scriptblock] $Action) {
     Record "[$Label]"
@@ -27,10 +30,10 @@ function Query([string] $Label, [scriptblock] $Action) {
         Record "QueryStatus=UNAVAILABLE HRESULT=0x$($errorObject.HResult.ToString('X8')) $($errorObject.Message)"
     }
 }
-function Adb([string] $Tail) {
+function Adb([string] $Tail, [switch] $HostCommand) {
     $start = [Diagnostics.ProcessStartInfo]::new()
     $start.FileName = $adb
-    $start.Arguments = '-s ' + $Device + ' ' + $Tail
+    $start.Arguments = if ($HostCommand) { $Tail } else { '-s ' + $Device + ' ' + $Tail }
     $start.UseShellExecute = $false
     $start.CreateNoWindow = $true
     $start.RedirectStandardOutput = $true
@@ -55,13 +58,40 @@ function Adb([string] $Tail) {
         return $outputText
     } finally { $process.Dispose() }
 }
+function Ensure-AdbDevice {
+    $state = ''
+    try { $state = Adb 'get-state' }
+    catch { Record "AdbInitialState=UNAVAILABLE $($_.Exception.Message)" }
+    if ($state -ne 'device') {
+        $endpoint = [regex]::Match($Device, '^(127\.0\.0\.1|localhost):([0-9]{1,5})$')
+        if (-not $endpoint.Success -or [int]$endpoint.Groups[2].Value -lt 1 -or [int]$endpoint.Groups[2].Value -gt 65535) {
+            throw 'Selected device is offline. Automatic reconnect requires an explicit localhost TCP endpoint.'
+        }
+        Record "AdbReconnect=ATTEMPT Endpoint=$Device"
+        Record (Adb -Tail ('connect ' + $Device) -HostCommand)
+        # adb connect may exit zero even when its text reports a failed connection.
+        $state = Adb 'get-state'
+    }
+    if ($state -ne 'device') { throw "Selected ADB endpoint is unavailable: $state" }
+    "SelectedDevice=$Device State=device"
+}
+function Get-PagingCpuIds([string] $ModeText, [int] $ConfiguredCount) {
+    $modeMatches = [regex]::Matches($ModeText, '(?m)^Guest paging mode \(VCPU #([0-9]+)\):')
+    $ids = @($modeMatches | ForEach-Object { [int]$_.Groups[1].Value } | Sort-Object -Unique)
+    if ($ids.Count -gt 0) {
+        if ($ids[-1] -gt 63) { throw 'Unexpected CPU ID in debugger paging report.' }
+        return [pscustomobject]@{ Source = 'DebuggerPagingMode'; Ids = [int[]]$ids }
+    }
+    if ($ConfiguredCount -lt 1 -or $ConfiguredCount -gt 64) { throw 'No usable runtime or configured CPU count.' }
+    return [pscustomobject]@{ Source = 'ConfiguredCountFallback'; Ids = [int[]](0..($ConfiguredCount - 1)) }
+}
 function Shell([string] $Command) {
     # Fixed commands below contain no embedded Windows double quotes or backslashes.
     # A validated decimal PID is the only value interpolated into a guest command.
     if ($Command.Contains('"') -or $Command.Contains('\')) { throw 'Unsupported command quoting.' }
     return (Adb ('shell "' + $Command + '"'))
 }
-Record 'MappingContextVersion=1'
+Record 'MappingContextVersion=2'
 Record 'Purpose=Kernel-layout and paging prerequisites; no game object mappings established'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
@@ -93,37 +123,41 @@ try {
     Record "Preflight=PASS Machine=$($machine.Name) HostPID=$($hostProcess.Id)"
 
     Query 'ADB' {
-        $state = Adb 'get-state'
-        if ($state -ne 'device') { throw "Selected ADB endpoint is unavailable: $state" }
-        "SelectedDevice=$Device"
+        Ensure-AdbDevice
+        $script:adbReady = $true
     }
-    Query 'Kernel' { Shell 'uname -srvm; cat /proc/version' }
-    Query 'Android' {
-        'Release=' + (Shell 'getprop ro.build.version.release')
-        'SDK=' + (Shell 'getprop ro.build.version.sdk')
-        'GuestABI=' + (Shell 'getprop ro.product.cpu.abi')
-        'NativeBridge=' + (Shell 'getprop ro.dalvik.vm.native.bridge')
-    }
-    Query 'KernelLayoutSources' {
-        Shell 'for p in /sys/kernel/btf/vmlinux /proc/config.gz; do if [ -r $p ]; then ls -ln $p; else echo Unavailable=$p; fi; done'
-    }
-    Query 'KernelConfig' {
-        # Output only settings that determine address translation and layout sources.
-        Shell "if [ -r /proc/config.gz ]; then zcat /proc/config.gz | grep -E '^(CONFIG_(X86_64|X86_5LEVEL|RANDOMIZE_BASE|RANDOMIZE_MEMORY|KALLSYMS|KALLSYMS_ALL|KALLSYMS_BASE_RELATIVE|DEBUG_INFO|DEBUG_INFO_BTF|DEBUG_INFO_REDUCED|GCC_PLUGIN_RANDSTRUCT|PAGE_TABLE_ISOLATION|IKCONFIG|IKCONFIG_PROC))='; else echo Config=UNAVAILABLE; fi"
-    }
-    Query 'SelectedKernelSymbols' {
-        # Address zero means redacted/unusable, even when the symbol name is present.
-        Shell "grep -E '[[:space:]](linux_banner|init_task|init_mm|swapper_pg_dir|init_top_pgt|init_level4_pgt|page_offset_base|phys_base|__per_cpu_offset)$' /proc/kallsyms"
-    }
-    $gameProcessId = $null
-    Query 'GameProcess' {
-        $script:gameProcessId = (Shell 'pidof com.dts.freefireth').Trim()
-        if ($gameProcessId -notmatch '^\d+$') { throw 'Exactly one running Free Fire PID is required.' }
-        "GuestGamePID=$gameProcessId"
-        Shell "cat /proc/$gameProcessId/comm"
-    }
-    Query 'Package' {
-        Shell "dumpsys package com.dts.freefireth | grep -E 'versionName=|primaryCpuAbi=|secondaryCpuAbi='"
+    if ($adbReady) {
+        Query 'Kernel' { Shell 'uname -srvm; cat /proc/version' }
+        Query 'Android' {
+            'Release=' + (Shell 'getprop ro.build.version.release')
+            'SDK=' + (Shell 'getprop ro.build.version.sdk')
+            'GuestABI=' + (Shell 'getprop ro.product.cpu.abi')
+            'NativeBridge=' + (Shell 'getprop ro.dalvik.vm.native.bridge')
+        }
+        Query 'KernelLayoutSources' {
+            Shell 'for p in /sys/kernel/btf/vmlinux /proc/config.gz; do if [ -r $p ]; then ls -ln $p; else echo Unavailable=$p; fi; done'
+        }
+        Query 'KernelConfig' {
+            # Output only settings that determine address translation and layout sources.
+            Shell "if [ -r /proc/config.gz ]; then zcat /proc/config.gz | grep -E '^(CONFIG_(X86_64|X86_5LEVEL|RANDOMIZE_BASE|RANDOMIZE_MEMORY|KALLSYMS|KALLSYMS_ALL|KALLSYMS_BASE_RELATIVE|DEBUG_INFO|DEBUG_INFO_BTF|DEBUG_INFO_REDUCED|GCC_PLUGIN_RANDSTRUCT|PAGE_TABLE_ISOLATION|IKCONFIG|IKCONFIG_PROC))='; else echo Config=UNAVAILABLE; fi"
+        }
+        Query 'SelectedKernelSymbols' {
+            # Address zero means redacted/unusable, even when the symbol name is present.
+            Shell "grep -E '[[:space:]](linux_banner|init_task|init_mm|swapper_pg_dir|init_top_pgt|init_level4_pgt|page_offset_base|phys_base|__per_cpu_offset)$' /proc/kallsyms"
+        }
+        Query 'GameProcess' {
+            $script:gameProcessId = (Shell 'pidof com.dts.freefireth').Trim()
+            if ($gameProcessId -notmatch '^\d+$') { throw 'Exactly one running Free Fire PID is required.' }
+            "GuestGamePID=$gameProcessId"
+            Shell "cat /proc/$gameProcessId/comm"
+        }
+        Query 'Package' {
+            Shell "dumpsys package com.dts.freefireth | grep -E 'versionName=|primaryCpuAbi=|secondaryCpuAbi='"
+        }
+    } else {
+        Record 'AndroidQueries=SKIPPED Reason=Selected ADB endpoint unavailable'
+        Query 'ADBDevices' { Adb -Tail 'devices -l' -HostCommand }
+        Record 'AdbAction=Check the ADB port shown in BlueStacks Settings > Advanced; pass that endpoint with -Device.'
     }
 
     $session = New-Object -ComObject 'VirtualBox.Session'
@@ -132,13 +166,17 @@ try {
     $debugger = $session.Console.Debugger
     if ($null -eq $debugger) { throw 'The debugger object is unavailable.' }
     Query 'DebuggerPlugins' { $debugger.Info('plugins', '') }
-    Query 'PagingMode' { $debugger.Info('mode', '') }
+    Query 'PagingMode' {
+        $script:pagingMode = [string]$debugger.Info('mode', '')
+        $pagingMode
+    }
     Query 'PhysicalRanges' { $debugger.Info('phys', '') }
     $cpuCount = [int]$machine.CPUCount
-    if ($cpuCount -lt 1 -or $cpuCount -gt 64) { throw 'Unexpected virtual CPU count.' }
-    Record "VirtualCPUCount=$cpuCount"
+    Record "ConfiguredCPUCount=$cpuCount"
+    $cpuSelection = Get-PagingCpuIds -ModeText $pagingMode -ConfiguredCount $cpuCount
+    Record "CPUEnumeration=$($cpuSelection.Source) CPUIds=$($cpuSelection.Ids -join ',')"
     Record 'RegisterScope=Scheduling samples; no sampled CR3 is identified as the Free Fire page table'
-    for ($cpuIndex = 0; $cpuIndex -lt $cpuCount; $cpuIndex++) {
+    foreach ($cpuIndex in $cpuSelection.Ids) {
         foreach ($registerName in @('cr0', 'cr3', 'cr4', 'efer')) {
             Query "CPU$cpuIndex.$registerName" { $debugger.GetRegister([uint32]$cpuIndex, $registerName) }
         }

@@ -85,8 +85,12 @@ Run `Get-GuestMappingContext.ps1` in 64-bit Administrator PowerShell with Pie64
 and Free Fire open. It writes `guest-mapping-context-<id>.txt` beside the script.
 It collects kernel version/layout-source availability, selected kernel symbol
 addresses, game PID, RAM ranges, paging mode, and paging-register samples.
-It does not require the plug-in DLL. The cloud cannot execute these live Windows
-queries; the collector still needs validation on the user's PC.
+It does not require the plug-in DLL. The user ran version 1: debugger queries and
+cleanup passed, but the selected ADB endpoint was disconnected. Version 2 adds
+one reconnect attempt to that explicit localhost endpoint and verifies it before
+running Android queries. It uses CPU IDs from the debugger paging report,
+because that report listed four CPUs while the configured CPU count was two.
+The cloud cannot execute the live Windows queries; version 2 needs a local run.
 
 An unavailable query is recorded and other independent queries continue. Exit
 code 1 means at least one query or collection step failed; share the full report
