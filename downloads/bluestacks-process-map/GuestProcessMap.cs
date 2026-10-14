@@ -17,7 +17,9 @@ namespace HeadBridge.Mapping
     {
         public readonly ulong Root;
         public readonly ulong Slide;
-        internal KernelContext(ulong root, ulong slide) { Root = root; Slide = slide; }
+        public readonly ulong InitialActiveMm;
+        internal KernelContext(ulong root, ulong slide, ulong initialActiveMm)
+        { Root = root; Slide = slide; InitialActiveMm = initialActiveMm; }
     }
     public sealed class GameProcess
     {
@@ -183,15 +185,22 @@ namespace HeadBridge.Mapping
             Expect(seedRoot, 0xffffffff8121b120UL + slide, VmaAnchor);
             Expect(seedRoot, 0xffffffff8127d69eUL + slide, DentryAnchor);
             byte[] task = Virtual(seedRoot, InitTaskVa + slide + 0x470UL, 0x2c0);
-            if (BitConverter.ToInt32(task, 0x100) != 0 || CString(task, 0x2b0, 16) != "swapper/0" ||
-                BitConverter.ToUInt64(task, 0x50) != 0 || BitConverter.ToUInt64(task, 0x58) != InitMmVa + slide)
-                throw new InvalidOperationException("Initial task layout does not match this kernel build.");
+            int initialPid = BitConverter.ToInt32(task, 0x100);
+            string initialName = CString(task, 0x2b0, 16);
+            ulong initialMm = BitConverter.ToUInt64(task, 0x50);
+            ulong initialActiveMm = BitConverter.ToUInt64(task, 0x58);
+            if (initialPid != 0) throw new InvalidOperationException("Initial task PID mismatch: observed " + initialPid + ".");
+            if (initialName != "swapper/0") throw new InvalidOperationException("Initial task name mismatch: observed " + initialName + ".");
+            if (initialMm != 0) throw new InvalidOperationException("Initial idle task has a non-null mm: 0x" + initialMm.ToString("x") + ".");
+            // context_switch assigns a borrowed mm to kernel threads and clears
+            // it when they switch away. This field is not a fixed init_mm pointer.
+            if (initialActiveMm != 0) KernelPointer(initialActiveMm);
             ulong pgd = U64(seedRoot, InitMmVa + slide + 0x50UL);
             if (pgd != InitPgdVa + slide) throw new InvalidOperationException("Initial mm page table does not match the inspected kernel.");
             ulong root = Translate(seedRoot, pgd);
             if ((root & 4095UL) != 0) throw new InvalidOperationException("Initial page-table alignment is invalid.");
             Expect(root, BannerVa + slide, BannerHex);
-            return new KernelContext(root, slide);
+            return new KernelContext(root, slide, initialActiveMm);
         }
         public GameProcess FindProcess(KernelContext kernel, int pid, string expectedName)
         {

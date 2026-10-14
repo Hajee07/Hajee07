@@ -139,3 +139,9 @@ The derived task/mm fields are now used by a separate
 [read-only process-mapping probe](../bluestacks-process-map/README.md). It passed
 16 offline reader checks with real kernel anchors and synthetic process/VMA
 records. Live process discovery and game-library reads remain unverified.
+
+The user then ran process-mapping version 1. Banner/code-anchor virtual reads
+succeeded, and initial-task validation failed after 195 physical read calls.
+Cleanup passed. Version 2 corrects its invalid fixed idle `active_mm` assumption;
+22 offline checks pass, and a live rerun is pending. See the process mapper's
+`LAYOUT-EVIDENCE.md` for source/binary evidence and the exact scope of this result.

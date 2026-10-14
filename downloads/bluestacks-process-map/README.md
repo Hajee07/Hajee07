@@ -6,9 +6,13 @@ using the derived task/mm fields, locates the current ADB game PID, discovers
 its page table, walks its VMAs, and attempts to read the ARM64 `libil2cpp.so` ELF
 header through that page table. It reports matching Unity/metadata mappings.
 
-**Live Windows validation is pending.** The earlier native one-byte probe passed;
-this process-mapping path has passed offline checks only. Entity/head/visibility
-layouts and aim-control writes remain unimplemented.
+**Live process discovery is pending.** The user ran version 1: native loading,
+paging queries, full kernel banner, and seven code anchors passed; initial task
+validation failed. Its combined check included a fixed `active_mm` assumption,
+which is invalid for scheduled idle tasks. Version 2 accepts
+a null or canonical borrowed pointer and keeps the PID/name/mm, code, and initial
+page-table checks. Its Windows run is pending. Entity/head/visibility layouts and
+aim-control writes remain unimplemented.
 
 Extract the complete ZIP into a new folder. Start the Pie64 instance and Free
 Fire, leave the game running, and run in 64-bit Administrator Windows PowerShell:
@@ -41,6 +45,10 @@ the full banner, seven code anchors, and initial task/mm fields. No matching
 candidate means no process layout is used. This first implementation may reject
 an otherwise valid kernel mapping when its relocation cannot be derived.
 
+The idle task's `active_mm` is reported as an observation; it is not required to
+equal `init_mm`. Linux context switching assigns and clears this field. No other
+initial-task fields are relaxed. Failure messages identify the individual field.
+
 The task scan is bounded to 2048 nodes and the VMA scan to 4096 nodes. Only the
 selected game's Unity/IL2CPP/metadata mapping names and ranges are logged. Game
 object contents are not printed. Multiple read calls are not an atomic snapshot;
@@ -60,10 +68,12 @@ kernel, APK, or Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-Sixteen checks passed using PowerShell 7.4.6 with C# 5 language compatibility:
+Twenty-two checks passed using PowerShell 7.4.6 with C# 5 language compatibility:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
-kernel anchors, and a synthetic game process/VMA/ARM64 header.
+kernel anchors, and a synthetic game process/VMA/ARM64 header. Regression cases
+cover borrowed/null/initial idle `active_mm` and continued rejection of invalid
+idle pointers, wrong PID/name, and non-null idle `mm`.
 
 Reproduce with the extracted ELF available locally:
 

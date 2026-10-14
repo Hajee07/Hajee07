@@ -44,7 +44,7 @@ to have recovered a complete C type definition:
 | --- | --- | --- |
 | task.tasks | 0x470 | show_state_filter at 0xffffffff8111e2d8 loads +0x470 and subtracts 0x470 |
 | task.mm | 0x4c0 | get_task_mm at 0xffffffff810e8a06 loads +0x4c0 |
-| task.active_mm | 0x4c8 | __mmdrop at 0xffffffff810e8e72 compares +0x4c8; static init_task points to init_mm there |
+| task.active_mm | 0x4c8 | __mmdrop at 0xffffffff810e8e72 compares +0x4c8; the static initializer points to init_mm, but scheduler changes this field at runtime |
 | task.pid | 0x570 | sched_show_task at 0xffffffff81119da7 loads +0x570 for the task's PID |
 | task.comm | 0x720 | __get_task_comm at 0xffffffff8126a3a0 forms +0x720; static init_task contains the idle name there |
 | mm.pgd | 0x50 | __mmdrop at 0xffffffff810e8e7b loads +0x50 before page-table destruction; static init_mm points to init_top_pgt there |
@@ -67,6 +67,30 @@ native probe: SHA-256
 `ff00d9e49cd11f76582b3476b7efd01107f115518fd4dbf9f7be38534a912ee3`.
 Its inspected VMM target remains SHA-256
 `09fcc9048aaeb610104110a1cf7a533603e423eb681f2e3db61d601869cd095a`.
+
+## User-reported version 1 result and version 2 correction
+
+The user ran the package from commit `9f0fa75d49e06719f7c763650ee2b04adb525ced`.
+Preflight (host PID 23620), ADB reconnect, game identity (PID 2942), plugin load,
+bridge status, and paging context succeeded. The sampled roots at slide zero
+passed the full kernel banner and all seven code anchors, then the combined
+initial-task check rejected them. There were 195 native physical read calls.
+Unload, handler cleanup, and shared-session release succeeded. No process lookup
+or game-library read ran.
+
+The combined version 1 check did not record which initial field differed. Its
+requirement that `init_task.active_mm == init_mm` was invalid: Linux 4.19.195
+`kernel/sched/core.c` assigns a borrowed mm to a kernel thread in `context_switch`
+and clears the field when it switches away. The exact extracted binary confirms
+both writes in `__schedule`: 0xffffffff8194219d stores the borrowed pointer at
+task+0x4c8, and 0xffffffff819421c3 stores zero there.
+
+Version 2 accepts null or a canonical, aligned kernel pointer for this transient
+field, records it, and keeps all banner/code/PID/name/mm/initial-PGD checks.
+Individual initial-field errors now have distinct messages. Twenty-two offline
+checks pass, including realistic borrowed/null idle contexts and continued
+rejection of other invalid fields. A live version 2 run is still required to
+confirm that this correction resolves the observed combined-check failure.
 
 Live process mapping, game ELF reads, entity/head layouts, and aim updates remain
 unverified. Offline fixtures contain synthetic process/VMA records and do not

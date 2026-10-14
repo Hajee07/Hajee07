@@ -78,7 +78,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=1 ReadOnly=1'
+Record 'ProcessMapVersion=2 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -181,7 +181,7 @@ try {
         if ($null -ne $kernel) { break }
     }
     if ($null -eq $kernel) { throw 'No sampled kernel mapping matched the extracted image; no process layouts were used.' }
-    Record "KernelIdentity=PASS Root=0x$($kernel.Root.ToString('x')) Slide=0x$($kernel.Slide.ToString('x'))"
+    Record "KernelIdentity=PASS Root=0x$($kernel.Root.ToString('x')) Slide=0x$($kernel.Slide.ToString('x')) InitialActiveMM=0x$($kernel.InitialActiveMm.ToString('x'))"
     $stage = 'ProcessMap'
     $game = $reader.FindProcess($kernel, [int]$gameProcessId, $gameName)
     Record "ProcessMap=PASS GuestPID=$($game.Pid) Task=0x$($game.Task.ToString('x')) MM=0x$($game.Mm.ToString('x')) CR3=0x$($game.Root.ToString('x')) TasksVisited=$($game.TasksVisited)"

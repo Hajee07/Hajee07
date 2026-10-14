@@ -134,9 +134,27 @@ namespace HeadBridge.Mapping.Tests
             live.Map4K(0x5008000, 0x70000000, 0x6000000);
             byte[] header = new byte[20]; header[0] = 0x7f; header[1] = 69; header[2] = 76; header[3] = 70; header[4] = 2; header[5] = 1; header[18] = 183;
             live.Write(0x6000000, header);
+            // A scheduled idle task borrows a process mm, not necessarily init_mm.
+            live.Put64(taskPhysical + 0x4c8, mm);
             Reader mapper = ReaderFor(live);
             KernelContext kernel = mapper.VerifyKernel(root | 5UL, 0);
-            Assert(kernel.Root == root, "real extracted kernel anchors and initial task match");
+            Assert(kernel.Root == root && kernel.InitialActiveMm == mm, "real kernel identity with borrowed idle active_mm");
+            live.Put64(taskPhysical + 0x4c8, 0);
+            Assert(mapper.VerifyKernel(root, 0).InitialActiveMm == 0, "switched-away idle active_mm can be null");
+            live.Put64(taskPhysical + 0x4c8, Reader.InitMmVa);
+            Assert(mapper.VerifyKernel(root, 0).InitialActiveMm == Reader.InitMmVa, "initial boot active_mm remains accepted");
+            live.Put64(taskPhysical + 0x4c8, 0x1234);
+            Reject(delegate { mapper.VerifyKernel(root, 0); }, "nonkernel idle active_mm rejected");
+            live.Put64(taskPhysical + 0x4c8, mm);
+            live.Write(taskPhysical + 0x570, BitConverter.GetBytes(1));
+            Reject(delegate { mapper.VerifyKernel(root, 0); }, "wrong initial PID remains rejected");
+            live.Write(taskPhysical + 0x570, BitConverter.GetBytes(0));
+            live.Write(taskPhysical + 0x720, Encoding.ASCII.GetBytes("imposter\0"));
+            Reject(delegate { mapper.VerifyKernel(root, 0); }, "wrong idle name remains rejected");
+            live.Write(taskPhysical + 0x720, Encoding.ASCII.GetBytes("swapper/0\0"));
+            live.Put64(taskPhysical + 0x4c0, mm);
+            Reject(delegate { mapper.VerifyKernel(root, 0); }, "non-null idle mm remains rejected");
+            live.Put64(taskPhysical + 0x4c0, 0);
             GameProcess game = mapper.FindProcess(kernel, 3806, ".dts.freefireth");
             Assert(game.Task == task && game.Mm == mm && game.Root == 0x5008000, "game PID and mm discover process root");
             LibraryResult libraries = mapper.Libraries(kernel, game);
