@@ -145,3 +145,28 @@ succeeded, and initial-task validation failed after 195 physical read calls.
 Cleanup passed. Version 2 corrects its invalid fixed idle `active_mm` assumption;
 22 offline checks pass, and a live rerun is pending. See the process mapper's
 `LAYOUT-EVIDENCE.md` for source/binary evidence and the exact scope of this result.
+
+## Process mapping version 2: user-reported Windows result
+
+The user then ran version 2. Preflight, ADB game identity, plugin load, paging
+context, kernel identity, and process discovery passed. The verified kernel
+root was 0x220e000 with slide zero. PID 2942 was found after 150 task-list nodes;
+its mm was 0xffff88811d512800 and its physical page-table root was 0xb9cf4000.
+These values describe that run and are not hard-coded into the mapper.
+
+The idle task's observed active_mm was also 0xffff88811d512800, confirming the
+borrowed-context case handled by version 2. The library scan then exhausted its
+30,000 physical-read-call budget. Version 2 did not emit partial VMA totals or
+candidates, so this report does not verify any game-library ELF header. Plugin
+unload, handler cleanup, and shared-session release all passed.
+
+Version 3 caches page translations while rewalking live page tables after each
+data read, deduplicates file-name lookups, and rechecks matched filenames before
+success. It preserves partial counters and emits scan progress. Both caches are
+bounded; the 30,000-call and 120-second budgets remain unchanged.
+
+Thirty-one offline checks passed. An 1800-VMA fixture with a final ARM64 library
+completed in 9663 physical reads; cached mapping changes, unmapping, root
+separation, and matched-file renames are covered. These fixture results do not
+establish live Windows performance. Version 3's Windows library scan remains
+pending, and entity/head/visibility mappings and aim writes are unimplemented.

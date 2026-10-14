@@ -109,6 +109,13 @@ namespace HeadBridge.Mapping.Tests
             Assert(cross[0] == 1 && cross[1] == 2 && cross[2] == 3 && cross[3] == 4, "virtual read crosses physical page boundary");
             simple.AfterRead = delegate(ulong address, int length) { if (address == 0x200000 && length == 1) simple.Map4K(0x1000, 0x401000, 0x220000); };
             Reject(delegate { r.Virtual(0x1000, 0x401000, 1); }, "changed page mapping detected after read");
+            simple.AfterRead = null; simple.Write(0x220000, new byte[] { 0x99 });
+            Assert(r.Virtual(0x1000, 0x401000, 1)[0] == 0x99, "changed translation is evicted and fresh retry succeeds");
+            simple.Map4K(0x2000, 0x401000, 0x330000); simple.Write(0x330000, new byte[] { 0x77 });
+            Assert(r.Virtual(0x2000, 0x401000, 1)[0] == 0x77, "translation cache separates page-table roots");
+            ulong pdp = simple.Child(0x2000, 0x401000, 39), pd = simple.Child(pdp, 0x401000, 30), pt = simple.Child(pd, 0x401000, 21);
+            simple.Put64(pt + ((0x401000UL >> 12) & 511UL) * 8UL, 0);
+            Reject(delegate { r.Virtual(0x2000, 0x401000, 1); }, "cached translation cannot pass after page is unmapped");
             Reader badReply = new Reader(delegate(ulong address, int length) { return "BridgeRead=PASS BytesRead=1 Hex=00"; }, new RamRange[] { new RamRange(0, 0xfffff) });
             Reject(delegate { badReply.Physical(0, 8); }, "incomplete native reply rejected");
 
@@ -159,6 +166,57 @@ namespace HeadBridge.Mapping.Tests
             Assert(game.Task == task && game.Mm == mm && game.Root == 0x5008000, "game PID and mm discover process root");
             LibraryResult libraries = mapper.Libraries(kernel, game);
             Assert(libraries.VmasVisited == 1 && libraries.Mappings.Count == 1 && libraries.Mappings[0].Arm64ElfHeader, "game virtual read verifies ARM64 library header");
+
+            // Reproduce a scan whose last library would be unreachable within
+            // 30,000 calls when every mapping rereads three filename fields.
+            const int many = 1800;
+            ulong arena = direct + 0x100000, arenaPhysical = 0x5100000;
+            for (ulong offset = 0; offset < (ulong)many * 256UL; offset += 4096)
+                live.Map4K(root, arena + offset, arenaPhysical + offset);
+            for (ulong offset = 0xd000; offset <= 0xf000; offset += 4096)
+                live.Map4K(root, direct + offset, 0x5000000UL + offset);
+            live.Put64(0x500d018, direct + 0xe000);
+            byte[] otherName = Encoding.ASCII.GetBytes("libother.so\0");
+            live.Write(0x500e024, BitConverter.GetBytes(otherName.Length - 1));
+            live.Put64(0x500e028, direct + 0xf000); live.Write(0x500f000, otherName);
+            for (int i = 0; i < many; i++)
+            {
+                ulong physical = arenaPhysical + (ulong)i * 256UL;
+                ulong start = i == many - 1 ? 0x70000000UL : 0x10000000UL + (ulong)i * 4096UL;
+                live.Put64(physical, start); live.Put64(physical + 8, start + 4096UL);
+                live.Put64(physical + 0x10, i == many - 1 ? 0 : arena + (ulong)(i + 1) * 256UL);
+                live.Put64(physical + 0x18, i == 0 ? 0 : arena + (ulong)(i - 1) * 256UL);
+                live.Put64(physical + 0xa0, direct + (i == many - 1 ? 0xa000UL : 0xd000UL));
+            }
+            live.Put64(0x5006000, arena);
+            Reader large = ReaderFor(live); KernelContext largeKernel = large.VerifyKernel(root, 0);
+            GameProcess largeGame = large.FindProcess(largeKernel, 3806, ".dts.freefireth");
+            List<string> progress = new List<string>();
+            LibraryResult manyLibraries = large.Libraries(largeKernel, largeGame, progress.Add);
+            Assert(manyLibraries.VmasVisited == many && manyLibraries.Mappings.Count == 1 && manyLibraries.Mappings[0].Arm64ElfHeader,
+                   "late ARM64 library is reached after 1800 VMAs");
+            Assert(large.PhysicalCalls < 30000 && large.TranslationCacheHits > 0, "large scan completes within unchanged read budget");
+            Assert(manyLibraries.FilesInspected == 2 && manyLibraries.RepeatedFilesSkipped == many - 2, "shared filename metadata is read once per file");
+            Assert(progress.Exists(delegate(string line) { return line.Contains("LibraryCandidate") && line.Contains("PENDING_RECHECK"); }),
+                   "candidate progress distinguishes pending verification");
+            Console.WriteLine("LARGE_FIXTURE_READ_CALLS=" + large.PhysicalCalls + " CACHE_HITS=" + large.TranslationCacheHits);
+
+            // A matching file renamed after its name is cached must not pass.
+            live.Put64(arenaPhysical + 0xa0, direct + 0xa000UL); live.Put64(arenaPhysical + 0x98, 1);
+            live.AfterRead = delegate(ulong address, int length)
+            {
+                if (address == arenaPhysical + (ulong)(many - 1) * 256UL && length == 0xa8)
+                {
+                    byte[] changedName = Encoding.ASCII.GetBytes("wrongname.so\0");
+                    live.Write(0x500b024, BitConverter.GetBytes(changedName.Length - 1)); live.Write(0x500c000, changedName);
+                }
+            };
+            Reader renamed = ReaderFor(live);
+            Reject(delegate { renamed.Libraries(largeKernel, largeGame); }, "matched cached filename is revalidated before success");
+            Assert(renamed.LastLibraries.VmasVisited == many && renamed.LastLibraries.Mappings.Count == 2,
+                   "partial scan progress survives a final identity failure");
+            live.AfterRead = null;
+            live.Write(0x500b024, BitConverter.GetBytes(name.Length - 1)); live.Write(0x500c000, name);
             Reject(delegate { mapper.FindProcess(kernel, 3806, "wrong-name"); }, "PID command-name mismatch rejected");
             live.Put64(0x50044c0, direct + 0x7000);
             Reject(delegate { mapper.Recheck(kernel, game); }, "changed game memory context rejected");

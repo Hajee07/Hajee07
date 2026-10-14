@@ -42,6 +42,8 @@ namespace HeadBridge.Mapping
     public sealed class LibraryResult
     {
         public int VmasVisited;
+        public int FilesInspected;
+        public int RepeatedFilesSkipped;
         public readonly List<LibraryMapping> Mappings = new List<LibraryMapping>();
     }
     public sealed class Reader
@@ -65,7 +67,18 @@ namespace HeadBridge.Mapping
         private readonly Func<ulong, int, string> transport;
         private readonly RamRange[] ram;
         private readonly Stopwatch timer = Stopwatch.StartNew();
+        private struct MappingKey : IEquatable<MappingKey>
+        {
+            internal ulong Root;
+            internal ulong Page;
+            public bool Equals(MappingKey other) { return Root == other.Root && Page == other.Page; }
+            public override bool Equals(object other) { return other is MappingKey && Equals((MappingKey)other); }
+            public override int GetHashCode() { return Root.GetHashCode() ^ Page.GetHashCode(); }
+        }
+        private readonly Dictionary<MappingKey, ulong> translations = new Dictionary<MappingKey, ulong>();
         public int PhysicalCalls { get; private set; }
+        public int TranslationCacheHits { get; private set; }
+        public LibraryResult LastLibraries { get; private set; }
         private static readonly Regex Reply = new Regex("\\ABridgeRead=PASS BytesRead=([0-9]+) Hex=([0-9a-fA-F]+)\\s*\\z", RegexOptions.CultureInvariant);
 
         public Reader(Func<ulong, int, string> transport, RamRange[] ram)
@@ -153,9 +166,25 @@ namespace HeadBridge.Mapping
             {
                 ulong current = checked(address + (ulong)used);
                 int length = Math.Min(count - used, 4096 - (int)(current & 4095UL));
-                ulong physical = Translate(root, current);
-                byte[] data = Physical(physical, length);
-                if (Translate(root, current) != physical) throw new InvalidOperationException("Virtual mapping changed while reading.");
+                MappingKey key = new MappingKey { Root = root & AddressMask, Page = current & ~4095UL };
+                ulong page;
+                bool cached = translations.TryGetValue(key, out page);
+                ulong physical;
+                if (cached) { physical = page | (current & 4095UL); TranslationCacheHits++; }
+                else { physical = Translate(root, current); page = physical & ~4095UL; }
+                byte[] data;
+                try
+                {
+                    data = Physical(physical, length);
+                    // Always walk live page tables after reading, even on cache hits.
+                    if (Translate(root, current) != physical) throw new InvalidOperationException("Virtual mapping changed while reading.");
+                }
+                catch { translations.Remove(key); throw; }
+                if (!cached)
+                {
+                    if (translations.Count >= 1024) translations.Clear();
+                    translations[key] = page;
+                }
                 Buffer.BlockCopy(data, 0, result, used, length); used += length;
             }
             return result;
@@ -238,12 +267,30 @@ namespace HeadBridge.Mapping
                 Translate(kernel.Root, game.PgdVirtual) != game.Root)
                 throw new InvalidOperationException("Game identity or page table changed during collection.");
         }
+        private string FileName(ulong root, ulong file)
+        {
+            KernelPointer(file);
+            ulong dentry = U64(root, file + 0x18UL); KernelPointer(dentry);
+            byte[] nameInfo = Virtual(root, dentry + 0x24UL, 12);
+            int length = BitConverter.ToInt32(nameInfo, 0);
+            ulong nameAddress = BitConverter.ToUInt64(nameInfo, 4);
+            if (length < 1 || length > 255) throw new InvalidOperationException("Invalid VMA file-name length.");
+            KernelPointer(nameAddress & ~7UL);
+            string name = CString(Virtual(root, nameAddress, length + 1), 0, length + 1);
+            if (Encoding.ASCII.GetByteCount(name) != length) throw new InvalidOperationException("VMA file name is inconsistent with its length.");
+            return name;
+        }
         public LibraryResult Libraries(KernelContext kernel, GameProcess game)
+        { return Libraries(kernel, game, null); }
+        public LibraryResult Libraries(KernelContext kernel, GameProcess game, Action<string> progress)
         {
             Recheck(kernel, game);
             LibraryResult result = new LibraryResult();
+            LastLibraries = result;
             ulong node = U64(kernel.Root, game.Mm), previous = 0, previousEnd = 0;
             HashSet<ulong> seen = new HashSet<ulong>();
+            Dictionary<ulong, string> fileNames = new Dictionary<ulong, string>();
+            Dictionary<ulong, string> matchedFiles = new Dictionary<ulong, string>();
             while (node != 0)
             {
                 KernelPointer(node);
@@ -253,20 +300,25 @@ namespace HeadBridge.Mapping
                 if (start >= end || start < previousEnd || end > 0x0000800000000000UL ||
                     BitConverter.ToUInt64(area, 0x18) != previous || ((start | end) & 4095UL) != 0)
                     throw new InvalidOperationException("VMA order, bounds, or links are inconsistent.");
+                result.VmasVisited = seen.Count;
+                if (progress != null && (result.VmasVisited == 1 || result.VmasVisited % 128 == 0))
+                    progress("LibraryScanProgress VmasVisited=" + result.VmasVisited + " PhysicalReadCalls=" + PhysicalCalls + " FilesInspected=" + result.FilesInspected + " RepeatedFilesSkipped=" + result.RepeatedFilesSkipped);
                 ulong file = BitConverter.ToUInt64(area, 0xa0);
                 if (file != 0)
                 {
                     KernelPointer(file);
-                    ulong dentry = U64(kernel.Root, file + 0x18UL); KernelPointer(dentry);
-                    byte[] nameInfo = Virtual(kernel.Root, dentry + 0x24UL, 12);
-                    int length = BitConverter.ToInt32(nameInfo, 0);
-                    ulong nameAddress = BitConverter.ToUInt64(nameInfo, 4);
-                    if (length < 1 || length > 255) throw new InvalidOperationException("Invalid VMA file-name length.");
-                    KernelPointer(nameAddress & ~7UL);
-                    string name = CString(Virtual(kernel.Root, nameAddress, length + 1), 0, length + 1);
-                    if (Encoding.ASCII.GetByteCount(name) != length) throw new InvalidOperationException("VMA file name is inconsistent with its length.");
+                    string name;
+                    if (fileNames.TryGetValue(file, out name)) result.RepeatedFilesSkipped++;
+                    else
+                    {
+                        name = FileName(kernel.Root, file);
+                        result.FilesInspected++;
+                        if (fileNames.Count >= 1024) fileNames.Clear();
+                        fileNames[file] = name;
+                    }
                     if (name == "libil2cpp.so" || name == "libunity.so" || name == "global-metadata.dat")
                     {
+                        matchedFiles[file] = name;
                         ulong offset = BitConverter.ToUInt64(area, 0x98);
                         bool arm64 = false;
                         if (offset == 0 && end - start >= 20)
@@ -276,11 +328,14 @@ namespace HeadBridge.Mapping
                                     header[4] == 2 && header[5] == 1 && BitConverter.ToUInt16(header, 18) == 183;
                         }
                         result.Mappings.Add(new LibraryMapping { Name = name, Start = start, End = end, FilePageOffset = offset, Arm64ElfHeader = arm64 });
+                        if (progress != null && (arm64 || result.Mappings.Count == 1)) progress("LibraryCandidate Name=" + name + " Start=0x" + start.ToString("x") + " End=0x" + end.ToString("x") + " Arm64ElfHeader=" + arm64 + " Status=PENDING_RECHECK");
                     }
                 }
                 previous = node; previousEnd = end; node = BitConverter.ToUInt64(area, 0x10);
             }
-            result.VmasVisited = seen.Count;
+            foreach (KeyValuePair<ulong, string> file in matchedFiles)
+                if (FileName(kernel.Root, file.Key) != file.Value)
+                    throw new InvalidOperationException("Matched library file identity changed during the scan.");
             Recheck(kernel, game);
             return result;
         }

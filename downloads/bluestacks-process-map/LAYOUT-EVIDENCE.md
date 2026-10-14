@@ -89,9 +89,31 @@ Version 2 accepts null or a canonical, aligned kernel pointer for this transient
 field, records it, and keeps all banner/code/PID/name/mm/initial-PGD checks.
 Individual initial-field errors now have distinct messages. Twenty-two offline
 checks pass, including realistic borrowed/null idle contexts and continued
-rejection of other invalid fields. A live version 2 run is still required to
-confirm that this correction resolves the observed combined-check failure.
+rejection of other invalid fields. The subsequent live result follows.
 
-Live process mapping, game ELF reads, entity/head layouts, and aim updates remain
-unverified. Offline fixtures contain synthetic process/VMA records and do not
-demonstrate an active Free Fire integration.
+## User-reported version 2 result and version 3 scan optimization
+
+Version 2 passed kernel identity at root 0x220e000 / slide zero. The idle task's
+observed active_mm was the current game's mm, confirming the borrowed-context
+case. The probe located PID 2942 after 150 task-list nodes and translated its PGD
+to physical root 0xb9cf4000. These are run-specific observations, not constants
+used by the mapper.
+
+The library scan reached its 30,000-call read budget and failed. Its totals and
+intermediate candidates were not emitted by version 2, so the report does not
+establish how many VMAs were scanned or whether an ELF header was reached.
+Unload, handler cleanup, and shared-session release all passed.
+
+Version 3 caches validated page translations by root/page while rewalking live
+page tables after every data read. It deduplicates filenames, rechecks every
+matched file before success, and reports partial progress and totals. Both caches
+are bounded to 1024 entries. Read/time/task/VMA budgets remain unchanged.
+
+Thirty-one offline checks pass. A controlled 1800-VMA scan with repeated file
+objects and a final ARM64 library uses 9663 physical reads. Additional regressions
+cover changed/unmapped cached translations, root separation, renamed matched
+files, and failure progress. Live version 3 scan performance remains unverified.
+
+Live game ELF reads, entity/head layouts, and aim updates remain unverified.
+Offline fixtures contain synthetic process/VMA records and do not demonstrate
+a working aim-control integration.
