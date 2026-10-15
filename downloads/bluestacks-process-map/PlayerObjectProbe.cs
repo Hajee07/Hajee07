@@ -25,7 +25,7 @@ namespace HeadBridge.Mapping
         public string HeadWorldStatus, HeadWorldError;
         public ulong UnityLoadBias, NativeHeadTransform;
         public uint HeadHierarchyCapacity;
-        public int HeadParentCount, HeadWorldObservations;
+        public int HeadParentCount, HeadWorldObservations, HeadSampleAttempts, HeadCaptureChunks;
         public float HeadWorldX, HeadWorldY, HeadWorldZ;
     }
     public sealed partial class Reader
@@ -237,7 +237,7 @@ namespace HeadBridge.Mapping
                     }
                 }
             }
-            try { ReadNativeHeadPosition(game, module, result); }
+            try { ReadNativeHeadPosition(game, module, result, progress); }
             catch (Exception error) { result.HeadWorldStatus = "FAIL"; result.HeadWorldError = error.Message; }
             Recheck(kernel, game); ObjectAnchors(this, game, module);
             result.Observations = reads.Recheck(); Recheck(kernel, game);

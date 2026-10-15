@@ -43,7 +43,67 @@ namespace HeadBridge.Mapping
             }
             return result;
         }
-        private void ReadNativeHeadPosition(GameProcess game, ModuleResult module, PlayerObjectResult result)
+        private sealed class NativeHeadMotionException : InvalidOperationException
+        { internal NativeHeadMotionException(string detail) : base(detail) { } }
+        private sealed class NativeTrsChunk
+        { internal int First, Length; internal readonly List<int> Indices = new List<int>(); }
+        private static List<NativeTrsChunk> NativeChunks(List<int> chain)
+        {
+            List<int> sorted = new List<int>(chain); sorted.Sort();
+            List<NativeTrsChunk> chunks = new List<NativeTrsChunk>(); NativeTrsChunk chunk = null;
+            int previous = -1, total = 0;
+            foreach (int index in sorted)
+            {
+                if (chunk == null || (index-previous-1)*48 > 192 || (index-chunk.First+1)*48 > 4096)
+                { chunk = new NativeTrsChunk { First=index }; chunks.Add(chunk); }
+                int length = (index-chunk.First+1)*48; total += length-chunk.Length;
+                chunk.Length=length; chunk.Indices.Add(index); previous=index;
+            }
+            Expect(chain.Count > 0 && chain.Count <= 128 && total <= 32768, "native TRS capture byte bound");
+            return chunks;
+        }
+        private Dictionary<int, byte[]> NativeCapture(GameProcess game, ulong matrices, List<NativeTrsChunk> chunks, bool reverse)
+        {
+            Dictionary<int, byte[]> rows = new Dictionary<int, byte[]>();
+            for (int i=0; i<chunks.Count; i++)
+            {
+                NativeTrsChunk chunk = chunks[reverse ? chunks.Count-1-i : i];
+                ulong address = checked(matrices+(ulong)chunk.First*48UL);
+                ObjectReads.User(address, 1, "native TRS capture");
+                Expect(chunk.Length > 0 && chunk.Length <= 4096 && checked(address+(ulong)chunk.Length) <= 0x0000800000000000UL,
+                    "native TRS capture range");
+                byte[] block = Virtual(game.Root, address, chunk.Length);
+                foreach (int index in chunk.Indices)
+                {
+                    byte[] row = new byte[48]; Array.Copy(block,(index-chunk.First)*48,row,0,48); rows.Add(index,row);
+                }
+            }
+            return rows;
+        }
+        private static int NativeIdentityRecheck(ObjectReads reads)
+        {
+            try { return reads.Recheck(); }
+            catch (InvalidOperationException error)
+            { throw new InvalidOperationException("Native identity recheck failed: " + error.Message, error); }
+        }
+        private void ReadNativeHeadPosition(GameProcess game, ModuleResult module, PlayerObjectResult result, Action<string> progress)
+        {
+            for (int attempt=1; attempt<=3; attempt++)
+            {
+                result.HeadSampleAttempts=attempt;
+                if (progress!=null) progress("NativeHeadSampleAttempt Attempt="+attempt+" MaximumAttempts=3");
+                try { ReadNativeHeadAttempt(game,module,result); return; }
+                catch (NativeHeadMotionException error)
+                {
+                    if (progress!=null) progress("NativeHeadSampleMotion Attempt="+attempt+" Discarded=True Detail="+error.Message);
+                    if (attempt==3) throw;
+                    // Only a changed selected TRS row is retryable. Each fresh
+                    // attempt revalidates bindings, hierarchy and backlinks.
+                    // Reader-global call/time budgets are never reset.
+                }
+            }
+        }
+        private void ReadNativeHeadAttempt(GameProcess game, ModuleResult module, PlayerObjectResult result)
         {
             result.HeadWorldStatus = "NOT_READY_MANAGED_TRANSFORM";
             if (result.HeadStatus != "MANAGED_TRANSFORM_VERIFIED") return;
@@ -61,7 +121,7 @@ namespace HeadBridge.Mapping
                 Expect(bias == 0 || bias == observed, "consistent resolved Unity position bindings"); bias = observed;
             }
             result.HeadWorldStatus = "NOT_READY_POSITION_ICALL_UNRESOLVED";
-            if (bias == 0) { reads.Recheck(); return; }
+            if (bias == 0) { NativeIdentityRecheck(reads); return; }
             Expect(EqualBytes(reads.Read(bias, 64), Hex(NativeTransformReference.HeaderHex)), "Unity ELF header");
             Expect(EqualBytes(reads.Read(bias + 64, NativeTransformReference.ProgramsHex.Length / 2), Hex(NativeTransformReference.ProgramsHex)), "Unity ELF program tables");
             Expect(EqualBytes(reads.Read(bias + 0x308, 24), Hex(NativeTransformReference.NoteHex)), "Unity build ID");
@@ -70,7 +130,7 @@ namespace HeadBridge.Mapping
             Expect(reads.Value(result.HeadProvider + 0x10) == result.HeadTransform, "head provider still references the verified Transform");
             ulong native = reads.Value(result.HeadTransform + 0x10);
             result.HeadWorldStatus = "NOT_READY_NATIVE_TRANSFORM_NULL";
-            if (native == 0) { reads.Recheck(); return; }
+            if (native == 0) { NativeIdentityRecheck(reads); return; }
             ObjectReads.User(native, 8, "native head Transform");
             ulong data = reads.Pointer(native + 0x38, "native Transform hierarchy");
             int index = BitConverter.ToInt32(reads.Read(native + 0x40, 4), 0);
@@ -81,13 +141,13 @@ namespace HeadBridge.Mapping
             {
                 result.HeadWorldStatus = "NOT_READY_HIERARCHY_JOB_PENDING";
                 result.HeadWorldError = "Job=0x" + job.ToString("x") + " Tag=" + jobTag;
-                reads.Recheck(); return;
+                NativeIdentityRecheck(reads); return;
             }
             uint capacity = reads.Word(data + 0x10);
             Expect(capacity > 0 && capacity <= 65536 && index >= 0 && (uint)index < capacity, "native hierarchy capacity/index bound");
             ulong matrices = reads.Pointer(data + 0x18, "native TRS array"), parents = reads.Pointer(data + 0x20, "native parent-index array"),
                 transforms = reads.Pointer(data + 0x30, "native Transform backlink array");
-            HashSet<int> visited = new HashSet<int>(); float[] position = null;
+            HashSet<int> visited = new HashSet<int>(); List<int> chain = new List<int>();
             ulong expectedNative = native;
             for (int depth = 0; ; depth++)
             {
@@ -95,20 +155,38 @@ namespace HeadBridge.Mapping
                 ulong current = reads.Pointer(checked(transforms + (ulong)index * 8UL), "hierarchy Transform backlink");
                 Expect(current == expectedNative && reads.Value(current + 0x38) == data && reads.Word(current + 0x40) == (uint)index,
                     "native hierarchy object/index backlinks");
-                byte[] trs = reads.Read(checked(matrices + (ulong)index * 48UL), 48);
-                // Capture the complete TRS record; padding lanes have no XYZ semantics.
-                NativeVector(trs, 0, 3); NativeVector(trs, 16, 4); NativeVector(trs, 32, 3);
-                position = depth == 0 ? NativeVector(trs, 0, 3) : NativeParentPosition(position, trs);
-                for (int axis = 0; axis < 3; axis++)
-                    Expect(!float.IsNaN(position[axis]) && !float.IsInfinity(position[axis]) && Math.Abs(position[axis]) <= 10000000,
-                        "finite bounded head world position");
+                chain.Add(index);
                 int parent = BitConverter.ToInt32(reads.Read(checked(parents + (ulong)index * 4UL), 4), 0);
                 expectedNative = reads.Value(current + 0x90);
                 if (parent == -1) { Expect(expectedNative == 0, "native root parent backlink"); result.HeadParentCount = depth; break; }
                 Expect(parent >= 0 && (uint)parent < capacity && expectedNative != 0, "native parent-index/Transform link");
                 index = parent;
             }
-            int observations = reads.Recheck();
+            NativeIdentityRecheck(reads);
+            List<NativeTrsChunk> chunks = NativeChunks(chain);
+            // Keep all code/identity verification outside the two TRS copies.
+            // Nearby rows share a bounded transport read, but only selected
+            // rows participate in the comparison; gap bytes are unused.
+            Dictionary<int, byte[]> first = NativeCapture(game,matrices,chunks,false);
+            Dictionary<int, byte[]> second = NativeCapture(game,matrices,chunks,true);
+            foreach (int slot in chain)
+                if (!EqualBytes(first[slot],second[slot]))
+                {
+                    NativeIdentityRecheck(reads);
+                    throw new NativeHeadMotionException("TRS_CHANGED Index="+slot+" Address=0x"+(matrices+(ulong)slot*48UL).ToString("x")+" Bytes=48");
+                }
+            float[] position = null;
+            for (int depth=0; depth<chain.Count; depth++)
+            {
+                byte[] trs = first[chain[depth]];
+                NativeVector(trs,0,3); NativeVector(trs,16,4); NativeVector(trs,32,3);
+                position = depth==0 ? NativeVector(trs,0,3) : NativeParentPosition(position,trs);
+                for (int axis=0; axis<3; axis++)
+                    Expect(!float.IsNaN(position[axis]) && !float.IsInfinity(position[axis]) && Math.Abs(position[axis])<=10000000,
+                        "finite bounded head world position");
+            }
+            int observations = NativeIdentityRecheck(reads)+chain.Count;
+            result.HeadCaptureChunks=chunks.Count;
             result.NativeHeadTransform = native; result.HeadHierarchyCapacity = capacity;
             result.HeadWorldX = position[0]; result.HeadWorldY = position[1]; result.HeadWorldZ = position[2];
             result.HeadWorldObservations = observations; result.HeadWorldStatus = "SAMPLED_READ_ONLY";

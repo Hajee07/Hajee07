@@ -1,7 +1,7 @@
-# Exact-build native local-head position sample (V14)
+# Exact-build native local-head position sample (V15)
 
 V13 established the cached managed head Transform, not its world position. V14
-adds a bounded read-only calculation for that one verified local-head object.
+added a bounded read-only calculation for that one verified local-head object.
 Live validation is pending. It does not enumerate enemies, test visibility or
 apply aim changes.
 
@@ -67,11 +67,11 @@ claims about map extents.
 ## Bounds and reporting
 
 At most 128 hierarchy nodes are visited; repeated indices, invalid indices,
-backlink disagreements and bad root sentinels fail. Native observations have a
-separate 1024-range/64-KiB snapshot bound and are reread in reverse order. The
-existing local-player, model-cache and managed-object observations are also
-rechecked before returning. All work shares the existing global 30,000-read and
-120-second budgets. No VM pause, engine synchronization, allocation or memory
+backlink disagreements and bad root sentinels fail. Native code/identity observations have a separate
+1024-range/64-KiB snapshot bound and are reread before and after the two TRS
+copies. The earlier local-player/model-cache/managed-object observations are
+also rechecked before returning. All work shares the existing global
+30,000-read and 120-second budgets. No VM pause, engine synchronization, guest allocation or memory
 write is performed.
 
 `LocalHeadWorldPosition=SAMPLED_READ_ONLY` is emitted only after these checks.
@@ -81,11 +81,43 @@ an absent prerequisite. The sampled native chain can change after the probe;
 there is no GC root, engine lock or atomic guest snapshot. Reverse rereads do
 not rule out changes that return to the same bytes between observations.
 
-174 offline checks pass, including an independent general quaternion matrix
+## User V14 result and V15 capture correction
+
+The user's V14 report (guest PID 7265, host PID 6372) passed all 80 registration
+checks twice, the exact module identity, local-player identity and managed head
+Transform. The native stage reached its final snapshot comparison, which failed
+at address 0x777d5b3d4150. It reported no coordinates. Total physical calls were
+15449; plugin unload, handler cleanup and shared-session release passed. The
+combined V14 snapshot did not identify the failed observation's kind, so that
+report does not prove which field changed or establish a stable world position.
+
+V14 kept TRS observations in the same snapshot collection as code/identity
+observations. V15 first builds and validates the native index/parent/backlink
+chain without capturing TRS data. It rechecks identities, then copies the
+selected TRS rows twice in immediate succession (second pass reverses chunk
+order). Nearby rows are grouped into at most 4096-byte reads, with gaps limited
+to 192 bytes. At most 128 rows are selected, and at most 32 KiB is fetched per
+pass. Only the selected 48-byte records are compared and used in the calculation;
+unused gap bytes may change without affecting the sample.
+
+Every selected record must match byte-for-byte across both copies. There is no
+numeric movement tolerance and no reuse of an earlier pose. Code/identity
+snapshots are rechecked after the copies, including when TRS changed; a
+simultaneous identity change fails immediately. Only a dedicated TRS_CHANGED
+exception qualifies for up to three fresh native attempts using the same Reader
+and its remaining global budgets. Each attempt revalidates bindings, code,
+hierarchy and backlinks. Other errors and pending/unresolved prerequisites do
+not enter the motion retry path. Continued motion on attempt three fails with
+no coordinates. Motion diagnostics include the selected row index/address;
+identity snapshot failures are labelled separately.
+
+181 offline checks pass, including an independent general quaternion matrix
 oracle, noncommuting X/Y rotations, nonuniform and negative scale, null/unresolved
 prerequisites, pending jobs, wrong Unity bindings/code, invalid capacity/links,
-cycles, nonfinite coordinates and a TRS mutation caught on the final recheck.
-The synthetic native fixture uses 2864 total physical reads including earlier
-stages and captures 63 native observations. This evidence validates the code
-path and error handling; only the user's next Windows report can establish a
-live native-head sample for this BlueStacks runtime.
+cycles and nonfinite coordinates. Capture tests cover continuous motion failing
+on exactly the third attempt, a new stable pose on attempt two, coalesced and
+sparse rows, ignored gap bytes, and immediate failure for identity/read errors
+including a simultaneous identity and TRS mutation. The stable synthetic native
+fixture uses 3144 total physical calls including earlier stages and records 63
+native observations. These tests validate implementation/error handling; V15
+live native-head sampling remains pending on the user's Windows PC.

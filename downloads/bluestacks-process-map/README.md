@@ -7,13 +7,19 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 14.** The user's V13 report passed kernel/process/module
+**Current version: 15.** The user's V13 report passed kernel/process/module
 identity, all 80 metadata checks twice, local-player identity and the cached
 `bone_Head` managed Transform. The model dictionary contained 29 entries and one
 matching key. All cleanup stages passed. See `OBJECT-EVIDENCE.md` for the
 historical object-probe results.
 
-V14 adds an exact-build native Unity hierarchy sample for this local head. It
+V14 added an exact-build native Unity hierarchy sample for this local head.
+Its Windows run passed the earlier stages, then rejected a changed native
+snapshot; no coordinates were reported. V15 separates the immutable identity
+checks from two short TRS copies, coalesces nearby rows and retries only changed
+selected TRS rows up to three times. Each attempt starts from fresh native
+identity/graph reads; the shared read/time budgets and byte comparisons remain
+strict. It
 checks the resolved position icall binding, Unity ELF tables/build ID and code,
 then reads the native Transform and bounded parent chain. Coordinates are
 reported only after stable snapshot comparisons and matching object/index
@@ -147,7 +153,7 @@ rounds do not prove uninterrupted stability.
 
 The task scan is bounded to 2048 nodes and the VMA scan to 4096 nodes. Only the
 selected game's Unity/IL2CPP/metadata mapping names and ranges are logged. Game
-arbitrary object contents are not printed; V14 exposes only the sampled local-head XYZ. Multiple read calls are not an atomic snapshot;
+arbitrary object contents are not printed; the native stage exposes only the sampled local-head XYZ. Multiple read calls are not an atomic snapshot;
 the probe does not take guest kernel locks or hold task/mm references. List,
 translation, and identity rechecks detect observed changes, but cannot eliminate
 all lifetime races. Restart the probe after a reported inconsistency with the
@@ -170,7 +176,7 @@ Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-174 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+181 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -323,9 +329,9 @@ are distinct statuses. A matching non-null Player cache keeps Source=PLAYER_FIEL
 The synthetic fallback fixture takes 2825 reads and 169 observations. Thirteen
 new tests cover the hit/miss path, removed/duplicate entries, bounds, wrong types,
 version changes and hotfix/virtual-target guards. The V13 Windows report subsequently passed this lookup and managed-head
-verification; native position validation remains pending for V14.
+verification; native position validation remains pending for V15.
 
-## V14 results
+## Native position results (V15)
 
 `LocalHeadWorldPosition=SAMPLED_READ_ONLY` reports the local head XYZ and parent
 count from a bounded, twice-observed native hierarchy. `NOT_READY_*` means the
@@ -336,8 +342,22 @@ Leave the character standing in Training Ground and share the complete result
 file. Character animation can invalidate a position snapshot; a failed sample
 does not establish a new layout or authorize weakening identity checks.
 
-There are 174 offline checks: 46 core/kernel, 31 module, 30 metadata and 67
+There are 181 offline checks: 46 core/kernel, 31 module, 30 metadata and 74
 object/native-head checks. These include an independent quaternion matrix
 oracle, cross-axis rotations, nonuniform/reflected scales, invalid backlinks,
 cycles, bad bindings/code, pending jobs and changing position data. They do not
 substitute for the Windows run.
+
+`NativeHeadSampleAttempt` identifies each bounded fresh attempt, and
+`NativeHeadSampleMotion ... Discarded=True` identifies a changed selected TRS
+record. Only that motion condition is retryable; code/identity, link, read,
+translation, numeric and budget failures stop immediately. A failed third
+attempt emits no coordinates. Success includes Attempts and CaptureChunks.
+
+Code/identity snapshots are rechecked before and after the two position-data
+copies. Each copy reads at most 128 selected 48-byte rows, coalescing gaps of at
+most 192 bytes into blocks no larger than 4096 bytes (at most 32 KiB fetched per
+pass). Gap bytes are never used as transform data or compared for stability.
+Every selected 48-byte row must match exactly between the two passes. There is
+no floating-point motion tolerance, stale-pose reuse or VM pause. The position
+capture is still non-atomic, and continued animation can exhaust all attempts.

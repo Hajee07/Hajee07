@@ -228,3 +228,12 @@ V14 adds the separately checked native position sample documented in
 `TRANSFORM-EVIDENCE.md`. The earlier object snapshots are still rechecked after
 this stage. Native-stage failure is reported separately and does not relabel
 the managed Transform as unverified. Live V14 validation remains pending.
+
+## User V14 snapshot rejection and V15
+
+V14 again passed the local-player chain and cached managed head Transform. Its
+native position stage rejected a changed snapshot and emitted no XYZ; all
+cleanup stages passed. V15 retains these object checks and makes two short,
+strict TRS copies separately from native identity snapshots, with at most three
+fresh attempts for selected TRS motion alone. See TRANSFORM-EVIDENCE.md. No new
+offsets, game calls or aim writes are introduced. V15 live validation is pending.

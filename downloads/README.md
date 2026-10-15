@@ -1,8 +1,9 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V14**. V13 passed live local-player and cached managed
-head Transform verification. V14 adds a bounded native local-head world-position
-sample; 174 offline checks pass, and its Windows validation is pending. See
+Current process probe: **V15**. V14 passed local-player and managed-head checks
+but rejected a changed native snapshot. V15 makes two short coalesced TRS copies
+and retries selected TRS motion at most three times, with strict identity and
+byte comparisons. 181 offline checks pass; live position validation is pending. See
 [the current probe instructions](bluestacks-process-map/README.md). Other-player
 visibility and aim control remain incomplete.
 

@@ -100,6 +100,13 @@ namespace HeadBridge.Mapping.Tests
                 float half = (float)Math.Sqrt(0.5); Trs(1,10,0,0,0,0,half,half,2,3,4);
                 Trs(0,100,200,300,0,0,0,1,1,1,1);
             }
+            internal void NativeIndices(int parent,int head)
+            {
+                U32(Hierarchy+0x10,(uint)(head+1)); U32(NativeParent+0x40,(uint)parent); U32(NativeHead+0x40,(uint)head);
+                U64(Transforms+(ulong)parent*8UL,NativeParent); U64(Transforms+(ulong)head*8UL,NativeHead);
+                U32(Parents+(ulong)parent*4UL,0); U32(Parents+(ulong)head*4UL,(uint)parent);
+                float half=(float)Math.Sqrt(0.5); Trs(parent,10,0,0,0,0,half,half,2,3,4); Trs(head,1,2,3,0,0,0,1,1,1,1);
+            }
             private void MetadataIdentity(ulong klass, ObjectClassProfile profile)
             {
                 ulong row = Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + (ulong)profile.Index * 88UL;
@@ -288,9 +295,51 @@ namespace HeadBridge.Mapping.Tests
             Check(pending.Run().HeadWorldStatus == "NOT_READY_HIERARCHY_JOB_PENDING", "pending native jobs are reported without synchronizing or writing");
             Fixture nullNative = new Fixture(); nullNative.SetupNative(); nullNative.U64(Fixture.Transform+0x10,0);
             Check(nullNative.Run().HeadWorldStatus == "NOT_READY_NATIVE_TRANSFORM_NULL", "destroyed native objects do not invalidate the earlier managed-object observation");
-            NativeFailure(delegate(Fixture f) { ulong address = f.Physical(Fixture.Matrices+96);
-                f.Memory.AfterRead = delegate(ulong at, int length) { if(at==address && length==48) f.Put(Fixture.Matrices+96,BitConverter.GetBytes(9f)); };
-            }, "final recheck", "moving TRS data invalidates the sample on the final snapshot comparison");
+            Fixture moving = new Fixture(); moving.SetupNative(); ulong movingAt = moving.Physical(Fixture.Matrices); int movingCopies=0;
+            moving.Memory.AfterRead = delegate(ulong at,int length) {
+                if(at==movingAt && length==144) { movingCopies++; moving.Put(Fixture.Matrices+96,BitConverter.GetBytes(movingCopies%2==1 ? 9f : 1f)); }
+            };
+            PlayerObjectResult motion = moving.Run();
+            Check(motion.HeadWorldStatus=="FAIL" && motion.HeadWorldError.Contains("TRS_CHANGED") && motion.HeadSampleAttempts==3 && movingCopies==6,
+                "continuously moving selected TRS rows fail after exactly three fresh attempts");
+            Fixture settles = new Fixture(); settles.SetupNative(); ulong settlesAt=settles.Physical(Fixture.Matrices); int settleCopies=0;
+            settles.Memory.AfterRead = delegate(ulong at,int length) {
+                if(at==settlesAt && length==144 && ++settleCopies==1) settles.Put(Fixture.Matrices+96,BitConverter.GetBytes(9f));
+            };
+            PlayerObjectResult settled=settles.Run();
+            Check(settled.HeadWorldStatus=="SAMPLED_READ_ONLY" && settled.HeadSampleAttempts==2 && Math.Abs(settled.HeadWorldY-218)<0.0001,
+                "a fresh bounded attempt can capture a new stable pose after discarding a moving sample");
+            Check(world.HeadCaptureChunks==1 && world.HeadSampleAttempts==1,
+                "nearby head and ancestor rows share one bounded read per capture pass");
+            Fixture identityChange=new Fixture(); identityChange.SetupNative(); ulong identityAt=identityChange.Physical(Fixture.Matrices);
+            identityChange.Memory.AfterRead=delegate(ulong at,int length) {
+                if(at==identityAt && length==144) identityChange.U64(Fixture.NativeHead+0x38,Fixture.Hierarchy+0x1000);
+            };
+            PlayerObjectResult changedIdentity=identityChange.Run();
+            Check(changedIdentity.HeadWorldStatus=="FAIL" && changedIdentity.HeadWorldError.Contains("Native identity recheck") && changedIdentity.HeadSampleAttempts==1,
+                "identity mutations fail immediately rather than taking the TRS-only retry path");
+            Fixture gaps=new Fixture(); gaps.SetupNative(); gaps.NativeIndices(2,4); ulong gapsAt=gaps.Physical(Fixture.Matrices); int gapCopies=0;
+            gaps.Memory.AfterRead=delegate(ulong at,int length) {
+                if(at==gapsAt && length==240) gaps.Put(Fixture.Matrices+48,BitConverter.GetBytes(++gapCopies));
+            };
+            PlayerObjectResult gapResult=gaps.Run();
+            Check(gapResult.HeadWorldStatus=="SAMPLED_READ_ONLY" && gapResult.HeadCaptureChunks==1 && gapCopies==2 && Math.Abs(gapResult.HeadWorldY-202)<0.0001,
+                "unused gap bytes in a coalesced read do not masquerade as selected head-chain motion");
+            Fixture sparse=new Fixture(); sparse.SetupNative(); sparse.NativeIndices(20,100); PlayerObjectResult sparseResult=sparse.Run();
+            Check(sparseResult.HeadWorldStatus=="SAMPLED_READ_ONLY" && sparseResult.HeadCaptureChunks==3 && Math.Abs(sparseResult.HeadWorldX-104)<0.0001,
+                "widely separated native rows use separate bounded capture chunks");
+            Fixture readFailure=new Fixture(); readFailure.SetupNative(); ulong failAt=readFailure.Physical(Fixture.Matrices);
+            readFailure.Memory.AfterRead=delegate(ulong at,int length) { if(at==failAt && length==144) throw new InvalidOperationException("Synthetic TRS transport failure"); };
+            PlayerObjectResult readFailed=readFailure.Run();
+            Check(readFailed.HeadWorldStatus=="FAIL" && readFailed.HeadSampleAttempts==1 && readFailed.HeadWorldError.Contains("transport failure"),
+                "read failures are fatal rather than eligible for motion retries");
+            Fixture bothChanges=new Fixture(); bothChanges.SetupNative(); ulong bothAt=bothChanges.Physical(Fixture.Matrices);
+            bothChanges.Memory.AfterRead=delegate(ulong at,int length) {
+                if(at==bothAt && length==144) { bothChanges.Put(Fixture.Matrices+96,BitConverter.GetBytes(9f)); bothChanges.U64(Fixture.NativeHead+0x38,Fixture.Hierarchy+0x1000); }
+            };
+            PlayerObjectResult both=bothChanges.Run();
+            Check(both.HeadWorldStatus=="FAIL" && both.HeadSampleAttempts==1 && both.HeadWorldError.Contains("Native identity recheck"),
+                "simultaneous TRS motion and identity changes cannot enter the retry path");
             Fixture negative = new Fixture(); negative.SetupNative(); negative.U64(negative.Module.LoadBias+0xafb9e00,0);
             negative.Trs(1,10,0,0,0,0,0,1,-2,3,4); PlayerObjectResult reflected = negative.Run();
             Check(reflected.HeadWorldStatus == "SAMPLED_READ_ONLY" && reflected.HeadWorldX==108 && reflected.HeadWorldY==206 && reflected.HeadWorldZ==312,

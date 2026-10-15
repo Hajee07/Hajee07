@@ -365,3 +365,14 @@ Process-map V14 adds exact Unity icall/code identity and a bounded native local
 head hierarchy calculation. All 174 offline checks pass. Its live Windows
 position validation remains pending, along with other-player enumeration,
 visibility semantics and aim integration.
+
+## V14 native sample rejected; V15 bounded capture pending
+
+The V14 user report passed exact module/metadata, local-player and managed-head
+verification, then failed the native stage's combined snapshot at
+0x777d5b3d4150. No XYZ was reported; 15449 physical calls and all cleanup stages
+completed. That generic snapshot error does not identify which native field
+changed. V15 separates immutable identity validation and short coalesced TRS
+copies, and retries only selected TRS motion (at most three fresh attempts).
+All 181 offline checks pass. Live V15 sampling, other players, visibility and
+aim integration remain pending.
