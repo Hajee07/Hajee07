@@ -296,3 +296,20 @@ Unreported header bytes and type-record contents remain unverified. V10 pins
 that observed runtime prefix while still comparing the remaining 248 header
 bytes and every selected 88-byte type record. 101 offline checks pass; live
 v10 metadata validation and player/head/aim integration remain pending.
+
+## Process mapping version 10: live runtime metadata success
+
+The user reported game PID 3775 with kernel/process/module verification passing.
+Module load bias was 0x777d99a00000 with the same GNU build ID, eight load segments,
+16 window VMAs and four fingerprints. Both rounds matched all 80 checks with
+zero mismatches and no changes. Runtime metadata base 0x777dac7aa000, all nine
+descriptors and complete 88-byte records passed the observed zero/version24
+header profile. Physical reads=9692, cache hits=1121, outer VMAs=714, inspected
+files=178, skipped repeats=183. Plugin unload, handler cleanup and session
+release all passed. No live player/head/aim verification was claimed by v10.
+
+V11 adds a metadata-derived local-player chain and managed head Transform probe.
+It checks class identities/ancestry, original-path hotfix entries, local-player
+marker and supported head interface dispatch. 127 offline checks pass; new live
+object verification remains pending. Other players, head world positions,
+visibility semantics and aim writes are still unimplemented.

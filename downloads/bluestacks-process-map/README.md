@@ -23,10 +23,14 @@ v9 run reached module verification on its first attempt and exposed a different
 runtime metadata header prefix. V10 checks this explicitly observed prefix and
 all remaining header/record bytes; live type-record validation is still pending. See `GAME-LAYOUT-EVIDENCE.md` and `game-layout.json` for
 the recovery and its limits. Live player objects, head world positions, visibility
-semantics, and aim-control writes remain unimplemented/unverified.
+semantics, and aim-control writes remain unverified. Version 11 adds a bounded
+local-player/managed-head-Transform probe after the verified metadata stage;
+its live run is pending. It does not yet enumerate other players or calculate
+head world positions. See `OBJECT-EVIDENCE.md`.
 
-Extract the complete ZIP into a new folder. Start the Pie64 instance and Free
-Fire, leave the game running, and run in 64-bit Administrator Windows PowerShell:
+Extract the complete ZIP into a new folder. Start the Pie64 instance, enter
+Free Fire Training Ground, wait until the character has spawned, and leave it
+standing while the probe runs. Run in 64-bit Administrator Windows PowerShell:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Run-ProcessMap.ps1
@@ -37,7 +41,7 @@ endpoint displayed by BlueStacks. An explicit disconnected localhost endpoint
 is reconnected once and verified. Other devices are not selected automatically.
 The runner discovers the current host/game PIDs; old PIDs are not constants.
 
-The package checks DLL and all five runtime C# source digests, plus the exact
+The package checks DLL and all seven runtime C# source digests, plus the exact
 loaded VMM fingerprint. It
 loads the same native DLL used in the successful probe, uses its read-only info
 handler, and unloads and releases its shared session in `finally`. The DLL bytes
@@ -171,7 +175,7 @@ Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-101 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+127 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -222,5 +226,39 @@ Reproduce with the extracted ELF available locally:
 .\Run-CoreTests.ps1 -KernelElfPath C:\path\to\vmlinux
 ```
 
+The 26 object checks cover exact class/metadata identity, supported derived
+Player ancestry, original-path hotfix gates, null/unresolved state, wrong local
+flags, changed pointers/mm, code samples, head interface dispatch, Transform
+identity, and interface/vtable bounds. The complete valid object fixture uses
+1710 physical reads and 104 bounded observations. These are offline measurements.
+
 Tests validate the reader against controlled fixtures. They do not establish
 live Windows COM behavior, runtime object lifetime, or a working aim lock.
+
+## Version 11 local-player and managed head Transform stage
+
+After metadata validation, the runner checks 41 additional exact code/GOT
+references and follows the original CurrentLocalPlayer path. Four relevant
+hotfix entries must be inactive. It validates CurrentGame as MatchGame or a
+supported derived class, then the current match and the locally marked Player.
+Classes must match exact metadata records, by-value types, names/namespaces,
+self pointers, tokens, instance sizes and runtime parent chains. The supported
+profile contains 104 classes derived from the exact metadata, not live addresses.
+
+If the head getter's hotfix entry is active, this is reported separately and the
+head-provider path is not followed. Otherwise, a non-null provider must match
+one of the three exact interface implementations. Its interface entry and
+vtable target must resolve to the original eight-byte get_transform function.
+That getter returns provider+0x10, which must identify UnityEngine.Transform.
+A null lazy provider or Transform is a distinct NOT_READY status. No managed or
+native game function is called to initialize them.
+
+A successful result includes `LocalPlayerObjects=PASS` and, when ready,
+`ManagedHeadTransform=MANAGED_TRANSFORM_VERIFIED`. These identify an observed
+local-player chain and managed head Transform, not world coordinates, other
+players, line-of-sight visibility or working aim updates. All object observations
+are reread before returning; code and process identity are also rechecked.
+The object snapshots are bounded to 1024 ranges/64 KiB, parent walks to 16 links,
+and interface scans to 64 entries and the exact class count. Shared global read
+and elapsed-time budgets remain unchanged. The scan remains non-atomic and
+holds no GC roots or guest locks; observed changes fail the run.

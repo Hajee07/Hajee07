@@ -40,3 +40,9 @@ V9 subsequently passed module verification on its first attempt and exposed a
 runtime header prefix of zero/version 24. V10 validates that exact observed
 prefix, the remaining 248 header bytes and complete type records. Input hashes
 remain unchanged. 101 offline checks pass; live metadata validation is pending.
+
+V10 then passed all 80 runtime registration checks in both rounds, including the
+complete header and nine type records. V11 adds read-only local-player and managed
+head Transform verification with class/parent/hotfix/interface checks. 127 offline
+checks pass. Run after spawning in Training Ground; live object validation is
+pending. Other-player enumeration, world coordinates and aim updates are pending.

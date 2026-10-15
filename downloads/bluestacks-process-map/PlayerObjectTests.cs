@@ -1,0 +1,134 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace HeadBridge.Mapping.Tests
+{
+    public static class PlayerObjectTests
+    {
+        private static int count;
+        private static void Check(bool condition, string label)
+        { if (!condition) throw new Exception("FAIL: " + label); count++; Console.WriteLine("PASS: " + label); }
+        private sealed class Fixture
+        {
+            internal readonly Memory Memory = new Memory();
+            internal readonly KernelContext Kernel = new KernelContext(0x1000, 0, 0);
+            internal readonly GameProcess Game;
+            internal readonly ModuleResult Module = new ModuleResult { LoadBias = 0x60000000, BuildId = ApkModule.BuildId, ReferenceFileSha256 = ApkModule.FileSha256 };
+            internal readonly GameLayoutResult Layout = new GameLayoutResult { RuntimeMetadataBase = 0x90000000, TypeDescriptors = 9, Checks = 80, FieldCandidates = 9, MethodCandidates = 9, MetadataSha256 = GameLayoutReference.MetadataSha256 };
+            internal readonly Reader Reader;
+            internal readonly List<string> Progress = new List<string>();
+            private readonly Dictionary<ulong, ulong> pages = new Dictionary<ulong, ulong>();
+            private ulong next = 0x8000000;
+            internal const ulong FacadeStatics = 0x41000000, HotfixStatics = 0x41001000, Array = 0x42000000, ArrayClass = 0x43000000;
+            internal const ulong Current = 0x44000000, Match = 0x45000000, Player = 0x46000000, Provider = 0x47000000, Transform = 0x48000000, Interfaces = 0x49000000;
+            internal static ulong Class(int index) { return 0x20000000UL + (ulong)index * 4096UL; }
+            internal Fixture()
+            {
+                const ulong k = 0xffff888000000000;
+                Memory.Map4K(0x1000, k + 0x1000, 0x101000); Memory.Map4K(0x1000, k + 0x3000, 0x103000); Memory.Map4K(0x1000, k + 0x4000, 0x2000);
+                Game = new GameProcess { Pid = 2942, Name = ".dts.freefireth", Task = k + 0x1000, Mm = k + 0x3000, PgdVirtual = k + 0x4000, Root = 0x2000 };
+                Memory.Put64(0x1014c0, Game.Mm); Memory.Write(0x101570, BitConverter.GetBytes(Game.Pid));
+                Memory.Write(0x101720, Encoding.ASCII.GetBytes(Game.Name + "\0")); Memory.Put64(0x103050, Game.PgdVirtual);
+                foreach (GameLayoutCheck check in ObjectReference.Anchors) Put(Module.LoadBias + check.Address, check.Expected(Module.LoadBias));
+                foreach (ObjectClassProfile profile in ObjectReference.Classes)
+                {
+                    ulong klass = Class(profile.Index), row = Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + (ulong)profile.Index * 88UL;
+                    Put(row, Reader.Hex(profile.RecordHex)); U64(klass + 0x68, row); U64(klass + 0x78, klass); U64(klass + 0x20, row); U32(klass + 0x28, profile.Bits);
+                    U64(klass + 0x10, Layout.RuntimeMetadataBase + profile.NameOffset); U64(klass + 0x18, Layout.RuntimeMetadataBase + profile.NamespaceOffset);
+                    U32(klass + 0x11c, profile.Token); U32(klass + 0xf8, profile.InstanceSize); U32(klass + 0xe0, 1);
+                    byte[] counts = new byte[16]; System.Array.Copy(Reader.Hex(profile.RecordHex), 0x40, counts, 0, 16); Put(klass + 0x120, counts);
+                    if (profile.Parent >= 0) U64(klass + 0x58, Class(profile.Parent));
+                }
+                U64(Module.LoadBias + ObjectReference.FacadeCell, Class(12418)); U64(Module.LoadBias + ObjectReference.MatchGameCell, Class(12425));
+                U64(Module.LoadBias + ObjectReference.HotfixCell, Class(37332)); U64(Module.LoadBias + ObjectReference.HeadInterfaceCell, Class(36294));
+                U64(Class(12418) + 0xb8, FacadeStatics); U64(Class(37332) + 0xb8, HotfixStatics); U64(HotfixStatics, Array);
+                U64(Array, ArrayClass); U32(ArrayClass + 0x28, 0x1d0000); U64(ArrayClass + 0x40, Class(37332)); U64(Array + 0x18, 0x400);
+                foreach (int id in new int[] { 0x1c6, 0x139, 0x1c5, 0x12b, 0x34e }) U64(Array + 0x20UL + (ulong)id * 8UL, 0);
+                U64(FacadeStatics, Current); U64(Current, Class(12425)); U64(Current + 0x90, Match); U64(Match, Class(32133));
+                U64(Match + 0xd8, Player); U64(Player, Class(31824)); Put(Player + 0x420, new byte[] { 1 }); U64(Player + 0xa00, Provider);
+                U64(Provider, Class(36295)); U64(Provider + 0x10, Transform); U64(Transform, Class(ObjectReference.TransformIndex));
+                Put(Class(36295) + 0x12e, BitConverter.GetBytes((ushort)1)); U64(Class(36295) + 0xb0, Interfaces);
+                Put(Interfaces, new byte[16]); U64(Interfaces, Class(36294)); U64(Class(36295) + 0x138, Module.LoadBias + 0x8259e90);
+                Reader = new Reader(Memory.Transport, new RamRange[] { new RamRange(0, 0xffffffff) });
+            }
+            internal void Put(ulong address, byte[] bytes)
+            {
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    ulong at = address + (ulong)i, page = at & ~4095UL, physical;
+                    if (!pages.TryGetValue(page, out physical)) { physical = next; next += 4096; pages.Add(page, physical); Memory.Map4K(Game.Root, page, physical); }
+                    Memory.Write(physical + (at & 4095UL), new byte[] { bytes[i] });
+                }
+            }
+            internal void U64(ulong address, ulong value) { Put(address, BitConverter.GetBytes(value)); }
+            internal void U32(ulong address, uint value) { Put(address, BitConverter.GetBytes(value)); }
+            internal ulong Physical(ulong address) { return pages[address & ~4095UL] + (address & 4095UL); }
+            internal PlayerObjectResult Run() { return Reader.VerifyPlayerObjects(Kernel, Game, Module, Layout, Progress.Add); }
+        }
+        private static void Reject(Fixture fixture, string text, string label)
+        {
+            bool rejected = false;
+            try { fixture.Run(); } catch (Exception error) { rejected = error.Message.Contains(text); }
+            Check(rejected, label);
+        }
+        public static void Run()
+        {
+            Fixture valid = new Fixture(); PlayerObjectResult result = valid.Run();
+            Check(result.LocalPlayer == Fixture.Player && result.Match == Fixture.Match && result.HeadTransform == Fixture.Transform && result.HeadStatus == "MANAGED_TRANSFORM_VERIFIED",
+                "verified classes and original paths identify local player and managed head Transform");
+            Check(valid.Reader.PhysicalCalls < 5000 && result.Observations < 1024, "object verification fits the shared read and snapshot bounds");
+            Console.WriteLine("OBJECT_FIXTURE_READ_CALLS=" + valid.Reader.PhysicalCalls + " OBSERVATIONS=" + result.Observations);
+            Fixture derived = new Fixture(); derived.U64(Fixture.Player, Fixture.Class(32360));
+            Check(derived.Run().PlayerClass == "COW.GamePlay.PlayerNetwork", "supported derived Player validates its metadata and runtime parent chain");
+            Fixture unresolved = new Fixture(); unresolved.U64(unresolved.Module.LoadBias + ObjectReference.FacadeCell, 0x20011e3b);
+            Reject(unresolved, "not resolved", "unresolved metadata usage is never followed as a class pointer");
+            Fixture missing = new Fixture(); missing.U64(Fixture.Match + 0xd8, 0);
+            Reject(missing, "local player is null", "lobby or unspawned local-player state is reported as not ready");
+            Fixture wrongFamily = new Fixture(); wrongFamily.U64(Fixture.Current, Fixture.Class(31824));
+            Reject(wrongFamily, "object family", "a Player cannot replace the current MatchGame object");
+            Fixture flag = new Fixture(); flag.Put(Fixture.Player + 0x420, new byte[] { 0 });
+            Reject(flag, "local-player bool", "the selected Player must have its local-player marker set");
+            Fixture metadata = new Fixture(); metadata.Put(metadata.Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + 31824UL * 88UL, new byte[] { 0 });
+            Reject(metadata, "type record", "live class metadata records must match the exact input");
+            Fixture classSelf = new Fixture(); classSelf.U64(Fixture.Class(31824) + 0x78, Fixture.Class(37332));
+            Reject(classSelf, "class self", "plausible class pointers do not bypass self identity");
+            Fixture classSize = new Fixture(); classSize.U32(Fixture.Class(31824) + 0xf8, 16);
+            Reject(classSize, "instance size", "incorrect runtime instance sizes are rejected");
+            Fixture parent = new Fixture(); parent.U64(Fixture.Player, Fixture.Class(32360)); parent.U64(Fixture.Class(32360) + 0x58, Fixture.Class(37332));
+            Reject(parent, "runtime parent", "derived object ancestry must match the decoded metadata");
+            Fixture patched = new Fixture(); patched.U64(Fixture.Array + 0x20UL + 0x1c6UL * 8UL, 0x50000000);
+            Reject(patched, "HOTFIX_ACTIVE", "an active local-player hotfix prevents accepting the original path");
+            Fixture array = new Fixture(); array.U64(Fixture.Array + 0x18, 1000001);
+            Reject(array, "array length bound", "malformed hotfix array lengths are bounded");
+            Fixture providerNull = new Fixture(); providerNull.U64(Fixture.Player + 0xa00, 0);
+            Check(providerNull.Run().HeadStatus == "NOT_READY_PROVIDER_NULL", "a null lazy head provider does not fabricate a Transform");
+            Fixture headPatch = new Fixture(); headPatch.U64(Fixture.Array + 0x20UL + 0x34eUL * 8UL, 0x50000000);
+            Check(headPatch.Run().HeadStatus == "HOTFIX_ACTIVE_HEAD_GETTER", "a head getter hotfix is reported separately from the verified local-player chain");
+            Fixture method = new Fixture(); method.U64(Fixture.Class(36295) + 0x138, method.Module.LoadBias + 0x37987c4);
+            Reject(method, "getter target", "provider interface dispatch must select that class's exact getter");
+            Fixture transform = new Fixture(); transform.U64(Fixture.Transform, Fixture.Class(31824));
+            Reject(transform, "object family", "a non-Transform object cannot pass as the managed head Transform");
+            Fixture changed = new Fixture(); ulong trigger = changed.Physical(Fixture.Player + 0x420);
+            changed.Memory.AfterRead = delegate(ulong address, int length) { if (address == trigger && length == 1) changed.U64(Fixture.Match + 0xd8, Fixture.Provider); };
+            Reject(changed, "final recheck", "changed local-player chain is rejected before a result is returned");
+            Fixture identity = new Fixture(); ulong identityTrigger = identity.Physical(Fixture.Player + 0x420);
+            identity.Memory.AfterRead = delegate(ulong address, int length) { if (address == identityTrigger && length == 1) identity.Memory.Put64(0x1014c0, 0xffff888000009000UL); };
+            Reject(identity, "Game identity", "changed guest process memory context invalidates object observations");
+            Fixture anchors = new Fixture(); GameLayoutCheck first = ObjectReference.Anchors[0]; anchors.Put(anchors.Module.LoadBias + first.Address, new byte[] { 0 });
+            Reject(anchors, "object code anchor", "new object-path instruction samples must match before pointers are followed");
+            Fixture profile = new Fixture(); profile.Layout.TypeDescriptors = 0;
+            Reject(profile, "verified module and runtime layout", "object probe requires prior runtime metadata verification");
+            Check(profile.Reader.PhysicalCalls == 0, "invalid prior profile causes no guest reads");
+            Fixture interfaceCount = new Fixture(); interfaceCount.Put(Fixture.Class(36295) + 0x12e, BitConverter.GetBytes((ushort)65));
+            Reject(interfaceCount, "provider interface count", "interface scans cannot exceed the exact profile count and hard bound");
+            Fixture vtable = new Fixture(); vtable.U32(Fixture.Interfaces + 8, 4095);
+            Reject(vtable, "vtable slot", "an interface offset cannot index beyond the class's actual vtable count");
+            Fixture transformNull = new Fixture(); transformNull.U64(Fixture.Provider + 0x10, 0);
+            Check(transformNull.Run().HeadStatus == "NOT_READY_TRANSFORM_NULL", "a null Transform is a distinct readiness result");
+            Fixture misaligned = new Fixture(); misaligned.U64(Fixture.Player + 0xa00, Fixture.Provider + 1);
+            Reject(misaligned, "Object pointer invalid", "misaligned provider addresses are rejected before following them");
+            Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects and managed Transform)");
+        }
+    }
+}

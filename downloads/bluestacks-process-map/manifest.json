@@ -9,5 +9,7 @@
   "module_source_sha256": "500a5542618a5b5d1e22f8d588d18ccdbc99e5da6b1ee9a50a5c588b27c94a9d",
   "module_reference_sha256": "51c5e75cd461cd901499dcbac835fda8029b5b20881f5ce33d0e0d55e47ee0b8",
   "layout_source_sha256": "141da2ecc36d9a36481a29b7e567cf0067ae10f39e31c7120e2300e483988c45",
-  "layout_reference_sha256": "6c32ded45ab71f01b66378e46c89594a6028f677a641c44bb13e6df6f6d359c9"
+  "layout_reference_sha256": "6c32ded45ab71f01b66378e46c89594a6028f677a641c44bb13e6df6f6d359c9",
+  "object_source_sha256": "00ecf16940c05928bed9afcf417b53b90533bba09fc6e1406d8eb961ef0ab621",
+  "object_reference_sha256": "398afe164221a5207574268248edd5494495ff4f40b02b0e306d9f3e6a3855bb"
 }

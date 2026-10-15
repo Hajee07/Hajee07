@@ -78,7 +78,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=10 ReadOnly=1'
+Record 'ProcessMapVersion=11 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -92,21 +92,27 @@ try {
     $referencePath = Join-Path $PSScriptRoot 'ModuleReference.cs'
     $layoutPath = Join-Path $PSScriptRoot 'GameLayoutProbe.cs'
     $layoutReferencePath = Join-Path $PSScriptRoot 'GameLayoutReference.cs'
+    $objectPath = Join-Path $PSScriptRoot 'PlayerObjectProbe.cs'
+    $objectReferencePath = Join-Path $PSScriptRoot 'ObjectReference.cs'
     if ($manifest.plugin -cne 'VBoxDbgHeadAimBridge.dll' -or $manifest.sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.mapping_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.module_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.module_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.layout_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
-        $manifest.layout_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
+        $manifest.layout_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.object_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.object_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
     if ((Get-FileHash -LiteralPath $pluginPath -Algorithm SHA256).Hash -ine $manifest.sha256 -or
         (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash -ine $manifest.mapping_source_sha256 -or
         (Get-FileHash -LiteralPath $modulePath -Algorithm SHA256).Hash -ine $manifest.module_source_sha256 -or
         (Get-FileHash -LiteralPath $referencePath -Algorithm SHA256).Hash -ine $manifest.module_reference_sha256 -or
         (Get-FileHash -LiteralPath $layoutPath -Algorithm SHA256).Hash -ine $manifest.layout_source_sha256 -or
-        (Get-FileHash -LiteralPath $layoutReferencePath -Algorithm SHA256).Hash -ine $manifest.layout_reference_sha256) {
+        (Get-FileHash -LiteralPath $layoutReferencePath -Algorithm SHA256).Hash -ine $manifest.layout_reference_sha256 -or
+        (Get-FileHash -LiteralPath $objectPath -Algorithm SHA256).Hash -ine $manifest.object_source_sha256 -or
+        (Get-FileHash -LiteralPath $objectReferencePath -Algorithm SHA256).Hash -ine $manifest.object_reference_sha256) {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
-    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath) -ErrorAction Stop
+    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath) -ErrorAction Stop
     $classId = (Get-Item -LiteralPath 'Registry::HKEY_CLASSES_ROOT\VirtualBox.VirtualBoxClient\CLSID').GetValue('')
     $server = [Environment]::ExpandEnvironmentVariables([string](Get-Item -LiteralPath "Registry::HKEY_CLASSES_ROOT\CLSID\$classId\InprocServer32").GetValue(''))
     if ([IO.Path]::GetFileName($server.Trim().Trim('"')) -ine 'BstkC.dll') { throw 'COM client is not the verified BlueStacks server.' }
@@ -222,7 +228,13 @@ try {
     Record "RuntimeTypeMetadata=PASS Base=0x$($layout.RuntimeMetadataBase.ToString('x')) Descriptors=$($layout.TypeDescriptors) RecordBytes=88 HeaderProfile=OBSERVED_ZERO_VERSION24"
     Record "GameLayoutRegistration=PASS Fields=$($layout.FieldCandidates) Methods=$($layout.MethodCandidates) Checks=$($layout.Checks) Passes=2"
     Record "MetadataReferenceSHA256=$($layout.MetadataSha256)"
-    Record 'AimIntegration=INCOMPLETE PlayerObjects=UNVERIFIED HeadWorldPositions=UNVERIFIED VisibilitySemantics=UNVERIFIED AimWrites=NONE'
+    $stage = 'PlayerObjectProbe'
+    $objects = $reader.VerifyPlayerObjects($kernel, $game, $module, $layout, $progress)
+    if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during object verification.' }
+    $reader.Recheck($kernel, $game)
+    Record "LocalPlayerObjects=PASS CurrentGame=0x$($objects.CurrentGame.ToString('x')) Match=0x$($objects.Match.ToString('x')) Player=0x$($objects.LocalPlayer.ToString('x')) Class=$($objects.PlayerClass) Observations=$($objects.Observations) OriginalPathHotfixSlots=INACTIVE"
+    Record "ManagedHeadTransform=$($objects.HeadStatus) Provider=0x$($objects.HeadProvider.ToString('x')) Transform=0x$($objects.HeadTransform.ToString('x'))"
+    Record 'AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED OtherPlayers=UNVERIFIED HeadWorldPositions=UNVERIFIED VisibilitySemantics=UNVERIFIED AimWrites=NONE'
 } catch { $failed = $true; Failure $stage $_.Exception }
 finally {
     if ($null -ne $reader) {
