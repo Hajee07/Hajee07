@@ -351,6 +351,20 @@ namespace HeadBridge.Mapping.Tests
             live.Put64(0x50044c0, mm);
             live.Write(0x1e00140, new byte[] { 0 });
             Reject(delegate { mapper.VerifyKernel(root, 0); }, "mismatched live kernel rejected");
+            Reader scoped=ReaderFor(new Memory());
+            using(scoped.PhysicalCallScope(2))
+            {
+                scoped.Physical(0,1);scoped.Physical(1,1);
+                Reject(delegate{scoped.Physical(2,1);},"scoped physical limit rejects an additional read");
+            }
+            Assert(scoped.PhysicalCalls==2,"scope exhaustion does not increment or reset the shared physical count");
+            scoped.Physical(2,1);Assert(scoped.PhysicalCalls==3,"disposing the scope restores the remaining global allowance");
+            using(scoped.PhysicalCallScope(2))
+            {
+                using(scoped.PhysicalCallScope(100)){scoped.Physical(3,1);scoped.Physical(4,1);
+                    Reject(delegate{scoped.Physical(5,1);},"nested scopes cannot expand a stricter parent limit");}
+            }
+            Reject(delegate{scoped.PhysicalCallScope(0);},"zero-length physical scopes are rejected");
             Console.WriteLine("TOTAL=" + count + " (offline kernel and synthetic process fixture)");
         }
     }

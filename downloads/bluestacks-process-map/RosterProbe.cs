@@ -4,7 +4,11 @@ using System.Collections.Generic;
 namespace HeadBridge.Mapping
 {
     public sealed class MatchPlayerObservation
-    { public ulong Address; public string Class; public bool IsLocal; }
+    {
+        public ulong Address; public string Class; public bool IsLocal;
+        internal int EntryIndex;
+        internal byte[] EntrySnapshot;
+    }
     public sealed partial class Reader
     {
         private static ulong RosterGeneric(ObjectReads reads, ulong klass, ObjectClassProfile definition, int definitionKind, GameLayoutResult layout)
@@ -65,13 +69,13 @@ namespace HeadBridge.Mapping
             {
                 int length=Math.Min(4096,data.Length-offset);byte[] part=reads.Read(entries+0x20UL+(ulong)offset,length);Array.Copy(part,0,data,offset,length);
             }
-            List<ulong> candidates=new List<ulong>();HashSet<ulong> unique=new HashSet<ulong>();int removed=0,active=0,nullValues=0;
+            List<ulong> candidates=new List<ulong>();HashSet<ulong> unique=new HashSet<ulong>();Dictionary<ulong,int> slots=new Dictionary<ulong,int>();int removed=0,active=0,nullValues=0;
             for(int i=0;i<used;i++)
             {
                 int at=i*40;if(BitConverter.ToInt32(data,at)<0) { removed++;continue; }
                 int next=BitConverter.ToInt32(data,at+4);Expect(next>=-1 && next<used,"roster entry link bound");active++;
                 ulong pointer=BitConverter.ToUInt64(data,at+32);if(pointer==0) { nullValues++;continue; }
-                ObjectReads.User(pointer,8,"roster Player candidate");if(unique.Add(pointer))candidates.Add(pointer);
+                ObjectReads.User(pointer,8,"roster Player candidate");if(unique.Add(pointer)){candidates.Add(pointer);slots.Add(pointer,i);}
             }
             Expect(removed==free,"roster removed count matches dictionary free count");
             bool localPresent=unique.Contains(result.LocalPlayer);
@@ -83,9 +87,13 @@ namespace HeadBridge.Mapping
                 if(!verifiedClasses.TryGetValue(playerClass,out profile))
                 { profile=ObjectFamily(reads,pointer,16,31824,0,layout,progress);verifiedClasses.Add(playerClass,profile); }
                 byte local=reads.Byte(pointer+0x420);Expect(local<=1 && (local==1)==(pointer==result.LocalPlayer),"roster local-player marker consistency");
-                verified.Add(new MatchPlayerObservation { Address=pointer,Class=profile.Name,IsLocal=local==1 });
+                int entryIndex=slots[pointer];byte[] entrySnapshot=new byte[40];Array.Copy(data,entryIndex*40,entrySnapshot,0,40);
+                verified.Add(new MatchPlayerObservation { Address=pointer,Class=profile.Name,IsLocal=local==1,EntryIndex=entryIndex,EntrySnapshot=entrySnapshot });
             }
+            ulong arrayClass=reads.Value(entries);
             int observations=reads.Recheck();
+            result.RosterCounterSnapshot=(byte[])counters.Clone();result.RosterEntries=entries;result.RosterCapacity=capacity;
+            result.RosterClass=klass;result.RosterArrayClass=arrayClass;
             result.RosterUsed=(int)used;result.RosterRemoved=removed;result.RosterActive=active;result.RosterNullValues=nullValues;
             result.RosterCandidates=candidates.Count;result.RosterLocalPresent=localPresent;
             result.MatchPlayers=verified.ToArray();result.RosterOtherVerified=verified.Count-(localPresent?1:0);

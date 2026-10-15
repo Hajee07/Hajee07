@@ -83,6 +83,7 @@ namespace HeadBridge.Mapping
         private static int NativeIdentityRecheck(ObjectReads reads)
         {
             try { return reads.Recheck(); }
+            catch (PhysicalScopeLimitException) { throw; }
             catch (InvalidOperationException error)
             { throw new InvalidOperationException("Native identity recheck failed: " + error.Message, error); }
         }

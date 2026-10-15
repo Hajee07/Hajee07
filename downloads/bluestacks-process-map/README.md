@@ -7,23 +7,21 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 16.** The user's V15 run passed the exact module/runtime
-metadata, local-player and managed-head checks, then sampled the native local
-head at X=58.67942, Y=12.7244778, Z=23.06973. It succeeded on attempt one with nine
-parents and two capture chunks. All cleanup stages passed. See
-`TRANSFORM-EVIDENCE.md` for the sample and its non-atomic limits.
+**Current version: 17.** The user's V16 run verified all 14 objects in the
+observed match dictionary: one local and 13 nonlocal objects. One was
+Player_Watching, so membership does not establish an enemy or alive-player list.
+The local head sample passed on attempt two at X=61.1467857, Y=12.7256794,
+Z=21.0208225, after a changed first pose was discarded. Cleanup passed.
 
-V16 adds a bounded read of one typed `Dictionary<EntityID,Player>` field on the
-verified match object. It verifies the closed dictionary/entry types and up to
-16 unique Player objects, reporting remaining candidates explicitly. This is
-one observed collection; its enemy/team/alive/visibility semantics and other
-players' head coordinates remain unverified. V16's live collection validation
-is pending. See `ROSTER-EVIDENCE.md`.
+V17 adds a separate phase that attempts head samples for at most two already
+verified nonlocal members. It checks fresh context and the exact saved entry
+fingerprint before using the same managed/native head resolver. The phase has
+an additional 6000-call cap including final checks and preserves the shared
+30000-call/120-second limits. Live V17 validation is pending. See
+`OTHER-HEAD-EVIDENCE.md` for the checks and limits.
 
-V16 also corrects the head-cache version observation: +0x24 is the free-list
-field, while +0x2c is the version. The complete 16-byte counter header is now
-captured/rechecked, backed by exact native version-update instructions. Previous
-head-cache tests mutated the incorrect field; the regression now changes +0x2c.
+Team/alive/visibility semantics and aim writes remain unimplemented. No target
+classification is inferred from these samples.
 
 Extract the complete ZIP into a new folder. Start the Pie64 instance, enter
 Free Fire Training Ground, wait until the character has spawned, and leave it
@@ -38,7 +36,7 @@ endpoint displayed by BlueStacks. An explicit disconnected localhost endpoint
 is reconnected once and verified. Other devices are not selected automatically.
 The runner discovers the current host/game PIDs; old PIDs are not constants.
 
-The package checks DLL and all twelve runtime C# source digests, plus the exact
+The package checks DLL and all thirteen runtime C# source digests, plus the exact
 loaded VMM fingerprint. It
 loads the same native DLL used in the successful probe, uses its read-only info
 handler, and unloads and releases its shared session in `finally`. The DLL bytes
@@ -172,7 +170,7 @@ Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-203 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+223 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -338,7 +336,7 @@ Leave the character standing in Training Ground and share the complete result
 file. Character animation can invalidate a position snapshot; a failed sample
 does not establish a new layout or authorize weakening identity checks.
 
-There are 203 offline checks: 46 core/kernel, 31 module, 30 metadata and 96
+There are 223 offline checks: 51 core/kernel, 31 module, 30 metadata and 111
 object/native-head checks. These include an independent quaternion matrix
 oracle, cross-axis rotations, nonuniform/reflected scales, invalid backlinks,
 cycles, bad bindings/code, pending jobs and changing position data. They do not
@@ -374,3 +372,28 @@ statuses. A failed collection stage reports MatchPlayerDictionaryError and exit
 code 1, preserving earlier completed observations. No other-player world
 position, target selection or aim write is performed. Leave the character
 standing in Training Ground and share the complete ResultFile.
+
+## V17 other-head result
+
+OtherHeadSamples reports verified eligible members, attempted rows, successful
+coordinate samples and StopReason. At most two objects are attempted; this does
+not sample the whole roster. Each OtherHeadWorldPosition line identifies its
+roster index, class and object address. XYZ appears only on SAMPLED_READ_ONLY.
+NOT_READY, hotfix, context-change and read-limit statuses are distinct. Failed
+rows emit no coordinates. Final phase code/process checks must pass before any
+other-head rows are returned. Earlier local/collection results remain visible
+if this optional phase fails.
+
+The same Reader is used throughout. A nested physical-call scope allows at most
+5000 reads for initial checks/sampling and keeps 1000 for final checks, with an
+overall additional cap of 6000 or the remaining global allowance, whichever is
+smaller. At 29000 total calls or above, the optional phase skips without reading.
+Nested scopes cannot expand an existing limit; disposing a scope restores its
+previous allowance without resetting counts or the elapsed timer.
+
+The collection counter header, array identity/length and exact saved 40-byte
+entry must still match. Game/match/local-player links, the selected class/local
+marker and original-path hotfix gates are also checked. All selected context and
+managed-head observations are rechecked after native capture. Samples are
+separate non-atomic observations; they do not form a synchronized frame and do
+not establish team, health, line of sight or suitability as a target.

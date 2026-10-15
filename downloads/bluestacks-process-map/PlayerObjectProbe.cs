@@ -32,6 +32,8 @@ namespace HeadBridge.Mapping
         public int RosterUsed,RosterRemoved,RosterActive,RosterNullValues,RosterCandidates,RosterOtherVerified,RosterObservations;
         public bool RosterLocalPresent,RosterComplete;
         public MatchPlayerObservation[] MatchPlayers=new MatchPlayerObservation[0];
+        internal byte[] RosterCounterSnapshot;
+        internal ulong RosterEntries,RosterCapacity,RosterClass,RosterArrayClass;
     }
     public sealed partial class Reader
     {
@@ -167,40 +169,9 @@ namespace HeadBridge.Mapping
             foreach (GameLayoutCheck check in ObjectReference.Anchors)
                 Expect(EqualBytes(reader.Virtual(game.Root, checked(module.LoadBias + check.Address), check.Expected(module.LoadBias).Length), check.Expected(module.LoadBias)), "object code anchor " + check.Name);
         }
-        public PlayerObjectResult VerifyPlayerObjects(KernelContext kernel, GameProcess game, ModuleResult module, GameLayoutResult layout, Action<string> progress)
+        private void ResolveManagedPlayerHead(ObjectReads reads,GameProcess game,ModuleResult module,GameLayoutResult layout,
+            PlayerObjectResult result,ObjectClassProfile player,ulong wrappers,ulong length,Action<string> progress)
         {
-            if (module == null || layout == null || module.BuildId != ApkModule.BuildId || module.ReferenceFileSha256 != ApkModule.FileSha256 ||
-                layout.MetadataSha256 != GameLayoutReference.MetadataSha256 || layout.TypeDescriptors != 9 || layout.Checks != 80)
-                throw new ArgumentException("Matching verified module and runtime layout are required for object probing.");
-            ObjectReads.User(module.LoadBias, 4096, "module base"); ObjectReads.User(layout.RuntimeMetadataBase, 4, "metadata base");
-            Recheck(kernel, game); ObjectAnchors(this, game, module);
-            ObjectReads reads = new ObjectReads(this, game.Root);
-            ulong facade = RootClass(reads, module, layout, ObjectReference.FacadeCell, 12418, progress);
-            ulong matchBase = RootClass(reads, module, layout, ObjectReference.MatchGameCell, 12425, progress);
-            ulong hotfix = RootClass(reads, module, layout, ObjectReference.HotfixCell, 37332, progress);
-            Expect(reads.Word(facade + 0xe0) != 0 && reads.Word(hotfix + 0xe0) != 0, "static class initialization complete");
-            VerifyWrapperField(reads, hotfix, module, layout);
-            ulong hotfixStatics = reads.Pointer(hotfix + 0xb8, "hotfix static storage");
-            ulong wrappers = reads.Pointer(hotfixStatics, "hotfix wrapper array");
-            reads.Pointer(wrappers, "wrapper array class");
-            // The exact metadata declares wrapperArray as an IFix wrapper[].
-            // Its length and element layout are taken from the verified dispatcher.
-            ulong length = reads.Value(wrappers + 0x18);
-            Expect(length <= 1000000, "hotfix array length bound");
-            foreach (int id in new int[] { 0x1c6, 0x139, 0x1c5, 0x12b })
-                if (HotfixEntry(reads, wrappers, length, id)) throw new InvalidOperationException("Object original path is overridden HOTFIX_ACTIVE Id=0x" + id.ToString("x"));
-            ulong statics = reads.Pointer(facade + 0xb8, "GameFacade static storage");
-            PlayerObjectResult result = new PlayerObjectResult();
-            result.CurrentGame = reads.Pointer(statics, "CurrentGame");
-            ObjectFamily(reads, result.CurrentGame, 4, 12425, matchBase, layout, progress);
-            // The cast in CurrentLocalPlayer must name the same MatchGame class.
-            Expect(reads.Value(matchBase + 0x68) == checked(layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + 12425UL * 88UL), "MatchGame root record");
-            result.Match = reads.Pointer(result.CurrentGame + 0x90, "current match");
-            ObjectFamily(reads, result.Match, 8, 32133, 0, layout, progress);
-            result.LocalPlayer = reads.Pointer(result.Match + 0xd8, "local player");
-            ObjectClassProfile player = ObjectFamily(reads, result.LocalPlayer, 16, 31824, 0, layout, progress);
-            Expect(reads.Byte(result.LocalPlayer + 0x420) == 1, "local-player bool marker");
-            result.PlayerClass = player.Name;
             result.HeadStatus = "NOT_READY_PROVIDER_NULL";
             result.HeadSource = "NONE";
             if (HotfixEntry(reads, wrappers, length, 0x34e)) result.HeadStatus = "HOTFIX_ACTIVE_HEAD_GETTER";
@@ -242,6 +213,42 @@ namespace HeadBridge.Mapping
                     }
                 }
             }
+        }
+        public PlayerObjectResult VerifyPlayerObjects(KernelContext kernel, GameProcess game, ModuleResult module, GameLayoutResult layout, Action<string> progress)
+        {
+            if (module == null || layout == null || module.BuildId != ApkModule.BuildId || module.ReferenceFileSha256 != ApkModule.FileSha256 ||
+                layout.MetadataSha256 != GameLayoutReference.MetadataSha256 || layout.TypeDescriptors != 9 || layout.Checks != 80)
+                throw new ArgumentException("Matching verified module and runtime layout are required for object probing.");
+            ObjectReads.User(module.LoadBias, 4096, "module base"); ObjectReads.User(layout.RuntimeMetadataBase, 4, "metadata base");
+            Recheck(kernel, game); ObjectAnchors(this, game, module);
+            ObjectReads reads = new ObjectReads(this, game.Root);
+            ulong facade = RootClass(reads, module, layout, ObjectReference.FacadeCell, 12418, progress);
+            ulong matchBase = RootClass(reads, module, layout, ObjectReference.MatchGameCell, 12425, progress);
+            ulong hotfix = RootClass(reads, module, layout, ObjectReference.HotfixCell, 37332, progress);
+            Expect(reads.Word(facade + 0xe0) != 0 && reads.Word(hotfix + 0xe0) != 0, "static class initialization complete");
+            VerifyWrapperField(reads, hotfix, module, layout);
+            ulong hotfixStatics = reads.Pointer(hotfix + 0xb8, "hotfix static storage");
+            ulong wrappers = reads.Pointer(hotfixStatics, "hotfix wrapper array");
+            reads.Pointer(wrappers, "wrapper array class");
+            // The exact metadata declares wrapperArray as an IFix wrapper[].
+            // Its length and element layout are taken from the verified dispatcher.
+            ulong length = reads.Value(wrappers + 0x18);
+            Expect(length <= 1000000, "hotfix array length bound");
+            foreach (int id in new int[] { 0x1c6, 0x139, 0x1c5, 0x12b })
+                if (HotfixEntry(reads, wrappers, length, id)) throw new InvalidOperationException("Object original path is overridden HOTFIX_ACTIVE Id=0x" + id.ToString("x"));
+            ulong statics = reads.Pointer(facade + 0xb8, "GameFacade static storage");
+            PlayerObjectResult result = new PlayerObjectResult();
+            result.CurrentGame = reads.Pointer(statics, "CurrentGame");
+            ObjectFamily(reads, result.CurrentGame, 4, 12425, matchBase, layout, progress);
+            // The cast in CurrentLocalPlayer must name the same MatchGame class.
+            Expect(reads.Value(matchBase + 0x68) == checked(layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + 12425UL * 88UL), "MatchGame root record");
+            result.Match = reads.Pointer(result.CurrentGame + 0x90, "current match");
+            ObjectFamily(reads, result.Match, 8, 32133, 0, layout, progress);
+            result.LocalPlayer = reads.Pointer(result.Match + 0xd8, "local player");
+            ObjectClassProfile player = ObjectFamily(reads, result.LocalPlayer, 16, 31824, 0, layout, progress);
+            Expect(reads.Byte(result.LocalPlayer + 0x420) == 1, "local-player bool marker");
+            result.PlayerClass = player.Name;
+            ResolveManagedPlayerHead(reads,game,module,layout,result,player,wrappers,length,progress);
             try { ReadNativeHeadPosition(game, module, result, progress); }
             catch (Exception error) { result.HeadWorldStatus = "FAIL"; result.HeadWorldError = error.Message; }
             try { ReadMatchPlayerDictionary(game,module,layout,result,wrappers,length,progress); }

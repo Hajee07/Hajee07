@@ -1,8 +1,7 @@
 # V16 typed match Player dictionary observation
 
 V15 passed one live local-head world-position sample. V16 adds a separate bounded
-observation of one typed match dictionary. Its live Windows validation is
-pending. No enemy/team/alive/visibility semantics are inferred from membership,
+observation of one typed match dictionary. Its V16 Windows validation subsequently passed (recorded below). No enemy/team/alive/visibility semantics are inferred from membership,
 and no other-player head positions or aim-control writes are implemented.
 
 ## Exact source derivation
@@ -90,3 +89,19 @@ preservation of an earlier native head sample when collection validation fails.
 The two-object collection fixture uses 3364 total physical calls including prior
 stages and captures 94 collection observations. This is synthetic verification;
 only the next Windows report can establish the live collection result.
+
+## User V16 result and V17 membership proof
+
+The user report (guest PID 8480, host PID 6372) passed the exact module/runtime
+metadata and local-player/head checks. Its dictionary had 14 used/active entries,
+zero removed/null entries and 14 unique pointers. All 14 were verified: one
+local and 13 others, including one COW.GamePlay.Player_Watching. Complete object
+validation was true for this dictionary. Collection snapshots covered 126
+observations. Total physical calls: 19180; all cleanup stages passed.
+
+V17 retains an internal copy of the accepted counter header, entry array/class
+identity and each verified member's original 40-byte entry/index. These bytes
+are not logged. A later other-head probe requires exact matches to establish
+that it still refers to the same observed member; it does not assume that a
+saved raw object address remains valid. This new use does not establish the
+collection's enemy/team/alive meaning. See OTHER-HEAD-EVIDENCE.md.

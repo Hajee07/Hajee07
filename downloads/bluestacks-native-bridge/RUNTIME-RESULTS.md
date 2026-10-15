@@ -390,3 +390,17 @@ from free-list +0x24 to the complete counter header containing version +0x2c.
 203 offline checks pass; the V16 Windows collection run remains pending. Other
 head positions, enemy/team/alive/visibility semantics and aim writes are not
 implemented.
+
+## V16 complete observed collection; V17 other-head samples pending
+
+V16 verified 14 dictionary members (local plus 13 others, including Player_Watching),
+with no removed/null entries and 126 collection observations. It discarded the
+first moving head pose, then sampled the local head at X=61.1467857,
+Y=12.7256794, Z=21.0208225 on attempt two. Total physical calls: 19180. All cleanup
+stages passed. This does not establish an enemy list.
+
+V17 adds at most two nonlocal head samples with fresh membership/context checks.
+The optional phase has a 6000-call additional cap including reserved final checks;
+it uses the same global Reader limits and does not reset counts/time. All 223
+offline checks pass. Live V17 sampling, team/alive/visibility semantics and aim
+integration remain pending.

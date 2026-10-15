@@ -136,3 +136,17 @@ This establishes one sampled local-head position for that run, not continuous
 tracking, other players' positions, visibility or aim control. V16 retains this
 native implementation and adds the separate match dictionary stage. Its live
 collection validation is pending.
+
+## User V16 repeat and V17 reuse
+
+V16 discarded attempt one on TRS_CHANGED index 52 and sampled attempt two at
+X=61.1467857, Y=12.7256794, Z=21.0208225. It again observed nine parents, two
+chunks, capacity 230 and 105 native observations; cleanup passed. This provides
+a live example of the bounded motion retry succeeding without a tolerance.
+
+V17 reuses this exact native hierarchy calculation for up to two selected
+nonlocal members, after separately verifying their managed head and context.
+The source only adds propagation of the typed optional-scope limit so native
+snapshot checks cannot disguise budget exhaustion as an identity mismatch.
+No native transform offsets, coefficients, byte comparisons or motion retry
+rules are weakened. Live other-head validation is pending.

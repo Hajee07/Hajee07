@@ -78,7 +78,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=16 ReadOnly=1'
+Record 'ProcessMapVersion=17 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -99,6 +99,7 @@ try {
     $nativeTransformReferencePath = Join-Path $PSScriptRoot 'NativeTransformReference.cs'
     $rosterPath = Join-Path $PSScriptRoot 'RosterProbe.cs'
     $rosterReferencePath = Join-Path $PSScriptRoot 'RosterReference.cs'
+    $otherHeadPath = Join-Path $PSScriptRoot 'OtherHeadProbe.cs'
     if ($manifest.plugin -cne 'VBoxDbgHeadAimBridge.dll' -or $manifest.sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.mapping_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.module_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
@@ -111,7 +112,8 @@ try {
         $manifest.native_transform_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.native_transform_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.roster_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
-        $manifest.roster_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
+        $manifest.roster_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.other_head_source_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
     if ((Get-FileHash -LiteralPath $pluginPath -Algorithm SHA256).Hash -ine $manifest.sha256 -or
         (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash -ine $manifest.mapping_source_sha256 -or
         (Get-FileHash -LiteralPath $modulePath -Algorithm SHA256).Hash -ine $manifest.module_source_sha256 -or
@@ -124,10 +126,11 @@ try {
         (Get-FileHash -LiteralPath $nativeTransformPath -Algorithm SHA256).Hash -ine $manifest.native_transform_source_sha256 -or
         (Get-FileHash -LiteralPath $nativeTransformReferencePath -Algorithm SHA256).Hash -ine $manifest.native_transform_reference_sha256 -or
         (Get-FileHash -LiteralPath $rosterPath -Algorithm SHA256).Hash -ine $manifest.roster_source_sha256 -or
-        (Get-FileHash -LiteralPath $rosterReferencePath -Algorithm SHA256).Hash -ine $manifest.roster_reference_sha256) {
+        (Get-FileHash -LiteralPath $rosterReferencePath -Algorithm SHA256).Hash -ine $manifest.roster_reference_sha256 -or
+        (Get-FileHash -LiteralPath $otherHeadPath -Algorithm SHA256).Hash -ine $manifest.other_head_source_sha256) {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
-    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath) -ErrorAction Stop
+    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath) -ErrorAction Stop
     $classId = (Get-Item -LiteralPath 'Registry::HKEY_CLASSES_ROOT\VirtualBox.VirtualBoxClient\CLSID').GetValue('')
     $server = [Environment]::ExpandEnvironmentVariables([string](Get-Item -LiteralPath "Registry::HKEY_CLASSES_ROOT\CLSID\$classId\InprocServer32").GetValue(''))
     if ([IO.Path]::GetFileName($server.Trim().Trim('"')) -ine 'BstkC.dll') { throw 'COM client is not the verified BlueStacks server.' }
@@ -262,7 +265,22 @@ try {
         Record "MatchPlayerObject Index=$index Address=0x$($entry.Address.ToString('x')) Class=$($entry.Class) IsLocal=$($entry.IsLocal)"
     }
     if ($objects.RosterStatus -ceq 'FAIL') { $failed = $true; Record "MatchPlayerDictionaryError=$($objects.RosterError)" }
-    Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadWorldPositions=UNVERIFIED TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
+    $stage = 'OtherHeadSamples'
+    $otherHeadStart = $reader.PhysicalCalls
+    $otherHeads = $reader.SampleOtherPlayerHeads($kernel, $game, $module, $layout, $objects, $progress)
+    if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during other-head sampling.' }
+    Record "OtherHeadSamples AdditionalPhysicalReads=$($reader.PhysicalCalls - $otherHeadStart) Eligible=$($otherHeads.Eligible) Attempted=$($otherHeads.Samples.Length) Sampled=$($otherHeads.Sampled) StopReason=$($otherHeads.StopReason) Detail=$($otherHeads.Detail)"
+    $culture = [Globalization.CultureInfo]::InvariantCulture
+    foreach ($sample in $otherHeads.Samples) {
+        if ($sample.Status -ceq 'SAMPLED_READ_ONLY') {
+            Record "OtherHeadWorldPosition=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) Source=$($sample.Source) X=$($sample.X.ToString('R', $culture)) Y=$($sample.Y.ToString('R', $culture)) Z=$($sample.Z.ToString('R', $culture)) Attempts=$($sample.Attempts) ParentCount=$($sample.ParentCount) Observations=$($sample.Observations) Provider=0x$($sample.Provider.ToString('x')) Transform=0x$($sample.Transform.ToString('x'))"
+        } else {
+            Record "OtherHeadWorldPosition=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) Attempts=$($sample.Attempts) Detail=$($sample.Detail)"
+            if ($sample.Status -ceq 'FAIL') { $failed = $true }
+        }
+    }
+    if ($otherHeads.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
+    Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadPositionsSampled=$($otherHeads.Sampled) TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
 } catch { $failed = $true; Failure $stage $_.Exception }
 finally {
     if ($null -ne $reader) {

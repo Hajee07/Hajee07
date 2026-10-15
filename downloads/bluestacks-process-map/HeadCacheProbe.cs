@@ -52,7 +52,7 @@ namespace HeadBridge.Mapping
             result.HeadSource = "MODEL_DICTIONARY";
             if (HotfixEntry(reads, wrappers, wrapperLength, 0x21f1a) || HotfixEntry(reads, wrappers, wrapperLength, 0x4f35))
             { result.HeadStatus = "HOTFIX_ACTIVE_MODEL_LOOKUP"; return 0; }
-            ulong klass = reads.Pointer(result.LocalPlayer, "local player class");
+            ulong klass = reads.Pointer(result.LocalPlayer, "head owner Player class");
             int count = BitConverter.ToUInt16(reads.Read(klass + 0x12a, 2), 0);
             int start = BitConverter.ToInt32(Hex(player.RecordHex), 0x38);
             Expect(start >= 0 && count == BitConverter.ToUInt16(Hex(player.RecordHex), 0x4a), "head lookup player vtable metadata");

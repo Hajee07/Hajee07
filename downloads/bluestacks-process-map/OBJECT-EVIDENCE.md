@@ -250,3 +250,13 @@ object anchor checks the head dictionary's version update at 0x9154cf4. Earlier
 static/object/pose observations remain historical samples and do not establish
 uninterrupted collection stability. See ROSTER-EVIDENCE.md for the new typed
 match collection probe and its separate pending Windows validation.
+
+## V17 shared resolver
+
+The existing managed head resolution was extracted into one private helper and
+is used by both local and selected nonlocal observations. Its provider types,
+interface/vtable checks, cache key, hotfix gates, metadata and snapshot checks
+remain the same. The nonlocal caller first validates the current game/match,
+collection membership and selected class/local marker. It does not substitute
+the local head when another member has no cached head. All earlier tests still
+pass, with dedicated nonlocal tests in the current 223-check suite.

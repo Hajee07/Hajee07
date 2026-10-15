@@ -84,6 +84,22 @@ namespace HeadBridge.Mapping
         public LibraryResult LastLibraries { get; private set; }
         private static readonly Regex Reply = new Regex("\\ABridgeRead=PASS BytesRead=([0-9]+) Hex=([0-9a-fA-F]+)\\s*\\z", RegexOptions.CultureInvariant);
 
+        private int physicalScopeLimit=30000;
+        internal sealed class PhysicalScopeLimitException : InvalidOperationException
+        { internal PhysicalScopeLimitException() : base("Physical call scope exhausted; partial results only.") { } }
+        private sealed class PhysicalScope : IDisposable
+        {
+            private Reader owner; private readonly int previous;
+            internal PhysicalScope(Reader owner,int additional)
+            { this.owner=owner;previous=owner.physicalScopeLimit;owner.physicalScopeLimit=Math.Min(previous,checked(owner.PhysicalCalls+additional)); }
+            public void Dispose() { if(owner!=null){owner.physicalScopeLimit=previous;owner=null;} }
+        }
+        internal IDisposable PhysicalCallScope(int maximumAdditionalCalls)
+        {
+            if(maximumAdditionalCalls<1 || maximumAdditionalCalls>30000)throw new ArgumentOutOfRangeException("maximumAdditionalCalls");
+            return new PhysicalScope(this,maximumAdditionalCalls);
+        }
+
         public Reader(Func<ulong, int, string> transport, RamRange[] ram)
         {
             if (transport == null || ram == null || ram.Length == 0) throw new ArgumentException("Reader requires a transport and verified RAM ranges.");
@@ -128,6 +144,7 @@ namespace HeadBridge.Mapping
         {
             InRam(address, count);
             if (PhysicalCalls >= 30000 || timer.Elapsed.TotalSeconds > 120) throw new InvalidOperationException("Read budget exhausted; partial results only.");
+            if(PhysicalCalls>=physicalScopeLimit)throw new PhysicalScopeLimitException();
             PhysicalCalls++;
             string text = transport(address, count);
             Match match = Reply.Match(text ?? "");

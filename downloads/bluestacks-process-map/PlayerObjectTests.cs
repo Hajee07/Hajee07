@@ -163,6 +163,33 @@ namespace HeadBridge.Mapping.Tests
                 U64(RArrayClass+0x40,REntryClass);U64(RArrayClass+0x20,RElement);U64(RElement,REntryGeneric);U32(RElement+8,0x80150000);
                 REntry(0,Player);REntry(1,Other);U64(Other,Class(32360));Put(Other+0x420,new byte[]{0});
             }
+            internal void SetupOtherHead(ulong owner,ulong region,float x)
+            {
+                ulong provider=region,transform=region+0x1000,native=region+0x2000,hierarchy=region+0x3000,matrices=region+0x4000,
+                    parents=region+0x6000,objects=region+0x7000;
+                U64(owner,Class(32360));Put(owner+0x420,new byte[]{0});U64(owner+0xa00,provider);U64(owner+0x1530,0);
+                U64(provider,Class(36295));U64(provider+0x10,transform);U64(transform,Class(ObjectReference.TransformIndex));U64(transform+0x10,native);
+                U64(native+0x38,hierarchy);U32(native+0x40,0);U64(native+0x90,0);
+                U64(hierarchy,0);U32(hierarchy+8,0);U32(hierarchy+0x10,1);U64(hierarchy+0x18,matrices);U64(hierarchy+0x20,parents);U64(hierarchy+0x30,objects);
+                U32(parents,0xffffffff);U64(objects,native);float[] values={x,32,33,0,0,0,0,1,1,1,1,0};byte[] trs=new byte[48];
+                for(int i=0;i<12;i++)System.Array.Copy(BitConverter.GetBytes(values[i]),0,trs,i*4,4);Put(matrices,trs);
+            }
+            internal void DeepOtherHead(ulong owner,ulong region)
+            {
+                SetupOtherHead(owner,region,31);ulong hierarchy=region+0x3000,head=region+0x2000;
+                U32(hierarchy+0x10,128);U32(head+0x40,127);
+                byte[] trs=new byte[48];System.Array.Copy(BitConverter.GetBytes(1f),0,trs,28,4);
+                for(int axis=0;axis<3;axis++)System.Array.Copy(BitConverter.GetBytes(1f),0,trs,32+axis*4,4);
+                for(int i=0;i<128;i++)
+                {
+                    ulong node=i==127?head:region+0x10000UL+(ulong)i*0x100UL;
+                    ulong parent=i==0?0:region+0x10000UL+(ulong)(i-1)*0x100UL;
+                    U64(node+0x38,hierarchy);U32(node+0x40,(uint)i);U64(node+0x90,parent);
+                    U64(region+0x7000UL+(ulong)i*8UL,node);U32(region+0x6000UL+(ulong)i*4UL,(uint)(i-1));Put(region+0x4000UL+(ulong)i*48UL,trs);
+                }
+            }
+            internal OtherHeadResult OtherHeads(PlayerObjectResult core)
+            { return Reader.SampleOtherPlayerHeads(Kernel,Game,Module,Layout,core,Progress.Add); }
             internal void Put(ulong address, byte[] bytes)
             {
                 for (int i = 0; i < bytes.Length; i++)
@@ -444,6 +471,60 @@ namespace HeadBridge.Mapping.Tests
             Fixture staged=new Fixture();staged.SetupNative();staged.SetupRoster();staged.U32(Fixture.REntryClass+0xf8,48);PlayerObjectResult stagedResult=staged.Run();
             Check(stagedResult.HeadWorldStatus=="SAMPLED_READ_ONLY" && stagedResult.RosterStatus=="FAIL" && stagedResult.MatchPlayers.Length==0,
                 "a failed roster stage preserves the earlier valid native head sample and emits no verified roster objects");
+            const ulong otherRegion=0x57100000,secondOwner=0x57010000,secondRegion=0x57200000,thirdOwner=0x57020000;
+            Fixture other=new Fixture();other.SetupNative();other.SetupRoster();other.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult otherCore=other.Run();
+            int beforeOther=other.Reader.PhysicalCalls;OtherHeadResult one=other.OtherHeads(otherCore);
+            Check(one.Sampled==1 && one.Samples.Length==1 && one.Samples[0].Status=="SAMPLED_READ_ONLY" && one.Samples[0].Player==Fixture.Other && one.Samples[0].X==31 && one.Samples[0].Y==32 && one.Samples[0].Z==33,
+                "a verified nonlocal dictionary member resolves its own managed/native head rather than the local head");
+            Check(otherCore.HeadWorldX==104 && one.Samples[0].Provider==otherRegion && one.Samples[0].RosterIndex==1,
+                "other-head sampling preserves the local sample and reports the exact collection member");
+            Check(other.Reader.PhysicalCalls>beforeOther && other.Reader.PhysicalCalls-beforeOther<=6000,"other-head phase consumes the same shared Reader within its additional-call bound");
+            Fixture absent=new Fixture();absent.SetupNative();absent.SetupRoster();absent.SetupOtherHead(Fixture.Other,otherRegion,31);absent.U64(Fixture.Other+0xa00,0);
+            OtherHeadResult noHead=absent.OtherHeads(absent.Run());
+            Check(noHead.Sampled==0 && noHead.Samples[0].Status=="NOT_READY_MODEL_CACHE_NULL","an uncached other head is reported without initializing Unity or substituting the local head");
+            Fixture versionMove=new Fixture();versionMove.SetupNative();versionMove.SetupRoster();versionMove.SetupOtherHead(Fixture.Other,otherRegion,31);
+            PlayerObjectResult versionCore=versionMove.Run();versionMove.U32(Fixture.RDict+0x2c,2);OtherHeadResult staleCollection=versionMove.OtherHeads(versionCore);
+            Check(staleCollection.Sampled==0 && staleCollection.StopReason=="CONTEXT_CHANGED" && staleCollection.Samples[0].Status=="NOT_READY_CONTEXT_CHANGED",
+                "collection version changes after the roster sample prevent stale-member head reads");
+            Fixture keyMove=new Fixture();keyMove.SetupNative();keyMove.SetupRoster();keyMove.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult keyCore=keyMove.Run();
+            keyMove.Put(Fixture.REntries+0x20UL+40UL+8UL,new byte[]{99});OtherHeadResult changedKey=keyMove.OtherHeads(keyCore);
+            Check(changedKey.Sampled==0 && changedKey.Samples[0].Detail.Contains("entry fingerprint"),"selected entry key/value bytes must still match even when its header version is unchanged");
+            Fixture actorMove=new Fixture();actorMove.SetupNative();actorMove.SetupRoster();actorMove.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult actorCore=actorMove.Run();
+            actorMove.Put(Fixture.Other+0x420,new byte[]{1});OtherHeadResult changedActor=actorMove.OtherHeads(actorCore);
+            Check(changedActor.Sampled==0 && changedActor.StopReason=="CONTEXT_CHANGED","a changed selected object's local marker invalidates its other-player role");
+            Fixture overrideHead=new Fixture();overrideHead.SetupNative();overrideHead.SetupRoster();overrideHead.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult overrideCore=overrideHead.Run();
+            overrideHead.U64(Fixture.Array+0x20UL+0x34eUL*8UL,Fixture.Other);OtherHeadResult hotfixHead=overrideHead.OtherHeads(overrideCore);
+            Check(hotfixHead.Sampled==0 && hotfixHead.Samples[0].Status=="HOTFIX_ACTIVE_HEAD_GETTER","other-head sampling honors the existing head-getter hotfix gate");
+            Fixture changeDuring=new Fixture();changeDuring.SetupNative();changeDuring.SetupRoster();changeDuring.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult duringCore=changeDuring.Run();
+            ulong otherPose=changeDuring.Physical(otherRegion+0x4000);changeDuring.Memory.AfterRead=delegate(ulong at,int length){if(at==otherPose && length==48)changeDuring.U32(Fixture.RDict+0x2c,2);};
+            OtherHeadResult during=changeDuring.OtherHeads(duringCore);
+            Check(during.Sampled==0 && during.Samples[0].Status=="FAIL" && during.Samples[0].Detail.Contains("final recheck"),"membership changes during a native head capture discard its coordinates");
+            Fixture two=new Fixture();two.SetupNative();two.SetupRoster();two.U32(Fixture.RDict+0x20,4);two.U64(Fixture.REntries+0x18,4);
+            two.SetupOtherHead(Fixture.Other,otherRegion,31);two.SetupOtherHead(secondOwner,secondRegion,41);two.U64(thirdOwner,Fixture.Class(32360));two.Put(thirdOwner+0x420,new byte[]{0});
+            two.REntry(2,secondOwner);two.REntry(3,thirdOwner);OtherHeadResult twoResult=two.OtherHeads(two.Run());
+            Check(twoResult.Eligible==3 && twoResult.Sampled==2 && twoResult.Samples.Length==2 && twoResult.Samples[1].X==41 && twoResult.StopReason=="TWO_OBJECT_LIMIT",
+                "at most two verified other objects are sampled and each uses its own head position");
+            Fixture deep=new Fixture();deep.SetupNative();deep.SetupRoster();deep.DeepOtherHead(Fixture.Other,otherRegion);PlayerObjectResult deepCore=deep.Run();int deepBefore=deep.Reader.PhysicalCalls;
+            OtherHeadResult deepResult=deep.OtherHeads(deepCore);
+            Check(deepResult.StopReason=="READ_LIMIT_REACHED" && deepResult.Sampled==0 && deep.Reader.PhysicalCalls-deepBefore<=6000,
+                "an expensive native hierarchy stops at the optional phase's read cap while reserving final identity checks Stop="+deepResult.StopReason+" Detail="+deepResult.Detail+" Row="+(deepResult.Samples.Length==0?"NONE":deepResult.Samples[0].Detail)+" Calls="+(deep.Reader.PhysicalCalls-deepBefore));
+            deep.Reader.Physical(0,1);Check(deep.Reader.PhysicalCalls>deepBefore+5000,"exhausting the optional read scope preserves the remaining global allowance");
+            Fixture reserve=new Fixture();reserve.SetupNative();reserve.SetupRoster();reserve.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult reserveCore=reserve.Run();
+            while(reserve.Reader.PhysicalCalls<29000)reserve.Reader.Physical(0,1);OtherHeadResult reserved=reserve.OtherHeads(reserveCore);
+            Check(reserved.StopReason=="READ_BUDGET_RESERVE" && reserved.Samples.Length==0 && reserve.Reader.PhysicalCalls==29000,
+                "the optional phase performs no reads when only its reserved global allowance remains");
+            Check(other.OtherHeads(new PlayerObjectResult()).StopReason=="PREREQUISITES_UNVERIFIED","other-head reads require the verified collection snapshot");
+            Fixture cachedOther=new Fixture();cachedOther.SetupNative();cachedOther.SetupRoster();cachedOther.SetupHeadCache();cachedOther.SetupOtherHead(Fixture.Other,otherRegion,31);
+            ulong otherModel=otherRegion+0x9000,otherDictionary=otherRegion+0xa000,otherEntries=otherRegion+0xb000;
+            cachedOther.U64(Fixture.Other+0xa00,0);cachedOther.U64(Fixture.Other+0x1530,otherModel);cachedOther.U64(otherModel,Fixture.Class(31706));cachedOther.U64(otherModel+0x10,otherDictionary);
+            cachedOther.U64(otherDictionary,Fixture.DictionaryClass);cachedOther.U32(otherDictionary+0x20,1);cachedOther.U32(otherDictionary+0x24,0xffffffff);
+            cachedOther.U32(otherDictionary+0x28,0);cachedOther.U32(otherDictionary+0x2c,1);cachedOther.U64(otherDictionary+0x18,otherEntries);
+            cachedOther.U64(otherEntries,0x4f100000);cachedOther.U64(otherEntries+0x18,1);cachedOther.U32(otherEntries+0x20,1);cachedOther.U32(otherEntries+0x24,0xffffffff);
+            cachedOther.U64(otherEntries+0x28,Fixture.Key);cachedOther.U64(otherEntries+0x30,otherRegion);cachedOther.U64(otherRegion,Fixture.Class(31705));
+            OtherHeadResult cachedRemote=cachedOther.OtherHeads(cachedOther.Run());
+            Check(cachedRemote.Sampled==1 && cachedRemote.Samples[0].Source=="MODEL_DICTIONARY" && cachedRemote.Samples[0].X==31 && cachedRemote.Samples[0].Provider==otherRegion,
+                "a remote owner's cached bone_Head resolves through its own model dictionary with the shared strict resolver");
+            Console.WriteLine("OTHER_HEAD_FIXTURE_ADDITIONAL_READ_CALLS="+(other.Reader.PhysicalCalls-beforeOther)+" OBSERVATIONS="+one.Samples[0].Observations);
             Console.WriteLine("ROSTER_FIXTURE_READ_CALLS="+roster.Reader.PhysicalCalls+" OBSERVATIONS="+players.RosterObservations);
             Console.WriteLine("NATIVE_HEAD_FIXTURE_READ_CALLS=" + native.Reader.PhysicalCalls + " OBSERVATIONS=" + world.HeadWorldObservations);
             Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects, native head sample and match dictionary)");
