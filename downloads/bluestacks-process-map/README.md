@@ -16,7 +16,9 @@ Version 6 passed live module verification but failed the first selected type
 descriptor comparison. Version 7 then showed 71 exact matches and nine stable descriptor differences
 in both rounds. Those nine payloads all point into one candidate metadata type
 table. Version 8 verifies the runtime representation against the decoded header
-and complete type records. Its live run is pending. See `GAME-LAYOUT-EVIDENCE.md` and `game-layout.json` for
+and complete type records. The user's v8 run stopped earlier on a repeated VMA
+node, so live metadata validation remains pending. Version 9 adds one bounded
+fresh scan for that condition and distinguishes repeated nodes from node limits. See `GAME-LAYOUT-EVIDENCE.md` and `game-layout.json` for
 the recovery and its limits. Live player objects, head world positions, visibility
 semantics, and aim-control writes remain unimplemented/unverified.
 
@@ -89,7 +91,16 @@ reference bytes, and different loader layouts may prevent verification.
 
 Reaching the list end without a matching module is a failure. The core's separate
 `Libraries` and `ProbeLibrary` methods retain the previous enumeration/header
-workflows for offline regression checks; the Windows runner uses `ProbeModule`.
+workflows for offline regression checks. The Windows runner uses
+`ProbeModuleWithRetry`, which calls the same module verifier at most twice.
+Only a repeated node in the outer traversal triggers a retry. The discarded
+attempt's node/mapping counts and cumulative reads are logged. Process identity
+is rechecked, the translation cache is cleared, and the next attempt starts at
+`mm.mmap` with fresh visited-node and file-name dictionaries. It uses the same
+Reader, so the 30,000-read and 120-second budgets are never reset. A repeated
+node on attempt two fails. Node limits, module-window cycles, inconsistent links,
+fingerprint mismatches, read failures, and identity changes are not retried.
+The retry does not establish why a node repeated or make the live scan atomic.
 
 The next stage compares 80 registration/code references twice. It checks the
 runtime-relocated pointer values separately from raw data and compares selected
@@ -151,7 +162,7 @@ Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-Eighty-nine checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+Ninety-six checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -172,12 +183,15 @@ link changes, including a VMA changed during the final header read. Wrong ELF
 architecture, nonzero file offset, and a Unity-only header cannot satisfy the
 target. Failed revalidation preserves provisional status and progress.
 
-Eighteen additional module checks use the exact APK reference bytes with synthetic
+Twenty-five additional module checks use the exact APK reference bytes with synthetic
 mappings. They distinguish a whole-file mapping from the PT_LOAD layout, reject
 incorrect tables/build ID/code/file offsets/names/gaps, detect changes during
 verification, and exercise the 128-VMA window boundary. The normal module fixture
 uses 681 reads and nine window VMAs; these are offline measurements. Reference
 generation reproduces identical bytes and rejects an incorrect source digest.
+Seven retry assertions cover recovery after a transient repeated node, cumulative
+reads and discarded results, persistent repetition, identity changes, no retry
+on fingerprint failure, shared budget exhaustion, and the 4096-node outer limit.
 
 Twenty-five registration checks validate matching relocated data and reject altered
 field offsets, relative-RVA-as-pointer mistakes, method bytes, between-round

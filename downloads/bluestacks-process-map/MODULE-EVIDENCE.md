@@ -98,3 +98,26 @@ second mapping. The outer scan visited 891 VMAs and the run used 10847 reads.
 Game identity and all cleanup steps passed. This establishes the version 5
 module checks on that live instance, not game object semantics. Version 6's
 metadata/registration evidence is in `GAME-LAYOUT-EVIDENCE.md`.
+
+## Version 8 traversal interruption and version 9 bounded restart
+
+The user reported kernel/process verification success for game PID 3775, then
+`VMA traversal bound or cycle validation failed` with VmasVisited=349. The old
+combined check used a 4096-node limit; at 349 nodes this was the repeated-node
+branch. No module or runtime-metadata success was reached. The report used 4816
+physical reads, 404 cache hits, 100 inspected files and 116 skipped repeats.
+Plugin unload, handler cleanup, and session release passed.
+
+Concurrent changes to a live VMA list can cause repetition, but the report does
+not establish that cause or prove a persistent cycle. V9 reports REPEATED_NODE
+and NODE_LIMIT separately with the current/previous node and visit count. Only
+an outer repeated-node failure permits one fresh scan after process revalidation.
+The failed partial result is discarded and logged; file/visited dictionaries
+and translation cache are reset. The existing Reader preserves cumulative read
+and elapsed-time budgets. A second repetition or any other failure terminates.
+Metadata checks are unchanged from v8 and still require live validation.
+
+96 offline checks pass (46 reader/header, 25 module, 25 registration). Seven
+new retry assertions include a persistent cycle and a 4097-node fixture that
+stops at exactly 4096 without retrying. Module and metadata verification still
+require their complete existing checks on the successful attempt.

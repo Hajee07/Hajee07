@@ -30,3 +30,8 @@ checks matched. Every differing payload points into one candidate metadata type
 table. Version 8 checks the descriptor flags, derived metadata base, exact header
 and complete type records. 89 offline checks pass; live version 8 verification
 and player/head/aim integration remain pending.
+
+The v8 run stopped on a repeated VMA node before module/metadata verification.
+V9 adds one bounded fresh scan for this specific condition, preserves the global
+budgets and all validation checks, and reports node limits separately. 96 offline
+checks pass. Live metadata verification and aim integration remain incomplete.

@@ -327,6 +327,14 @@ namespace HeadBridge.Mapping
             Recheck(kernel, game);
             mapping.Revalidated = true;
         }
+        private sealed class VmaTraversalException : InvalidOperationException
+        {
+            internal readonly bool RepeatedNode;
+            internal VmaTraversalException(bool repeatedNode, ulong node, ulong previous, int count)
+                : base("VMA traversal failed Reason=" + (repeatedNode ? "REPEATED_NODE" : "NODE_LIMIT") +
+                    " Node=0x" + node.ToString("x") + " Previous=0x" + previous.ToString("x") +
+                    " VmasVisited=" + count + " Limit=4096") { RepeatedNode = repeatedNode; }
+        }
         private LibraryResult ScanLibraries(KernelContext kernel, GameProcess game, Action<string> progress, bool stopAfterTarget,
             Func<ulong, byte[], LibraryMapping, byte[], bool> verifyModule = null)
         {
@@ -340,7 +348,16 @@ namespace HeadBridge.Mapping
             while (node != 0)
             {
                 KernelPointer(node);
-                if (seen.Count >= 4096 || !seen.Add(node)) throw new InvalidOperationException("VMA traversal bound or cycle validation failed.");
+                if (seen.Count >= 4096)
+                {
+                    result.StopReason = "NODE_LIMIT";
+                    throw new VmaTraversalException(false, node, previous, seen.Count);
+                }
+                if (!seen.Add(node))
+                {
+                    result.StopReason = "REPEATED_NODE";
+                    throw new VmaTraversalException(true, node, previous, seen.Count);
+                }
                 byte[] area = Virtual(kernel.Root, node, 0xa8);
                 ulong start = BitConverter.ToUInt64(area, 0), end = BitConverter.ToUInt64(area, 8);
                 if (start >= end || start < previousEnd || end > 0x0000800000000000UL ||

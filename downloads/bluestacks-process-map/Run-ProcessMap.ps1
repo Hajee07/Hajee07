@@ -78,7 +78,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=8 ReadOnly=1'
+Record 'ProcessMapVersion=9 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -200,7 +200,7 @@ try {
     $stage = 'GameModuleIdentity'
     Record 'LibraryScanMode=TARGETED_MODULE Target=libil2cpp.so'
     $progress = [Action[string]]{ param([string]$message) Record $message }
-    $module = $reader.ProbeModule($kernel, $game, $progress)
+    $module = $reader.ProbeModuleWithRetry($kernel, $game, $progress)
     $libraries = $reader.LastLibraries
     $il2cpp = $false
     foreach ($mapping in $libraries.Mappings) {

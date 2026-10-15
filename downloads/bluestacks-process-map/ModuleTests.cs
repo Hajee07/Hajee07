@@ -82,6 +82,25 @@ namespace HeadBridge.Mapping.Tests
             catch (InvalidOperationException error) { rejected = error.Message.Contains(message); }
             Check(rejected && (reason == null || fixture.Progress.Exists(delegate(string line) { return line.Contains(reason); })), name);
         }
+        private static void RepeatFirst(Fixture fixture, bool restore)
+        {
+            fixture.Memory.Put64(fixture.Areas[0] + 0xa0, 0);
+            fixture.Memory.Put64(fixture.Areas[0] + 0x10, Fixture.Kernel + 0x10000);
+            if (restore) fixture.Memory.AfterRead = delegate(ulong address, int length)
+            {
+                if (address == fixture.Areas[0] && length == 0xa8)
+                {
+                    fixture.Memory.Put64(fixture.Areas[0] + 0xa0, Fixture.Kernel + 0x5000);
+                    fixture.Memory.Put64(fixture.Areas[0] + 0x10, Fixture.Kernel + 0x10100);
+                }
+            };
+        }
+        private static bool RetryReject(Fixture fixture, string text, Action<string> progress)
+        {
+            try { fixture.Reader.ProbeModuleWithRetry(fixture.Context, fixture.Game, progress); }
+            catch (InvalidOperationException error) { return error.Message.Contains(text); }
+            return false;
+        }
         public static void Run()
         {
             Fixture valid = new Fixture(); ModuleResult result = valid.Run();
@@ -131,6 +150,50 @@ namespace HeadBridge.Mapping.Tests
             Check(boundary.Run().WindowVmas == 128, "exactly 128 module VMAs permit one outside-boundary observation");
             Fixture bounded = new Fixture(130);
             Reject(bounded, "Module VMA window bound", null, "excessively fragmented module cannot exceed the 128-VMA window");
+            Fixture transient = new Fixture(); RepeatFirst(transient, true);
+            ModuleResult retried = transient.Reader.ProbeModuleWithRetry(transient.Context, transient.Game, transient.Progress.Add);
+            Check(retried.LoadBias == Fixture.Bias && transient.Progress.Exists(delegate(string line) { return line.Contains("LibraryScanRetry") && line.Contains("DiscardedVmas=1"); }),
+                "transient repeated VMA is discarded and a fresh scan can verify the module");
+            Check(transient.Progress.FindAll(delegate(string line) { return line.StartsWith("LibraryScanAttempt ", StringComparison.Ordinal); }).Count == 2 &&
+                transient.Reader.PhysicalCalls > valid.Reader.PhysicalCalls && transient.Reader.LastLibraries.StopReason == "MODULE_VERIFIED",
+                "retry preserves cumulative reads while replacing the provisional scan result");
+            Fixture cycle = new Fixture(); RepeatFirst(cycle, false);
+            Check(RetryReject(cycle, "Reason=REPEATED_NODE", cycle.Progress.Add) && cycle.Reader.LastLibraries.StopReason == "REPEATED_NODE" &&
+                cycle.Progress.FindAll(delegate(string line) { return line.StartsWith("LibraryScanAttempt ", StringComparison.Ordinal); }).Count == 2,
+                "persistent repeated node fails after exactly two attempts");
+            Fixture identityRetry = new Fixture(); RepeatFirst(identityRetry, false);
+            Action<string> identityProgress = delegate(string line)
+            {
+                identityRetry.Progress.Add(line);
+                if (line.StartsWith("LibraryScanRetry ", StringComparison.Ordinal)) identityRetry.Memory.Put64(0x1014c0, Fixture.Kernel + 0x8000);
+            };
+            Check(RetryReject(identityRetry, "Game identity", identityProgress) && !identityRetry.Progress.Contains("LibraryScanAttempt Attempt=2 MaximumAttempts=2"),
+                "changed process identity prevents starting the retry");
+            Fixture noRetry = new Fixture(); noRetry.Put(Fixture.Bias + ApkModule.Samples[0].Address, new byte[] { 0 });
+            Check(RetryReject(noRetry, "No IL2CPP candidate", noRetry.Progress.Add) && !noRetry.Progress.Contains("LibraryScanAttempt Attempt=2 MaximumAttempts=2"),
+                "module fingerprint mismatch is not retried");
+            Fixture budget = new Fixture(); RepeatFirst(budget, false);
+            Action<string> budgetProgress = delegate(string line)
+            {
+                budget.Progress.Add(line);
+                if (line.StartsWith("LibraryScanRetry ", StringComparison.Ordinal))
+                    while (budget.Reader.PhysicalCalls < 30000) budget.Reader.Physical(0x100000, 1);
+            };
+            Check(RetryReject(budget, "Read budget exhausted", budgetProgress) && budget.Reader.PhysicalCalls == 30000,
+                "retry cannot reset or exceed the shared physical-read budget");
+            Fixture outerBound = new Fixture(); const ulong listPhysical = 0x20000000UL, listVirtual = Fixture.Kernel + 0x4000000UL;
+            for (int i = 0; i < 4097; i++)
+            {
+                ulong offsetAt = (ulong)i * 256UL, at = listPhysical + offsetAt;
+                if ((offsetAt & 4095UL) == 0) outerBound.Memory.Map4K(outerBound.Context.Root, listVirtual + offsetAt, at);
+                outerBound.Memory.Put64(at, 0x10000UL + (ulong)i * 4096UL); outerBound.Memory.Put64(at + 8, 0x11000UL + (ulong)i * 4096UL);
+                outerBound.Memory.Put64(at + 0x10, i == 4096 ? 0 : listVirtual + offsetAt + 256UL);
+                outerBound.Memory.Put64(at + 0x18, i == 0 ? 0 : listVirtual + offsetAt - 256UL);
+            }
+            outerBound.Memory.Put64(0x103000, listVirtual);
+            Check(RetryReject(outerBound, "Reason=NODE_LIMIT", outerBound.Progress.Add) && outerBound.Reader.LastLibraries.VmasVisited == 4096 &&
+                outerBound.Reader.LastLibraries.StopReason == "NODE_LIMIT" && !outerBound.Progress.Contains("LibraryScanAttempt Attempt=2 MaximumAttempts=2"),
+                "4096-node exhaustion is distinguished from repetition and is not retried");
             Console.WriteLine("MODULE_TOTAL=" + count + " (synthetic mappings with exact APK reference bytes)");
         }
     }

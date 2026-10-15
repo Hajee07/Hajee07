@@ -39,6 +39,28 @@ namespace HeadBridge.Mapping
         private static ulong PageEnd(ulong address) { return checked(address + 4095UL) & ~4095UL; }
         private static void ModuleNote(Action<string> progress, ulong address, string reason)
         { if (progress != null) progress("ModuleCandidate Start=0x" + address.ToString("x") + " Status=REJECTED Reason=" + reason); }
+        public ModuleResult ProbeModuleWithRetry(KernelContext kernel, GameProcess game, Action<string> progress)
+        {
+            // Rescan only an observed repeated node in the outer VMA traversal.
+            // One Reader preserves the physical-call count and elapsed budget.
+            for (int attempt = 1; attempt <= 2; attempt++)
+            {
+                if (progress != null) progress("LibraryScanAttempt Attempt=" + attempt + " MaximumAttempts=2");
+                try { return ProbeModule(kernel, game, progress); }
+                catch (VmaTraversalException error)
+                {
+                    if (!error.RepeatedNode || attempt == 2) throw;
+                    if (progress != null) progress("LibraryScanRetry Attempt=1 NextAttempt=2 Reason=REPEATED_NODE" +
+                        " DiscardedVmas=" + LastLibraries.VmasVisited + " DiscardedMappings=" + LastLibraries.Mappings.Count +
+                        " PhysicalReadCalls=" + PhysicalCalls + " Detail=" + error.Message);
+                    Recheck(kernel, game);
+                    translations.Clear();
+                    // ScanLibraries starts over at mm.mmap with new visited/file
+                    // dictionaries. It never follows on from the repeated node.
+                }
+            }
+            throw new InvalidOperationException("VMA scan attempts exhausted.");
+        }
         public ModuleResult ProbeModule(KernelContext kernel, GameProcess game, Action<string> progress)
         {
             ModuleResult verified = null;

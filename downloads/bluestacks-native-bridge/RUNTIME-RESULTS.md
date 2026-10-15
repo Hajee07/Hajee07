@@ -264,3 +264,19 @@ in GAME-LAYOUT-EVIDENCE.md. V8 corrects the representation check by requiring
 exact header and record contents at these derived addresses, not merely plausible
 pointers. 89 offline checks pass. V8 target reads remain unverified on Windows;
 player objects, head world positions, and aim writes remain incomplete.
+
+## Process mapping version 8: outer VMA traversal repeated a node
+
+Host PID 6372 and game PID 3775 passed preflight/process discovery (162 tasks).
+Kernel identity passed with InitialActiveMM=0. The outer scan stopped at 349
+visited nodes with the old combined bound/cycle error. Because this is below
+4096, the failed condition was a repeated node. Concurrent list changes are a
+possible cause, not established by this report. Module and metadata validation
+were not reached successfully. Physical reads=4816, cache hits=404, inspected
+files=100, skipped repeats=116. All cleanup stages passed.
+
+V9 separates repeated-node and node-limit diagnostics. One repeated-node failure
+can restart from the list head after rechecking process identity. Partial results
+are discarded; caches/dictionaries are refreshed; read/time budgets are shared.
+A second repetition still fails. Other failures are not retried. 96 offline
+checks pass. Live v9 recovery and v8's metadata-target validation remain pending.
