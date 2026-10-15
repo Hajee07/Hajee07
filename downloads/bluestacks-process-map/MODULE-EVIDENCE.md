@@ -87,4 +87,14 @@ with a successor outside the module passes, and an over-limit case fails.
 The reference generator reproduces byte-identical C# output and rejects an
 incorrect source digest without writing a reference. Runner syntax and the
 existing real-report RAM/CPU parsers also pass. These are cloud checks; live
-Windows version 5 verification remains pending.
+Windows version 5 subsequently passed, as recorded below.
+
+## User-reported version 5 success
+
+The user reported GameModuleIdentity=PASS with load bias 0x7f96c4e00000 and the
+expected build ID. Eight PT_LOADs, 28 window VMAs, and four fingerprints passed.
+The whole-file-sized mapping at 0x7f96b9e6b000 was rejected before selecting the
+second mapping. The outer scan visited 891 VMAs and the run used 10847 reads.
+Game identity and all cleanup steps passed. This establishes the version 5
+module checks on that live instance, not game object semantics. Version 6's
+metadata/registration evidence is in `GAME-LAYOUT-EVIDENCE.md`.

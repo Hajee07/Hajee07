@@ -157,4 +157,6 @@ enumerated. Plugin unload, handler cleanup, and shared-session release passed.
 This verifies the header-reading workflow on Windows. It does not identify a
 loaded module base: that VMA is the same size as the entire page-rounded APK
 library. Version 5's additional segment/fingerprint checks and static evidence
-are documented in `MODULE-EVIDENCE.md`. Live version 5 verification is pending.
+are documented in `MODULE-EVIDENCE.md`, which also records its subsequent live
+success. Exact metadata and registration recovery follows in
+`GAME-LAYOUT-EVIDENCE.md`; live version 6 registration verification is pending.

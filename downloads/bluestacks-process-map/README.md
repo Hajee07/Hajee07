@@ -7,14 +7,14 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Version 4 passed live kernel, process, and targeted IL2CPP header verification.**
-It finished after 808 VMAs and 8096 physical reads, with all cleanup steps passing.
-That first mapping is exactly the page-rounded size of the entire library file;
-an ELF header alone does not establish the loaded module's base. Version 5 checks
-the first-load boundary, all eight PT_LOAD segments, ELF tables, GNU build ID,
-and three code samples before reporting a layout-consistent load bias. Its live
-Windows run is pending. See `MODULE-EVIDENCE.md` for exact reference provenance.
-Entity/head/visibility layouts and aim-control writes remain unimplemented.
+**Version 5 passed live kernel, process, header, and module verification.** It
+selected the second IL2CPP mapping after rejecting the whole-file-sized mapping,
+verified all eight load segments and four fingerprints, and completed in 10847
+reads with successful cleanup. Version 6 adds registration/code verification for
+nine field and nine method candidates recovered from the exact APK metadata.
+Its live run is pending. See `GAME-LAYOUT-EVIDENCE.md` and `game-layout.json` for
+the recovery and its limits. Live player objects, head world positions, visibility
+semantics, and aim-control writes remain unimplemented/unverified.
 
 Extract the complete ZIP into a new folder. Start the Pie64 instance and Free
 Fire, leave the game running, and run in 64-bit Administrator Windows PowerShell:
@@ -28,7 +28,7 @@ endpoint displayed by BlueStacks. An explicit disconnected localhost endpoint
 is reconnected once and verified. Other devices are not selected automatically.
 The runner discovers the current host/game PIDs; old PIDs are not constants.
 
-The package checks DLL and all three runtime C# source digests, plus the exact
+The package checks DLL and all five runtime C# source digests, plus the exact
 loaded VMM fingerprint. It
 loads the same native DLL used in the successful probe, uses its read-only info
 handler, and unloads and releases its shared session in `finally`. The DLL bytes
@@ -87,6 +87,13 @@ Reaching the list end without a matching module is a failure. The core's separat
 `Libraries` and `ProbeLibrary` methods retain the previous enumeration/header
 workflows for offline regression checks; the Windows runner uses `ProbeModule`.
 
+The next stage verifies 80 registration/code references twice. It checks the
+runtime-relocated pointer values separately from raw data and compares selected
+field offsets, type descriptors, type sizes, and method/instruction bytes. These
+references come from the exact SHA-256-checked metadata and ELF inputs. It does
+not dereference player objects or call any game method. The global budgets are
+shared with the preceding scan; process identity is rechecked between rounds.
+
 The task scan is bounded to 2048 nodes and the VMA scan to 4096 nodes. Only the
 selected game's Unity/IL2CPP/metadata mapping names and ranges are logged. Game
 object contents are not printed. Multiple read calls are not an atomic snapshot;
@@ -97,21 +104,22 @@ game left running.
 
 A successful result includes `KernelIdentity=PASS`, `ProcessMap=PASS`, and
 `GameLibraryRead=PASS Name=libil2cpp.so Architecture=ARM64`, followed by
-`GameModuleIdentity=PASS`. The first three stages were observed on Windows with
-version 4. Module identity remains pending. The runner rechecks the ADB PID and
-process identity before reporting success.
+`GameModuleIdentity=PASS`, then `GameLayoutRegistration=PASS`. The first four
+stages were observed on Windows with version 5; the registration stage remains
+pending. The runner rechecks the ADB PID and process identity before success.
 Exit code 1 means a stage or cleanup failed.
 Share the complete `ResultFile` report even after a failure; individual stages
 remain distinguishable.
 
-See `LAYOUT-EVIDENCE.md` and `MODULE-EVIDENCE.md` for derivation and provenance.
+See `LAYOUT-EVIDENCE.md`, `MODULE-EVIDENCE.md`, and `GAME-LAYOUT-EVIDENCE.md` for
+derivation and provenance.
 The generated module reference contains only selected header/sample bytes and
 layout constants. No uploaded VDI, extracted kernel, full APK/library, or
 Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-Sixty-four checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+Seventy-two checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -138,6 +146,13 @@ incorrect tables/build ID/code/file offsets/names/gaps, detect changes during
 verification, and exercise the 128-VMA window boundary. The normal module fixture
 uses 681 reads and nine window VMAs; these are offline measurements. Reference
 generation reproduces identical bytes and rejects an incorrect source digest.
+
+Eight registration checks validate matching relocated data and reject altered
+field offsets, relative-RVA-as-pointer mistakes, method bytes, between-round
+changes, and process/profile mismatches. The registration fixture uses 1018
+reads. The metadata decoder validates all recovered records, reproduces the
+same JSON/C# reference, and passes five malformed-input checks. These checks do
+not establish live object layouts or aim behavior.
 
 Reproduce with the extracted ELF available locally:
 

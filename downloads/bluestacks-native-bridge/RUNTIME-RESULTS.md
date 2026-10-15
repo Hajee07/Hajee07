@@ -212,3 +212,21 @@ Sixty-four offline checks pass (46 reader/header plus 18 module checks). The
 reference generator reproduces its output and rejects the wrong source SHA-256.
 Live version 5 module verification remains pending. Entity/head/visibility
 mapping and aim updates remain unimplemented.
+
+## Process mapping version 5: user-reported Windows success
+
+The user reported GameModuleIdentity=PASS at load bias 0x7f96c4e00000, matching
+GNU build ID ee8bf32c4483429084fde022704ead01a94b6620. All eight load segments,
+28 window VMAs, and four fingerprints passed. The first whole-file-sized mapping
+was rejected. The outer scan visited 891 VMAs, inspected 238 file objects, and
+skipped 167 repeats. Total physical reads were 10847 with 1266 cache hits. Kernel
+identity, process identity (145 tasks visited), and all cleanup steps passed.
+
+Subsequent exact-APK metadata recovery validates 43624 types, 336350 methods,
+475669 fields, 278571 parameters, and 56 images. Native registration tables and
+method tokens identify nine selected field and nine method candidates. Version 6
+adds 80 registration/code comparisons in two rounds after module verification.
+Seventy-two offline C# checks and five metadata-negative checks pass; regenerated
+reference outputs match. Live version 6 verification remains pending. Player
+objects, head world positions, visibility semantics, and aim writes remain
+unimplemented/unverified. See the process probe's `GAME-LAYOUT-EVIDENCE.md`.

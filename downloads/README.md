@@ -18,8 +18,9 @@ The uploaded fastboot disk subsequently supplied the matching kernel image and
 87,332 recoverable kernel symbols. A [read-only process-mapping probe](bluestacks-process-map/README.md)
 now implements kernel identity checks, process page-table discovery, and a
 bounded ARM64 IL2CPP header read. Version 4 passed live kernel/process and final
-header verification after 808 VMAs and 8096 reads, with successful cleanup.
-Version 5 adds APK ELF segment-layout, build-ID, and code-sample verification to
-distinguish whole-file mappings from a layout-consistent module base. Sixty-four
-offline checks passed. Live module verification and entity/head/aim integration
-remain pending.
+header verification after 808 VMAs and 8096 reads. Version 5 subsequently passed
+live module segment/build-ID/code verification in 10847 reads, with cleanup.
+The exact metadata now yields validated type/method/field records and selected
+native registrations. Version 6 verifies nine field and nine method candidates
+against live memory. Seventy-two offline checks passed. Live registration checks,
+player-object/head-position integration, and aim updates remain pending.

@@ -1,0 +1,681 @@
+{
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_magic_version_decoded": [
+    "0x741425f2",
+    "0x8af82d7e"
+  ],
+  "counts": {
+    "types": 43624,
+    "methods": 336350,
+    "fields": 475669,
+    "parameters": 278571,
+    "images": 56,
+    "native_types": 103559,
+    "assembly_csharp_methods": 289444
+  },
+  "registration_rva": 173902528,
+  "code_module_rva": 172440168,
+  "classes": [
+    {
+      "name": "COW.GameFacade",
+      "type_index": 12418,
+      "field_count": 196,
+      "method_count": 631,
+      "instance_size": 16,
+      "static_size": 960
+    },
+    {
+      "name": "COW.GamePlay.Player",
+      "type_index": 31824,
+      "field_count": 1689,
+      "method_count": 4136,
+      "instance_size": 9328,
+      "static_size": 536
+    },
+    {
+      "name": "COW.MatchGame",
+      "type_index": 12425,
+      "field_count": 70,
+      "method_count": 212,
+      "instance_size": 592,
+      "static_size": 0
+    },
+    {
+      "name": "COW.GamePlay.JMAGGLCNGIG",
+      "type_index": 32133,
+      "field_count": 256,
+      "method_count": 551,
+      "instance_size": 1592,
+      "static_size": 40
+    }
+  ],
+  "fields": [
+    {
+      "owner": "COW.GameFacade",
+      "name": "CurrentGame",
+      "type": "GCommon.BaseGame",
+      "attributes": 22,
+      "storage": "static",
+      "offset": 0,
+      "metadata_index": 94527,
+      "local_index": 0,
+      "token": 67203392,
+      "offset_slot_rva": 28296908
+    },
+    {
+      "owner": "COW.GameFacade",
+      "name": "CurrentMatchGame",
+      "type": "COW.MatchGame",
+      "attributes": 22,
+      "storage": "static",
+      "offset": 8,
+      "metadata_index": 94528,
+      "local_index": 1,
+      "token": 67203393,
+      "offset_slot_rva": 28296912
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "name": "<AKKPEKIHGAH>k__BackingField",
+      "type": "UnityEngine.Quaternion",
+      "attributes": 1,
+      "storage": "instance",
+      "offset": 1556,
+      "metadata_index": 251697,
+      "local_index": 280,
+      "token": 67360562,
+      "offset_slot_rva": 27159076
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "name": "BANPEGJEAKE",
+      "type": "UnityEngine.Collider",
+      "attributes": 4,
+      "storage": "instance",
+      "offset": 1848,
+      "metadata_index": 251735,
+      "local_index": 318,
+      "token": 67360600,
+      "offset_slot_rva": 27159228
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "name": "LHICEKMGJOB",
+      "type": "GCommon.ITransformNode",
+      "attributes": 4,
+      "storage": "instance",
+      "offset": 2560,
+      "metadata_index": 251834,
+      "local_index": 417,
+      "token": 67360699,
+      "offset_slot_rva": 27159624
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "name": "NBIIBJBALJD",
+      "type": "GCommon.BitArrayBoolean",
+      "attributes": 4,
+      "storage": "instance",
+      "offset": 2768,
+      "metadata_index": 251926,
+      "local_index": 509,
+      "token": 67360791,
+      "offset_slot_rva": 27159992
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "name": "m_CurrentAimRotation",
+      "type": "UnityEngine.Quaternion",
+      "attributes": 6,
+      "storage": "instance",
+      "offset": 6796,
+      "metadata_index": 252636,
+      "local_index": 1219,
+      "token": 67361501,
+      "offset_slot_rva": 27162832
+    },
+    {
+      "owner": "COW.MatchGame",
+      "name": "m_Match",
+      "type": "COW.GamePlay.JMAGGLCNGIG",
+      "attributes": 4,
+      "storage": "instance",
+      "offset": 144,
+      "metadata_index": 94737,
+      "local_index": 0,
+      "token": 67203602,
+      "offset_slot_rva": 28297712
+    },
+    {
+      "owner": "COW.GamePlay.JMAGGLCNGIG",
+      "name": "MHJCLOPOBAA",
+      "type": "COW.GamePlay.Player",
+      "attributes": 4,
+      "storage": "instance",
+      "offset": 216,
+      "metadata_index": 255791,
+      "local_index": 30,
+      "token": 67364656,
+      "offset_slot_rva": 27173164
+    }
+  ],
+  "methods": [
+    {
+      "owner": "COW.GameFacade",
+      "name": "CurrentMatch",
+      "metadata_index": 35034,
+      "token": 100698331,
+      "rva": 119297084,
+      "pointer_slot_rva": 178075256,
+      "return_type": "COW.GamePlay.JMAGGLCNGIG",
+      "parameters": [],
+      "hotfix_index_candidate": 314
+    },
+    {
+      "owner": "COW.GameFacade",
+      "name": "CurrentLocalPlayer",
+      "metadata_index": 35044,
+      "token": 100698341,
+      "rva": 119298104,
+      "pointer_slot_rva": 178075336,
+      "return_type": "COW.GamePlay.Player",
+      "parameters": [],
+      "hotfix_index_candidate": 454
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "name": "get_HeadCollider",
+      "metadata_index": 210212,
+      "token": 100873509,
+      "rva": 116601820,
+      "pointer_slot_rva": 179476680,
+      "return_type": "UnityEngine.Collider",
+      "parameters": [],
+      "hotfix_index_candidate": 18273
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "name": "SetAimRotation",
+      "metadata_index": 210260,
+      "token": 100873557,
+      "rva": 116608704,
+      "pointer_slot_rva": 179477064,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "FMLGGLAFNEC",
+          "type": "UnityEngine.Quaternion"
+        },
+        {
+          "name": "KDCHOPMDKKE",
+          "type": "bool"
+        }
+      ],
+      "hotfix_index_candidate": 9762
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "name": "get_HeadBoneTransform",
+      "metadata_index": 210356,
+      "token": 100873653,
+      "rva": 116620260,
+      "pointer_slot_rva": 179477832,
+      "return_type": "UnityEngine.Transform",
+      "parameters": [],
+      "hotfix_index_candidate": 846
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "name": "IsVisible",
+      "metadata_index": 210384,
+      "token": 100873681,
+      "rva": 116623412,
+      "pointer_slot_rva": 179478056,
+      "return_type": "bool",
+      "parameters": [],
+      "hotfix_index_candidate": 138227
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "name": "IsLocalPlayer",
+      "metadata_index": 210540,
+      "token": 100873837,
+      "rva": 116390196,
+      "pointer_slot_rva": 179479304,
+      "return_type": "bool",
+      "parameters": [],
+      "hotfix_index_candidate": 299
+    },
+    {
+      "owner": "COW.MatchGame",
+      "name": "GetMatch",
+      "metadata_index": 35575,
+      "token": 100698872,
+      "rva": 120708680,
+      "pointer_slot_rva": 178079584,
+      "return_type": "COW.GamePlay.JMAGGLCNGIG",
+      "parameters": [],
+      "hotfix_index_candidate": 313
+    },
+    {
+      "owner": "COW.GamePlay.JMAGGLCNGIG",
+      "name": "IKKLCLKFBHM",
+      "metadata_index": 217502,
+      "token": 100880799,
+      "rva": 119580516,
+      "pointer_slot_rva": 179535000,
+      "return_type": "COW.GamePlay.Player",
+      "parameters": [],
+      "hotfix_index_candidate": 453
+    }
+  ],
+  "checks": [
+    {
+      "name": "code_module_name",
+      "rva": 172440168,
+      "target_rva": 26759414
+    },
+    {
+      "name": "code_module_name_bytes",
+      "rva": 26759414,
+      "hex": "417373656d626c792d4353686172702e646c6c00"
+    },
+    {
+      "name": "code_module_method_count",
+      "rva": 172440176,
+      "hex": "a46a040000000000"
+    },
+    {
+      "name": "code_module_method_table",
+      "rva": 172440184,
+      "target_rva": 177794984
+    },
+    {
+      "name": "registration_count_0",
+      "rva": 173902528,
+      "hex": "4b6c000000000000"
+    },
+    {
+      "name": "registration_table_0",
+      "rva": 173902536,
+      "target_rva": 172552048
+    },
+    {
+      "name": "registration_count_1",
+      "rva": 173902544,
+      "hex": "2953000000000000"
+    },
+    {
+      "name": "registration_table_1",
+      "rva": 173902552,
+      "target_rva": 173114456
+    },
+    {
+      "name": "registration_count_2",
+      "rva": 173902560,
+      "hex": "432e010000000000"
+    },
+    {
+      "name": "registration_table_2",
+      "rva": 173902568,
+      "target_rva": 32593204
+    },
+    {
+      "name": "registration_count_3",
+      "rva": 173902576,
+      "hex": "8794010000000000"
+    },
+    {
+      "name": "registration_table_3",
+      "rva": 173902584,
+      "target_rva": 174380784
+    },
+    {
+      "name": "registration_count_4",
+      "rva": 173902592,
+      "hex": "394d020000000000"
+    },
+    {
+      "name": "registration_table_4",
+      "rva": 173902600,
+      "target_rva": 30783112
+    },
+    {
+      "name": "registration_count_5",
+      "rva": 173902608,
+      "hex": "68aa000000000000"
+    },
+    {
+      "name": "registration_table_5",
+      "rva": 173902616,
+      "target_rva": 177012416
+    },
+    {
+      "name": "registration_count_6",
+      "rva": 173902624,
+      "hex": "68aa000000000000"
+    },
+    {
+      "name": "registration_table_6",
+      "rva": 173902632,
+      "target_rva": 177361408
+    },
+    {
+      "name": "COW.GameFacade.field_offsets",
+      "rva": 177111760,
+      "target_rva": 28296908
+    },
+    {
+      "name": "COW.GameFacade.type_sizes",
+      "rva": 177460752,
+      "target_rva": 29083932
+    },
+    {
+      "name": "COW.GameFacade.size_values",
+      "rva": 29083932,
+      "hex": "10000000ffffffffc003000000000000"
+    },
+    {
+      "name": "COW.GameFacade.CurrentGame.offset",
+      "rva": 28296908,
+      "hex": "00000000"
+    },
+    {
+      "name": "COW.GameFacade.CurrentGame.type",
+      "rva": 174579464,
+      "target_rva": 182107040
+    },
+    {
+      "name": "COW.GameFacade.CurrentGame.type_descriptor",
+      "rva": 182107040,
+      "hex": "aa8d00000000000016001200"
+    },
+    {
+      "name": "COW.GameFacade.CurrentMatchGame.offset",
+      "rva": 28296912,
+      "hex": "08000000"
+    },
+    {
+      "name": "COW.GameFacade.CurrentMatchGame.type",
+      "rva": 174731680,
+      "target_rva": 182399344
+    },
+    {
+      "name": "COW.GameFacade.CurrentMatchGame.type_descriptor",
+      "rva": 182399344,
+      "hex": "893000000000000016001200"
+    },
+    {
+      "name": "COW.GamePlay.Player.field_offsets",
+      "rva": 177267008,
+      "target_rva": 27157956
+    },
+    {
+      "name": "COW.GamePlay.Player.type_sizes",
+      "rva": 177616000,
+      "target_rva": 29394428
+    },
+    {
+      "name": "COW.GamePlay.Player.size_values",
+      "rva": 29394428,
+      "hex": "70240000ffffffff1802000000000000"
+    },
+    {
+      "name": "COW.GamePlay.Player.<AKKPEKIHGAH>k__BackingField.offset",
+      "rva": 27159076,
+      "hex": "14060000"
+    },
+    {
+      "name": "COW.GamePlay.Player.<AKKPEKIHGAH>k__BackingField.type",
+      "rva": 174768240,
+      "target_rva": 182039168
+    },
+    {
+      "name": "COW.GamePlay.Player.<AKKPEKIHGAH>k__BackingField.type_descriptor",
+      "rva": 182039168,
+      "hex": "14a000000000000001001180"
+    },
+    {
+      "name": "COW.GamePlay.Player.BANPEGJEAKE.offset",
+      "rva": 27159228,
+      "hex": "38070000"
+    },
+    {
+      "name": "COW.GamePlay.Player.BANPEGJEAKE.type",
+      "rva": 174616872,
+      "target_rva": 182179168
+    },
+    {
+      "name": "COW.GamePlay.Player.BANPEGJEAKE.type_descriptor",
+      "rva": 182179168,
+      "hex": "2ba800000000000004001200"
+    },
+    {
+      "name": "COW.GamePlay.Player.LHICEKMGJOB.offset",
+      "rva": 27159624,
+      "hex": "000a0000"
+    },
+    {
+      "name": "COW.GamePlay.Player.LHICEKMGJOB.type",
+      "rva": 174696240,
+      "target_rva": 182030368
+    },
+    {
+      "name": "COW.GamePlay.Player.LHICEKMGJOB.type_descriptor",
+      "rva": 182030368,
+      "hex": "c68d00000000000004001200"
+    },
+    {
+      "name": "COW.GamePlay.Player.NBIIBJBALJD.offset",
+      "rva": 27159992,
+      "hex": "d00a0000"
+    },
+    {
+      "name": "COW.GamePlay.Player.NBIIBJBALJD.type",
+      "rva": 174582344,
+      "target_rva": 182112320
+    },
+    {
+      "name": "COW.GamePlay.Player.NBIIBJBALJD.type_descriptor",
+      "rva": 182112320,
+      "hex": "048e00000000000004001200"
+    },
+    {
+      "name": "COW.GamePlay.Player.m_CurrentAimRotation.offset",
+      "rva": 27162832,
+      "hex": "8c1a0000"
+    },
+    {
+      "name": "COW.GamePlay.Player.m_CurrentAimRotation.type",
+      "rva": 174768256,
+      "target_rva": 182039200
+    },
+    {
+      "name": "COW.GamePlay.Player.m_CurrentAimRotation.type_descriptor",
+      "rva": 182039200,
+      "hex": "14a000000000000006001180"
+    },
+    {
+      "name": "COW.MatchGame.field_offsets",
+      "rva": 177111816,
+      "target_rva": 28297712
+    },
+    {
+      "name": "COW.MatchGame.type_sizes",
+      "rva": 177460808,
+      "target_rva": 29084044
+    },
+    {
+      "name": "COW.MatchGame.size_values",
+      "rva": 29084044,
+      "hex": "50020000ffffffff0000000000000000"
+    },
+    {
+      "name": "COW.MatchGame.m_Match.offset",
+      "rva": 28297712,
+      "hex": "90000000"
+    },
+    {
+      "name": "COW.MatchGame.m_Match.type",
+      "rva": 174705584,
+      "target_rva": 182348816
+    },
+    {
+      "name": "COW.MatchGame.m_Match.type_descriptor",
+      "rva": 182348816,
+      "hex": "857d00000000000004001200"
+    },
+    {
+      "name": "COW.GamePlay.JMAGGLCNGIG.field_offsets",
+      "rva": 177269480,
+      "target_rva": 27173044
+    },
+    {
+      "name": "COW.GamePlay.JMAGGLCNGIG.type_sizes",
+      "rva": 177618472,
+      "target_rva": 29399372
+    },
+    {
+      "name": "COW.GamePlay.JMAGGLCNGIG.size_values",
+      "rva": 29399372,
+      "hex": "38060000ffffffff2800000000000000"
+    },
+    {
+      "name": "COW.GamePlay.JMAGGLCNGIG.MHJCLOPOBAA.offset",
+      "rva": 27173164,
+      "hex": "d8000000"
+    },
+    {
+      "name": "COW.GamePlay.JMAGGLCNGIG.MHJCLOPOBAA.type",
+      "rva": 174762176,
+      "target_rva": 182038576
+    },
+    {
+      "name": "COW.GamePlay.JMAGGLCNGIG.MHJCLOPOBAA.type_descriptor",
+      "rva": 182038576,
+      "hex": "507c00000000000004001200"
+    },
+    {
+      "name": "COW.GameFacade.CurrentMatch.method_pointer",
+      "rva": 178075256,
+      "target_rva": 119297084
+    },
+    {
+      "name": "COW.GameFacade.CurrentMatch.entry",
+      "rva": 119297084,
+      "hex": "fe0f1ef8f44f01a913ef01b0686a5e3988010037c0ab01d0006040f9e13dc694"
+    },
+    {
+      "name": "COW.GameFacade.CurrentLocalPlayer.method_pointer",
+      "rva": 178075336,
+      "target_rva": 119298104
+    },
+    {
+      "name": "COW.GameFacade.CurrentLocalPlayer.entry",
+      "rva": 119298104,
+      "hex": "fe0f1ef8f44f01a913ef01b068925e3928010037c0ab01d0006040f9e23cc694"
+    },
+    {
+      "name": "COW.GamePlay.Player.get_HeadCollider.method_pointer",
+      "rva": 179476680,
+      "target_rva": 116601820
+    },
+    {
+      "name": "COW.GamePlay.Player.get_HeadCollider.entry",
+      "rva": 116601820,
+      "hex": "fe67bca9f85f01a9f65702a9f44f03a9930302d068da5c39f40300aa88010037"
+    },
+    {
+      "name": "COW.GamePlay.Player.SetAimRotation.method_pointer",
+      "rva": 179477064,
+      "target_rva": 116608704
+    },
+    {
+      "name": "COW.GamePlay.Player.SetAimRotation.entry",
+      "rva": 116608704,
+      "hex": "eb2bbc6de923016dfe5702a9f44f03a9950302b0a80a5d39f403012a681ca34e"
+    },
+    {
+      "name": "COW.GamePlay.Player.get_HeadBoneTransform.method_pointer",
+      "rva": 179477832,
+      "target_rva": 116620260
+    },
+    {
+      "name": "COW.GamePlay.Player.get_HeadBoneTransform.entry",
+      "rva": 116620260,
+      "hex": "fe57bea9f44f01a9740302d088825d39f30300aa28010037a0c00190006447f9"
+    },
+    {
+      "name": "COW.GamePlay.Player.IsVisible.method_pointer",
+      "rva": 179478056,
+      "target_rva": 116623412
+    },
+    {
+      "name": "COW.GamePlay.Player.IsVisible.entry",
+      "rva": 116623412,
+      "hex": "fe4fbfa9f30300aa607e83524000a072e1031faa75c8639440010036607e8352"
+    },
+    {
+      "name": "COW.GamePlay.Player.IsLocalPlayer.method_pointer",
+      "rva": 179479304,
+      "target_rva": 116390196
+    },
+    {
+      "name": "COW.GamePlay.Player.IsLocalPlayer.entry",
+      "rva": 116390196,
+      "hex": "fe4fbfa9f30300aa60258052e1031faa36ac64942001003660258052e1031faa"
+    },
+    {
+      "name": "COW.MatchGame.GetMatch.method_pointer",
+      "rva": 178079584,
+      "target_rva": 120708680
+    },
+    {
+      "name": "COW.MatchGame.GetMatch.entry",
+      "rva": 120708680,
+      "hex": "fe4fbfa9f30300aa20278052e1031faaf13254942001003620278052e1031faa"
+    },
+    {
+      "name": "COW.GamePlay.JMAGGLCNGIG.IKKLCLKFBHM.method_pointer",
+      "rva": 179535000,
+      "target_rva": 119580516
+    },
+    {
+      "name": "COW.GamePlay.JMAGGLCNGIG.IKKLCLKFBHM.entry",
+      "rva": 119580516,
+      "hex": "fe4fbfa9f30300aaa0388052e1031faaaa80589420010036a0388052e1031faa"
+    },
+    {
+      "name": "head_provider_load",
+      "rva": 116620368,
+      "hex": "740245f9740200b5"
+    },
+    {
+      "name": "visibility_provider_load",
+      "rva": 116623476,
+      "hex": "606a45f9e1031faafe4fc1a806044d14"
+    },
+    {
+      "name": "aim_setter_original_stores",
+      "rva": 116608988,
+      "hex": "6b1606bd6a1a06bd691e06bd682206bd"
+    },
+    {
+      "name": "match_field_load",
+      "rva": 120708736,
+      "hex": "604a40f9fe4fc1a8c0035fd6"
+    },
+    {
+      "name": "local_player_field_load",
+      "rva": 119580572,
+      "hex": "606e40f9fe4fc1a8c0035fd6"
+    }
+  ],
+  "limitations": [
+    "Custom metadata version is not identified.",
+    "Fields and methods are static candidates until runtime registration checks pass.",
+    "Player objects, world-space head positions, line-of-sight semantics and aim execution remain unverified.",
+    "Hotfix dispatch is present; original-code paths are not guaranteed to be active."
+  ]
+}
