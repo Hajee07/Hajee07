@@ -247,3 +247,20 @@ weakening comparisons or following observed pointers. It still fails on any
 mismatch and immediately stops on read/translation/identity/budget errors.
 79 offline C# checks pass. The V7 Windows report is required to diagnose the
 mismatch; active objects, head world positions, and aim updates remain pending.
+
+## Process mapping version 7: stable descriptor pointer representation
+
+User-reported PID 6053 was found after 152 tasks. InitialActiveMM=0 was accepted
+as the valid idle-task state. Kernel/process/module verification passed: eight
+load segments, 16 window VMAs and four fingerprints. The outer scan visited 840
+VMAs, inspected 196 files and skipped 167 repeats. PhysicalReadCalls=10636,
+TranslationCacheHits=1241. All cleanup steps passed.
+
+Both comparison rounds matched 71 checks and differed on exactly nine type
+descriptors, with no changes between rounds. The descriptors' four flag/kind
+bytes match, while their eight-byte payloads are addresses. All nine resolve to
+one metadata base via the exact type-index/88-byte-stride relationship documented
+in GAME-LAYOUT-EVIDENCE.md. V8 corrects the representation check by requiring
+exact header and record contents at these derived addresses, not merely plausible
+pointers. 89 offline checks pass. V8 target reads remain unverified on Windows;
+player objects, head world positions, and aim writes remain incomplete.

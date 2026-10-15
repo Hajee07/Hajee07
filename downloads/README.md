@@ -25,7 +25,8 @@ native registrations. Version 6 verifies nine field and nine method candidates
 against live memory. Seventy-two offline checks passed. Live registration checks,
 player-object/head-position integration, and aim updates remain pending.
 
-Version 6 subsequently passed module verification but failed the first type
-descriptor comparison. Version 7 retains the comparisons and reports bounded
-expected/actual bytes across both rounds; 79 offline checks pass. The runtime
-mismatch cause remains unresolved until the diagnostic report is available.
+Version 7 isolated nine stable type-descriptor differences while the other 71
+checks matched. Every differing payload points into one candidate metadata type
+table. Version 8 checks the descriptor flags, derived metadata base, exact header
+and complete type records. 89 offline checks pass; live version 8 verification
+and player/head/aim integration remain pending.

@@ -1,6 +1,10 @@
 {
   "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
   "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_header_hex": "f22514747e2df88a00010000403b0600403c06005457180094931e0064e4f400f877130198130000908b13013ce90700cc741b01b04acd007cbfe801d05d02004c1deb018c502900d86d14020cc73400e4344902983f04007c744d020402330080768002fc1857007c8fd702007e00007c0dd802900a00000c18d802e0690000ec81d802ecbb0000d83dd90204860000dcc3d902f05f2e00cc230803c0c004008ce40c03c0933a004c784703c00800000c814703000e00000c8f4703602100006cb04703e804000054b5470374481200c8fd5903205d0a00e85a6403308a000018e56403a8570000c03c650300000000c03c650300000000c03c650344220000",
+  "metadata_size": 56975108,
+  "type_definitions_offset": 51176588,
+  "type_definition_stride": 88,
   "metadata_magic_version_decoded": [
     "0x741425f2",
     "0x8af82d7e"
@@ -389,7 +393,9 @@
     {
       "name": "COW.GameFacade.CurrentGame.type_descriptor",
       "rva": 182107040,
-      "hex": "aa8d00000000000016001200"
+      "hex": "aa8d00000000000016001200",
+      "type_definition_index": 36266,
+      "type_definition_hex": "f0906500c528650000610000ffffffff9eb4000000610000ffffffff81001000e84804007a0c0400ffffffffc43e000008260000ffffffff6f4d0a00ffffffff740009001a0000000200430000000000080c0000a98d0002"
     },
     {
       "name": "COW.GameFacade.CurrentMatchGame.offset",
@@ -404,7 +410,9 @@
     {
       "name": "COW.GameFacade.CurrentMatchGame.type_descriptor",
       "rva": 182399344,
-      "hex": "893000000000000016001200"
+      "hex": "893000000000000016001200",
+      "type_definition_index": 12425,
+      "type_definition_hex": "6f6d1d00f4fa0f0053ab0000ffffffff0b66000053ab0000ffffffff8000100011720100eb8a0000ffffffffbf0600001a080000ffffffffdeb60100ffffffffd4000b004600000002006e0000000000000c000088300002"
     },
     {
       "name": "COW.GamePlay.Player.field_offsets",
@@ -434,7 +442,9 @@
     {
       "name": "COW.GamePlay.Player.<AKKPEKIHGAH>k__BackingField.type_descriptor",
       "rva": 182039168,
-      "hex": "14a000000000000001001180"
+      "hex": "14a000000000000001001180",
+      "type_definition_index": 40980,
+      "type_definition_hex": "e95b03009b64ee002fbd0000ffffffffbb1901002fbd0000ffffffff090110005b1807000dd80400ffffffff2f560000ffffffff391e0000ec380b00888d00002f000300060000000000060002000200190c000016010002"
     },
     {
       "name": "COW.GamePlay.Player.BANPEGJEAKE.offset",
@@ -449,7 +459,9 @@
     {
       "name": "COW.GamePlay.Player.BANPEGJEAKE.type_descriptor",
       "rva": 182179168,
-      "hex": "2ba800000000000004001200"
+      "hex": "2ba800000000000004001200",
+      "type_definition_index": 43051,
+      "type_definition_hex": "678d00009b64ee0044730000ffffffff4174000044730000ffffffff01001000ffffffff8f150500ffffffff53620000ffffffffffffffff60860b00ffffffff0e000600000000000000040000000000000c000013000002"
     },
     {
       "name": "COW.GamePlay.Player.LHICEKMGJOB.offset",
@@ -464,7 +476,9 @@
     {
       "name": "COW.GamePlay.Player.LHICEKMGJOB.type_descriptor",
       "rva": 182030368,
-      "hex": "c68d00000000000004001200"
+      "hex": "c68d00000000000004001200",
+      "type_definition_index": 36294,
+      "type_definition_hex": "dda66500c5286500069a0000ffffffffffffffff069a0000ffffffffa1000000ffffffffd60d0400ffffffffeb3e0000ffffffffffffffffffffffffffffffff01000100000000000000000000000000000c0000c78d0002"
     },
     {
       "name": "COW.GamePlay.Player.NBIIBJBALJD.offset",
@@ -479,7 +493,9 @@
     {
       "name": "COW.GamePlay.Player.NBIIBJBALJD.type_descriptor",
       "rva": 182112320,
-      "hex": "048e00000000000004001200"
+      "hex": "048e00000000000004001200",
+      "type_definition_index": 36356,
+      "type_definition_hex": "6eda6500c528650069620000ffffffff5f62000069620000ffffffff01001000ad4b040042100400ffffffffffffffff1e260000ffffffffd9500a00ffffffff09000000020000000100040000000000000c0000048e0002"
     },
     {
       "name": "COW.GamePlay.Player.m_CurrentAimRotation.offset",
@@ -494,7 +510,9 @@
     {
       "name": "COW.GamePlay.Player.m_CurrentAimRotation.type_descriptor",
       "rva": 182039200,
-      "hex": "14a000000000000006001180"
+      "hex": "14a000000000000006001180",
+      "type_definition_index": 40980,
+      "type_definition_hex": "e95b03009b64ee002fbd0000ffffffffbb1901002fbd0000ffffffff090110005b1807000dd80400ffffffff2f560000ffffffff391e0000ec380b00888d00002f000300060000000000060002000200190c000016010002"
     },
     {
       "name": "COW.MatchGame.field_offsets",
@@ -524,7 +542,9 @@
     {
       "name": "COW.MatchGame.m_Match.type_descriptor",
       "rva": 182348816,
-      "hex": "857d00000000000004001200"
+      "hex": "857d00000000000004001200",
+      "type_definition_index": 32133,
+      "type_definition_hex": "b8175b00c6f75700969e0000ffffffff9eb40000969e0000ffffffff0000100011e70300fe500300ffffffffd7310000ea210000ffffffff6f300800ffffffff27025500000100001f00090000000000080c0000677d0002"
     },
     {
       "name": "COW.GamePlay.JMAGGLCNGIG.field_offsets",
@@ -554,7 +574,9 @@
     {
       "name": "COW.GamePlay.JMAGGLCNGIG.MHJCLOPOBAA.type_descriptor",
       "rva": 182038576,
-      "hex": "507c00000000000004001200"
+      "hex": "507c00000000000004001200",
+      "type_definition_index": 31824,
+      "type_definition_hex": "474e0000c6f7570037ba0000ffffffff1f5c000037ba0000ffffffff0000100019d6030085330300ffffffffe02d000005210000f7150000dc1808004a6200002810ca0299060000b500b00106000900080c00009b7b0002"
     },
     {
       "name": "COW.GameFacade.CurrentMatch.method_pointer",

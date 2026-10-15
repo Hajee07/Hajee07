@@ -19,8 +19,10 @@ namespace HeadBridge.Mapping.Tests
             internal readonly Dictionary<ulong, ulong> Pages = new Dictionary<ulong, ulong>();
             internal readonly List<string> Progress = new List<string>();
             private ulong next = 0x8000000;
-            internal Fixture()
+            internal readonly ulong MetadataRva;
+            internal Fixture(ulong metadataRva = 0x20000000UL)
             {
+                MetadataRva = metadataRva;
                 const ulong k = 0xffff888000000000;
                 Memory.Map4K(0x1000, k + 0x1000, 0x101000);
                 Memory.Map4K(0x1000, k + 0x3000, 0x103000);
@@ -29,7 +31,20 @@ namespace HeadBridge.Mapping.Tests
                 Memory.Put64(0x1014c0, Game.Mm); Memory.Write(0x101570, BitConverter.GetBytes(Game.Pid));
                 Memory.Write(0x101720, Encoding.ASCII.GetBytes(Game.Name + "\0")); Memory.Put64(0x103050, Game.PgdVirtual);
                 foreach (GameLayoutCheck check in GameLayoutReference.Checks) Put(check.Address, check.Expected(Module.LoadBias));
+                Put(MetadataRva, Reader.Hex(GameLayoutReference.MetadataHeaderHex));
+                foreach (GameLayoutCheck check in GameLayoutReference.Checks)
+                    if (check.TypeDefinitionIndex >= 0)
+                    {
+                        Put(check.Address, DescriptorBytes(check, MetadataRva));
+                        Put(MetadataRva + GameLayoutReference.TypeDefinitionsOffset + (ulong)check.TypeDefinitionIndex * 88UL, Reader.Hex(check.TypeDefinitionHex));
+                    }
                 Reader = new Reader(Memory.Transport, new RamRange[] { new RamRange(0, 0xffffffff) });
+            }
+            internal byte[] DescriptorBytes(GameLayoutCheck check, ulong metadataRva)
+            {
+                byte[] bytes = check.Expected(Module.LoadBias);
+                BitConverter.GetBytes(Module.LoadBias + metadataRva + GameLayoutReference.TypeDefinitionsOffset + (ulong)check.TypeDefinitionIndex * 88UL).CopyTo(bytes, 0);
+                return bytes;
             }
             internal void Put(ulong rva, byte[] data)
             {
@@ -100,6 +115,37 @@ namespace HeadBridge.Mapping.Tests
             try { descriptors.Reader.VerifyGameLayout(descriptors.Kernel, descriptors.Game, descriptors.Module, null); }
             catch (InvalidOperationException error) { nullRejected = error.Message.Contains("Layout registration mismatch"); }
             Assert(nullRejected, "omitting the diagnostic callback cannot turn mismatches into success");
+            Assert(result.TypeDescriptors == 9 && result.RuntimeMetadataBase == good.Module.LoadBias + good.MetadataRva,
+                "resolved descriptors verify all nine exact records against a shared metadata base");
+            Fixture relocated = new Fixture(0x30000000UL); GameLayoutResult relocatedResult = relocated.Run();
+            Assert(relocatedResult.RuntimeMetadataBase == relocated.Module.LoadBias + relocated.MetadataRva,
+                "metadata base is derived from runtime descriptors instead of hardcoded");
+            Fixture unresolved = new Fixture(); unresolved.Put(descriptor.Address, descriptor.Expected(unresolved.Module.LoadBias));
+            Reject(unresolved, "INVALID_METADATA_POINTER", "on-disk type indexes cannot pass as resolved runtime descriptors");
+            Fixture flags = new Fixture(); byte[] flagged = flags.DescriptorBytes(descriptor, flags.MetadataRva); flagged[8] ^= 1; flags.Put(descriptor.Address, flagged);
+            Reject(flags, "DESCRIPTOR_FLAGS", "descriptor attributes remain exact despite accepting runtime pointers");
+            Fixture badHeader = new Fixture(); badHeader.Put(badHeader.MetadataRva, new byte[] { 0 });
+            Reject(badHeader, "METADATA_HEADER", "a plausible pointer cannot bypass exact metadata header verification");
+            Fixture badRecord = new Fixture(); ulong recordRva = badRecord.MetadataRva + GameLayoutReference.TypeDefinitionsOffset + (ulong)descriptor.TypeDefinitionIndex * 88UL;
+            byte[] row = Reader.Hex(descriptor.TypeDefinitionHex); row[87] ^= 1; badRecord.Put(recordRva, row);
+            Reject(badRecord, "TYPE_RECORD", "all 88 type-record bytes are checked including the last byte");
+            Assert(badRecord.Progress.Exists(delegate(string line) { return line.Contains("TypeMetadataDifference") && line.Contains("Offset=87 Bytes=1"); }),
+                "record mismatch diagnostics report a bounded sample at the actual difference");
+            Fixture inconsistent = new Fixture(); GameLayoutCheck later = null;
+            foreach (GameLayoutCheck check in GameLayoutReference.Checks)
+                if (check.TypeDefinitionIndex >= 0 && check != descriptor) { later = check; break; }
+            inconsistent.Put(later.Address, inconsistent.DescriptorBytes(later, 0x30000000UL));
+            Reject(inconsistent, "INCONSISTENT_METADATA_BASE", "descriptors cannot point into different metadata tables");
+            Fixture moving = new Fixture(); ulong descriptorPhysical = moving.Physical(descriptor.Address); bool moved = false;
+            moving.Memory.AfterRead = delegate(ulong address, int length)
+            {
+                if (!moved && address == descriptorPhysical && length == 12)
+                { moving.Put(descriptor.Address, descriptor.Expected(moving.Module.LoadBias)); moved = true; }
+            };
+            Reject(moving, "DESCRIPTOR_CHANGED_DURING_READ", "descriptor pointer is reread after checking its target record");
+            Fixture kernelPointer = new Fixture(); byte[] kernelBytes = kernelPointer.DescriptorBytes(descriptor, kernelPointer.MetadataRva);
+            BitConverter.GetBytes(0xffff888000001000UL).CopyTo(kernelBytes, 0); kernelPointer.Put(descriptor.Address, kernelBytes);
+            Reject(kernelPointer, "INVALID_METADATA_POINTER", "kernel addresses cannot be followed as user metadata pointers");
             Console.WriteLine("LAYOUT_TOTAL=" + count + " (synthetic memory with recovered registration references)");
         }
     }

@@ -151,3 +151,48 @@ Reproduce the static report/reference:
 ```sh
 python3 Recover-GameLayout.py /path/to/libil2cpp.so /path/to/global-metadata.dat output-directory
 ```
+
+## Version 7 observation and version 8 correction
+
+The user reported 71 matches and nine mismatches in each round, with zero
+between-round changes. All nine mismatches concern only the first eight bytes
+of an Il2CppType descriptor; the four attribute/kind bytes match. The observed
+payloads have this exact relationship to the decoded type-definition indexes:
+
+| Type index | Observed payload (pointer) |
+| --- | --- |
+| 0x8daa | 0x7f96e89836fc |
+| 0x3089 | 0x7f96e87833a4 |
+| 0xa014 | 0x7f96e89e8b6c (two Quaternion descriptors) |
+| 0xa82b | 0x7f96e8a15354 |
+| 0x8dc6 | 0x7f96e898409c |
+| 0x8e04 | 0x7f96e89855ec |
+| 0x7d85 | 0x7f96e892aa44 |
+| 0x7c50 | 0x7f96e892400c |
+
+For every row, `payload - index * 88 = 0x7f96e867848c`. Subtracting the exact
+metadata type-table file offset `0x30ce48c` gives candidate metadata base
+`0x7f96e55aa000`. This explains why comparing the on-disk index to these runtime
+addresses fails. These are observations from one run, never runtime constants.
+Target header/record contents were not read by v7 and remain pending validation.
+
+V8 replaces the nine raw descriptor comparisons with representation-aware
+checks: four exact flag/kind bytes; a bounded, aligned user pointer; one shared
+derived metadata base across all descriptors and both rounds; the full decoded
+256-byte header; and each exact 88-byte type record. It rereads the descriptor
+after its target. Other 71 comparisons remain exact. Metadata targets use the
+same virtual-read translation rechecks, verified RAM ranges, process identity
+rechecks, 30,000-call and 120-second budgets. Invalid references, unresolved
+indexes, inconsistent bases, changed descriptors and mismatching target bytes
+fail. No pointer is followed into a player object and no memory is written.
+
+The generated report now includes the metadata header, file size and type-table
+offset, plus the nine selected records. Reproduction still checks both complete
+input SHA-256 values. A live PASS means these sampled records and references
+match, not that all live metadata was hashed or that a player/head mapping works.
+
+89 offline C# checks pass: 46 reader/header, 18 module and 25 registration.
+The valid metadata fixture uses 1324 reads. Ten added assertions cover runtime
+metadata validation, relocation, unresolved indexes, changed flags/header/last
+record byte, bounded difference output, inconsistent bases, changing descriptors
+and kernel pointers. Version 8 still needs a Windows run on the user's instance.
