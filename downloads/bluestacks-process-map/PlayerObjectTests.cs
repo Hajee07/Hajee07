@@ -68,6 +68,10 @@ namespace HeadBridge.Mapping.Tests
                 Put(Interfaces, new byte[16]); U64(Interfaces, Class(36294)); U64(Class(36295) + 0x138, Module.LoadBias + 0x8259e90);
                 foreach (GameLayoutCheck a in NativeTransformReference.Il2CppAnchors) Put(Module.LoadBias + a.Address, a.Expected(Module.LoadBias));
                 U64(Module.LoadBias + 0xafb9e00, 0); U64(Module.LoadBias + 0xafb9e10, 0);
+                U64(Match+0x128,0);
+                foreach(GameLayoutCheck a in RosterReference.Anchors) Put(Module.LoadBias+a.Address,a.Expected(Module.LoadBias));
+                U32(Module.LoadBias+RosterReference.FieldOffsetRva,0x128); U32(Module.LoadBias+RosterReference.FieldTypeRva+8,0x150004);
+                Put(Layout.RuntimeMetadataBase+RosterReference.FieldMetadataOffset,Reader.Hex(RosterReference.FieldRecordHex));
                 Reader = new Reader(Memory.Transport, new RamRange[] { new RamRange(0, 0xffffffff) });
             }
             internal const ulong Model = 0x4a010000, DictionaryClass = 0x4b000000, Dictionary = 0x4b010000, Generic = 0x4c000000,
@@ -126,9 +130,38 @@ namespace HeadBridge.Mapping.Tests
                 U64(Arguments, StringType); U64(Arguments + 8, ValueType); U32(StringType + 8, 0xe0000);
                 U32(ValueType + 8, 0x120000); U64(ValueType, Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + 31705UL * 88UL);
                 U32(StringClass + 0x28, 0xe0000); U64(Key, StringClass); U32(Key + 0x10, 9); Put(Key + 0x14, Reader.Hex(ObjectReference.HeadKeyUtf16Hex));
-                U32(Dictionary + 0x20, 1); U32(Dictionary + 0x24, 1); U64(Dictionary + 0x18, Entries); U64(Entries, 0x4f100000); U64(Entries + 0x18, 1);
+                U32(Dictionary + 0x20, 1); U32(Dictionary + 0x24, 0xffffffff); U32(Dictionary + 0x28,0); U32(Dictionary + 0x2c,1); U64(Dictionary + 0x18, Entries); U64(Entries, 0x4f100000); U64(Entries + 0x18, 1);
                 Put(Entries + 0x20, new byte[24]); U32(Entries + 0x20, 1234); U32(Entries + 0x24, 0xffffffff); U64(Entries + 0x28, Key); U64(Entries + 0x30, Provider);
                 U64(Provider, Class(31705)); U64(Class(31705) + 0xb0, Interfaces); U64(Class(31705) + 0x138, Module.LoadBias + 0x70e0ba8);
+            }
+            internal const ulong RDict=0x56000000,RClass=0x56010000,REntries=0x56020000,RArrayClass=0x56030000,REntryClass=0x56040000,
+                RGeneric=0x56050000,REntryGeneric=0x56060000,RDefinition=0x56070000,REntryDefinition=0x56080000,RInst=0x56090000,
+                RArgs=0x560a0000,RKeyType=0x560b0000,RValueType=0x560c0000,RElement=0x560d0000,Other=0x57000000;
+            private void RGenericClass(ulong klass,ObjectClassProfile profile,int kind,ulong generic,ulong definition,uint size)
+            {
+                MetadataIdentity(klass,profile); U64(klass+0x60,generic);U64(klass+0x20,generic);U32(klass+0x28,0x150000);U32(klass+0xf8,size);
+                U64(generic,definition);U64(generic+8,RInst);U64(generic+0x10,0);U64(generic+0x18,klass);
+                U64(definition,Layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset+(ulong)profile.Index*88UL);U32(definition+8,(uint)kind<<16);
+            }
+            internal void REntry(int index,ulong value)
+            {
+                byte[] bytes=new byte[40];System.Array.Copy(BitConverter.GetBytes(1),0,bytes,0,4);
+                System.Array.Copy(BitConverter.GetBytes(-1),0,bytes,4,4);System.Array.Copy(BitConverter.GetBytes((ulong)(index+1)),0,bytes,8,8);
+                System.Array.Copy(BitConverter.GetBytes(value),0,bytes,32,8);Put(REntries+0x20UL+(ulong)index*40UL,bytes);
+            }
+            internal void SetupRoster()
+            {
+                U64(Match+0x128,RDict);U64(RDict,RClass);
+                RGenericClass(RClass,RosterReference.Dictionary,0x12,RGeneric,RDefinition,80);
+                RGenericClass(REntryClass,RosterReference.Entry,0x11,REntryGeneric,REntryDefinition,56);
+                MetadataIdentity(0x560e0000,RosterReference.Key);
+                U64(Module.LoadBias+RosterReference.FieldTypeRva,RGeneric);U32(RInst,2);U64(RInst+8,RArgs);U64(RArgs,RKeyType);U64(RArgs+8,RValueType);
+                U64(RKeyType,Layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset+34565UL*88UL);U32(RKeyType+8,0x80110000);
+                U64(RValueType,Layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset+31824UL*88UL);U32(RValueType+8,0x120000);
+                U64(RDict+0x18,REntries);U32(RDict+0x20,2);U32(RDict+0x24,0xffffffff);U32(RDict+0x28,0);U32(RDict+0x2c,1);
+                U64(REntries,RArrayClass);U64(REntries+0x18,2);U64(RArrayClass+0x78,RArrayClass);U32(RArrayClass+0x28,0x1d0000);
+                U64(RArrayClass+0x40,REntryClass);U64(RArrayClass+0x20,RElement);U64(RElement,REntryGeneric);U32(RElement+8,0x80150000);
+                REntry(0,Player);REntry(1,Other);U64(Other,Class(32360));Put(Other+0x420,new byte[]{0});
             }
             internal void Put(ulong address, byte[] bytes)
             {
@@ -156,6 +189,11 @@ namespace HeadBridge.Mapping.Tests
             Check(result.HeadStatus == "MANAGED_TRANSFORM_VERIFIED" && result.HeadWorldStatus == "FAIL" &&
                 result.HeadWorldError.IndexOf(message, StringComparison.OrdinalIgnoreCase) >= 0,
                 label + " Detail=" + result.HeadWorldError);
+        }
+        private static void RosterFailure(Action<Fixture> change,string message,string label)
+        {
+            Fixture f=new Fixture();f.SetupRoster();change(f);PlayerObjectResult result=f.Run();
+            Check(result.HeadStatus=="MANAGED_TRANSFORM_VERIFIED" && result.RosterStatus=="FAIL" && result.RosterError.Contains(message),label+" Detail="+result.RosterError);
         }
         public static void Run()
         {
@@ -261,7 +299,7 @@ namespace HeadBridge.Mapping.Tests
                 wrongArgument.Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + 31824UL * 88UL);
             Reject(wrongArgument, "value must be BFOONIGAIFK", "closed generic dictionary arguments must match the exact declared cache type");
             Fixture cacheChanged = new Fixture(); cacheChanged.SetupHeadCache(); ulong chars = cacheChanged.Physical(Fixture.Key + 0x14);
-            cacheChanged.Memory.AfterRead = delegate(ulong address, int length) { if (address == chars && length == 18) cacheChanged.U32(Fixture.Dictionary + 0x24, 2); };
+            cacheChanged.Memory.AfterRead = delegate(ulong address, int length) { if (address == chars && length == 18) cacheChanged.U32(Fixture.Dictionary + 0x2c, 2); };
             Reject(cacheChanged, "final recheck", "dictionary version changes invalidate the lookup result");
             Fixture lookupPatch = new Fixture(); lookupPatch.SetupHeadCache(); lookupPatch.U64(Fixture.Array + 0x18, 0x30000);
             lookupPatch.U64(Fixture.Array + 0x20UL + 0x21f1aUL * 8UL, 0x50000000);
@@ -362,8 +400,53 @@ namespace HeadBridge.Mapping.Tests
             Check(general.HeadWorldStatus=="SAMPLED_READ_ONLY" && Math.Abs(general.HeadWorldX-expected[0])<0.0001 &&
                 Math.Abs(general.HeadWorldY-expected[1])<0.0001 && Math.Abs(general.HeadWorldZ-expected[2])<0.0001,
                 "native SIMD reproduction agrees with an independent general quaternion matrix oracle");
+            Fixture roster=new Fixture();roster.SetupRoster();PlayerObjectResult players=roster.Run();
+            Check(players.RosterStatus=="TYPED_COLLECTION_VERIFIED" && players.RosterLocalPresent && players.RosterCandidates==2 &&
+                players.MatchPlayers.Length==2 && players.RosterOtherVerified==1 && players.MatchPlayers[1].Class=="COW.GamePlay.PlayerNetwork" && players.RosterComplete,
+                "typed match dictionary verifies local and other Player objects with exact generic context and entry stride");
+            Check(roster.Reader.PhysicalCalls<8000 && players.RosterObservations<1024,"bounded roster sampling shares the existing Reader and snapshot limits");
+            Check(new Fixture().Run().RosterStatus=="NOT_READY_COLLECTION_NULL","missing match collection is reported without initialization");
+            Fixture empty=new Fixture();empty.SetupRoster();empty.U32(Fixture.RDict+0x20,0);
+            Check(empty.Run().RosterStatus=="EMPTY","an empty typed collection does not require an allocated entry array");
+            Fixture rosterPatched=new Fixture();rosterPatched.SetupRoster();rosterPatched.U64(Fixture.Array+0x20UL+0x1bfUL*8UL,Fixture.Other);
+            Check(rosterPatched.Run().RosterStatus=="HOTFIX_ACTIVE_COLLECTION_GETTER","active collection getter hotfix prevents following the original field path");
+            RosterFailure(delegate(Fixture f){ f.U64(Fixture.RValueType,f.Layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset+32133UL*88UL); },
+                "value must be Player","collection value generic argument must be the exact Player definition");
+            RosterFailure(delegate(Fixture f){ f.U32(Fixture.REntryClass+0xf8,48); },"entry runtime size","entry stride is checked against the runtime closed value-type size");
+            RosterFailure(delegate(Fixture f){ f.U32(Fixture.RArrayClass+0x28,0x150000); },"entry array identity","an arbitrary object cannot substitute for the entry array");
+            RosterFailure(delegate(Fixture f){ f.U64(Fixture.REntries+0x18,1); },"entry-array capacity","entry array must cover all used slots");
+            RosterFailure(delegate(Fixture f){ f.U32(Fixture.RDict+0x20,257); },"used/free bound","roster scan is capped at 256 used entries");
+            RosterFailure(delegate(Fixture f){ f.U32(Fixture.RDict+0x28,1); },"removed count","observed removed entries must agree with the dictionary free count");
+            RosterFailure(delegate(Fixture f){ f.U32(Fixture.REntries+0x24,9); },"entry link bound","active entry chain indices remain bounded");
+            RosterFailure(delegate(Fixture f){ f.U64(Fixture.REntries+0x40,8); },"roster Player candidate","noncanonical or low candidate addresses fail before dereference");
+            RosterFailure(delegate(Fixture f){ f.U64(Fixture.Other,Fixture.Class(32133)); },"object family","collection values must be supported Player objects");
+            RosterFailure(delegate(Fixture f){ f.Put(Fixture.Other+0x420,new byte[]{1}); },"local-player marker","an additional locally marked object is not silently treated as another player");
+            Fixture removedRoster=new Fixture();removedRoster.SetupRoster();removedRoster.U32(Fixture.REntries+0x20,0xffffffff);removedRoster.U32(Fixture.RDict+0x28,1);
+            PlayerObjectResult removedPlayers=removedRoster.Run();
+            Check(removedPlayers.RosterStatus=="TYPED_COLLECTION_VERIFIED" && removedPlayers.RosterRemoved==1 && !removedPlayers.RosterLocalPresent && removedPlayers.RosterOtherVerified==1,
+                "removed slots are ignored and local membership is observed rather than assumed for this collection");
+            Fixture nullValue=new Fixture();nullValue.SetupRoster();nullValue.REntry(1,0);PlayerObjectResult nullPlayers=nullValue.Run();
+            Check(nullPlayers.RosterStatus=="TYPED_COLLECTION_VERIFIED" && nullPlayers.RosterNullValues==1 && nullPlayers.RosterCandidates==1,
+                "null active values are counted without being promoted to Player objects");
+            Fixture duplicateRoster=new Fixture();duplicateRoster.SetupRoster();duplicateRoster.REntry(1,Fixture.Player);PlayerObjectResult duplicatePlayers=duplicateRoster.Run();
+            Check(duplicatePlayers.RosterStatus=="TYPED_COLLECTION_VERIFIED" && duplicatePlayers.RosterCandidates==1 && duplicatePlayers.RosterActive==2,
+                "repeated value pointers are deduplicated without equating entry count to unique players");
+            RosterFailure(delegate(Fixture f){ ulong at=f.Physical(Fixture.REntries+0x20);f.Memory.AfterRead=delegate(ulong p,int n){if(p==at && n==80)f.U32(Fixture.RDict+0x2c,2);}; },
+                "final recheck","actual dictionary version changes reject the roster snapshot");
+            RosterFailure(delegate(Fixture f){ ulong at=f.Physical(Fixture.REntries+0x20);f.Memory.AfterRead=delegate(ulong p,int n){if(p==at && n==80)f.U64(Fixture.Array+0x20UL+0x1bfUL*8UL,Fixture.Other);}; },
+                "final recheck","collection getter hotfix changes during the snapshot are detected");
+            Fixture many=new Fixture();many.SetupRoster();many.U32(Fixture.RDict+0x20,20);many.U64(Fixture.REntries+0x18,20);
+            for(int i=1;i<20;i++){ulong address=Fixture.Other+(ulong)(i-1)*4096UL;many.U64(address,Fixture.Class(32360));many.Put(address+0x420,new byte[]{0});many.REntry(i,address);}
+            PlayerObjectResult rosterBounded=many.Run();
+            Check(rosterBounded.RosterStatus=="TYPED_COLLECTION_VERIFIED" && rosterBounded.RosterCandidates==20 && rosterBounded.MatchPlayers.Length==16 &&
+                rosterBounded.RosterOtherVerified==15 && !rosterBounded.RosterComplete && rosterBounded.MatchPlayers[0].IsLocal,
+                "at most sixteen unique Player objects are verified and remaining candidates are reported as incomplete");
+            Fixture staged=new Fixture();staged.SetupNative();staged.SetupRoster();staged.U32(Fixture.REntryClass+0xf8,48);PlayerObjectResult stagedResult=staged.Run();
+            Check(stagedResult.HeadWorldStatus=="SAMPLED_READ_ONLY" && stagedResult.RosterStatus=="FAIL" && stagedResult.MatchPlayers.Length==0,
+                "a failed roster stage preserves the earlier valid native head sample and emits no verified roster objects");
+            Console.WriteLine("ROSTER_FIXTURE_READ_CALLS="+roster.Reader.PhysicalCalls+" OBSERVATIONS="+players.RosterObservations);
             Console.WriteLine("NATIVE_HEAD_FIXTURE_READ_CALLS=" + native.Reader.PhysicalCalls + " OBSERVATIONS=" + world.HeadWorldObservations);
-            Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects, managed Transform and native head sample)");
+            Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects, native head sample and match dictionary)");
         }
     }
 }

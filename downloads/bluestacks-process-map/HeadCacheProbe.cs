@@ -69,7 +69,7 @@ namespace HeadBridge.Mapping
             ObjectReads.User(dictionary, 8, "head model dictionary");
             ulong dictionaryClass = reads.Pointer(dictionary, "head dictionary class");
             VerifyHeadDictionary(reads, dictionaryClass, module, layout);
-            uint used = reads.Word(dictionary + 0x20); reads.Word(dictionary + 0x24); // Snapshot the version too.
+            uint used = BitConverter.ToUInt32(reads.Read(dictionary + 0x20, 16), 0); // count, free-list, free-count, version (+0x2c).
             Expect(used <= 512, "head dictionary used-entry bound");
             result.HeadCacheEntries = checked((int)used);
             if (used == 0) { result.HeadStatus = "NOT_READY_BONE_NOT_CACHED"; return 0; }

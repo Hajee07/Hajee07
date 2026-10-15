@@ -2,7 +2,8 @@
 
 V13 established the cached managed head Transform, not its world position. V14
 added a bounded read-only calculation for that one verified local-head object.
-Live validation is pending. It does not enumerate enemies, test visibility or
+The user subsequently passed a live V15 local-head sample (recorded below).
+This native position stage does not enumerate enemies, test visibility or
 apply aim changes.
 
 ## Inputs and code provenance
@@ -119,5 +120,19 @@ on exactly the third attempt, a new stable pose on attempt two, coalesced and
 sparse rows, ignored gap bytes, and immediate failure for identity/read errors
 including a simultaneous identity and TRS mutation. The stable synthetic native
 fixture uses 3144 total physical calls including earlier stages and records 63
-native observations. These tests validate implementation/error handling; V15
-live native-head sampling remains pending on the user's Windows PC.
+native observations. These tests validate implementation/error handling; V15 live native-head sampling subsequently passed on the user's Windows PC.
+
+## User V15 live sample
+
+The V15 report (guest PID 8063, host PID 6372) passed the exact module identity,
+all 80 registration checks twice, local-player chain and cached managed head
+Transform. Native sampling succeeded on attempt one: X=58.67942, Y=12.7244778,
+Z=23.06973; nine parents, two capture chunks, hierarchy capacity 230 and 105
+native observations. The static object phase rechecked 282 observations. Unity
+load bias was 0x3290000. Total physical calls: 17097. Plugin unload, handler
+cleanup and shared-session release all passed.
+
+This establishes one sampled local-head position for that run, not continuous
+tracking, other players' positions, visibility or aim control. V16 retains this
+native implementation and adds the separate match dictionary stage. Its live
+collection validation is pending.

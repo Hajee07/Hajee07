@@ -2091,6 +2091,11 @@
       "hex": "8a1601b98a0a01b9681e41b9881e01b9"
     },
     {
+      "name": "head_dictionary_version_0",
+      "rva": 152390900,
+      "hex": "a82e40b9a90a40f908050011a82e00b9"
+    },
+    {
       "name": "got_Facade",
       "rva": 175370432,
       "target_rva": 180548976
@@ -2120,5 +2125,5 @@
     "name": "JKACLOCKKPH",
     "offset": 1056
   },
-  "scope": "Original-path local-player chain and managed head Transform; world coordinates and player enumeration are unimplemented."
+  "scope": "Original-path local-player chain and managed head Transform; native position and match collection references are separate."
 }

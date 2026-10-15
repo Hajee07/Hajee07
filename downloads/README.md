@@ -1,11 +1,12 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V15**. V14 passed local-player and managed-head checks
-but rejected a changed native snapshot. V15 makes two short coalesced TRS copies
-and retries selected TRS motion at most three times, with strict identity and
-byte comparisons. 181 offline checks pass; live position validation is pending. See
-[the current probe instructions](bluestacks-process-map/README.md). Other-player
-visibility and aim control remain incomplete.
+Current process probe: **V16**. V15 passed one live native local-head sample
+(X=58.67942, Y=12.7244778, Z=23.06973) and cleanup. V16 adds one typed match Player
+dictionary and at most 16 verified objects; its live validation is pending.
+It also fixes the actual head-cache version observation. 203 offline checks
+pass. See [the current probe instructions](bluestacks-process-map/README.md).
+Other-player head positions, team/alive/visibility semantics and aim control
+remain incomplete.
 
 Download `head-aim-dll-x64.zip` and extract it on Windows. The archive contains C++ source, a Windows x64 DLL, and an own-process DLL smoke loader.
 

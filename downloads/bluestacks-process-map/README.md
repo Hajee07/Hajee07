@@ -7,27 +7,23 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 15.** The user's V13 report passed kernel/process/module
-identity, all 80 metadata checks twice, local-player identity and the cached
-`bone_Head` managed Transform. The model dictionary contained 29 entries and one
-matching key. All cleanup stages passed. See `OBJECT-EVIDENCE.md` for the
-historical object-probe results.
+**Current version: 16.** The user's V15 run passed the exact module/runtime
+metadata, local-player and managed-head checks, then sampled the native local
+head at X=58.67942, Y=12.7244778, Z=23.06973. It succeeded on attempt one with nine
+parents and two capture chunks. All cleanup stages passed. See
+`TRANSFORM-EVIDENCE.md` for the sample and its non-atomic limits.
 
-V14 added an exact-build native Unity hierarchy sample for this local head.
-Its Windows run passed the earlier stages, then rejected a changed native
-snapshot; no coordinates were reported. V15 separates the immutable identity
-checks from two short TRS copies, coalesces nearby rows and retries only changed
-selected TRS rows up to three times. Each attempt starts from fresh native
-identity/graph reads; the shared read/time budgets and byte comparisons remain
-strict. It
-checks the resolved position icall binding, Unity ELF tables/build ID and code,
-then reads the native Transform and bounded parent chain. Coordinates are
-reported only after stable snapshot comparisons and matching object/index
-backlinks. Outstanding hierarchy jobs return NOT_READY. This stage has passed
-synthetic tests; **live Windows validation is pending**. See
-`TRANSFORM-EVIDENCE.md` for the derivation and limits.
+V16 adds a bounded read of one typed `Dictionary<EntityID,Player>` field on the
+verified match object. It verifies the closed dictionary/entry types and up to
+16 unique Player objects, reporting remaining candidates explicitly. This is
+one observed collection; its enemy/team/alive/visibility semantics and other
+players' head coordinates remain unverified. V16's live collection validation
+is pending. See `ROSTER-EVIDENCE.md`.
 
-Other players, visibility semantics and aim updates remain unimplemented.
+V16 also corrects the head-cache version observation: +0x24 is the free-list
+field, while +0x2c is the version. The complete 16-byte counter header is now
+captured/rechecked, backed by exact native version-update instructions. Previous
+head-cache tests mutated the incorrect field; the regression now changes +0x2c.
 
 Extract the complete ZIP into a new folder. Start the Pie64 instance, enter
 Free Fire Training Ground, wait until the character has spawned, and leave it
@@ -42,7 +38,7 @@ endpoint displayed by BlueStacks. An explicit disconnected localhost endpoint
 is reconnected once and verified. Other devices are not selected automatically.
 The runner discovers the current host/game PIDs; old PIDs are not constants.
 
-The package checks DLL and all ten runtime C# source digests, plus the exact
+The package checks DLL and all twelve runtime C# source digests, plus the exact
 loaded VMM fingerprint. It
 loads the same native DLL used in the successful probe, uses its read-only info
 handler, and unloads and releases its shared session in `finally`. The DLL bytes
@@ -176,7 +172,7 @@ Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-181 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+203 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -238,7 +234,7 @@ live Windows COM behavior, runtime object lifetime, or a working aim lock.
 
 ## Version 11 local-player and managed head Transform stage
 
-After metadata validation, the runner checks 70 additional exact code/GOT
+After metadata validation, the runner checks 71 additional exact code/GOT
 references and follows the original CurrentLocalPlayer path. Four relevant
 hotfix entries must be inactive. It validates CurrentGame as MatchGame or a
 supported derived class, then the current match and the locally marked Player.
@@ -331,7 +327,7 @@ new tests cover the hit/miss path, removed/duplicate entries, bounds, wrong type
 version changes and hotfix/virtual-target guards. The V13 Windows report subsequently passed this lookup and managed-head
 verification; native position validation remains pending for V15.
 
-## Native position results (V15)
+## Native position results
 
 `LocalHeadWorldPosition=SAMPLED_READ_ONLY` reports the local head XYZ and parent
 count from a bounded, twice-observed native hierarchy. `NOT_READY_*` means the
@@ -342,7 +338,7 @@ Leave the character standing in Training Ground and share the complete result
 file. Character animation can invalidate a position snapshot; a failed sample
 does not establish a new layout or authorize weakening identity checks.
 
-There are 181 offline checks: 46 core/kernel, 31 module, 30 metadata and 74
+There are 203 offline checks: 46 core/kernel, 31 module, 30 metadata and 96
 object/native-head checks. These include an independent quaternion matrix
 oracle, cross-axis rotations, nonuniform/reflected scales, invalid backlinks,
 cycles, bad bindings/code, pending jobs and changing position data. They do not
@@ -361,3 +357,20 @@ pass). Gap bytes are never used as transform data or compared for stability.
 Every selected 48-byte row must match exactly between the two passes. There is
 no floating-point motion tolerance, stale-pose reuse or VM pause. The position
 capture is still non-atomic, and continued animation can exhaust all attempts.
+
+## V16 match collection
+
+The report adds MatchPlayerDictionary with used/removed/active/null counts,
+unique candidate pointers, verified players, local membership and
+CompleteObjectValidation. At most 16 unique candidates are checked as Player
+objects; local is checked first when present. MatchPlayerObject lines report
+only objects that passed class/parent/local-marker and final snapshot checks.
+Candidate pointers outside the verified subset remain unverified. A full scan
+of the used dictionary slots does not mean every candidate object was checked.
+
+The reader checks the original getter's hotfix gate (0x1bf); an override returns
+HOTFIX_ACTIVE_COLLECTION_GETTER. Null and empty collections have distinct
+statuses. A failed collection stage reports MatchPlayerDictionaryError and exit
+code 1, preserving earlier completed observations. No other-player world
+position, target selection or aim write is performed. Leave the character
+standing in Training Ground and share the complete ResultFile.

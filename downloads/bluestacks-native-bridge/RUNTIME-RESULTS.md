@@ -376,3 +376,17 @@ changed. V15 separates immutable identity validation and short coalesced TRS
 copies, and retries only selected TRS motion (at most three fresh attempts).
 All 181 offline checks pass. Live V15 sampling, other players, visibility and
 aim integration remain pending.
+
+## V15 local native-head sample passed; V16 collection pending
+
+V15 passed on guest PID 8063, host PID 6372. The local-head native sample was
+X=58.67942 Y=12.7244778 Z=23.06973, attempt 1, two chunks, nine parents, capacity
+230 and 105 native observations. Static object observations: 282. Total physical
+calls: 17097. All cleanup stages passed. This is one read-only local-head sample.
+
+V16 adds one exact typed match Player dictionary and bounded object validation
+(maximum 16 unique candidates). It also corrects the head-cache version snapshot
+from free-list +0x24 to the complete counter header containing version +0x2c.
+203 offline checks pass; the V16 Windows collection run remains pending. Other
+head positions, enemy/team/alive/visibility semantics and aim writes are not
+implemented.

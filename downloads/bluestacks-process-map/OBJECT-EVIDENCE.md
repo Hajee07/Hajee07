@@ -9,7 +9,7 @@ window. All cleanup steps passed. V12 subsequently passed live local-player vali
 
 Build-ObjectReference.py uses Recover-GameLayout.py to verify the same complete
 ELF and metadata SHA-256 inputs. It derives parent relationships, 105 supported
-normal class records plus separate String/generic-definition profiles, native type/size data, four type-usage roots and 70 code/GOT
+normal class records plus separate String/generic-definition profiles, native type/size data, four type-usage roots and 71 code/GOT
 references. The JSON and C# outputs reproduce byte-for-byte. No live PID, object
 address, metadata base or module load bias is a runtime constant.
 
@@ -237,3 +237,16 @@ cleanup stages passed. V15 retains these object checks and makes two short,
 strict TRS copies separately from native identity snapshots, with at most three
 fresh attempts for selected TRS motion alone. See TRANSFORM-EVIDENCE.md. No new
 offsets, game calls or aim writes are introduced. V15 live validation is pending.
+
+## V16 version-field correction
+
+While deriving the match dictionary layout, the native increment instructions
+confirmed that Dictionary version is at +0x2c, while +0x24 is the free-list index.
+The prior head-cache implementation and its version-mutation test both used
++0x24. That test therefore established free-list mutation detection, not actual
+version mutation detection. V16 captures all 16 bytes at +0x20 (count, free-list,
+free-count, version) and changes the regression to mutate +0x2c. An additional
+object anchor checks the head dictionary's version update at 0x9154cf4. Earlier
+static/object/pose observations remain historical samples and do not establish
+uninterrupted collection stability. See ROSTER-EVIDENCE.md for the new typed
+match collection probe and its separate pending Windows validation.

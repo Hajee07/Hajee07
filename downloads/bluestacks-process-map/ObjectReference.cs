@@ -175,6 +175,7 @@ namespace HeadBridge.Mapping {
             new GameLayoutCheck("generic_type_0", 0xa345e7cUL, "882a40b9893a40b9aa028052e00314aa481d1033aa02a4522961081229010a2a"),
             new GameLayoutCheck("generic_type_32", 0xa345e9cUL, "882a00b9150c02f8951a00f9893a00b9"),
             new GameLayoutCheck("generic_token_0", 0xa345f28UL, "8a1601b98a0a01b9681e41b9881e01b9"),
+            new GameLayoutCheck("head_dictionary_version_0", 0x9154cf4UL, "a82e40b9a90a40f908050011a82e00b9"),
             new GameLayoutCheck("got_Facade", 0xa73f0c0UL, 0xac2f570UL),
             new GameLayoutCheck("got_MatchGame", 0xa7759c0UL, 0xac340a8UL),
             new GameLayoutCheck("got_Hotfix", 0xa899b98UL, 0xac30d18UL),

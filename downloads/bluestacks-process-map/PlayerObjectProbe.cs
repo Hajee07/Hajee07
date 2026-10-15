@@ -27,6 +27,11 @@ namespace HeadBridge.Mapping
         public uint HeadHierarchyCapacity;
         public int HeadParentCount, HeadWorldObservations, HeadSampleAttempts, HeadCaptureChunks;
         public float HeadWorldX, HeadWorldY, HeadWorldZ;
+        public string RosterStatus,RosterError;
+        public ulong RosterDictionary;
+        public int RosterUsed,RosterRemoved,RosterActive,RosterNullValues,RosterCandidates,RosterOtherVerified,RosterObservations;
+        public bool RosterLocalPresent,RosterComplete;
+        public MatchPlayerObservation[] MatchPlayers=new MatchPlayerObservation[0];
     }
     public sealed partial class Reader
     {
@@ -239,6 +244,8 @@ namespace HeadBridge.Mapping
             }
             try { ReadNativeHeadPosition(game, module, result, progress); }
             catch (Exception error) { result.HeadWorldStatus = "FAIL"; result.HeadWorldError = error.Message; }
+            try { ReadMatchPlayerDictionary(game,module,layout,result,wrappers,length,progress); }
+            catch(Exception error) { result.RosterStatus="FAIL";result.RosterError=error.Message; }
             Recheck(kernel, game); ObjectAnchors(this, game, module);
             result.Observations = reads.Recheck(); Recheck(kernel, game);
             return result;
