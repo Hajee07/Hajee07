@@ -1,10 +1,11 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V18**. V17 passed exact module/layout and managed
-local-head validation, but moving TRS rows and a changed collection snapshot
-prevented coordinates and other-head attempts. V18 reports unavailable moving
-poses separately and adds one bounded fresh collection retry with precise
-change diagnostics. 229 offline checks pass; live V18 validation is pending.
+Current process probe: **V19**. Recent V18 runs verified the observed player
+dictionary but rejected other-head samples when collection context changed before or
+during capture. The latest run also rejected a changed local native identity.
+V19 uses fresh selected-entry membership with exact storage/type/context checks,
+retains strict rejection of capture-time changes, and labels native fields in
+errors. 241 offline checks pass; live V19 validation is pending.
 See [the probe instructions](bluestacks-process-map/README.md).
 Team/alive/visibility semantics and aim control remain incomplete.
 

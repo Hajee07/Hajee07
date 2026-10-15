@@ -161,3 +161,15 @@ transport error still yields FAIL, including simultaneous identity/TRS changes.
 Only successful sampled rows emit coordinates. Offline tests confirm both
 continuous-motion paths and an independent other-head sample when the local
 pose is unavailable. Live V18 validation is pending.
+
+## V19 identity-field diagnostics
+
+The latest V18 local sample failed an 8-byte native identity observation at
+0x7dccf5f5d010. Its semantic field cannot be identified from that report alone.
+V19 attaches labels to position icall bindings, provider/managed native links,
+hierarchy jobs/capacity, indices and parent/backlink references. The snapshot
+exception includes the label along with range address/length/first changed byte.
+Native identity recheck still wraps and fails the error immediately. Synthetic
+hierarchy-pointer and job-handle mutations remain hard failures on attempt one
+with no XYZ. No native offsets, byte comparisons, computation, retry limits or
+read budgets were changed. Live V19 verification remains pending.

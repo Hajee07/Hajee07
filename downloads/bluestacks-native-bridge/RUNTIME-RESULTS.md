@@ -423,3 +423,32 @@ still share the global 30000-call/120-second limits. Discarded membership proofs
 are never merged. Other errors remain failures. Range size/first changed offset
 are logged without byte contents. All 229 offline checks pass. Live V18 sampling
 and team/alive/visibility/aim integration remain pending.
+
+## V18 reports: context changes before and during other-head capture
+
+After restart, guest PID 2942 / host PID 14916 passed exact module/layout,
+local managed/native head and 15 dictionary objects (one local plus 14 others).
+The local sample was X=61.3005676 Y=12.7349987 Z=20.563179, attempt one. A
+nonlocal model-cache head was resolved, but its enclosing membership snapshot
+changed at dictionary+0x20, byte offset 4: the +0x24 free-list field. No other
+XYZ was accepted. Other-phase calls=4475; total=23279. V18 printed Attempts=0
+for the rejected row because its exception path lost the temporary result;
+that zero does not establish that no native attempt occurred (progress shows
+one). All cleanup stages passed.
+
+The latest run (guest 3862 / host 14916) passed exact module/layout, managed
+local head and 14 dictionary objects (one local plus 13 others). Native local
+identity failed at 0x7dccf5f5d010, 8 bytes, first change offset 0; V18 does not
+identify the field. Its first nonlocal member was rejected before native
+capture because saved collection pointer/counters differed. Other-phase
+calls=954; total=18300. All cleanup stages passed. No XYZ was accepted in this
+run. An intervening GameIdentity ADB-exit-1 run stopped before plugin loading.
+
+V19 revalidates the phase's exact dictionary/entry-array schema and each selected
+member against fresh bounded counters, original exact entry bytes and object
+identity. A changed earlier counter snapshot alone is no longer grounds to
+reject a currently reverified selected entry. Changes during capture still
+reject the pose, and no roster report is refreshed or merged. Native snapshots
+add field labels without weakening validation. Rejected rows preserve actual
+attempt counts. 241 offline checks pass; live V19 sampling and all team/alive/
+visibility/aim integration remain pending.

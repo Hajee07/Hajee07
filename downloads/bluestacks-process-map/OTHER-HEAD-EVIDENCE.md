@@ -1,4 +1,8 @@
-# V17 bounded nonlocal head samples
+# V19 bounded nonlocal head samples
+
+The sections below record the original V17/V18 design; the V19 membership
+contract and current validation are specified in the final section.
+
 
 V16 verified the observed match dictionary's 14 objects (local plus 13 others),
 including Player_Watching. It also repeated the live local-head sample after
@@ -98,3 +102,64 @@ motion classification. The optional phase can run after an unavailable local
 pose if the independent typed collection was accepted. No stale local XYZ is
 substituted. V18's 229 offline checks include these motion and independence
 cases; a live other-head sample is still unverified.
+
+## V19 fresh selected-entry membership and field diagnostics
+
+Two V18 reports demonstrated distinct windows: one changed the dictionary's
+free-list during capture; the latest rejected earlier collection context before
+native capture. Its combined pointer/counters message does not identify which. A saved roster is an observation from a previous phase, not a lock.
+V19 replaces only the requirement that current counters equal that old header.
+It still requires the same current game/match/local pointer chain, dictionary
+pointer/class, entry-array pointer/class/capacity and selected original 40-byte
+entry at the same slot. No object is substituted or newly enumerated.
+
+At phase entry, a separate bounded ObjectReads snapshot verifies the exact
+closed dictionary and entry generic contexts, metadata/key/value types,
+array element descriptor/runtime entry size, dictionary size, field registration
+and the saved storage identities. This shared schema is rechecked at phase end,
+inside the existing reserved final allowance. Keeping immutable schema checks
+once per phase avoids repeating them for each selected member. If final schema,
+code or process checks fail, all tentative rows are discarded.
+
+Each selected member captures a fresh 16-byte header. Used slots must be <=256,
+free count <=used, and the signed free-list head must be -1 or a bounded slot.
+Capacity must cover used and remain <=8192. The original selected index must
+still be inside the fresh used range. Its 40 bytes must equal the saved proof,
+its signed hash must be active and its next index bounded by the fresh count.
+Class/parent and nonlocal marker are revalidated. Exact entry bytes include the
+key and value; neither is printed as an account ID. Fresh counters and all
+selected context/entry bytes are reread after native capture. A during-capture
+change returns NOT_READY_CONTEXT_CHANGED with no XYZ or accepted membership
+proof. Before-capture changes to other entries do not require a new full roster
+scan if this selected proof can be re-established.
+
+This proves only the selected entry's observed membership, not current global
+collection consistency or a fresh full roster. Historical roster counts and
+objects are never rewritten or merged. CountersChangedSinceRoster explicitly
+reports header differences. MembershipProof=FRESH_SELECTED_ENTRY is assigned
+only after per-object final checks. Lifetime/ABA races are still possible;
+there is no GC root, lock, engine call, VM pause or synchronized frame.
+
+Only snapshot mismatches labelled OtherMembership.* receive the context-change
+classification. Other managed/native/code/type/transport failures retain their
+failure behavior. Native diagnostics label bindings, managed/native links,
+hierarchy job handle/tag/capacity and parent/index/backlinks; an unknown prior
+address is not retrospectively mapped to a field. No native identity change
+gets a new retry. The TRS-only three-attempt rule remains unchanged. Rejected
+other rows preserve provider/Transform provenance and attempted native count,
+but never assign XYZ before all per-object checks pass.
+
+The 6000-call outer phase / 1000-call final reserve and global count/time
+budgets are unchanged. The expensive fixture stops sampling at 5000 calls and
+completes reserved final checks at 5699 total additional calls. A simple single
+other-head fixture uses 3354 additional calls, with 159 per-object observations
+and separate phase-wide schema observations.
+
+241 offline checks pass: 51 core/kernel, 31 module, 30 metadata, 129 object/
+native/collection checks. New cases cover changed old counters, another entry
+removed before capture, the selected entry removed, a shrunken used count,
+invalid fresh counters and changed field registration, capture-time version/
+free-list/selected-key changes, final schema invalidation, precise native field
+labels and accurate rejected-row attempt counts. Existing distinct two-head,
+model-cache, motion, identity-failure and read-budget tests still pass. Live V19
+head sampling remains pending; no target classification or aim write is added.

@@ -114,7 +114,7 @@ namespace HeadBridge.Mapping
             ulong[] cells = { 0xafb9e00, 0xafb9e10 }, targets = { 0x45ea4c, 0x45ec64 };
             for (int i = 0; i < cells.Length; i++)
             {
-                ulong target = reads.Value(checked(module.LoadBias + cells[i]));
+                ulong target = reads.Value(checked(module.LoadBias + cells[i]),"PositionIcallBinding"+i);
                 if (target == 0) continue;
                 ObjectReads.User(target, 4, "resolved Unity position icall");
                 Expect(target > targets[i], "Unity icall load-bias subtraction");
@@ -128,23 +128,23 @@ namespace HeadBridge.Mapping
             Expect(EqualBytes(reads.Read(bias + 0x308, 24), Hex(NativeTransformReference.NoteHex)), "Unity build ID");
             NativeAnchors(reads, bias, NativeTransformReference.UnityAnchors);
             result.UnityLoadBias = bias;
-            Expect(reads.Value(result.HeadProvider + 0x10) == result.HeadTransform, "head provider still references the verified Transform");
-            ulong native = reads.Value(result.HeadTransform + 0x10);
+            Expect(reads.Value(result.HeadProvider + 0x10,"HeadProvider.Transform") == result.HeadTransform, "head provider still references the verified Transform");
+            ulong native = reads.Value(result.HeadTransform + 0x10,"ManagedTransform.NativePointer");
             result.HeadWorldStatus = "NOT_READY_NATIVE_TRANSFORM_NULL";
             if (native == 0) { NativeIdentityRecheck(reads); return; }
             ObjectReads.User(native, 8, "native head Transform");
             ulong data = reads.Pointer(native + 0x38, "native Transform hierarchy");
-            int index = BitConverter.ToInt32(reads.Read(native + 0x40, 4), 0);
+            int index = BitConverter.ToInt32(reads.Read(native + 0x40, 4,"NativeTransform.Index"), 0);
             // The native getter synchronizes/clears an outstanding job here.
             // A read-only sample requires it already to be clear.
-            ulong job = reads.Value(data); uint jobTag = reads.Word(data + 8);
+            ulong job = reads.Value(data,"Hierarchy.JobHandle"); uint jobTag = reads.Word(data + 8,"Hierarchy.JobTag");
             if (job != 0 || jobTag != 0)
             {
                 result.HeadWorldStatus = "NOT_READY_HIERARCHY_JOB_PENDING";
                 result.HeadWorldError = "Job=0x" + job.ToString("x") + " Tag=" + jobTag;
                 NativeIdentityRecheck(reads); return;
             }
-            uint capacity = reads.Word(data + 0x10);
+            uint capacity = reads.Word(data + 0x10,"Hierarchy.Capacity");
             Expect(capacity > 0 && capacity <= 65536 && index >= 0 && (uint)index < capacity, "native hierarchy capacity/index bound");
             ulong matrices = reads.Pointer(data + 0x18, "native TRS array"), parents = reads.Pointer(data + 0x20, "native parent-index array"),
                 transforms = reads.Pointer(data + 0x30, "native Transform backlink array");
@@ -154,11 +154,11 @@ namespace HeadBridge.Mapping
             {
                 Expect(depth < 128 && index >= 0 && (uint)index < capacity && visited.Add(index), "native parent-chain bound/cycle");
                 ulong current = reads.Pointer(checked(transforms + (ulong)index * 8UL), "hierarchy Transform backlink");
-                Expect(current == expectedNative && reads.Value(current + 0x38) == data && reads.Word(current + 0x40) == (uint)index,
+                Expect(current == expectedNative && reads.Value(current + 0x38,"NativeTransform.Hierarchy") == data && reads.Word(current + 0x40,"NativeTransform.Index") == (uint)index,
                     "native hierarchy object/index backlinks");
                 chain.Add(index);
-                int parent = BitConverter.ToInt32(reads.Read(checked(parents + (ulong)index * 4UL), 4), 0);
-                expectedNative = reads.Value(current + 0x90);
+                int parent = BitConverter.ToInt32(reads.Read(checked(parents + (ulong)index * 4UL), 4,"Hierarchy.ParentIndex"), 0);
+                expectedNative = reads.Value(current + 0x90,"NativeTransform.ParentPointer");
                 if (parent == -1) { Expect(expectedNative == 0, "native root parent backlink"); result.HeadParentCount = depth; break; }
                 Expect(parent >= 0 && (uint)parent < capacity && expectedNative != 0, "native parent-index/Transform link");
                 index = parent;

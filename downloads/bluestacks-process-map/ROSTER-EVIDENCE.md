@@ -142,3 +142,13 @@ a changed entry with unchanged version, hotfix activation between attempts,
 precise changed-offset reporting, single-attempt hard failures and call-scope
 restoration. Local and other-head continuous motion tests retain strict limits
 and no coordinates. Live V18 verification remains pending.
+
+## V19 selected membership versus historical roster
+
+V19 leaves this full roster stage and its accepted snapshots unchanged. The
+later optional head phase rechecks the exact typed storage schema and takes
+fresh counters for each previously verified selected entry. It requires the
+same original entry bytes, current bounds and supported object, then holds
+that fresh context stable through capture. It does not relabel the earlier
+roster report as current or complete. See OTHER-HEAD-EVIDENCE.md for the updated
+selected-entry contract and its limitations.

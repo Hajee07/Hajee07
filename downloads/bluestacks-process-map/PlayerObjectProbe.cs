@@ -39,13 +39,14 @@ namespace HeadBridge.Mapping
     {
         private sealed class ObjectObservationChangedException : InvalidOperationException
         {
-            internal ObjectObservationChangedException(ulong address, byte[] before, byte[] after, bool final)
-                : base(ChangedDetail(address,before,after,final)) { }
-            private static string ChangedDetail(ulong address,byte[] before,byte[] after,bool final)
+            internal readonly string Label;
+            internal ObjectObservationChangedException(ulong address, byte[] before, byte[] after, bool final,string label)
+                : base(ChangedDetail(address,before,after,final,label)) { Label=label; }
+            private static string ChangedDetail(ulong address,byte[] before,byte[] after,bool final,string label)
             {
                 int offset=0;while(offset<before.Length && before[offset]==after[offset])offset++;
                 return "Object observation changed"+(final ? " on final recheck" : "")+" Address=0x"+address.ToString("x")+
-                    " Bytes="+before.Length+" FirstChangedOffset="+offset;
+                    " Bytes="+before.Length+" FirstChangedOffset="+offset+" Field="+label;
             }
         }
         private sealed class ObjectReads
@@ -53,6 +54,7 @@ namespace HeadBridge.Mapping
             private readonly Reader reader;
             private readonly ulong root;
             private readonly Dictionary<string, byte[]> values = new Dictionary<string, byte[]>();
+            private readonly Dictionary<string, string> labels = new Dictionary<string, string>();
             private readonly List<ulong> addresses = new List<ulong>();
             private readonly List<byte[]> snapshots = new List<byte[]>();
             private int bytes;
@@ -62,7 +64,7 @@ namespace HeadBridge.Mapping
                 if (value < 0x10000 || value >= 0x0000800000000000UL || value % (ulong)alignment != 0)
                     throw new InvalidOperationException("Object pointer invalid: " + label + " Value=0x" + value.ToString("x"));
             }
-            internal byte[] Read(ulong address, int length)
+            internal byte[] Read(ulong address, int length,string label=null)
             {
                 User(address, 1, "read address");
                 if (length < 1 || length > 4096 || checked(address + (ulong)length) > 0x0000800000000000UL)
@@ -71,20 +73,21 @@ namespace HeadBridge.Mapping
                 string key = address.ToString("x") + ":" + length;
                 byte[] previous;
                 if (values.TryGetValue(key, out previous))
-                { if (!EqualBytes(previous, actual)) throw new ObjectObservationChangedException(address,previous,actual,false); }
+                { if(label!=null)labels[key]=label;
+                  if (!EqualBytes(previous, actual)) throw new ObjectObservationChangedException(address,previous,actual,false,labels[key]); }
                 else
                 {
                     if (values.Count >= 1024 || bytes + length > 65536) throw new InvalidOperationException("Object observation bound exhausted.");
-                    values.Add(key, actual); addresses.Add(address); snapshots.Add(actual); bytes += length;
+                    values.Add(key, actual); labels.Add(key,label??"UNLABELLED");addresses.Add(address); snapshots.Add(actual); bytes += length;
                 }
                 return actual;
             }
-            internal ulong Value(ulong address) { return BitConverter.ToUInt64(Read(address, 8), 0); }
-            internal uint Word(ulong address) { return BitConverter.ToUInt32(Read(address, 4), 0); }
-            internal byte Byte(ulong address) { return Read(address, 1)[0]; }
+            internal ulong Value(ulong address,string label=null) { return BitConverter.ToUInt64(Read(address, 8,label), 0); }
+            internal uint Word(ulong address,string label=null) { return BitConverter.ToUInt32(Read(address, 4,label), 0); }
+            internal byte Byte(ulong address,string label=null) { return Read(address, 1,label)[0]; }
             internal ulong Pointer(ulong address, string label)
             {
-                ulong pointer = Value(address);
+                ulong pointer = Value(address,label);
                 if (pointer == 0) throw new InvalidOperationException("Object not ready: " + label + " is null. Leave the spawned character in Training Ground.");
                 User(pointer, 8, label); return pointer;
             }
@@ -94,7 +97,7 @@ namespace HeadBridge.Mapping
                 {
                     byte[] actual=reader.Virtual(root, addresses[i], snapshots[i].Length);
                     if (!EqualBytes(actual, snapshots[i]))
-                        throw new ObjectObservationChangedException(addresses[i],snapshots[i],actual,true);
+                        throw new ObjectObservationChangedException(addresses[i],snapshots[i],actual,true,labels[addresses[i].ToString("x")+":"+snapshots[i].Length]);
                 }
                 return addresses.Count;
             }
