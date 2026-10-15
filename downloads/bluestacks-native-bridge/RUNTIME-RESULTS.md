@@ -192,3 +192,23 @@ Forty-six offline checks passed, including mutation regressions and a 4500-VMA
 fixture whose target at VMA 800 is verified in 4372 physical reads. Live version
 4 verification remains pending. Head/entity/visibility mapping and aim writes
 remain unimplemented.
+
+## Process mapping version 4: user-reported Windows success
+
+Version 4 passed the full kernel/process/targeted-header workflow on Pie64.
+Host PID was 23620, game PID 2942, and process discovery visited 147 task nodes.
+The IL2CPP VMA at 0x7f96b9e6b000 was revalidated, and GameLibraryRead passed after
+808 outer VMAs and 8096 physical reads. It inspected 156 file objects, skipped
+217 repeated lookups, and recorded 905 translation-cache hits. Plugin unload,
+handler cleanup, and shared-session release all passed.
+
+The first VMA spans 0xaf95000 bytes, exactly the page-rounded size of the APK's
+IL2CPP file. It cannot be assumed to be the loaded module base. Version 5 checks
+the first segment boundary, all eight PT_LOAD ranges/file offsets, ELF tables,
+GNU build ID, and three code samples. A module-local VMA window is bounded to
+128 entries; global read/time limits and the native DLL are unchanged.
+
+Sixty-four offline checks pass (46 reader/header plus 18 module checks). The
+reference generator reproduces its output and rejects the wrong source SHA-256.
+Live version 5 module verification remains pending. Entity/head/visibility
+mapping and aim updates remain unimplemented.

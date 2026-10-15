@@ -49,7 +49,7 @@ namespace HeadBridge.Mapping
         public bool CompleteVmaList;
         public readonly List<LibraryMapping> Mappings = new List<LibraryMapping>();
     }
-    public sealed class Reader
+    public sealed partial class Reader
     {
         // These addresses and offsets belong only to the inspected boot image.
         public const ulong BannerVa = 0xffffffff81e00140UL;
@@ -327,7 +327,8 @@ namespace HeadBridge.Mapping
             Recheck(kernel, game);
             mapping.Revalidated = true;
         }
-        private LibraryResult ScanLibraries(KernelContext kernel, GameProcess game, Action<string> progress, bool stopAfterTarget)
+        private LibraryResult ScanLibraries(KernelContext kernel, GameProcess game, Action<string> progress, bool stopAfterTarget,
+            Func<ulong, byte[], LibraryMapping, byte[], bool> verifyModule = null)
         {
             Recheck(kernel, game);
             LibraryResult result = new LibraryResult();
@@ -376,7 +377,15 @@ namespace HeadBridge.Mapping
                         LibraryMapping mapping = new LibraryMapping { Name = name, Start = start, End = end, FilePageOffset = offset, Arm64ElfHeader = arm64 };
                         result.Mappings.Add(mapping);
                         if (progress != null && (arm64 || result.Mappings.Count == 1)) progress("LibraryCandidate Name=" + name + " Start=0x" + start.ToString("x") + " End=0x" + end.ToString("x") + " Arm64ElfHeader=" + arm64 + " Status=PENDING_RECHECK");
-                        if (stopAfterTarget && name == "libil2cpp.so" && arm64)
+                        if (verifyModule != null && name == "libil2cpp.so" && arm64)
+                        {
+                            if (verifyModule(node, area, mapping, header))
+                            {
+                                result.StopReason = "MODULE_VERIFIED";
+                                return result;
+                            }
+                        }
+                        else if (stopAfterTarget && name == "libil2cpp.so" && arm64)
                         {
                             VerifyTarget(kernel, game, node, area, mapping, header);
                             result.StopReason = "TARGET_VERIFIED";

@@ -78,7 +78,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=4 ReadOnly=1'
+Record 'ProcessMapVersion=5 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -88,13 +88,19 @@ try {
     $manifest = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'manifest.json') -Raw | ConvertFrom-Json
     $pluginPath = Join-Path $PSScriptRoot 'VBoxDbgHeadAimBridge.dll'
     $sourcePath = Join-Path $PSScriptRoot 'GuestProcessMap.cs'
+    $modulePath = Join-Path $PSScriptRoot 'ModuleProbe.cs'
+    $referencePath = Join-Path $PSScriptRoot 'ModuleReference.cs'
     if ($manifest.plugin -cne 'VBoxDbgHeadAimBridge.dll' -or $manifest.sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
-        $manifest.mapping_source_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
+        $manifest.mapping_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.module_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.module_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
     if ((Get-FileHash -LiteralPath $pluginPath -Algorithm SHA256).Hash -ine $manifest.sha256 -or
-        (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash -ine $manifest.mapping_source_sha256) {
+        (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash -ine $manifest.mapping_source_sha256 -or
+        (Get-FileHash -LiteralPath $modulePath -Algorithm SHA256).Hash -ine $manifest.module_source_sha256 -or
+        (Get-FileHash -LiteralPath $referencePath -Algorithm SHA256).Hash -ine $manifest.module_reference_sha256) {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
-    Add-Type -Path $sourcePath -ErrorAction Stop
+    Add-Type -Path @($sourcePath, $modulePath, $referencePath) -ErrorAction Stop
     $classId = (Get-Item -LiteralPath 'Registry::HKEY_CLASSES_ROOT\VirtualBox.VirtualBoxClient\CLSID').GetValue('')
     $server = [Environment]::ExpandEnvironmentVariables([string](Get-Item -LiteralPath "Registry::HKEY_CLASSES_ROOT\CLSID\$classId\InprocServer32").GetValue(''))
     if ([IO.Path]::GetFileName($server.Trim().Trim('"')) -ine 'BstkC.dll') { throw 'COM client is not the verified BlueStacks server.' }
@@ -185,20 +191,24 @@ try {
     $stage = 'ProcessMap'
     $game = $reader.FindProcess($kernel, [int]$gameProcessId, $gameName)
     Record "ProcessMap=PASS GuestPID=$($game.Pid) Task=0x$($game.Task.ToString('x')) MM=0x$($game.Mm.ToString('x')) CR3=0x$($game.Root.ToString('x')) TasksVisited=$($game.TasksVisited)"
-    $stage = 'GameLibraryRead'
-    Record 'LibraryScanMode=TARGETED Target=libil2cpp.so'
+    $stage = 'GameModuleIdentity'
+    Record 'LibraryScanMode=TARGETED_MODULE Target=libil2cpp.so'
     $progress = [Action[string]]{ param([string]$message) Record $message }
-    $libraries = $reader.ProbeLibrary($kernel, $game, $progress)
+    $module = $reader.ProbeModule($kernel, $game, $progress)
+    $libraries = $reader.LastLibraries
     $il2cpp = $false
     foreach ($mapping in $libraries.Mappings) {
-        Record "LibraryMapping Name=$($mapping.Name) Start=0x$($mapping.Start.ToString('x')) End=0x$($mapping.End.ToString('x')) FilePageOffset=$($mapping.FilePageOffset) Arm64ElfHeader=$($mapping.Arm64ElfHeader) Revalidated=$($mapping.Revalidated)"
-        if ($mapping.Name -ceq 'libil2cpp.so' -and $mapping.Arm64ElfHeader -and $mapping.Revalidated) { $il2cpp = $true }
+        $selected = $mapping.Start -eq $module.LoadBias
+        Record "LibraryMapping Name=$($mapping.Name) Start=0x$($mapping.Start.ToString('x')) End=0x$($mapping.End.ToString('x')) FilePageOffset=$($mapping.FilePageOffset) Arm64ElfHeader=$($mapping.Arm64ElfHeader) Revalidated=$($mapping.Revalidated) SelectedModule=$selected"
+        if ($selected -and $mapping.Name -ceq 'libil2cpp.so' -and $mapping.Arm64ElfHeader -and $mapping.Revalidated) { $il2cpp = $true }
     }
     Record "VmasVisited=$($libraries.VmasVisited)"
-    if (-not $il2cpp -or $libraries.StopReason -cne 'TARGET_VERIFIED') { throw 'An ARM64 libil2cpp ELF header was not revalidated in the game address space.' }
+    if (-not $il2cpp -or $libraries.StopReason -cne 'MODULE_VERIFIED') { throw 'The selected ARM64 IL2CPP module was not revalidated.' }
     if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during the probe.' }
     $reader.Recheck($kernel, $game)
     Record 'GameLibraryRead=PASS Name=libil2cpp.so Architecture=ARM64'
+    Record "GameModuleIdentity=PASS LoadBias=0x$($module.LoadBias.ToString('x')) BuildId=$($module.BuildId) LoadSegments=$($module.LoadSegments) WindowVmas=$($module.WindowVmas) Fingerprints=$($module.Fingerprints)"
+    Record "ApkReferenceSHA256=$($module.ReferenceFileSha256) RuntimeVerification=ELF_TABLES_SEGMENT_OFFSETS_BUILD_ID_AND_CODE_SAMPLES"
     Record 'AimIntegration=INCOMPLETE EntityHeadVisibilityMappings=UNVERIFIED AimWrites=NONE'
 } catch { $failed = $true; Failure $stage $_.Exception }
 finally {

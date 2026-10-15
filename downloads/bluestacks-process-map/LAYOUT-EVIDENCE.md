@@ -143,3 +143,18 @@ filename, ELF bytes, mm identity, VMA bounds, list head, and neighboring links.
 The first three versions' results do not establish these new final rechecks on
 Windows; version 4's live result remains pending. Entity/head/visibility layouts
 and aim-control writes remain unimplemented.
+
+## User-reported version 4 success
+
+The user ran version 4 against Pie64, host PID 23620 and guest PID 2942. Kernel
+identity and process discovery passed (147 task nodes). The selected IL2CPP
+mapping at 0x7f96b9e6b000 passed the targeted VMA, filename, ARM64 header, and
+process checks. The runner reported `GameLibraryRead=PASS` after 808 outer VMAs,
+156 file objects, 217 repeated-file skips, and 8096 physical reads (905 cache
+hits). The stop reason was TARGET_VERIFIED and the remaining VMA list was not
+enumerated. Plugin unload, handler cleanup, and shared-session release passed.
+
+This verifies the header-reading workflow on Windows. It does not identify a
+loaded module base: that VMA is the same size as the entire page-rounded APK
+library. Version 5's additional segment/fingerprint checks and static evidence
+are documented in `MODULE-EVIDENCE.md`. Live version 5 verification is pending.

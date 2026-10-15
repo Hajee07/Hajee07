@@ -17,9 +17,9 @@ Aim-control writes remain unimplemented.
 The uploaded fastboot disk subsequently supplied the matching kernel image and
 87,332 recoverable kernel symbols. A [read-only process-mapping probe](bluestacks-process-map/README.md)
 now implements kernel identity checks, process page-table discovery, and a
-bounded ARM64 IL2CPP header read. Version 3 passed live kernel/process discovery
-and observed ARM64 IL2CPP headers, then exhausted its budget while continuing
-the full mapping scan. Version 4 revalidates the first target and stops there.
-Forty-six offline checks passed, including a 4500-VMA fixture that reached its
-target at VMA 800 in 4372 reads. Final Windows target verification and
-entity/head/aim integration remain pending.
+bounded ARM64 IL2CPP header read. Version 4 passed live kernel/process and final
+header verification after 808 VMAs and 8096 reads, with successful cleanup.
+Version 5 adds APK ELF segment-layout, build-ID, and code-sample verification to
+distinguish whole-file mappings from a layout-consistent module base. Sixty-four
+offline checks passed. Live module verification and entity/head/aim integration
+remain pending.

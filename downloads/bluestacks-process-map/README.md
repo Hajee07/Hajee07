@@ -3,16 +3,17 @@
 This probe uses the already tested native physical-read DLL and the kernel
 extracted from the user's `fastboot.vdi`. It verifies live kernel bytes before
 using the derived task/mm fields, locates the current ADB game PID, discovers
-its page table, and walks its VMAs until it can revalidate an ARM64 `libil2cpp.so`
-ELF header through that page table. Other matching Unity/metadata mappings seen
-before the target are reported as observations.
+its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
+against the inspected APK. Other matching Unity/metadata mappings seen before
+the target are reported as observations.
 
-**Live process discovery passed in version 2.** The user verified the kernel,
-found Free Fire PID 2942 and its physical page-table root. Version 3 subsequently
-read ARM64 IL2CPP headers before VMA 896, but kept scanning and exhausted the
-30,000-read budget at VMA 3300 before final rechecks. Version 4 stops after the
-first IL2CPP header passes targeted mapping, filename, header, and process
-rechecks. Its Windows run is pending.
+**Version 4 passed live kernel, process, and targeted IL2CPP header verification.**
+It finished after 808 VMAs and 8096 physical reads, with all cleanup steps passing.
+That first mapping is exactly the page-rounded size of the entire library file;
+an ELF header alone does not establish the loaded module's base. Version 5 checks
+the first-load boundary, all eight PT_LOAD segments, ELF tables, GNU build ID,
+and three code samples before reporting a layout-consistent load bias. Its live
+Windows run is pending. See `MODULE-EVIDENCE.md` for exact reference provenance.
 Entity/head/visibility layouts and aim-control writes remain unimplemented.
 
 Extract the complete ZIP into a new folder. Start the Pie64 instance and Free
@@ -27,7 +28,8 @@ endpoint displayed by BlueStacks. An explicit disconnected localhost endpoint
 is reconnected once and verified. Other devices are not selected automatically.
 The runner discovers the current host/game PIDs; old PIDs are not constants.
 
-The package checks DLL/source digests and the exact loaded VMM fingerprint. It
+The package checks DLL and all three runtime C# source digests, plus the exact
+loaded VMM fingerprint. It
 loads the same native DLL used in the successful probe, uses its read-only info
 handler, and unloads and releases its shared session in `finally`. The DLL bytes
 are unchanged. No VM pause or memory write is used.
@@ -56,21 +58,34 @@ initial-task fields are relaxed. Failure messages identify the individual field.
 Filename lookups are deduplicated by the observed file object, with a 1024-entry
 bound. Progress is reported every 128 VMAs, and partial scan totals survive an
 exception. `LibraryCandidate ... Status=PENDING_RECHECK` is provisional.
-For the first ARM64 IL2CPP header at file offset zero, the targeted probe rechecks
+For each ARM64 IL2CPP header at file offset zero, the targeted probe rechecks
 the process, VMA bounds/file/offset/links, immediate neighbor links (or list head),
 filename, and the exact 20 header bytes. It checks the VMA and process again after
-the header read, then returns `StopReason=TARGET_VERIFIED`. Every virtual read
-still rewalks the live page tables. Only this candidate gets `Revalidated=True`;
-earlier mappings remain observations. Changes to skipped file objects can cause
+the header read. Every virtual read still rewalks the live page tables.
+`Revalidated=True` describes this header check; `SelectedModule=True` identifies
+the candidate that also passed the module checks. Changes to skipped file objects can cause
 a library to be missed in this non-atomic scan, so a missing library is reported
 as unverified.
 
-`LibraryScanStop Reason=TARGET_VERIFIED CompleteVmaList=False` means the remaining
-VMAs were not enumerated. The probe does not collect all load segments, choose a
-module load bias, or verify metadata/entity structures. Reaching the list end
-without a verified target is a failure at the runner level. The core's separate
-`Libraries` method retains full enumeration for offline checks; the Windows
-runner uses `ProbeLibrary` and its target rechecks.
+The module check rejects a whole-file-sized mapping as a loaded-layout candidate.
+For a candidate whose first VMA matches the first PT_LOAD boundary, it compares
+the complete ELF header and program-header table. It reads a local window of at
+most 128 VMAs (plus one boundary observation) covering the module's extent.
+All eight PT_LOAD file ranges must have the expected file offsets and basename;
+memory-only tails must also be mapped. GNU build-ID note bytes and three 64-byte
+executable-segment samples must match the APK reference. These bytes, used VMA
+fields/links, filenames, and process identity are rechecked before success.
+
+`LibraryScanStop Reason=MODULE_VERIFIED CompleteVmaList=False` means the rest of
+the process list was not enumerated. `WindowVmas` counts the separate module
+window; `VmasVisited` counts the outer search. A match establishes this observed
+layout and these sampled bytes, not a whole-memory hash, currently executing
+module copy, decoded metadata, or entity layout. Unmapped pages, runtime-altered
+reference bytes, and different loader layouts may prevent verification.
+
+Reaching the list end without a matching module is a failure. The core's separate
+`Libraries` and `ProbeLibrary` methods retain the previous enumeration/header
+workflows for offline regression checks; the Windows runner uses `ProbeModule`.
 
 The task scan is bounded to 2048 nodes and the VMA scan to 4096 nodes. Only the
 selected game's Unity/IL2CPP/metadata mapping names and ranges are logged. Game
@@ -81,20 +96,23 @@ all lifetime races. Restart the probe after a reported inconsistency with the
 game left running.
 
 A successful result includes `KernelIdentity=PASS`, `ProcessMap=PASS`, and
-`GameLibraryRead=PASS Name=libil2cpp.so Architecture=ARM64`. The first two stages
-and provisional ARM64 header reads have been observed on Windows. The final
-library verification stage remains pending; the runner rechecks the ADB PID and
-process identity before reporting it as passed.
+`GameLibraryRead=PASS Name=libil2cpp.so Architecture=ARM64`, followed by
+`GameModuleIdentity=PASS`. The first three stages were observed on Windows with
+version 4. Module identity remains pending. The runner rechecks the ADB PID and
+process identity before reporting success.
 Exit code 1 means a stage or cleanup failed.
 Share the complete `ResultFile` report even after a failure; individual stages
 remain distinguishable.
 
-See `LAYOUT-EVIDENCE.md` for derivation and provenance. No uploaded VDI, extracted
-kernel, APK, or Oracle/BlueStacks system binaries are included in this package.
+See `LAYOUT-EVIDENCE.md` and `MODULE-EVIDENCE.md` for derivation and provenance.
+The generated module reference contains only selected header/sample bytes and
+layout constants. No uploaded VDI, extracted kernel, full APK/library, or
+Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-Forty-six checks passed using PowerShell 7.4.6 with C# 5 language compatibility:
+Sixty-four checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
 kernel anchors, and a synthetic game process/VMA/ARM64 header. Regression cases
@@ -113,6 +131,13 @@ Regressions reject filename, VMA file, header, process mm, list-head and neighbo
 link changes, including a VMA changed during the final header read. Wrong ELF
 architecture, nonzero file offset, and a Unity-only header cannot satisfy the
 target. Failed revalidation preserves provisional status and progress.
+
+Eighteen additional module checks use the exact APK reference bytes with synthetic
+mappings. They distinguish a whole-file mapping from the PT_LOAD layout, reject
+incorrect tables/build ID/code/file offsets/names/gaps, detect changes during
+verification, and exercise the 128-VMA window boundary. The normal module fixture
+uses 681 reads and nine window VMAs; these are offline measurements. Reference
+generation reproduces identical bytes and rejects an incorrect source digest.
 
 Reproduce with the extracted ELF available locally:
 
