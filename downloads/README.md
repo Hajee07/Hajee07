@@ -46,3 +46,10 @@ complete header and nine type records. V11 adds read-only local-player and manag
 head Transform verification with class/parent/hotfix/interface checks. 127 offline
 checks pass. Run after spawning in Training Ground; live object validation is
 pending. Other-player enumeration, world coordinates and aim updates are pending.
+
+V11 user reports exposed a traversal inconsistency and, on a later successful
+module/metadata scan, an IFix class-layout mismatch. V12 corrects the generator's
+use of opaque native-size words as exact expectations. It verifies bounded
+runtime sizes and IFix's actual static-field metadata/layout, and adds a bounded
+fresh scan for outer order/backlink inconsistencies. 142 offline checks pass.
+Live player/head validation and aim integration still require further work.

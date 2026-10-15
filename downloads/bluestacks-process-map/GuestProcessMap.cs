@@ -329,11 +329,12 @@ namespace HeadBridge.Mapping
         }
         private sealed class VmaTraversalException : InvalidOperationException
         {
-            internal readonly bool RepeatedNode;
-            internal VmaTraversalException(bool repeatedNode, ulong node, ulong previous, int count)
-                : base("VMA traversal failed Reason=" + (repeatedNode ? "REPEATED_NODE" : "NODE_LIMIT") +
-                    " Node=0x" + node.ToString("x") + " Previous=0x" + previous.ToString("x") +
-                    " VmasVisited=" + count + " Limit=4096") { RepeatedNode = repeatedNode; }
+            internal readonly string Reason;
+            internal bool Retryable { get { return Reason == "REPEATED_NODE" || Reason == "VMA_ORDER" || Reason == "VMA_BACKLINK"; } }
+            internal VmaTraversalException(string reason, ulong node, ulong previous, int count, string detail = "")
+                : base("VMA traversal failed Reason=" + reason + " Node=0x" + node.ToString("x") +
+                    " Previous=0x" + previous.ToString("x") + " VmasVisited=" + count + " Limit=4096 " + detail)
+            { Reason = reason; }
         }
         private LibraryResult ScanLibraries(KernelContext kernel, GameProcess game, Action<string> progress, bool stopAfterTarget,
             Func<ulong, byte[], LibraryMapping, byte[], bool> verifyModule = null)
@@ -351,18 +352,28 @@ namespace HeadBridge.Mapping
                 if (seen.Count >= 4096)
                 {
                     result.StopReason = "NODE_LIMIT";
-                    throw new VmaTraversalException(false, node, previous, seen.Count);
+                    throw new VmaTraversalException("NODE_LIMIT", node, previous, result.VmasVisited);
                 }
                 if (!seen.Add(node))
                 {
                     result.StopReason = "REPEATED_NODE";
-                    throw new VmaTraversalException(true, node, previous, seen.Count);
+                    throw new VmaTraversalException("REPEATED_NODE", node, previous, result.VmasVisited);
                 }
                 byte[] area = Virtual(kernel.Root, node, 0xa8);
                 ulong start = BitConverter.ToUInt64(area, 0), end = BitConverter.ToUInt64(area, 8);
-                if (start >= end || start < previousEnd || end > 0x0000800000000000UL ||
-                    BitConverter.ToUInt64(area, 0x18) != previous || ((start | end) & 4095UL) != 0)
-                    throw new InvalidOperationException("VMA order, bounds, or links are inconsistent.");
+                ulong actualPrevious = BitConverter.ToUInt64(area, 0x18);
+                string invalid = start >= end ? "INVALID_RANGE" : end > 0x0000800000000000UL ? "USER_RANGE" :
+                    ((start | end) & 4095UL) != 0 ? "PAGE_ALIGNMENT" : start < previousEnd ? "VMA_ORDER" :
+                    actualPrevious != previous ? "VMA_BACKLINK" : null;
+                if (invalid != null)
+                {
+                    result.StopReason = invalid;
+                    string detail = "Start=0x" + start.ToString("x") + " End=0x" + end.ToString("x") +
+                        " PreviousEnd=0x" + previousEnd.ToString("x") + " LinkPrevious=0x" + actualPrevious.ToString("x") +
+                        " Next=0x" + BitConverter.ToUInt64(area, 0x10).ToString("x");
+                    if (progress != null) progress("LibraryScanInconsistency Reason=" + invalid + " Node=0x" + node.ToString("x") + " " + detail);
+                    throw new VmaTraversalException(invalid, node, previous, result.VmasVisited, detail);
+                }
                 result.VmasVisited = seen.Count;
                 if (progress != null && (result.VmasVisited == 1 || result.VmasVisited % 128 == 0))
                     progress("LibraryScanProgress VmasVisited=" + result.VmasVisited + " PhysicalReadCalls=" + PhysicalCalls + " FilesInspected=" + result.FilesInspected + " RepeatedFilesSkipped=" + result.RepeatedFilesSkipped);

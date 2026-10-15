@@ -100,12 +100,13 @@ Reaching the list end without a matching module is a failure. The core's separat
 `Libraries` and `ProbeLibrary` methods retain the previous enumeration/header
 workflows for offline regression checks. The Windows runner uses
 `ProbeModuleWithRetry`, which calls the same module verifier at most twice.
-Only a repeated node in the outer traversal triggers a retry. The discarded
+A repeated node, inconsistent traversal order or inconsistent backlink in the
+outer traversal can trigger one retry. The discarded
 attempt's node/mapping counts and cumulative reads are logged. Process identity
 is rechecked, the translation cache is cleared, and the next attempt starts at
 `mm.mmap` with fresh visited-node and file-name dictionaries. It uses the same
 Reader, so the 30,000-read and 120-second budgets are never reset. A repeated
-node on attempt two fails. Node limits, module-window cycles, inconsistent links,
+node on attempt two fails. Node limits, invalid ranges/alignment/user bounds, module-window failures,
 fingerprint mismatches, read failures, and identity changes are not retried.
 The retry does not establish why a node repeated or make the live scan atomic.
 
@@ -175,7 +176,7 @@ Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-127 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+142 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -196,7 +197,7 @@ link changes, including a VMA changed during the final header read. Wrong ELF
 architecture, nonzero file offset, and a Unity-only header cannot satisfy the
 target. Failed revalidation preserves provisional status and progress.
 
-Twenty-five additional module checks use the exact APK reference bytes with synthetic
+Thirty-one additional module checks use the exact APK reference bytes with synthetic
 mappings. They distinguish a whole-file mapping from the PT_LOAD layout, reject
 incorrect tables/build ID/code/file offsets/names/gaps, detect changes during
 verification, and exercise the 128-VMA window boundary. The normal module fixture
@@ -226,23 +227,23 @@ Reproduce with the extracted ELF available locally:
 .\Run-CoreTests.ps1 -KernelElfPath C:\path\to\vmlinux
 ```
 
-The 26 object checks cover exact class/metadata identity, supported derived
+The 35 object checks cover exact class/metadata identity, supported derived
 Player ancestry, original-path hotfix gates, null/unresolved state, wrong local
 flags, changed pointers/mm, code samples, head interface dispatch, Transform
 identity, and interface/vtable bounds. The complete valid object fixture uses
-1710 physical reads and 104 bounded observations. These are offline measurements.
+1890 physical reads and 114 bounded observations. These are offline measurements.
 
 Tests validate the reader against controlled fixtures. They do not establish
 live Windows COM behavior, runtime object lifetime, or a working aim lock.
 
 ## Version 11 local-player and managed head Transform stage
 
-After metadata validation, the runner checks 41 additional exact code/GOT
+After metadata validation, the runner checks 47 additional exact code/GOT
 references and follows the original CurrentLocalPlayer path. Four relevant
 hotfix entries must be inactive. It validates CurrentGame as MatchGame or a
 supported derived class, then the current match and the locally marked Player.
 Classes must match exact metadata records, by-value types, names/namespaces,
-self pointers, tokens, instance sizes and runtime parent chains. The supported
+self pointers, tokens, supported runtime-size rules and runtime parent chains. The supported
 profile contains 104 classes derived from the exact metadata, not live addresses.
 
 If the head getter's hotfix entry is active, this is reported separately and the
@@ -262,3 +263,38 @@ The object snapshots are bounded to 1024 ranges/64 KiB, parent walks to 16 links
 and interface scans to 64 entries and the exact class count. Shared global read
 and elapsed-time budgets remain unchanged. The scan remains non-atomic and
 holds no GC roots or guest locks; observed changes fail the run.
+
+## Version 12 diagnostics and traversal recovery
+
+Two user v11 runs reached different stages. One stopped at an outer VMA
+inconsistency after 945 valid entries. A later run passed module and both metadata
+rounds, then failed the combined IFix class token/instance-size comparison.
+Neither report establishes the cause of the class mismatch; no object-chain
+success was returned.
+
+V12 distinguishes INVALID_RANGE, USER_RANGE, PAGE_ALIGNMENT, VMA_ORDER and
+VMA_BACKLINK, with the offending node and range/link fields. Only outer order,
+backlink and repeated-node failures can restart once; each new attempt must pass
+all original checks under the same cumulative read/time budgets.
+
+V11's reference generator incorrectly treated six opaque initial native-size
+values as exact runtime sizes. For IFix the raw initial size is 0x81818099;
+that is not a plausible instance size. V12 preserves the raw reference for audit
+and marks it untrusted. Plausible native sizes remain exact checks. The six
+opaque cases use bounded runtime sizes sufficient for the instance fields that
+the probe accesses. IFix's declared instance fields independently require at
+least 40 bytes; its runtime size must be between that and 1 MiB. Derived game
+classes must cover their verified base storage. The interface type retains its
+valid zero instance-size profile because it is not dereferenced as an instance.
+
+For IFix, the runtime field table must independently identify wrapperArray: its
+complete field metadata record, name pointer, declaring class, token, array type,
+static offset zero and storage extent all have to match. The field table is
+indexed with the exact 32-byte field-info stride. Runtime static storage must
+cover the eight-byte reference and remain within 64 KiB. No opaque static-size
+value is used as an expected allocation size.
+
+Class token and size failures now report separately. ObjectClassSizeObservation
+records bounded runtime sizes; ObjectClassLayoutDifference reports expected and
+actual class data on failure. This is a reference-generation correction, not
+proof the live object chain now passes. Share the complete v12 Windows report.

@@ -8,11 +8,12 @@ namespace HeadBridge.Mapping
         internal readonly int Index, Family, Parent;
         internal readonly string Name, RecordHex;
         internal readonly ulong NameOffset, NamespaceOffset, Getter;
-        internal readonly uint Bits, InstanceSize, StaticSize, Token;
+        internal readonly uint Bits, InstanceSize, StaticSize, Token, MinimumInstanceSize;
+        internal readonly bool InstanceSizeExact;
         internal ObjectClassProfile(int index, string name, int family, int parent, ulong nameOffset, ulong namespaceOffset,
-            string recordHex, uint bits, uint instanceSize, uint staticSize, uint token, ulong getter)
+            string recordHex, uint bits, uint instanceSize, uint staticSize, uint token, ulong getter, uint minimumInstanceSize, bool instanceSizeExact)
         { Index = index; Name = name; Family = family; Parent = parent; NameOffset = nameOffset; NamespaceOffset = namespaceOffset;
-          RecordHex = recordHex; Bits = bits; InstanceSize = instanceSize; StaticSize = staticSize; Token = token; Getter = getter; }
+          RecordHex = recordHex; Bits = bits; InstanceSize = instanceSize; StaticSize = staticSize; Token = token; Getter = getter; MinimumInstanceSize = minimumInstanceSize; InstanceSizeExact = instanceSizeExact; }
     }
     public sealed class PlayerObjectResult
     {
@@ -90,8 +91,20 @@ namespace HeadBridge.Mapping
             Expect(reads.Value(klass + 0x20) == type && reads.Word(klass + 0x28) == profile.Bits, "class by-value type " + profile.Name);
             Expect(reads.Value(klass + 0x10) == checked(layout.RuntimeMetadataBase + profile.NameOffset) &&
                 reads.Value(klass + 0x18) == checked(layout.RuntimeMetadataBase + profile.NamespaceOffset), "class name/namespace pointers " + profile.Name);
-            Expect(reads.Word(klass + 0x11c) == profile.Token && reads.Word(klass + 0xf8) == profile.InstanceSize,
-                "class token/instance size " + profile.Name);
+            uint token = reads.Word(klass + 0x11c), instanceSize = reads.Word(klass + 0xf8);
+            bool sizeMatches = profile.InstanceSizeExact ? instanceSize == profile.InstanceSize :
+                instanceSize >= profile.MinimumInstanceSize && instanceSize <= 1048576;
+            if (!profile.InstanceSizeExact && progress != null)
+                progress("ObjectClassSizeObservation Name=" + profile.Name + " Rule=BOUNDED_RUNTIME Minimum=" + profile.MinimumInstanceSize +
+                    " ActualInstanceSize=" + instanceSize + " SourceInitialSize=0x" + profile.InstanceSize.ToString("x"));
+            if ((token != profile.Token || !sizeMatches) && progress != null)
+                progress("ObjectClassLayoutDifference Name=" + profile.Name + " TypeIndex=" + index +
+                    " ExpectedToken=0x" + profile.Token.ToString("x") + " ActualToken=0x" + token.ToString("x") +
+                    " ExpectedInstanceSize=" + (profile.InstanceSizeExact ? profile.InstanceSize.ToString() : "UNVERIFIED") + " ActualInstanceSize=" + instanceSize +
+                    " SourceInitialStaticSize=0x" + profile.StaticSize.ToString("x") + " ActualStaticSize=" + reads.Word(klass + 0x10c) +
+                    " GenericClass=0x" + reads.Value(klass + 0x60).ToString("x"));
+            Expect(token == profile.Token, "class token " + profile.Name);
+            Expect(sizeMatches, "class instance size " + profile.Name);
             return profile;
         }
         private ulong RootClass(ObjectReads reads, ModuleResult module, GameLayoutResult layout, ulong cell, int expected, Action<string> progress)
@@ -117,6 +130,24 @@ namespace HeadBridge.Mapping
             }
             throw new InvalidOperationException("Object class parent bound exhausted.");
         }
+        private void VerifyWrapperField(ObjectReads reads, ulong hotfix, ModuleResult module, GameLayoutResult layout)
+        {
+            uint staticSize = reads.Word(hotfix + 0x10c);
+            Expect(staticSize >= 8 && staticSize <= 65536, "IFix static storage extent");
+            int fields = BitConverter.ToUInt16(reads.Read(hotfix + 0x124, 2), 0);
+            Expect(fields == 4 && ObjectReference.WrapperFieldIndex < fields, "IFix field count");
+            ulong table = reads.Pointer(hotfix + 0x80, "IFix runtime field table");
+            ulong field = checked(table + (ulong)ObjectReference.WrapperFieldIndex * 32UL);
+            Expect(EqualBytes(reads.Read(checked(layout.RuntimeMetadataBase + ObjectReference.WrapperMetadataOffset), 12),
+                Hex(ObjectReference.WrapperFieldRecordHex)), "IFix wrapper field metadata");
+            Expect(reads.Value(field) == checked(layout.RuntimeMetadataBase + ObjectReference.WrapperFieldNameOffset) &&
+                reads.Value(field + 0x10) == hotfix && reads.Word(field + 0x1c) == ObjectReference.WrapperFieldToken,
+                "IFix wrapper field identity");
+            Expect(reads.Word(field + 0x18) == 0, "IFix wrapper static field offset");
+            ulong type = checked(module.LoadBias + ObjectReference.WrapperTypeRva);
+            Expect(reads.Value(field + 8) == type && reads.Word(type + 8) == ObjectReference.WrapperTypeBits,
+                "IFix wrapper declared array type");
+        }
         private static bool HotfixEntry(ObjectReads reads, ulong array, ulong length, int id)
         { return (ulong)id < length && reads.Value(checked(array + 0x20UL + (ulong)id * 8UL)) != 0; }
         private static void ObjectAnchors(Reader reader, GameProcess game, ModuleResult module)
@@ -136,6 +167,7 @@ namespace HeadBridge.Mapping
             ulong matchBase = RootClass(reads, module, layout, ObjectReference.MatchGameCell, 12425, progress);
             ulong hotfix = RootClass(reads, module, layout, ObjectReference.HotfixCell, 37332, progress);
             Expect(reads.Word(facade + 0xe0) != 0 && reads.Word(hotfix + 0xe0) != 0, "static class initialization complete");
+            VerifyWrapperField(reads, hotfix, module, layout);
             ulong hotfixStatics = reads.Pointer(hotfix + 0xb8, "hotfix static storage");
             ulong wrappers = reads.Pointer(hotfixStatics, "hotfix wrapper array");
             reads.Pointer(wrappers, "wrapper array class");

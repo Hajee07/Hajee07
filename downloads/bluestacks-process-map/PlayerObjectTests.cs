@@ -36,12 +36,20 @@ namespace HeadBridge.Mapping.Tests
                     ulong klass = Class(profile.Index), row = Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + (ulong)profile.Index * 88UL;
                     Put(row, Reader.Hex(profile.RecordHex)); U64(klass + 0x68, row); U64(klass + 0x78, klass); U64(klass + 0x20, row); U32(klass + 0x28, profile.Bits);
                     U64(klass + 0x10, Layout.RuntimeMetadataBase + profile.NameOffset); U64(klass + 0x18, Layout.RuntimeMetadataBase + profile.NamespaceOffset);
-                    U32(klass + 0x11c, profile.Token); U32(klass + 0xf8, profile.InstanceSize); U32(klass + 0xe0, 1);
+                    U32(klass + 0x11c, profile.Token); U32(klass + 0xf8, profile.InstanceSizeExact ? profile.InstanceSize : profile.MinimumInstanceSize); U32(klass + 0xe0, 1);
                     byte[] counts = new byte[16]; System.Array.Copy(Reader.Hex(profile.RecordHex), 0x40, counts, 0, 16); Put(klass + 0x120, counts);
                     if (profile.Parent >= 0) U64(klass + 0x58, Class(profile.Parent));
                 }
                 U64(Module.LoadBias + ObjectReference.FacadeCell, Class(12418)); U64(Module.LoadBias + ObjectReference.MatchGameCell, Class(12425));
                 U64(Module.LoadBias + ObjectReference.HotfixCell, Class(37332)); U64(Module.LoadBias + ObjectReference.HeadInterfaceCell, Class(36294));
+                const ulong fieldTable = 0x4a000000;
+                U64(Class(37332) + 0x80, fieldTable); U32(Class(37332) + 0x10c, 8);
+                ulong field = fieldTable + (ulong)ObjectReference.WrapperFieldIndex * 32UL;
+                U64(field, Layout.RuntimeMetadataBase + ObjectReference.WrapperFieldNameOffset);
+                U64(field + 8, Module.LoadBias + ObjectReference.WrapperTypeRva); U64(field + 0x10, Class(37332));
+                U32(field + 0x18, 0); U32(field + 0x1c, ObjectReference.WrapperFieldToken);
+                Put(Layout.RuntimeMetadataBase + ObjectReference.WrapperMetadataOffset, Reader.Hex(ObjectReference.WrapperFieldRecordHex));
+                U32(Module.LoadBias + ObjectReference.WrapperTypeRva + 8, ObjectReference.WrapperTypeBits);
                 U64(Class(12418) + 0xb8, FacadeStatics); U64(Class(37332) + 0xb8, HotfixStatics); U64(HotfixStatics, Array);
                 U64(Array, ArrayClass); U32(ArrayClass + 0x28, 0x1d0000); U64(ArrayClass + 0x40, Class(37332)); U64(Array + 0x18, 0x400);
                 foreach (int id in new int[] { 0x1c6, 0x139, 0x1c5, 0x12b, 0x34e }) U64(Array + 0x20UL + (ulong)id * 8UL, 0);
@@ -128,6 +136,36 @@ namespace HeadBridge.Mapping.Tests
             Check(transformNull.Run().HeadStatus == "NOT_READY_TRANSFORM_NULL", "a null Transform is a distinct readiness result");
             Fixture misaligned = new Fixture(); misaligned.U64(Fixture.Player + 0xa00, Fixture.Provider + 1);
             Reject(misaligned, "Object pointer invalid", "misaligned provider addresses are rejected before following them");
+            Check(classSize.Progress.Exists(delegate(string line) { return line.Contains("ObjectClassLayoutDifference") && line.Contains("ExpectedInstanceSize=9328") &&
+                line.Contains("ActualInstanceSize=16") && line.Contains("ActualToken=0x"); }), "class layout diagnostics preserve expected and actual sizes and token");
+            Fixture token = new Fixture(); token.U32(Fixture.Class(37332) + 0x11c, 0);
+            bool tokenRejected = false;
+            try { token.Run(); } catch (Exception error) { tokenRejected = error.Message.Contains("class token IFix"); }
+            Check(tokenRejected && token.Progress.Exists(delegate(string line) { return line.Contains("ObjectClassLayoutDifference Name=IFix") &&
+                line.Contains("ActualToken=0x0") && line.Contains("ActualInstanceSize="); }), "token and instance-size failures remain distinct and cannot become a PASS");
+            bool sane = true; int bounded = 0, opaque = 0;
+            foreach (ObjectClassProfile c in ObjectReference.Classes)
+            {
+                if (c.InstanceSizeExact) sane &= c.InstanceSize >= c.MinimumInstanceSize && c.InstanceSize <= 1048576;
+                else bounded++;
+                if (c.InstanceSize > 1048576) { opaque++; sane &= !c.InstanceSizeExact; }
+            }
+            Check(sane && bounded >= 6 && opaque == 6, "opaque native sizes are never promoted to exact runtime expectations");
+            Fixture dynamicSize = new Fixture(); dynamicSize.U32(Fixture.Class(37332) + 0xf8, 48);
+            Check(dynamicSize.Run().LocalPlayer == Fixture.Player && dynamicSize.Progress.Exists(delegate(string line) { return line.Contains("ObjectClassSizeObservation Name=IFix") &&
+                line.Contains("ActualInstanceSize=48"); }), "bounded IFix runtime sizes require the independently verified runtime field layout");
+            Fixture small = new Fixture(); small.U32(Fixture.Class(37332) + 0xf8, 32);
+            Reject(small, "class instance size", "IFix runtime size cannot be smaller than its declared instance fields");
+            Fixture staticSize = new Fixture(); staticSize.U32(Fixture.Class(37332) + 0x10c, 0);
+            Reject(staticSize, "static storage extent", "runtime static storage must contain the wrapper reference");
+            Fixture fieldOffset = new Fixture(); fieldOffset.U32(0x4a000000UL + (ulong)ObjectReference.WrapperFieldIndex * 32UL + 0x18, 8);
+            Reject(fieldOffset, "static field offset", "runtime field offset must independently agree with static offset zero");
+            Fixture fieldToken = new Fixture(); fieldToken.U32(0x4a000000UL + (ulong)ObjectReference.WrapperFieldIndex * 32UL + 0x1c, 0);
+            Reject(fieldToken, "wrapper field identity", "an unrelated runtime field cannot masquerade as wrapperArray");
+            bool interfaceZero = false;
+            foreach (ObjectClassProfile c in ObjectReference.Classes) if (c.Index == 36294)
+                interfaceZero = c.InstanceSizeExact && c.InstanceSize == 0 && c.MinimumInstanceSize == 0;
+            Check(interfaceZero, "interface class size zero remains valid without treating it as an object instance");
             Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects and managed Transform)");
         }
     }

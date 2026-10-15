@@ -41,7 +41,7 @@ namespace HeadBridge.Mapping
         { if (progress != null) progress("ModuleCandidate Start=0x" + address.ToString("x") + " Status=REJECTED Reason=" + reason); }
         public ModuleResult ProbeModuleWithRetry(KernelContext kernel, GameProcess game, Action<string> progress)
         {
-            // Rescan only an observed repeated node in the outer VMA traversal.
+            // Rescan outer repeated nodes or inconsistent traversal order/backlinks once.
             // One Reader preserves the physical-call count and elapsed budget.
             for (int attempt = 1; attempt <= 2; attempt++)
             {
@@ -49,8 +49,8 @@ namespace HeadBridge.Mapping
                 try { return ProbeModule(kernel, game, progress); }
                 catch (VmaTraversalException error)
                 {
-                    if (!error.RepeatedNode || attempt == 2) throw;
-                    if (progress != null) progress("LibraryScanRetry Attempt=1 NextAttempt=2 Reason=REPEATED_NODE" +
+                    if (!error.Retryable || attempt == 2) throw;
+                    if (progress != null) progress("LibraryScanRetry Attempt=1 NextAttempt=2 Reason=" + error.Reason +
                         " DiscardedVmas=" + LastLibraries.VmasVisited + " DiscardedMappings=" + LastLibraries.Mappings.Count +
                         " PhysicalReadCalls=" + PhysicalCalls + " Detail=" + error.Message);
                     Recheck(kernel, game);

@@ -1,4 +1,12 @@
 {
+  "wrapper_field": {
+    "local_index": 3,
+    "token": 67396131,
+    "name_offset": 9123849,
+    "type_rva": 173919008,
+    "metadata_offset": 45420568,
+    "record_hex": "75a46c003552000023620404"
+  },
   "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
   "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
   "transform_type_index": 41116,
@@ -34,6 +42,8 @@
   ],
   "classes": [
     {
+      "minimum_instance_size": 16,
+      "instance_size_exact": true,
       "index": 12418,
       "name": "COW.GameFacade",
       "family": 1,
@@ -48,6 +58,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 12425,
       "name": "COW.MatchGame",
       "family": 4,
@@ -62,6 +74,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": false,
       "index": 12644,
       "name": "COW.MultiplePlayerUGCPartyGame",
       "family": 4,
@@ -76,6 +90,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": false,
       "index": 12654,
       "name": "COW.Player_HippoCrisis",
       "family": 16,
@@ -90,6 +106,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": false,
       "index": 12655,
       "name": "COW.Player_HippoCrisisNPC",
       "family": 16,
@@ -104,6 +122,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 24,
+      "instance_size_exact": true,
       "index": 14528,
       "name": "TransformNode",
       "family": 128,
@@ -118,6 +138,8 @@
       "getter": 58296260
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 30530,
       "name": "COW.Gameplay.MultiplePlayerWereWolvesGame",
       "family": 4,
@@ -132,6 +154,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 30536,
       "name": "COW.Gameplay.PlayerArmsRace",
       "family": 16,
@@ -146,6 +170,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 24,
+      "instance_size_exact": true,
       "index": 31705,
       "name": "BFOONIGAIFK",
       "family": 128,
@@ -160,6 +186,8 @@
       "getter": 118361000
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 31824,
       "name": "COW.GamePlay.Player",
       "family": 16,
@@ -174,6 +202,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 1592,
+      "instance_size_exact": true,
       "index": 32133,
       "name": "COW.GamePlay.JMAGGLCNGIG",
       "family": 8,
@@ -188,6 +218,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 32220,
       "name": "COW.GamePlay.IKPGFONFBGK",
       "family": 4,
@@ -202,6 +234,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 32251,
       "name": "COW.GamePlay.PKPPEHIJAML",
       "family": 4,
@@ -216,6 +250,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 32360,
       "name": "COW.GamePlay.PlayerNetwork",
       "family": 16,
@@ -230,6 +266,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 1592,
+      "instance_size_exact": false,
       "index": 33936,
       "name": "COW.GamePlay.EPPMGCJDEDC",
       "family": 8,
@@ -244,6 +282,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 1592,
+      "instance_size_exact": false,
       "index": 33941,
       "name": "COW.GamePlay.LOLABBDJOCE",
       "family": 8,
@@ -258,6 +298,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34072,
       "name": "COW.GamePlay.JBFODFJAINO",
       "family": 4,
@@ -272,6 +314,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34074,
       "name": "COW.GamePlay.CDPHCLJCNMK",
       "family": 4,
@@ -286,6 +330,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34076,
       "name": "COW.GamePlay.PNEMDDOGKCP",
       "family": 4,
@@ -300,6 +346,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34077,
       "name": "COW.GamePlay.CNAILEHIHNC",
       "family": 4,
@@ -314,6 +362,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34078,
       "name": "COW.GamePlay.FDBBEKDMFBE",
       "family": 4,
@@ -328,6 +378,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34080,
       "name": "COW.GamePlay.FHDPOODEGMP",
       "family": 4,
@@ -342,6 +394,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34081,
       "name": "COW.GamePlay.MNDJOKDJPGG",
       "family": 4,
@@ -356,6 +410,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34082,
       "name": "COW.GamePlay.MGACBPLCHLC",
       "family": 4,
@@ -370,6 +426,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34087,
       "name": "COW.GamePlay.FOMLLGKJKAC",
       "family": 4,
@@ -384,6 +442,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34088,
       "name": "COW.GamePlay.HHGOFJCPDJJ",
       "family": 4,
@@ -398,6 +458,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34089,
       "name": "COW.GamePlay.GDPNJDPMACM",
       "family": 4,
@@ -412,6 +474,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34090,
       "name": "COW.GamePlay.OGDJJDBNBAL",
       "family": 4,
@@ -426,6 +490,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34091,
       "name": "COW.GamePlay.ELLPOCBEMLO",
       "family": 4,
@@ -440,6 +506,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34092,
       "name": "COW.GamePlay.MLPHNDFCEKL",
       "family": 4,
@@ -454,6 +522,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34095,
       "name": "COW.GamePlay.PDACLPGCLFP",
       "family": 4,
@@ -468,6 +538,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34096,
       "name": "COW.GamePlay.JHBCNIJOLDF",
       "family": 4,
@@ -482,6 +554,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34099,
       "name": "COW.GamePlay.CLHMKNNMLJG",
       "family": 4,
@@ -496,6 +570,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34100,
       "name": "COW.GamePlay.PNFHIEJBCIJ",
       "family": 4,
@@ -510,6 +586,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34107,
       "name": "COW.GamePlay.KMLICIEHMHC",
       "family": 4,
@@ -524,6 +602,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34109,
       "name": "COW.GamePlay.AKFIPICCGAP",
       "family": 4,
@@ -538,6 +618,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34112,
       "name": "COW.GamePlay.CJMAJMMDLNH",
       "family": 4,
@@ -552,6 +634,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34145,
       "name": "COW.GamePlay.LAKJPIMOOOO",
       "family": 4,
@@ -566,6 +650,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34146,
       "name": "COW.GamePlay.KEMFILHMJAF",
       "family": 4,
@@ -580,6 +666,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34147,
       "name": "COW.GamePlay.OFGAJJCKEDC",
       "family": 4,
@@ -594,6 +682,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34149,
       "name": "COW.GamePlay.GDFGFGGNJAH",
       "family": 4,
@@ -608,6 +698,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34150,
       "name": "COW.GamePlay.OPOIEIKELDB",
       "family": 4,
@@ -622,6 +714,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34162,
       "name": "COW.GamePlay.LBGMLLGCHPD",
       "family": 4,
@@ -636,6 +730,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34164,
       "name": "COW.GamePlay.JMINKIKPPGF",
       "family": 4,
@@ -650,6 +746,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34166,
       "name": "COW.GamePlay.FFAKINPKFOP",
       "family": 4,
@@ -664,6 +762,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34167,
       "name": "COW.GamePlay.GNAIECMIBKN",
       "family": 4,
@@ -678,6 +778,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34170,
       "name": "COW.GamePlay.MDHAFBELMFD",
       "family": 4,
@@ -692,6 +794,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34171,
       "name": "COW.GamePlay.NHIHMKIAONG",
       "family": 4,
@@ -706,6 +810,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34172,
       "name": "COW.GamePlay.OOBLJGPNPLK",
       "family": 4,
@@ -720,6 +826,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34173,
       "name": "COW.GamePlay.CGMCDHJNLBA",
       "family": 4,
@@ -734,6 +842,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34174,
       "name": "COW.GamePlay.CBLMBFIGLNF",
       "family": 4,
@@ -748,6 +858,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34176,
       "name": "COW.GamePlay.CKMCKMPLDPL",
       "family": 4,
@@ -762,6 +874,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34177,
       "name": "COW.GamePlay.CLCDLONBNHE",
       "family": 4,
@@ -776,6 +890,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34178,
       "name": "COW.GamePlay.KDNFFCDNNFC",
       "family": 4,
@@ -790,6 +906,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34180,
       "name": "COW.GamePlay.HOEPPJHBJCN",
       "family": 4,
@@ -804,6 +922,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34181,
       "name": "COW.GamePlay.GJBMABPKFCN",
       "family": 4,
@@ -818,6 +938,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34183,
       "name": "COW.GamePlay.KPBCNDFCDJB",
       "family": 4,
@@ -832,6 +954,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34188,
       "name": "COW.GamePlay.MNDPBJMLABJ",
       "family": 4,
@@ -846,6 +970,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34189,
       "name": "COW.GamePlay.NGCBCCALMNO",
       "family": 4,
@@ -860,6 +986,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34190,
       "name": "COW.GamePlay.PCGBBLLJBPI",
       "family": 4,
@@ -874,6 +1002,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34191,
       "name": "COW.GamePlay.IJDBIHJBPPJ",
       "family": 4,
@@ -888,6 +1018,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34192,
       "name": "COW.GamePlay.FFLKGFCADON",
       "family": 4,
@@ -902,6 +1034,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34195,
       "name": "COW.GamePlay.CKDMNJAIPGD",
       "family": 4,
@@ -916,6 +1050,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34206,
       "name": "COW.GamePlay.NGGMGLCAJAN",
       "family": 4,
@@ -930,6 +1066,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34207,
       "name": "COW.GamePlay.PBKKDPJKIPB",
       "family": 4,
@@ -944,6 +1082,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34208,
       "name": "COW.GamePlay.JJBBNOCIAGD",
       "family": 4,
@@ -958,6 +1098,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34209,
       "name": "COW.GamePlay.JBGLPKNEIAF",
       "family": 4,
@@ -972,6 +1114,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34527,
       "name": "COW.GamePlay.PlayerAOH",
       "family": 16,
@@ -986,6 +1130,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34541,
       "name": "COW.GamePlay.PlayerCollectionTrial",
       "family": 16,
@@ -1000,6 +1146,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34542,
       "name": "COW.GamePlay.PlayerCollectionTrialBot",
       "family": 16,
@@ -1014,6 +1162,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34543,
       "name": "COW.GamePlay.PlayerCollectionTrialLocal",
       "family": 16,
@@ -1028,6 +1178,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34545,
       "name": "COW.GamePlay.PlayerControl",
       "family": 16,
@@ -1042,6 +1194,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34547,
       "name": "COW.GamePlay.PlayerDeathMatch",
       "family": 16,
@@ -1056,6 +1210,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34548,
       "name": "COW.GamePlay.PlayerFootballArena",
       "family": 16,
@@ -1070,6 +1226,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34554,
       "name": "COW.GamePlay.PlayerForceTutorial",
       "family": 16,
@@ -1084,6 +1242,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34556,
       "name": "COW.GamePlay.PlayerForceTutorialBot",
       "family": 16,
@@ -1098,6 +1258,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34561,
       "name": "COW.GamePlay.PlayerForceTutorialLocal",
       "family": 16,
@@ -1112,6 +1274,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34562,
       "name": "COW.GamePlay.PlayerGGC",
       "family": 16,
@@ -1126,6 +1290,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34564,
       "name": "COW.GamePlay.PlayerHuntingGround",
       "family": 16,
@@ -1140,6 +1306,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34570,
       "name": "COW.GamePlay.PlayerNetworkToken",
       "family": 16,
@@ -1154,6 +1322,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34571,
       "name": "COW.GamePlay.PlayerPDM",
       "family": 16,
@@ -1168,6 +1338,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34573,
       "name": "COW.GamePlay.PlayerReaper",
       "family": 16,
@@ -1182,6 +1354,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34620,
       "name": "COW.GamePlay.PlayerRushingPets",
       "family": 16,
@@ -1196,6 +1370,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34621,
       "name": "COW.GamePlay.PlayerSocial",
       "family": 16,
@@ -1210,6 +1386,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34624,
       "name": "COW.GamePlay.PlayerSocialUGC",
       "family": 16,
@@ -1224,6 +1402,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34630,
       "name": "COW.GamePlay.PlayerUGCCommon",
       "family": 16,
@@ -1238,6 +1418,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34631,
       "name": "COW.GamePlay.PlayerUGCOffline",
       "family": 16,
@@ -1252,6 +1434,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34632,
       "name": "COW.GamePlay.PlayerWereWolves",
       "family": 16,
@@ -1266,6 +1450,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34633,
       "name": "COW.GamePlay.PlayerZombieBR",
       "family": 16,
@@ -1280,6 +1466,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34655,
       "name": "COW.GamePlay.Player_TrainingHumanTarget",
       "family": 16,
@@ -1294,6 +1482,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34656,
       "name": "COW.GamePlay.Player_TrainingHumanTarget_Stand",
       "family": 16,
@@ -1308,6 +1498,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 34657,
       "name": "COW.GamePlay.Player_Watching",
       "family": 16,
@@ -1322,6 +1514,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 34963,
       "name": "COW.GamePlay.BLKBCBNFKBB",
       "family": 4,
@@ -1336,6 +1530,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 35149,
       "name": "COW.GamePlay.IJONELEIMJO",
       "family": 4,
@@ -1350,6 +1546,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 35177,
       "name": "COW.GamePlay.BBPFFDGGLPG",
       "family": 4,
@@ -1364,6 +1562,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 35180,
       "name": "COW.GamePlay.OOEOLBJEIHL",
       "family": 4,
@@ -1378,6 +1578,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 35181,
       "name": "COW.GamePlay.NHHHEJDDLHN",
       "family": 4,
@@ -1392,6 +1594,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 35184,
       "name": "COW.GamePlay.PBFFBGLCGEB",
       "family": 4,
@@ -1406,6 +1610,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 592,
+      "instance_size_exact": true,
       "index": 35185,
       "name": "COW.GamePlay.EHAKFOKGKAA",
       "family": 4,
@@ -1420,6 +1626,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 9328,
+      "instance_size_exact": true,
       "index": 35618,
       "name": "LNEMPDHNHHG",
       "family": 16,
@@ -1434,6 +1642,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 0,
+      "instance_size_exact": true,
       "index": 36294,
       "name": "GCommon.ITransformNode",
       "family": 32,
@@ -1448,6 +1658,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 24,
+      "instance_size_exact": true,
       "index": 36295,
       "name": "GCommon.TransformNode",
       "family": 128,
@@ -1462,6 +1674,8 @@
       "getter": 136683152
     },
     {
+      "minimum_instance_size": 40,
+      "instance_size_exact": false,
       "index": 37332,
       "name": "IFix.ILFixDynamicMethodWrapper",
       "family": 2,
@@ -1476,6 +1690,8 @@
       "getter": 0
     },
     {
+      "minimum_instance_size": 16,
+      "instance_size_exact": true,
       "index": 41116,
       "name": "UnityEngine.Transform",
       "family": 64,
@@ -1675,6 +1891,36 @@
       "name": "provider3_0",
       "rva": 136683152,
       "hex": "000840f9c0035fd6"
+    },
+    {
+      "name": "dynamic_size1_0",
+      "rva": 171448240,
+      "hex": "683240f9280100b4000140f97da8fe9708f840b9bf0208eb0931959a1f010071"
+    },
+    {
+      "name": "dynamic_size1_32",
+      "rva": 171448272,
+      "hex": "b502899a75fa00b9"
+    },
+    {
+      "name": "dynamic_size2_0",
+      "rva": 171448548,
+      "hex": "683240f9280100b4000140f930a8fe9708f840b91f01156b0981951a1f010071"
+    },
+    {
+      "name": "dynamic_size2_32",
+      "rva": 171448580,
+      "hex": "a802891a68fa00b9"
+    },
+    {
+      "name": "static_alloc_0",
+      "rva": 171448592,
+      "hex": "600e41b900010034e1031faae3390094605e00f9e06100d0"
+    },
+    {
+      "name": "field_layout_0",
+      "rva": 171265080,
+      "hex": "080840f9091880b9085d40f90001098bc0035fd6"
     },
     {
       "name": "got_Facade",

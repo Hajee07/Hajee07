@@ -121,3 +121,16 @@ Metadata checks are unchanged from v8 and still require live validation.
 new retry assertions include a persistent cycle and a 4097-node fixture that
 stops at exactly 4096 without retrying. Module and metadata verification still
 require their complete existing checks on the successful attempt.
+
+## V12 outer traversal diagnostics
+
+The user reported a v11 outer traversal inconsistency after 945 valid VMAs.
+That message did not distinguish order, bounds and backlink checks. V12 records
+those separately, with node/range/link observations. An outer VMA_ORDER or
+VMA_BACKLINK failure may restart once, just like REPEATED_NODE. Each retry starts
+from mm.mmap with fresh dictionaries after process identity revalidation; read
+and elapsed-time budgets remain cumulative. INVALID_RANGE, USER_RANGE,
+PAGE_ALIGNMENT and NODE_LIMIT fail immediately. A persistent retryable failure
+still fails attempt two. This does not prove concurrent mutation caused either
+report. Six additional tests cover transient/permanent backlink problems, order
+recovery and continued non-retry of malformed ranges/alignment/user bounds.

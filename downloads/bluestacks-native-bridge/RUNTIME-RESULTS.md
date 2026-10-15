@@ -313,3 +313,25 @@ It checks class identities/ancestry, original-path hotfix entries, local-player
 marker and supported head interface dispatch. 127 offline checks pass; new live
 object verification remains pending. Other players, head world positions,
 visibility semantics and aim writes are still unimplemented.
+
+## V11 reports: traversal interruption and IFix class-layout mismatch
+
+First report (PID 5553): kernel/process checks passed, but outer VMA validation
+failed after 945 valid nodes; 8837 physical reads and 985 cache hits. It did not
+reach module/metadata/object success. Second report (PID 5886): kernel/process,
+module identity and both 80-check metadata rounds passed. Module load bias was
+0x777da4e00000, metadata base 0x777da17aa000, with eight load segments and 16 window
+VMAs. After GameFacade/MatchGame/IFix root type observations, the IFix combined
+class token/instance-size assertion failed. Reads=12854, cache hits=1631,
+outer VMAs=1019, inspected files=255, skipped repeats=165. Both reports completed
+all cleanup stages.
+
+Inspection found the V11 generator had treated opaque native size values as
+exact runtime class sizes. IFix's source instance word is 0x81818099. V12 marks
+six affected profiles as untrusted initial sizes, uses verified field/base
+storage minima and hard runtime bounds, and independently validates IFix's
+actual static wrapperArray field metadata/type/token/offset/storage extent.
+Plausible native-size profiles and all class identity checks remain exact.
+It also adds one bounded rescan for outer order/backlink inconsistencies and
+precise diagnostics. 142 offline checks pass. Live object/head validation and
+aim integration remain pending; actual IFix token/size values were not in v11.

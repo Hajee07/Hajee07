@@ -25,9 +25,10 @@ for i in [14528,31705,36295]:selected[i]=128
 classes=[]
 for i,flags in sorted(selected.items()):
  t=m.types[i];pos=m.header[40]+i*88;size=e.pointer(0xa925200+i*8);instance,_,statics,_=struct.unpack('<4I',e.bytes(size,16));bits=native_info(t[2])[1]
- classes.append(dict(index=i,name=m.type_name(i),family=flags,parent=parents[i],name_offset=m.header[6]+t[0],namespace_offset=m.header[6]+t[1],record_hex=m.data[pos:pos+88].hex(),bits=bits,instance_size=instance,static_size=statics,token=t[-1],getter={14528:0x37987c4,31705:0x70e0ba8,36295:0x8259e90}.get(i,0)))
+ minimum = 0 if flags & 32 else 9328 if flags & 16 else 1592 if flags & 8 else 592 if flags & 4 else 24 if flags & 128 else 40 if i == 37332 else 16
+ classes.append(dict(minimum_instance_size=minimum, instance_size_exact=minimum <= instance <= 1048576, index=i,name=m.type_name(i),family=flags,parent=parents[i],name_offset=m.header[6]+t[0],namespace_offset=m.header[6]+t[1],record_hex=m.data[pos:pos+88].hex(),bits=bits,instance_size=instance,static_size=statics,token=t[-1],getter={14528:0x37987c4,31705:0x70e0ba8,36295:0x8259e90}.get(i,0)))
 anchors=[]
-for name,start,length in [('local_path',0x71c589c,0x130),('class_constructor',0xa32b6ec,0x174),('class_sizes',0xa32b798,0x38),('class_type_token',0xa32b888,0x10),('hotfix_dispatch',0x882aa50,0x78),('head_interface_dispatch',0x6f37ca0,0x74),('local_flag',0x6eff96c,12),('provider1',0x37987c4,8),('provider2',0x70e0ba8,8),('provider3',0x8259e90,8)]:
+for name,start,length in [('local_path',0x71c589c,0x130),('class_constructor',0xa32b6ec,0x174),('class_sizes',0xa32b798,0x38),('class_type_token',0xa32b888,0x10),('hotfix_dispatch',0x882aa50,0x78),('head_interface_dispatch',0x6f37ca0,0x74),('local_flag',0x6eff96c,12),('provider1',0x37987c4,8),('provider2',0x70e0ba8,8),('provider3',0x8259e90,8),('dynamic_size1',0xa3817b0,40),('dynamic_size2',0xa3818e4,40),('static_alloc',0xa381910,24),('field_layout',0xa354c38,20)]:
  for offset in range(0,length,32):anchors.append(dict(name=name+'_'+str(offset),rva=start+offset,hex=e.bytes(start+offset,min(32,length-offset)).hex()))
 roots=[]
 for name,got,index in [('Facade',0xa73f0c0,12418),('MatchGame',0xa7759c0,12425),('Hotfix',0xa899b98,37332),('HeadInterface',0xa74bec8,36294)]:
@@ -42,6 +43,18 @@ wrapper_bits=int.from_bytes(e.bytes(wrapper_type+8,4),'little')
 assert wrapper_bits&16 and wrapper_bits>>16&255==0x1d
 wrapper_element=e.pointer(wrapper_type)
 assert int.from_bytes(e.bytes(wrapper_element,8),'little')==37332
+# Bound the IFix instance from its actual nonstatic fields, not the opaque
+# initial native size. These exact fields use reference/int32/reference widths.
+instance_extents=[]
+for k in range(hotfix[18]):
+ field=m.fields[hotfix[8]+k];kind=native_info(field[1])[1];offset=int.from_bytes(e.bytes(hotfix_offsets+k*4,4),'little')
+ if not kind&16:
+  width={0x12:8,0x1c:8,8:4}.get(kind>>16&255)
+  assert width is not None and offset<1048576
+  instance_extents.append(offset+width)
+assert max(instance_extents)==40
+wrapper_profile=dict(local_index=j, token=f[2], name_offset=m.header[6]+f[0], type_rva=wrapper_type,
+                     metadata_offset=m.header[24]+(hotfix[8]+j)*12, record_hex=struct.pack('<iiI',*f).hex())
 # Find the local marker by the native offset, and verify its bool kind.
 t=m.types[31824];offsets=e.pointer(0xa8cfec0+31824*8)
 found=[]
@@ -49,16 +62,20 @@ for j in range(t[18]):
  if int.from_bytes(e.bytes(offsets+j*4,4),'little')==0x420:
   f=m.fields[t[8]+j];assert native_info(f[1])[1]>>16&255==2;found.append(m.string(f[0]))
 assert found==['JKACLOCKKPH']
-report=dict(elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,transform_type_index=transform,roots=roots,classes=classes,anchors=anchors,local_flag=dict(name=found[0],offset=0x420),scope='Original-path local-player chain and managed head Transform; world coordinates and player enumeration are unimplemented.')
+report=dict(wrapper_field=wrapper_profile, elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,transform_type_index=transform,roots=roots,classes=classes,anchors=anchors,local_flag=dict(name=found[0],offset=0x420),scope='Original-path local-player chain and managed head Transform; world coordinates and player enumeration are unimplemented.')
 (root/'object-reference.json').write_text(json.dumps(report,indent=2)+'\n')
 lines=['// Generated from exact SHA-256-verified metadata/ELF inputs.','namespace HeadBridge.Mapping {','    internal static class ObjectReference {','        internal const int TransformIndex = %d;'%transform,'        internal static readonly ObjectClassProfile[] Classes = new ObjectClassProfile[] {']
 for c in classes:
- lines.append('            new ObjectClassProfile(%d, %s, %d, %d, %dUL, %dUL, %s, %dU, %dU, %dU, %dU, %dUL),'%(c['index'],json.dumps(c['name']),c['family'],c['parent'],c['name_offset'],c['namespace_offset'],json.dumps(c['record_hex']),c['bits'],c['instance_size'],c['static_size'],c['token'],c['getter']))
+ lines.append('            new ObjectClassProfile(%d, %s, %d, %d, %dUL, %dUL, %s, %dU, %dU, %dU, %dU, %dUL, %dU, %s),'%(c['index'],json.dumps(c['name']),c['family'],c['parent'],c['name_offset'],c['namespace_offset'],json.dumps(c['record_hex']),c['bits'],c['instance_size'],c['static_size'],c['token'],c['getter'],c['minimum_instance_size'],str(c['instance_size_exact']).lower()))
 lines+=['        };','        internal static readonly GameLayoutCheck[] Anchors = new GameLayoutCheck[] {']
 for a in anchors:
  val='0x%xUL'%a['target_rva'] if 'target_rva' in a else json.dumps(a['hex'])
  lines.append('            new GameLayoutCheck(%s, 0x%xUL, %s),'%(json.dumps(a['name']),a['rva'],val))
 lines+=['        };']
 for r0 in roots:lines.append('        internal const ulong %sCell = 0x%xUL;'%(r0['name'],r0['cell']))
+lines += ['        internal const int WrapperFieldIndex = %d;' % wrapper_profile['local_index'],
+          '        internal const uint WrapperFieldToken = %dU, WrapperTypeBits = %dU;' % (wrapper_profile['token'], wrapper_bits),
+          '        internal const ulong WrapperFieldNameOffset = %dUL, WrapperTypeRva = %dUL, WrapperMetadataOffset = %dUL;' % (wrapper_profile['name_offset'],wrapper_profile['type_rva'],wrapper_profile['metadata_offset']),
+          '        internal const string WrapperFieldRecordHex = "%s";' % wrapper_profile['record_hex']]
 lines+=['    }','}',''];(root/'ObjectReference.cs').write_text('\n'.join(lines))
 print('ObjectReferenceClasses='+str(len(classes))+' Anchors='+str(len(anchors))+' TransformIndex='+str(transform))

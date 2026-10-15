@@ -194,6 +194,35 @@ namespace HeadBridge.Mapping.Tests
             Check(RetryReject(outerBound, "Reason=NODE_LIMIT", outerBound.Progress.Add) && outerBound.Reader.LastLibraries.VmasVisited == 4096 &&
                 outerBound.Reader.LastLibraries.StopReason == "NODE_LIMIT" && !outerBound.Progress.Contains("LibraryScanAttempt Attempt=2 MaximumAttempts=2"),
                 "4096-node exhaustion is distinguished from repetition and is not retried");
+            Fixture backlink = new Fixture(); backlink.Memory.Put64(backlink.Areas[0] + 0x18, Fixture.Kernel + 0x9000);
+            backlink.Memory.AfterRead = delegate(ulong address, int length)
+            { if (address == backlink.Areas[0] && length == 0xa8) backlink.Memory.Put64(backlink.Areas[0] + 0x18, 0); };
+            Check(backlink.Reader.ProbeModuleWithRetry(backlink.Context, backlink.Game, backlink.Progress.Add).LoadBias == Fixture.Bias &&
+                backlink.Progress.Exists(delegate(string line) { return line.Contains("LibraryScanRetry") && line.Contains("Reason=VMA_BACKLINK"); }),
+                "an inconsistent backlink can recover only through a complete fresh scan");
+            Fixture persistentLink = new Fixture(); persistentLink.Memory.Put64(persistentLink.Areas[0] + 0x18, Fixture.Kernel + 0x9000);
+            Check(RetryReject(persistentLink, "Reason=VMA_BACKLINK", persistentLink.Progress.Add) &&
+                persistentLink.Progress.FindAll(delegate(string line) { return line.StartsWith("LibraryScanAttempt ", StringComparison.Ordinal); }).Count == 2 &&
+                persistentLink.Progress.Exists(delegate(string line) { return line.Contains("LibraryScanInconsistency") && line.Contains("Start=0x") && line.Contains("LinkPrevious=0x"); }),
+                "persistent backlink failure stops after two attempts with the offending VMA fields");
+            Fixture ordered = new Fixture(); ordered.Memory.Put64(ordered.Areas[1], Fixture.Raw + 4096); ordered.Memory.Put64(ordered.Areas[1] + 0xa0, 0);
+            ordered.Memory.AfterRead = delegate(ulong address, int length)
+            {
+                if (address == ordered.Areas[1] && length == 0xa8)
+                { ordered.Memory.Put64(ordered.Areas[1], Fixture.Bias); ordered.Memory.Put64(ordered.Areas[1] + 0xa0, Fixture.Kernel + 0x5000); }
+            };
+            Check(ordered.Reader.ProbeModuleWithRetry(ordered.Context, ordered.Game, ordered.Progress.Add).LoadBias == Fixture.Bias &&
+                ordered.Progress.Exists(delegate(string line) { return line.Contains("LibraryScanRetry") && line.Contains("Reason=VMA_ORDER"); }),
+                "an inconsistent traversal order can recover after a discarded first scan");
+            Fixture invalidRange = new Fixture(); invalidRange.Memory.Put64(invalidRange.Areas[0], invalidRange.Mappings[0][1]);
+            Check(RetryReject(invalidRange, "Reason=INVALID_RANGE", invalidRange.Progress.Add) &&
+                !invalidRange.Progress.Contains("LibraryScanAttempt Attempt=2 MaximumAttempts=2"), "invalid VMA ranges are not retried");
+            Fixture unaligned = new Fixture(); unaligned.Memory.Put64(unaligned.Areas[0], Fixture.Raw + 1);
+            Check(RetryReject(unaligned, "Reason=PAGE_ALIGNMENT", unaligned.Progress.Add) &&
+                !unaligned.Progress.Contains("LibraryScanAttempt Attempt=2 MaximumAttempts=2"), "unaligned VMA boundaries are not retried");
+            Fixture userRange = new Fixture(); userRange.Memory.Put64(userRange.Areas[0] + 8, 0x0000800000001000UL);
+            Check(RetryReject(userRange, "Reason=USER_RANGE", userRange.Progress.Add) &&
+                !userRange.Progress.Contains("LibraryScanAttempt Attempt=2 MaximumAttempts=2"), "VMAs outside user space are rejected without retry");
             Console.WriteLine("MODULE_TOTAL=" + count + " (synthetic mappings with exact APK reference bytes)");
         }
     }
