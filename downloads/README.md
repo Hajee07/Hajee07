@@ -1,5 +1,11 @@
 # Standalone head-direction DLL core
 
+Current process probe: **V14**. V13 passed live local-player and cached managed
+head Transform verification. V14 adds a bounded native local-head world-position
+sample; 174 offline checks pass, and its Windows validation is pending. See
+[the current probe instructions](bluestacks-process-map/README.md). Other-player
+visibility and aim control remain incomplete.
+
 Download `head-aim-dll-x64.zip` and extract it on Windows. The archive contains C++ source, a Windows x64 DLL, and an own-process DLL smoke loader.
 
 This is a mathematical core that accepts caller-supplied head positions and calculates directions. It has no live Free Fire data provider or aim-control integration. It is not a working Free Fire aim-lock.

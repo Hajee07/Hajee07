@@ -7,26 +7,21 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Version 5 passed live kernel, process, header, and module verification.** It
-selected the second IL2CPP mapping after rejecting the whole-file-sized mapping,
-verified all eight load segments and four fingerprints, and completed in 10847
-reads with successful cleanup. Version 6 adds registration/code verification for
-nine field and nine method candidates recovered from the exact APK metadata.
-Version 6 passed live module verification but failed the first selected type
-descriptor comparison. Version 7 then showed 71 exact matches and nine stable descriptor differences
-in both rounds. Those nine payloads all point into one candidate metadata type
-table. Version 8 verifies the runtime representation against the decoded header
-and complete type records. The user's v8 run stopped earlier on a repeated VMA
-node, so live metadata validation remains pending. Version 9 adds one bounded
-fresh scan for that condition and distinguishes repeated nodes from node limits. The
-v9 run reached module verification on its first attempt and exposed a different
-runtime metadata header prefix. V10 checks this explicitly observed prefix and
-all remaining header/record bytes; live type-record validation is still pending. See `GAME-LAYOUT-EVIDENCE.md` and `game-layout.json` for
-the recovery and its limits. Live player objects, head world positions, visibility
-semantics, and aim-control writes remain unverified. Version 11 adds a bounded
-local-player/managed-head-Transform probe after the verified metadata stage;
-its live run is pending. It does not yet enumerate other players or calculate
-head world positions. See `OBJECT-EVIDENCE.md`.
+**Current version: 14.** The user's V13 report passed kernel/process/module
+identity, all 80 metadata checks twice, local-player identity and the cached
+`bone_Head` managed Transform. The model dictionary contained 29 entries and one
+matching key. All cleanup stages passed. See `OBJECT-EVIDENCE.md` for the
+historical object-probe results.
+
+V14 adds an exact-build native Unity hierarchy sample for this local head. It
+checks the resolved position icall binding, Unity ELF tables/build ID and code,
+then reads the native Transform and bounded parent chain. Coordinates are
+reported only after stable snapshot comparisons and matching object/index
+backlinks. Outstanding hierarchy jobs return NOT_READY. This stage has passed
+synthetic tests; **live Windows validation is pending**. See
+`TRANSFORM-EVIDENCE.md` for the derivation and limits.
+
+Other players, visibility semantics and aim updates remain unimplemented.
 
 Extract the complete ZIP into a new folder. Start the Pie64 instance, enter
 Free Fire Training Ground, wait until the character has spawned, and leave it
@@ -41,7 +36,7 @@ endpoint displayed by BlueStacks. An explicit disconnected localhost endpoint
 is reconnected once and verified. Other devices are not selected automatically.
 The runner discovers the current host/game PIDs; old PIDs are not constants.
 
-The package checks DLL and all eight runtime C# source digests, plus the exact
+The package checks DLL and all ten runtime C# source digests, plus the exact
 loaded VMM fingerprint. It
 loads the same native DLL used in the successful probe, uses its read-only info
 handler, and unloads and releases its shared session in `finally`. The DLL bytes
@@ -152,7 +147,7 @@ rounds do not prove uninterrupted stability.
 
 The task scan is bounded to 2048 nodes and the VMA scan to 4096 nodes. Only the
 selected game's Unity/IL2CPP/metadata mapping names and ranges are logged. Game
-object contents are not printed. Multiple read calls are not an atomic snapshot;
+arbitrary object contents are not printed; V14 exposes only the sampled local-head XYZ. Multiple read calls are not an atomic snapshot;
 the probe does not take guest kernel locks or hold task/mm references. List,
 translation, and identity rechecks detect observed changes, but cannot eliminate
 all lifetime races. Restart the probe after a reported inconsistency with the
@@ -161,9 +156,8 @@ game left running.
 A successful result includes `KernelIdentity=PASS`, `ProcessMap=PASS`, and
 `GameLibraryRead=PASS Name=libil2cpp.so Architecture=ARM64`, followed by
 `GameModuleIdentity=PASS`, `RuntimeTypeMetadata=PASS`, then
-`GameLayoutRegistration=PASS`. The first four
-stages were observed on Windows with version 5; the registration stage remains
-pending. The runner rechecks the ADB PID and process identity before success.
+`GameLayoutRegistration=PASS`. The first four stages were observed on Windows with version 5; registration
+subsequently passed in V10 and the managed-head path passed in V13. The runner rechecks the ADB PID and process identity before success.
 Exit code 1 means a stage or cleanup failed.
 Share the complete `ResultFile` report even after a failure; individual stages
 remain distinguishable.
@@ -176,7 +170,7 @@ Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-155 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+174 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -299,7 +293,8 @@ value is used as an expected allocation size.
 Class token and size failures now report separately. ObjectClassSizeObservation
 records bounded runtime sizes; ObjectClassLayoutDifference reports expected and
 actual class data on failure. This is a reference-generation correction, not
-proof the live object chain now passes. Share the complete v12 Windows report.
+proof by itself that the live object chain passes. The subsequent V12 report
+verified the local-player chain, and V13 verified its cached managed head.
 
 ## Version 13 model-cache head lookup
 
@@ -327,4 +322,22 @@ Null model/cache, missing key, active lookup hotfix or unsupported virtual targe
 are distinct statuses. A matching non-null Player cache keeps Source=PLAYER_FIELD.
 The synthetic fallback fixture takes 2825 reads and 169 observations. Thirteen
 new tests cover the hit/miss path, removed/duplicate entries, bounds, wrong types,
-version changes and hotfix/virtual-target guards. Live v13 validation is pending.
+version changes and hotfix/virtual-target guards. The V13 Windows report subsequently passed this lookup and managed-head
+verification; native position validation remains pending for V14.
+
+## V14 results
+
+`LocalHeadWorldPosition=SAMPLED_READ_ONLY` reports the local head XYZ and parent
+count from a bounded, twice-observed native hierarchy. `NOT_READY_*` means the
+corresponding prerequisite was absent; the probe does not initialize an icall,
+wait on an engine job or call Unity. `FAIL` includes the failed check and sets
+the runner's exit status to 1 while preserving earlier completed observations.
+Leave the character standing in Training Ground and share the complete result
+file. Character animation can invalidate a position snapshot; a failed sample
+does not establish a new layout or authorize weakening identity checks.
+
+There are 174 offline checks: 46 core/kernel, 31 module, 30 metadata and 67
+object/native-head checks. These include an independent quaternion matrix
+oracle, cross-axis rotations, nonuniform/reflected scales, invalid backlinks,
+cycles, bad bindings/code, pending jobs and changing position data. They do not
+substitute for the Windows run.

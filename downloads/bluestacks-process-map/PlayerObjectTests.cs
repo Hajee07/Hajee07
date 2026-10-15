@@ -66,11 +66,40 @@ namespace HeadBridge.Mapping.Tests
                 U64(Provider, Class(36295)); U64(Provider + 0x10, Transform); U64(Transform, Class(ObjectReference.TransformIndex));
                 Put(Class(36295) + 0x12e, BitConverter.GetBytes((ushort)1)); U64(Class(36295) + 0xb0, Interfaces);
                 Put(Interfaces, new byte[16]); U64(Interfaces, Class(36294)); U64(Class(36295) + 0x138, Module.LoadBias + 0x8259e90);
+                foreach (GameLayoutCheck a in NativeTransformReference.Il2CppAnchors) Put(Module.LoadBias + a.Address, a.Expected(Module.LoadBias));
+                U64(Module.LoadBias + 0xafb9e00, 0); U64(Module.LoadBias + 0xafb9e10, 0);
                 Reader = new Reader(Memory.Transport, new RamRange[] { new RamRange(0, 0xffffffff) });
             }
             internal const ulong Model = 0x4a010000, DictionaryClass = 0x4b000000, Dictionary = 0x4b010000, Generic = 0x4c000000,
                 Definition = 0x4c001000, Instance = 0x4c002000, Arguments = 0x4c003000, StringType = 0x4c004000, ValueType = 0x4c005000,
                 StringClass = 0x4d000000, Key = 0x4e000000, Entries = 0x4f000000;
+            internal const ulong Unity = 0x58000000, NativeHead = 0x50000000, NativeParent = 0x50001000, NativeRoot = 0x50002000,
+                Hierarchy = 0x51000000, Matrices = 0x52000000, Parents = 0x53000000, Transforms = 0x54000000;
+            internal void Trs(int index, float x, float y, float z, float qx, float qy, float qz, float qw, float sx, float sy, float sz)
+            {
+                float[] values = { x,y,z,0, qx,qy,qz,qw, sx,sy,sz,0 }; byte[] bytes = new byte[48];
+                for (int i = 0; i < values.Length; i++) System.Array.Copy(BitConverter.GetBytes(values[i]), 0, bytes, i * 4, 4);
+                Put(Matrices + (ulong)index * 48UL, bytes);
+            }
+            internal void SetupNative()
+            {
+                U64(Module.LoadBias + 0xafb9e00, Unity + 0x45ea4c); U64(Module.LoadBias + 0xafb9e10, Unity + 0x45ec64);
+                foreach (GameLayoutCheck a in NativeTransformReference.Il2CppAnchors) Put(Module.LoadBias + a.Address, a.Expected(Module.LoadBias));
+                foreach (GameLayoutCheck a in NativeTransformReference.UnityAnchors) Put(Unity + a.Address, a.Expected(Unity));
+                Put(Unity, Reader.Hex(NativeTransformReference.HeaderHex)); Put(Unity + 64, Reader.Hex(NativeTransformReference.ProgramsHex));
+                Put(Unity + 0x308, Reader.Hex(NativeTransformReference.NoteHex)); U64(Transform + 0x10, NativeHead);
+                U64(Hierarchy, 0); U32(Hierarchy + 8, 0); U32(Hierarchy + 0x10, 3);
+                U64(Hierarchy + 0x18, Matrices); U64(Hierarchy + 0x20, Parents); U64(Hierarchy + 0x30, Transforms);
+                ulong[] objects = { NativeRoot, NativeParent, NativeHead };
+                for (int i = 0; i < 3; i++)
+                {
+                    U64(Transforms + (ulong)i * 8UL, objects[i]); U64(objects[i] + 0x38, Hierarchy); U32(objects[i] + 0x40, (uint)i);
+                    U64(objects[i] + 0x90, i == 0 ? 0 : objects[i-1]); U32(Parents + (ulong)i * 4UL, (uint)(i-1));
+                }
+                Trs(2,1,2,3,0,0,0,1,1,1,1);
+                float half = (float)Math.Sqrt(0.5); Trs(1,10,0,0,0,0,half,half,2,3,4);
+                Trs(0,100,200,300,0,0,0,1,1,1,1);
+            }
             private void MetadataIdentity(ulong klass, ObjectClassProfile profile)
             {
                 ulong row = Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + (ulong)profile.Index * 88UL;
@@ -113,6 +142,13 @@ namespace HeadBridge.Mapping.Tests
             bool rejected = false;
             try { fixture.Run(); } catch (Exception error) { rejected = error.Message.Contains(text); }
             Check(rejected, label);
+        }
+        private static void NativeFailure(Action<Fixture> change, string message, string label)
+        {
+            Fixture f = new Fixture(); f.SetupNative(); change(f); PlayerObjectResult result = f.Run();
+            Check(result.HeadStatus == "MANAGED_TRANSFORM_VERIFIED" && result.HeadWorldStatus == "FAIL" &&
+                result.HeadWorldError.IndexOf(message, StringComparison.OrdinalIgnoreCase) >= 0,
+                label + " Detail=" + result.HeadWorldError);
         }
         public static void Run()
         {
@@ -231,7 +267,54 @@ namespace HeadBridge.Mapping.Tests
             Reject(longKey, "key length bound", "string reads remain bounded even for corrupted dictionary keys");
             Fixture wrongString = new Fixture(); wrongString.SetupHeadCache(); wrongString.U64(Fixture.Key, Fixture.Class(31824));
             Reject(wrongString, "head cache class identity", "cache key objects must be the exact System.String class");
-            Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects and managed Transform)");
+            Fixture native = new Fixture(); native.SetupNative(); PlayerObjectResult world = native.Run();
+            Check(world.HeadWorldStatus == "SAMPLED_READ_ONLY" && Math.Abs(world.HeadWorldX-104) < 0.0001 &&
+                Math.Abs(world.HeadWorldY-202) < 0.0001 && Math.Abs(world.HeadWorldZ-312) < 0.0001 && world.HeadParentCount == 2,
+                "native head hierarchy reproduces translation, nonuniform scale and rotation in parent order");
+            Check(world.NativeHeadTransform == Fixture.NativeHead && world.HeadHierarchyCapacity == 3 && world.HeadWorldObservations < 128,
+                "native sample keeps bounded hierarchy evidence and exact native identity");
+            Check(new Fixture().Run().HeadWorldStatus == "NOT_READY_POSITION_ICALL_UNRESOLVED", "an unresolved icall is not initialized by the probe");
+            NativeFailure(delegate(Fixture f) { f.U64(f.Module.LoadBias+0xafb9e00, Fixture.Unity+0x45ea50); }, "load bias", "incorrect icall binding fails exact module identification");
+            NativeFailure(delegate(Fixture f) { f.Put(Fixture.Unity+0x693054,new byte[4]); }, "code identity", "changed native layout instructions fail the sample");
+            NativeFailure(delegate(Fixture f) { f.Put(Fixture.Unity,new byte[4]); }, "ELF header", "native sampling requires the exact Unity ELF header");
+            NativeFailure(delegate(Fixture f) { f.Put(Fixture.Matrices+96,BitConverter.GetBytes(float.NaN)); }, "finite native", "NaN local coordinates cannot produce a world sample");
+            NativeFailure(delegate(Fixture f) { f.Trs(1,0,0,0,0,0,0,0,1,1,1); }, "quaternion norm", "invalid parent rotations fail the world calculation");
+            NativeFailure(delegate(Fixture f) { f.U32(Fixture.Hierarchy+0x10,2); }, "capacity/index", "head index must fit the observed hierarchy allocation");
+            NativeFailure(delegate(Fixture f) { f.U32(Fixture.Parents+8,3); }, "parent-index", "parent indices outside the hierarchy capacity fail");
+            NativeFailure(delegate(Fixture f) { f.U32(Fixture.Parents+8,2); f.U64(Fixture.NativeHead+0x90,Fixture.NativeHead); }, "bound/cycle", "cyclic parent links fail without looping");
+            NativeFailure(delegate(Fixture f) { f.U64(Fixture.Transforms+16,Fixture.NativeParent); }, "backlinks", "hierarchy slots must point back to the exact native Transform");
+            NativeFailure(delegate(Fixture f) { f.U64(Fixture.NativeRoot+0x90,Fixture.NativeHead); }, "root parent", "root sentinel must agree with the native parent pointer");
+            Fixture pending = new Fixture(); pending.SetupNative(); pending.U64(Fixture.Hierarchy,0x100000);
+            Check(pending.Run().HeadWorldStatus == "NOT_READY_HIERARCHY_JOB_PENDING", "pending native jobs are reported without synchronizing or writing");
+            Fixture nullNative = new Fixture(); nullNative.SetupNative(); nullNative.U64(Fixture.Transform+0x10,0);
+            Check(nullNative.Run().HeadWorldStatus == "NOT_READY_NATIVE_TRANSFORM_NULL", "destroyed native objects do not invalidate the earlier managed-object observation");
+            NativeFailure(delegate(Fixture f) { ulong address = f.Physical(Fixture.Matrices+96);
+                f.Memory.AfterRead = delegate(ulong at, int length) { if(at==address && length==48) f.Put(Fixture.Matrices+96,BitConverter.GetBytes(9f)); };
+            }, "final recheck", "moving TRS data invalidates the sample on the final snapshot comparison");
+            Fixture negative = new Fixture(); negative.SetupNative(); negative.U64(negative.Module.LoadBias+0xafb9e00,0);
+            negative.Trs(1,10,0,0,0,0,0,1,-2,3,4); PlayerObjectResult reflected = negative.Run();
+            Check(reflected.HeadWorldStatus == "SAMPLED_READ_ONLY" && reflected.HeadWorldX==108 && reflected.HeadWorldY==206 && reflected.HeadWorldZ==312,
+                "local-position binding fallback and reflected nonuniform scale retain signed coordinates");
+            Fixture crossAxis = new Fixture(); crossAxis.SetupNative(); float sine = (float)Math.Sqrt(0.5);
+            crossAxis.Trs(1,10,0,0,0,sine,0,sine,2,3,4); crossAxis.Trs(0,100,200,300,sine,0,0,sine,-1,2,0.5f);
+            PlayerObjectResult cross = crossAxis.Run();
+            Check(cross.HeadWorldStatus == "SAMPLED_READ_ONLY" && Math.Abs(cross.HeadWorldX-78)<0.0001 &&
+                Math.Abs(cross.HeadWorldY-201)<0.0001 && Math.Abs(cross.HeadWorldZ-312)<0.0001,
+                "noncommuting rotations across Y and X preserve native quaternion lane order");
+            Fixture arbitrary = new Fixture(); arbitrary.SetupNative(); double divisor = Math.Sqrt(30);
+            float qx=(float)(1/divisor), qy=(float)(2/divisor), qz=(float)(3/divisor), qw=(float)(4/divisor);
+            arbitrary.Trs(1,10,0,0,qx,qy,qz,qw,2,3,4); PlayerObjectResult general = arbitrary.Run();
+            // Independent double-precision rotation matrix oracle (XYZ only).
+            double[] input={2,6,12}; double[,] matrix={
+                {1-2*((double)qy*qy+(double)qz*qz),2*((double)qx*qy-(double)qz*qw),2*((double)qx*qz+(double)qy*qw)},
+                {2*((double)qx*qy+(double)qz*qw),1-2*((double)qx*qx+(double)qz*qz),2*((double)qy*qz-(double)qx*qw)},
+                {2*((double)qx*qz-(double)qy*qw),2*((double)qy*qz+(double)qx*qw),1-2*((double)qx*qx+(double)qy*qy)}};
+            double[] expected={110,200,300}; for(int i=0;i<3;i++) for(int j=0;j<3;j++) expected[i]+=matrix[i,j]*input[j];
+            Check(general.HeadWorldStatus=="SAMPLED_READ_ONLY" && Math.Abs(general.HeadWorldX-expected[0])<0.0001 &&
+                Math.Abs(general.HeadWorldY-expected[1])<0.0001 && Math.Abs(general.HeadWorldZ-expected[2])<0.0001,
+                "native SIMD reproduction agrees with an independent general quaternion matrix oracle");
+            Console.WriteLine("NATIVE_HEAD_FIXTURE_READ_CALLS=" + native.Reader.PhysicalCalls + " OBSERVATIONS=" + world.HeadWorldObservations);
+            Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects, managed Transform and native head sample)");
         }
     }
 }

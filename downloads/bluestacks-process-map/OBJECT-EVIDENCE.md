@@ -1,4 +1,4 @@
-# Version 11 read-only local-player and head Transform probe
+# Read-only local-player and managed head Transform evidence
 
 V10 passed live kernel, process, ARM64 module, runtime metadata header and all
 80 registration checks in both rounds, with no mismatches or observed changes.
@@ -211,3 +211,20 @@ unchanged global budgets. Identical samples still are not an atomic GC snapshot.
 2825 reads and 169 observations. Live cache availability and the fallback
 representation still require the v13 Windows run. Head world coordinates,
 other-player enumeration and aim updates remain unimplemented.
+
+## User V13 result and V14 follow-up
+
+V13 passed on guest PID 6727 with host PID 6372. All 80 registration checks
+matched twice, metadata base was 0x777da15aa000, and the model cache had 29 used
+entries with exactly one active `bone_Head` key. The returned BFOONIGAIFK node
+passed its exact interface/getter/class checks, and its returned managed object
+passed UnityEngine.Transform identity. Final static snapshots covered 280
+observations. Total physical reads were 15040. Plugin unload, handler cleanup and
+shared-session release all passed. The head source was MODEL_DICTIONARY; no
+cache initialization or writes occurred. This verifies the managed head
+Transform observation; V13 did not obtain world coordinates.
+
+V14 adds the separately checked native position sample documented in
+`TRANSFORM-EVIDENCE.md`. The earlier object snapshots are still rechecked after
+this stage. Native-stage failure is reported separately and does not relabel
+the managed Transform as unverified. Live V14 validation remains pending.

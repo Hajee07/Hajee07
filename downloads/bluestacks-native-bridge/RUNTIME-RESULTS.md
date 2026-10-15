@@ -352,3 +352,16 @@ cache when the player cache is null. It verifies the original virtual/hotfix
 path, closed generic dictionary identity, String key and returned node before
 using the existing managed Transform checks. 155 offline checks pass. A cache
 miss remains NOT_READY; live fallback validation and aim integration are pending.
+
+## V13 managed local-head observation; V14 native sample pending
+
+The user's V13 run passed the exact module and runtime metadata checks, live
+local-player chain and cached managed head Transform. The model cache had 29
+entries and one `bone_Head` match; 280 static observations were rechecked. Total
+physical calls: 15040. All cleanup stages passed. No coordinates or aim writes
+were produced by that run.
+
+Process-map V14 adds exact Unity icall/code identity and a bounded native local
+head hierarchy calculation. All 174 offline checks pass. Its live Windows
+position validation remains pending, along with other-player enumeration,
+visibility semantics and aim integration.

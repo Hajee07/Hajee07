@@ -22,6 +22,11 @@ namespace HeadBridge.Mapping
         public ulong HeadModel;
         public int HeadCacheEntries;
         public int Observations;
+        public string HeadWorldStatus, HeadWorldError;
+        public ulong UnityLoadBias, NativeHeadTransform;
+        public uint HeadHierarchyCapacity;
+        public int HeadParentCount, HeadWorldObservations;
+        public float HeadWorldX, HeadWorldY, HeadWorldZ;
     }
     public sealed partial class Reader
     {
@@ -232,6 +237,8 @@ namespace HeadBridge.Mapping
                     }
                 }
             }
+            try { ReadNativeHeadPosition(game, module, result); }
+            catch (Exception error) { result.HeadWorldStatus = "FAIL"; result.HeadWorldError = error.Message; }
             Recheck(kernel, game); ObjectAnchors(this, game, module);
             result.Observations = reads.Recheck(); Recheck(kernel, game);
             return result;
