@@ -35,3 +35,8 @@ The v8 run stopped on a repeated VMA node before module/metadata verification.
 V9 adds one bounded fresh scan for this specific condition, preserves the global
 budgets and all validation checks, and reports node limits separately. 96 offline
 checks pass. Live metadata verification and aim integration remain incomplete.
+
+V9 subsequently passed module verification on its first attempt and exposed a
+runtime header prefix of zero/version 24. V10 validates that exact observed
+prefix, the remaining 248 header bytes and complete type records. Input hashes
+remain unchanged. 101 offline checks pass; live metadata validation is pending.

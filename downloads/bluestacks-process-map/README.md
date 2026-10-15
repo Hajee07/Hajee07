@@ -18,7 +18,10 @@ in both rounds. Those nine payloads all point into one candidate metadata type
 table. Version 8 verifies the runtime representation against the decoded header
 and complete type records. The user's v8 run stopped earlier on a repeated VMA
 node, so live metadata validation remains pending. Version 9 adds one bounded
-fresh scan for that condition and distinguishes repeated nodes from node limits. See `GAME-LAYOUT-EVIDENCE.md` and `game-layout.json` for
+fresh scan for that condition and distinguishes repeated nodes from node limits. The
+v9 run reached module verification on its first attempt and exposed a different
+runtime metadata header prefix. V10 checks this explicitly observed prefix and
+all remaining header/record bytes; live type-record validation is still pending. See `GAME-LAYOUT-EVIDENCE.md` and `game-layout.json` for
 the recovery and its limits. Live player objects, head world positions, visibility
 semantics, and aim-control writes remain unimplemented/unverified.
 
@@ -113,8 +116,12 @@ Version 8 keeps 71 exact registration/code comparisons. For the nine type
 descriptors it checks all four attribute/kind bytes, validates the runtime user
 pointer, and derives a metadata base by subtracting the known type index times
 88 and the type-table file offset. All nine descriptors must agree on this base
-across both rounds. The decoded 256-byte metadata header and each complete
-88-byte type record must match the SHA-256-verified input references. The
+across both rounds. The 256-byte runtime metadata header must match an explicit
+build profile: first words exactly zero and 24 (observed in v9), with bytes
+8..255 exactly matching the SHA-256-verified decoded metadata. Each complete
+88-byte type record must also match the decoded input reference. The original
+file header and source hashes are retained separately; they are not rewritten
+or treated as interchangeable with the runtime representation. The
 descriptor is reread after its target to reject observed pointer changes.
 The shared physical-read/time budgets and page-table/RAM checks apply to these
 bounded target reads. No player-object pointer or game method is followed.
@@ -130,7 +137,9 @@ Mismatches are reported while the remaining fixed checks continue in both
 rounds. GameLayoutDifference records retain bounded expected/actual bytes;
 for descriptors, ReferenceEncoding=ON_DISK_TYPE_INDEX labels the file reference,
 while Reason identifies the failed runtime validation. TypeMetadataDifference
-reports up to 32 bytes at the first header/record difference. Any mismatch still
+reports up to 32 bytes at the first header/record difference. V10 compares the
+bounded type record even when its header fails, so both differences can be
+reported in one run. This does not allow a mismatched header to pass. Any mismatch still
 fails registration verification, even if it later disappears. Read, translation,
 identity and budget errors stop immediately. Differences reported before a
 failed process recheck are provisional. These are non-atomic samples; identical
@@ -162,7 +171,7 @@ Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-Ninety-six checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+101 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -193,14 +202,17 @@ Seven retry assertions cover recovery after a transient repeated node, cumulativ
 reads and discarded results, persistent repetition, identity changes, no retry
 on fingerprint failure, shared budget exhaustion, and the 4096-node outer limit.
 
-Twenty-five registration checks validate matching relocated data and reject altered
+Thirty registration checks validate matching relocated data and reject altered
 field offsets, relative-RVA-as-pointer mistakes, method bytes, between-round
 changes, and process/profile mismatches. The registration fixture uses 1324
 reads. Diagnostic regressions cover descriptor byte reporting, stable mismatches
 in both rounds, later mismatches after the first, changed observations, and
 failure without a logging callback. Runtime metadata tests cover two derived
 bases, exact records/headers/flags, unresolved indexes, inconsistent tables,
-changed pointers, and rejection of kernel-space pointer values. The metadata decoder validates all recovered records, reproduces the
+changed pointers, and rejection of kernel-space pointer values. Five more
+assertions reject the decoded file prefix at runtime, a wrong runtime version,
+a changed table offset, and a changed final header byte, and verify that header
+and type-record differences can both be reported without accepting either. The metadata decoder validates all recovered records, reproduces the
 same JSON/C# reference, and passes five malformed-input checks. These checks do
 not establish live object layouts or aim behavior.
 

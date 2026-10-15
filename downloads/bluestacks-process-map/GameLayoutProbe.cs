@@ -58,12 +58,14 @@ namespace HeadBridge.Mapping
             ulong candidate = pointer - offset;
             if (GameLayoutReference.MetadataSize > 0x0000800000000000UL - candidate) return "INVALID_METADATA_RANGE";
             if (metadataBase != 0 && candidate != metadataBase) return "INCONSISTENT_METADATA_BASE";
-            byte[] header = Hex(GameLayoutReference.MetadataHeaderHex);
-            if (!MetadataBytesMatch(check.Name + ".metadata_header", header, Virtual(game.Root, candidate, header.Length), pass, progress))
-                return "METADATA_HEADER";
-            if (!MetadataBytesMatch(check.Name + ".type_record", record, Virtual(game.Root, pointer, record.Length), pass, progress))
-                return "TYPE_RECORD";
+            byte[] header = Hex(GameLayoutReference.RuntimeMetadataHeaderHex);
+            bool headerMatches = MetadataBytesMatch(check.Name + ".metadata_header", header, Virtual(game.Root, candidate, header.Length), pass, progress);
+            // Collect the bounded record comparison even if the header differs.
+            // Neither observation can produce success without all checks passing.
+            bool recordMatches = MetadataBytesMatch(check.Name + ".type_record", record, Virtual(game.Root, pointer, record.Length), pass, progress);
             if (!EqualBytes(actual, Virtual(game.Root, descriptorAddress, 12))) return "DESCRIPTOR_CHANGED_DURING_READ";
+            if (!headerMatches) return "METADATA_HEADER";
+            if (!recordMatches) return "TYPE_RECORD";
             metadataBase = candidate;
             return null;
         }

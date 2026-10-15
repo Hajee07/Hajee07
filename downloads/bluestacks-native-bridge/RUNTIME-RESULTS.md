@@ -280,3 +280,19 @@ can restart from the list head after rechecking process identity. Partial result
 are discarded; caches/dictionaries are refreshed; read/time budgets are shared.
 A second repetition still fails. Other failures are not retried. 96 offline
 checks pass. Live v9 recovery and v8's metadata-target validation remain pending.
+
+## Process mapping version 9: first-attempt scan, runtime header prefix mismatch
+
+The supplied report passed kernel/process checks for PID 3775, then module
+verification on attempt one. Load bias was 0x777d99a00000, with the same build ID,
+eight segments, 16 window VMAs and four fingerprints. It visited 702 outer VMAs,
+inspected 170 files and skipped 179 repeats. Physical reads=9298, cache hits=1066.
+All cleanup stages passed. No repeated-node retry was needed in this run.
+
+Both rounds matched 71 checks and failed all nine descriptor header comparisons.
+The 18 bounded header observations consistently show words 0 and 24 instead of
+the decoded file's custom first words; the following 24 reported bytes match.
+Unreported header bytes and type-record contents remain unverified. V10 pins
+that observed runtime prefix while still comparing the remaining 248 header
+bytes and every selected 88-byte type record. 101 offline checks pass; live
+v10 metadata validation and player/head/aim integration remain pending.

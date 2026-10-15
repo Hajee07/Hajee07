@@ -31,7 +31,7 @@ namespace HeadBridge.Mapping.Tests
                 Memory.Put64(0x1014c0, Game.Mm); Memory.Write(0x101570, BitConverter.GetBytes(Game.Pid));
                 Memory.Write(0x101720, Encoding.ASCII.GetBytes(Game.Name + "\0")); Memory.Put64(0x103050, Game.PgdVirtual);
                 foreach (GameLayoutCheck check in GameLayoutReference.Checks) Put(check.Address, check.Expected(Module.LoadBias));
-                Put(MetadataRva, Reader.Hex(GameLayoutReference.MetadataHeaderHex));
+                Put(MetadataRva, Reader.Hex(GameLayoutReference.RuntimeMetadataHeaderHex));
                 foreach (GameLayoutCheck check in GameLayoutReference.Checks)
                     if (check.TypeDefinitionIndex >= 0)
                     {
@@ -124,7 +124,7 @@ namespace HeadBridge.Mapping.Tests
             Reject(unresolved, "INVALID_METADATA_POINTER", "on-disk type indexes cannot pass as resolved runtime descriptors");
             Fixture flags = new Fixture(); byte[] flagged = flags.DescriptorBytes(descriptor, flags.MetadataRva); flagged[8] ^= 1; flags.Put(descriptor.Address, flagged);
             Reject(flags, "DESCRIPTOR_FLAGS", "descriptor attributes remain exact despite accepting runtime pointers");
-            Fixture badHeader = new Fixture(); badHeader.Put(badHeader.MetadataRva, new byte[] { 0 });
+            Fixture badHeader = new Fixture(); badHeader.Put(badHeader.MetadataRva, new byte[] { 0xff });
             Reject(badHeader, "METADATA_HEADER", "a plausible pointer cannot bypass exact metadata header verification");
             Fixture badRecord = new Fixture(); ulong recordRva = badRecord.MetadataRva + GameLayoutReference.TypeDefinitionsOffset + (ulong)descriptor.TypeDefinitionIndex * 88UL;
             byte[] row = Reader.Hex(descriptor.TypeDefinitionHex); row[87] ^= 1; badRecord.Put(recordRva, row);
@@ -146,6 +146,22 @@ namespace HeadBridge.Mapping.Tests
             Fixture kernelPointer = new Fixture(); byte[] kernelBytes = kernelPointer.DescriptorBytes(descriptor, kernelPointer.MetadataRva);
             BitConverter.GetBytes(0xffff888000001000UL).CopyTo(kernelBytes, 0); kernelPointer.Put(descriptor.Address, kernelBytes);
             Reject(kernelPointer, "INVALID_METADATA_POINTER", "kernel addresses cannot be followed as user metadata pointers");
+            Fixture diskHeader = new Fixture(); diskHeader.Put(diskHeader.MetadataRva, Reader.Hex(GameLayoutReference.MetadataHeaderHex));
+            Reject(diskHeader, "METADATA_HEADER", "decoded file prefix is not accepted as the observed runtime header");
+            Fixture wrongVersion = new Fixture(); wrongVersion.Put(wrongVersion.MetadataRva + 4, BitConverter.GetBytes(25));
+            Reject(wrongVersion, "METADATA_HEADER", "runtime metadata version must be exactly the observed 24");
+            Fixture tableHeader = new Fixture(); tableHeader.Put(tableHeader.MetadataRva + 8, new byte[] { 0xff });
+            Reject(tableHeader, "METADATA_HEADER", "runtime prefix acceptance does not relax metadata table offsets");
+            Fixture tailHeader = new Fixture(); byte[] fullHeader = Reader.Hex(GameLayoutReference.RuntimeMetadataHeaderHex);
+            fullHeader[255] ^= 1; tailHeader.Put(tailHeader.MetadataRva, fullHeader);
+            Reject(tailHeader, "METADATA_HEADER", "all 256 runtime-header bytes remain checked");
+            Fixture both = new Fixture(); both.Put(both.MetadataRva, new byte[] { 0xff });
+            both.Put(both.MetadataRva + GameLayoutReference.TypeDefinitionsOffset + (ulong)descriptor.TypeDefinitionIndex * 88UL, row);
+            bool bothRejected = false;
+            try { both.Run(); } catch (InvalidOperationException error) { bothRejected = error.Message.Contains("METADATA_HEADER"); }
+            Assert(bothRejected && both.Progress.Exists(delegate(string line) { return line.Contains("TypeMetadataDifference") && line.Contains(".metadata_header"); }) &&
+                both.Progress.Exists(delegate(string line) { return line.Contains("TypeMetadataDifference") && line.Contains(".type_record"); }),
+                "header and record differences are both reported while verification still fails");
             Console.WriteLine("LAYOUT_TOTAL=" + count + " (synthetic memory with recovered registration references)");
         }
     }

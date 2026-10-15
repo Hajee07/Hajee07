@@ -8,6 +8,6 @@
   "kernel_elf_sha256": "ef91958406d5fa8e57b9e1098c4227ca4eaea91c32e47c8031fa6649084458d3",
   "module_source_sha256": "500a5542618a5b5d1e22f8d588d18ccdbc99e5da6b1ee9a50a5c588b27c94a9d",
   "module_reference_sha256": "51c5e75cd461cd901499dcbac835fda8029b5b20881f5ce33d0e0d55e47ee0b8",
-  "layout_source_sha256": "9d88dcb850d54b4d43baa8a3f13cbc150d09da5b8349123daaeff1b58ccc012a",
-  "layout_reference_sha256": "387398c51c62b1773a161cce0e76384c531a3a01e87c6143678ecb95ff51889b"
+  "layout_source_sha256": "141da2ecc36d9a36481a29b7e567cf0067ae10f39e31c7120e2300e483988c45",
+  "layout_reference_sha256": "6c32ded45ab71f01b66378e46c89594a6028f677a641c44bb13e6df6f6d359c9"
 }

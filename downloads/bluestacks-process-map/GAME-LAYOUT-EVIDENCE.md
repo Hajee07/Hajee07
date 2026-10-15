@@ -196,3 +196,31 @@ The valid metadata fixture uses 1324 reads. Ten added assertions cover runtime
 metadata validation, relocation, unresolved indexes, changed flags/header/last
 record byte, bounded difference output, inconsistent bases, changing descriptors
 and kernel pointers. Version 8 still needs a Windows run on the user's instance.
+
+## Version 9 runtime header observations and version 10 profile
+
+The user's v9 report passed module identity in attempt one at load bias
+0x777d99a00000 with the same build ID. All nine descriptors failed the header
+comparison in both rounds; the reported first 32 bytes were identical across
+these 18 observations. File-decoded words were 0x741425f2 and 0x8af82d7e; runtime
+words were 0 and 24. Bytes 8..31 in those samples exactly matched the decoded
+metadata header. The rest of the runtime header was not included in the log,
+and v9 returned before reading the type records. Thus neither the full runtime
+header nor the records are claimed as verified by that run.
+
+V10 uses an explicit exact-build runtime header profile: bytes 0..7 are
+0000000018000000 from these observations; bytes 8..255 remain the unchanged
+decoded header reference. The generated report keeps both headers and records
+the runtime prefix provenance. Both full input SHA-256 checks are unchanged.
+No arbitrary prefix, generic metadata-version compatibility, or alternate
+unverified header is accepted. The runtime version word 24 does not establish
+compatibility with a standard IL2CPP metadata parser for this custom layout.
+
+All descriptor flags, pointer/base checks, full 88-byte records, process checks,
+and two-round comparisons remain required. Header and record comparisons now
+both run for a bounded validated user pointer even if one differs; any mismatch
+still fails. Header mismatch does not lead to player-object access or writes.
+101 offline C# checks pass (46 reader/header, 25 module, 30 registration).
+Five new assertions cover exact runtime prefix/version, unchanged table offsets
+and final header byte, and reporting simultaneous header/record differences.
+Live v10 header/record validation remains pending.

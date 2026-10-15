@@ -78,7 +78,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=9 ReadOnly=1'
+Record 'ProcessMapVersion=10 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -219,7 +219,7 @@ try {
     $layout = $reader.VerifyGameLayout($kernel, $game, $module, $progress)
     if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during layout verification.' }
     $reader.Recheck($kernel, $game)
-    Record "RuntimeTypeMetadata=PASS Base=0x$($layout.RuntimeMetadataBase.ToString('x')) Descriptors=$($layout.TypeDescriptors) RecordBytes=88"
+    Record "RuntimeTypeMetadata=PASS Base=0x$($layout.RuntimeMetadataBase.ToString('x')) Descriptors=$($layout.TypeDescriptors) RecordBytes=88 HeaderProfile=OBSERVED_ZERO_VERSION24"
     Record "GameLayoutRegistration=PASS Fields=$($layout.FieldCandidates) Methods=$($layout.MethodCandidates) Checks=$($layout.Checks) Passes=2"
     Record "MetadataReferenceSHA256=$($layout.MetadataSha256)"
     Record 'AimIntegration=INCOMPLETE PlayerObjects=UNVERIFIED HeadWorldPositions=UNVERIFIED VisibilitySemantics=UNVERIFIED AimWrites=NONE'
