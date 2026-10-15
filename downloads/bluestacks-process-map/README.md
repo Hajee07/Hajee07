@@ -7,18 +7,28 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 17.** The user's V16 run verified all 14 objects in the
-observed match dictionary: one local and 13 nonlocal objects. One was
-Player_Watching, so membership does not establish an enemy or alive-player list.
-The local head sample passed on attempt two at X=61.1467857, Y=12.7256794,
-Z=21.0208225, after a changed first pose was discarded. Cleanup passed.
+**Current version: 18.** V16 verified the observed dictionary's 14 objects and
+sampled the local head. The user's V17 run passed exact module/metadata and
+managed local-head checks, but all three native poses changed. Its collection
+snapshot also changed at final recheck. No other-head sample was attempted;
+all cleanup stages passed. The report does not identify the changing collection
+field because V17 logged only the range address.
 
-V17 adds a separate phase that attempts head samples for at most two already
-verified nonlocal members. It checks fresh context and the exact saved entry
-fingerprint before using the same managed/native head resolver. The phase has
-an additional 6000-call cap including final checks and preserves the shared
-30000-call/120-second limits. Live V17 validation is pending. See
-`OTHER-HEAD-EVIDENCE.md` for the checks and limits.
+V18 labels exhausted TRS-only attempts NOT_READY_MOTION and keeps the same
+strict comparisons and three-attempt limit. A collection snapshot change gets
+at most one complete fresh retry, inside a shared additional 4500-call ceiling
+that cannot extend past physical count 28000. Each retry discards its tentative
+members and rechecks code, types, hotfix gates and entries. Continued changes
+return NOT_READY_COLLECTION_CHANGED with no accepted members. Validation or
+transport errors still fail. Diagnostics add range size and first changed byte
+offset, without dumping contents. 229 offline checks pass; live V18 validation
+is pending. See ROSTER-EVIDENCE.md.
+
+The separate other-head phase still attempts at most two verified nonlocal
+members, checking fresh context and exact saved entry fingerprints. Its
+additional 6000-call cap includes final checks, with the same global
+30000-call/120-second limits. An unavailable local pose does not prevent an
+independent other-head observation. See OTHER-HEAD-EVIDENCE.md.
 
 Team/alive/visibility semantics and aim writes remain unimplemented. No target
 classification is inferred from these samples.

@@ -29,7 +29,7 @@ namespace HeadBridge.Mapping
         public float HeadWorldX, HeadWorldY, HeadWorldZ;
         public string RosterStatus,RosterError;
         public ulong RosterDictionary;
-        public int RosterUsed,RosterRemoved,RosterActive,RosterNullValues,RosterCandidates,RosterOtherVerified,RosterObservations;
+        public int RosterUsed,RosterRemoved,RosterActive,RosterNullValues,RosterCandidates,RosterOtherVerified,RosterObservations,RosterAttempts;
         public bool RosterLocalPresent,RosterComplete;
         public MatchPlayerObservation[] MatchPlayers=new MatchPlayerObservation[0];
         internal byte[] RosterCounterSnapshot;
@@ -37,6 +37,17 @@ namespace HeadBridge.Mapping
     }
     public sealed partial class Reader
     {
+        private sealed class ObjectObservationChangedException : InvalidOperationException
+        {
+            internal ObjectObservationChangedException(ulong address, byte[] before, byte[] after, bool final)
+                : base(ChangedDetail(address,before,after,final)) { }
+            private static string ChangedDetail(ulong address,byte[] before,byte[] after,bool final)
+            {
+                int offset=0;while(offset<before.Length && before[offset]==after[offset])offset++;
+                return "Object observation changed"+(final ? " on final recheck" : "")+" Address=0x"+address.ToString("x")+
+                    " Bytes="+before.Length+" FirstChangedOffset="+offset;
+            }
+        }
         private sealed class ObjectReads
         {
             private readonly Reader reader;
@@ -60,7 +71,7 @@ namespace HeadBridge.Mapping
                 string key = address.ToString("x") + ":" + length;
                 byte[] previous;
                 if (values.TryGetValue(key, out previous))
-                { if (!EqualBytes(previous, actual)) throw new InvalidOperationException("Object observation changed Address=0x" + address.ToString("x")); }
+                { if (!EqualBytes(previous, actual)) throw new ObjectObservationChangedException(address,previous,actual,false); }
                 else
                 {
                     if (values.Count >= 1024 || bytes + length > 65536) throw new InvalidOperationException("Object observation bound exhausted.");
@@ -80,8 +91,11 @@ namespace HeadBridge.Mapping
             internal int Recheck()
             {
                 for (int i = addresses.Count - 1; i >= 0; i--)
-                    if (!EqualBytes(reader.Virtual(root, addresses[i], snapshots[i].Length), snapshots[i]))
-                        throw new InvalidOperationException("Object observation changed on final recheck Address=0x" + addresses[i].ToString("x"));
+                {
+                    byte[] actual=reader.Virtual(root, addresses[i], snapshots[i].Length);
+                    if (!EqualBytes(actual, snapshots[i]))
+                        throw new ObjectObservationChangedException(addresses[i],snapshots[i],actual,true);
+                }
                 return addresses.Count;
             }
         }
@@ -250,6 +264,7 @@ namespace HeadBridge.Mapping
             result.PlayerClass = player.Name;
             ResolveManagedPlayerHead(reads,game,module,layout,result,player,wrappers,length,progress);
             try { ReadNativeHeadPosition(game, module, result, progress); }
+            catch (NativeHeadMotionException error) { result.HeadWorldStatus = "NOT_READY_MOTION"; result.HeadWorldError = error.Message; }
             catch (Exception error) { result.HeadWorldStatus = "FAIL"; result.HeadWorldError = error.Message; }
             try { ReadMatchPlayerDictionary(game,module,layout,result,wrappers,length,progress); }
             catch(Exception error) { result.RosterStatus="FAIL";result.RosterError=error.Message; }

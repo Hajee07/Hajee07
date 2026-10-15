@@ -105,3 +105,40 @@ are not logged. A later other-head probe requires exact matches to establish
 that it still refers to the same observed member; it does not assume that a
 saved raw object address remains valid. This new use does not establish the
 collection's enemy/team/alive meaning. See OTHER-HEAD-EVIDENCE.md.
+
+## V17 change and V18 fresh attempts
+
+V17 passed exact module/layout and managed local-head identity, but all native
+poses moved and its independent collection snapshot changed on final recheck.
+No collection proof or other-head coordinates were accepted. V17 logged only
+the changed range address, so its semantic identity cannot be established.
+
+V18 gives only a typed ObjectObservationChangedException one fresh collection
+attempt (maximum two). A new ObjectReads and temporary result are constructed
+for each attempt. All code anchors, field registration, generic/runtime class
+checks, hotfix gate, counters, entries and selected object identities are
+re-read. Tentative member arrays, entry proofs and counters are copied to the
+public result only after successful final rechecks. Persistent changes return
+NOT_READY_COLLECTION_CHANGED with no accepted members. Invalid layouts,
+pointers, types, code, hotfix identities or transport/page-table errors are not
+retryable snapshot changes. A newly active getter gate returns its existing
+HOTFIX_ACTIVE_COLLECTION_GETTER status and no members.
+
+Both attempts share one temporary physical-call scope of min(4500,28000-current
+count). A nonpositive allowance skips the stage. Scope exhaustion returns
+NOT_READY_READ_BUDGET, discards unaccepted members and restores the prior scope
+for final core checks. At least 2000 calls of the global ceiling are left at
+this scope's limit; that is a reserve, not a guarantee that final checks pass.
+No count or timer is reset; the 120-second global deadline still applies.
+A process/current-game change may still invalidate the outer core snapshot.
+
+Changed-range diagnostics now include Bytes and FirstChangedOffset in both
+immediate and final mismatches. Contents are not logged. Reported attempts and
+progress distinguish discarded observations from accepted membership.
+
+229 offline checks pass (51 core/kernel, 31 module, 30 metadata, 117 objects/
+native/collection). New checks exercise a settling version, persistent changes,
+a changed entry with unchanged version, hotfix activation between attempts,
+precise changed-offset reporting, single-attempt hard failures and call-scope
+restoration. Local and other-head continuous motion tests retain strict limits
+and no coordinates. Live V18 verification remains pending.

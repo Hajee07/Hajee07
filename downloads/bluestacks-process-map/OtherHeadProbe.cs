@@ -53,7 +53,8 @@ namespace HeadBridge.Mapping
             PlayerObjectResult head=new PlayerObjectResult { LocalPlayer=member.Address,PlayerClass=member.Class };
             Action<string> note=progress==null ? (Action<string>)null : delegate(string text){progress("OtherHeadProgress Index="+rosterIndex+" "+text);};
             ResolveManagedPlayerHead(reads,game,module,layout,head,profile,wrappers,length,note);
-            ReadNativeHeadPosition(game,module,head,note);
+            try { ReadNativeHeadPosition(game,module,head,note); }
+            catch(NativeHeadMotionException error){head.HeadWorldStatus="NOT_READY_MOTION";head.HeadWorldError=error.Message;}
             Recheck(kernel,game);int observations=reads.Recheck();Recheck(kernel,game);
             return new OtherHeadObservation { RosterIndex=rosterIndex,Player=member.Address,Class=member.Class,Provider=head.HeadProvider,Transform=head.HeadTransform,
                 Status=head.HeadWorldStatus=="SAMPLED_READ_ONLY" ? head.HeadWorldStatus : head.HeadStatus!="MANAGED_TRANSFORM_VERIFIED" ? head.HeadStatus : head.HeadWorldStatus,

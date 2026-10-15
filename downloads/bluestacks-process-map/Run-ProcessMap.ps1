@@ -78,7 +78,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=17 ReadOnly=1'
+Record 'ProcessMapVersion=18 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -259,12 +259,13 @@ try {
         Record "LocalHeadWorldPosition=$($objects.HeadWorldStatus) Attempts=$($objects.HeadSampleAttempts) Detail=$($objects.HeadWorldError)"
         if ($objects.HeadWorldStatus -ceq 'FAIL') { $failed = $true }
     }
-    Record "MatchPlayerDictionary=$($objects.RosterStatus) Dictionary=0x$($objects.RosterDictionary.ToString('x')) UsedSlots=$($objects.RosterUsed) RemovedSlots=$($objects.RosterRemoved) ActiveEntries=$($objects.RosterActive) NullValues=$($objects.RosterNullValues) UniqueCandidatePointers=$($objects.RosterCandidates) VerifiedPlayers=$($objects.MatchPlayers.Length) VerifiedOtherPlayers=$($objects.RosterOtherVerified) LocalPresent=$($objects.RosterLocalPresent) CompleteObjectValidation=$($objects.RosterComplete) Observations=$($objects.RosterObservations)"
+    Record "MatchPlayerDictionary=$($objects.RosterStatus) Attempts=$($objects.RosterAttempts) Dictionary=0x$($objects.RosterDictionary.ToString('x')) UsedSlots=$($objects.RosterUsed) RemovedSlots=$($objects.RosterRemoved) ActiveEntries=$($objects.RosterActive) NullValues=$($objects.RosterNullValues) UniqueCandidatePointers=$($objects.RosterCandidates) VerifiedPlayers=$($objects.MatchPlayers.Length) VerifiedOtherPlayers=$($objects.RosterOtherVerified) LocalPresent=$($objects.RosterLocalPresent) CompleteObjectValidation=$($objects.RosterComplete) Observations=$($objects.RosterObservations)"
     for ($index = 0; $index -lt $objects.MatchPlayers.Length; $index++) {
         $entry = $objects.MatchPlayers[$index]
         Record "MatchPlayerObject Index=$index Address=0x$($entry.Address.ToString('x')) Class=$($entry.Class) IsLocal=$($entry.IsLocal)"
     }
-    if ($objects.RosterStatus -ceq 'FAIL') { $failed = $true; Record "MatchPlayerDictionaryError=$($objects.RosterError)" }
+    if ($objects.RosterStatus -ceq 'FAIL') { $failed = $true }
+    if ($objects.RosterError) { Record "MatchPlayerDictionaryError=$($objects.RosterError)" }
     $stage = 'OtherHeadSamples'
     $otherHeadStart = $reader.PhysicalCalls
     $otherHeads = $reader.SampleOtherPlayerHeads($kernel, $game, $module, $layout, $objects, $progress)

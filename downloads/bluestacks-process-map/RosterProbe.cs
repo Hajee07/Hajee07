@@ -43,6 +43,41 @@ namespace HeadBridge.Mapping
         private void ReadMatchPlayerDictionary(GameProcess game, ModuleResult module, GameLayoutResult layout, PlayerObjectResult result,
             ulong wrappers,ulong wrapperLength,Action<string> progress)
         {
+            int allowance=Math.Min(4500,28000-PhysicalCalls);
+            if(allowance<=0){result.RosterStatus="NOT_READY_READ_BUDGET";return;}
+            using(PhysicalCallScope(allowance))
+            {
+                for(int attempt=1;attempt<=2;attempt++)
+                {
+                    result.RosterAttempts=attempt;
+                    if(progress!=null)progress("RosterSampleAttempt Attempt="+attempt+" MaximumAttempts=2");
+                    PlayerObjectResult fresh=new PlayerObjectResult { CurrentGame=result.CurrentGame,Match=result.Match,LocalPlayer=result.LocalPlayer };
+                    try
+                    {
+                        ReadMatchPlayerDictionaryAttempt(game,module,layout,fresh,wrappers,wrapperLength,progress);
+                        result.RosterStatus=fresh.RosterStatus;result.RosterDictionary=fresh.RosterDictionary;
+                        result.RosterUsed=fresh.RosterUsed;result.RosterRemoved=fresh.RosterRemoved;result.RosterActive=fresh.RosterActive;
+                        result.RosterNullValues=fresh.RosterNullValues;result.RosterCandidates=fresh.RosterCandidates;
+                        result.RosterOtherVerified=fresh.RosterOtherVerified;result.RosterObservations=fresh.RosterObservations;
+                        result.RosterLocalPresent=fresh.RosterLocalPresent;result.RosterComplete=fresh.RosterComplete;
+                        result.MatchPlayers=fresh.MatchPlayers;result.RosterCounterSnapshot=fresh.RosterCounterSnapshot;
+                        result.RosterEntries=fresh.RosterEntries;result.RosterCapacity=fresh.RosterCapacity;
+                        result.RosterClass=fresh.RosterClass;result.RosterArrayClass=fresh.RosterArrayClass;
+                        return;
+                    }
+                    catch(ObjectObservationChangedException error)
+                    {
+                        if(progress!=null)progress("RosterSampleChanged Attempt="+attempt+" Discarded=True Detail="+error.Message);
+                        if(attempt==2){result.RosterStatus="NOT_READY_COLLECTION_CHANGED";result.RosterError=error.Message;return;}
+                    }
+                    catch(PhysicalScopeLimitException error)
+                    {result.RosterStatus="NOT_READY_READ_BUDGET";result.RosterError=error.Message;return;}
+                }
+            }
+        }
+        private void ReadMatchPlayerDictionaryAttempt(GameProcess game, ModuleResult module, GameLayoutResult layout, PlayerObjectResult result,
+            ulong wrappers,ulong wrapperLength,Action<string> progress)
+        {
             ObjectReads reads=new ObjectReads(this,game.Root);
             foreach(GameLayoutCheck anchor in RosterReference.Anchors)
                 Expect(EqualBytes(reads.Read(module.LoadBias+anchor.Address,anchor.Expected(module.LoadBias).Length),anchor.Expected(module.LoadBias)),"roster code anchor "+anchor.Name);

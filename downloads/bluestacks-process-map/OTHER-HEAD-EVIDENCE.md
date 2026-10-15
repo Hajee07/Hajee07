@@ -2,8 +2,9 @@
 
 V16 verified the observed match dictionary's 14 objects (local plus 13 others),
 including Player_Watching. It also repeated the live local-head sample after
-rejecting one moving pose. V17 adds at most two nonlocal head samples. Its live
-Windows validation remains pending. No enemy/team/alive/visibility classification
+rejecting one moving pose. V17 adds at most two nonlocal head samples. Its V17 Windows run was blocked by an unstable local pose and collection
+snapshot; no other-head sample was attempted. Live other-head validation remains
+pending. No enemy/team/alive/visibility classification
 or aim-control write is implemented.
 
 ## Reuse and membership
@@ -85,3 +86,15 @@ phase identity checks and records 159 combined observations.
 
 These are synthetic implementation checks. The next Windows report is needed
 to establish a live other-head sample for this BlueStacks/game build.
+
+## V18 motion classification
+
+After three TRS-only mismatches, local and other-head callers return
+NOT_READY_MOTION with no coordinates. The native reader's byte comparisons,
+identity checks and attempt limit are unchanged. Other-head managed/context
+snapshots are still rechecked before reporting that unavailable status. An
+identity or membership mutation remains a failure and cannot be hidden by
+motion classification. The optional phase can run after an unavailable local
+pose if the independent typed collection was accepted. No stale local XYZ is
+substituted. V18's 229 offline checks include these motion and independence
+cases; a live other-head sample is still unverified.

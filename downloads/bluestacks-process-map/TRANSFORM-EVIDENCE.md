@@ -150,3 +150,14 @@ The source only adds propagation of the typed optional-scope limit so native
 snapshot checks cannot disguise budget exhaustion as an identity mismatch.
 No native transform offsets, coefficients, byte comparisons or motion retry
 rules are weakened. Live other-head validation is pending.
+
+## V18 unavailable pose status
+
+The V17 report changed on all three native attempts, so no XYZ was accepted.
+V18 reports this exhausted TRS-only case as NOT_READY_MOTION at both local and
+other-head callers. The native implementation, strict comparisons, bindings,
+identity checks, attempt limit and read budgets are unchanged. An identity or
+transport error still yields FAIL, including simultaneous identity/TRS changes.
+Only successful sampled rows emit coordinates. Offline tests confirm both
+continuous-motion paths and an independent other-head sample when the local
+pose is unavailable. Live V18 validation is pending.

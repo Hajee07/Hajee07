@@ -404,3 +404,22 @@ The optional phase has a 6000-call additional cap including reserved final check
 it uses the same global Reader limits and does not reset counts/time. All 223
 offline checks pass. Live V17 sampling, team/alive/visibility semantics and aim
 integration remain pending.
+
+## V17 changed pose and collection; V18 bounded retry pending
+
+The V17 report used host PID 6372 and guest PID 9864. Exact ARM64 module and
+80 registration checks passed twice. Managed local-head resolution passed via
+a 30-entry model cache. Native samples changed on all three attempts (indices
+0, then 8, then 8); no position was accepted. The roster snapshot changed on
+final recheck at 0x777d85ad3340. That address alone does not identify the field.
+No members were accepted and the optional other-head phase performed zero reads.
+Total physical calls: 20445; cache hits: 2968. All cleanup stages passed.
+
+V18 preserves exact TRS comparisons and the three-attempt limit while reporting
+continued motion as NOT_READY_MOTION. A typed object-snapshot mismatch in the
+collection permits one completely fresh retry. Both attempts share an extra
+4500-call ceiling, never extending past count 28000; remaining final checks
+still share the global 30000-call/120-second limits. Discarded membership proofs
+are never merged. Other errors remain failures. Range size/first changed offset
+are logged without byte contents. All 229 offline checks pass. Live V18 sampling
+and team/alive/visibility/aim integration remain pending.

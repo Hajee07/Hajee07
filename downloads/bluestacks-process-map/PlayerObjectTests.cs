@@ -220,7 +220,7 @@ namespace HeadBridge.Mapping.Tests
         private static void RosterFailure(Action<Fixture> change,string message,string label)
         {
             Fixture f=new Fixture();f.SetupRoster();change(f);PlayerObjectResult result=f.Run();
-            Check(result.HeadStatus=="MANAGED_TRANSFORM_VERIFIED" && result.RosterStatus=="FAIL" && result.RosterError.Contains(message),label+" Detail="+result.RosterError);
+            Check(result.HeadStatus=="MANAGED_TRANSFORM_VERIFIED" && result.RosterStatus=="FAIL" && result.RosterAttempts==1 && result.RosterError.Contains(message),label+" Detail="+result.RosterError);
         }
         public static void Run()
         {
@@ -365,8 +365,8 @@ namespace HeadBridge.Mapping.Tests
                 if(at==movingAt && length==144) { movingCopies++; moving.Put(Fixture.Matrices+96,BitConverter.GetBytes(movingCopies%2==1 ? 9f : 1f)); }
             };
             PlayerObjectResult motion = moving.Run();
-            Check(motion.HeadWorldStatus=="FAIL" && motion.HeadWorldError.Contains("TRS_CHANGED") && motion.HeadSampleAttempts==3 && movingCopies==6,
-                "continuously moving selected TRS rows fail after exactly three fresh attempts");
+            Check(motion.HeadWorldStatus=="NOT_READY_MOTION" && motion.HeadWorldError.Contains("TRS_CHANGED") && motion.HeadSampleAttempts==3 && movingCopies==6 && motion.HeadWorldX==0,
+                "continuously moving selected TRS rows yield no pose after exactly three fresh attempts");
             Fixture settles = new Fixture(); settles.SetupNative(); ulong settlesAt=settles.Physical(Fixture.Matrices); int settleCopies=0;
             settles.Memory.AfterRead = delegate(ulong at,int length) {
                 if(at==settlesAt && length==144 && ++settleCopies==1) settles.Put(Fixture.Matrices+96,BitConverter.GetBytes(9f));
@@ -458,10 +458,35 @@ namespace HeadBridge.Mapping.Tests
             Fixture duplicateRoster=new Fixture();duplicateRoster.SetupRoster();duplicateRoster.REntry(1,Fixture.Player);PlayerObjectResult duplicatePlayers=duplicateRoster.Run();
             Check(duplicatePlayers.RosterStatus=="TYPED_COLLECTION_VERIFIED" && duplicatePlayers.RosterCandidates==1 && duplicatePlayers.RosterActive==2,
                 "repeated value pointers are deduplicated without equating entry count to unique players");
-            RosterFailure(delegate(Fixture f){ ulong at=f.Physical(Fixture.REntries+0x20);f.Memory.AfterRead=delegate(ulong p,int n){if(p==at && n==80)f.U32(Fixture.RDict+0x2c,2);}; },
-                "final recheck","actual dictionary version changes reject the roster snapshot");
-            RosterFailure(delegate(Fixture f){ ulong at=f.Physical(Fixture.REntries+0x20);f.Memory.AfterRead=delegate(ulong p,int n){if(p==at && n==80)f.U64(Fixture.Array+0x20UL+0x1bfUL*8UL,Fixture.Other);}; },
-                "final recheck","collection getter hotfix changes during the snapshot are detected");
+            Fixture rosterSettles=new Fixture();rosterSettles.SetupRoster();ulong rosterAt=rosterSettles.Physical(Fixture.REntries+0x20);
+            rosterSettles.Memory.AfterRead=delegate(ulong p,int n){if(p==rosterAt && n==80)rosterSettles.U32(Fixture.RDict+0x2c,2);};
+            PlayerObjectResult settledRoster=rosterSettles.Run();
+            Check(settledRoster.RosterStatus=="TYPED_COLLECTION_VERIFIED" && settledRoster.RosterAttempts==2 && BitConverter.ToUInt32(settledRoster.RosterCounterSnapshot,12)==2,
+                "a changed dictionary version discards the first attempt and accepts a fresh stable counter snapshot");
+            Fixture changingRoster=new Fixture();changingRoster.SetupRoster();ulong changingAt=changingRoster.Physical(Fixture.REntries+0x20);uint version=1;
+            changingRoster.Memory.AfterRead=delegate(ulong p,int n){if(p==changingAt && n==80)changingRoster.U32(Fixture.RDict+0x2c,++version);};
+            PlayerObjectResult changedRoster=changingRoster.Run();
+            Check(changedRoster.RosterStatus=="NOT_READY_COLLECTION_CHANGED" && changedRoster.RosterAttempts==2 && changedRoster.MatchPlayers.Length==0 &&
+                changedRoster.RosterCounterSnapshot==null && changedRoster.RosterCandidates==0,
+                "persistent roster motion stops after two fresh attempts without leaking discarded membership proofs");
+            Check(changedRoster.RosterError.Contains("Bytes=16") && changedRoster.RosterError.Contains("FirstChangedOffset=12") &&
+                changingRoster.Progress.FindAll(delegate(string text){return text.StartsWith("RosterSampleChanged");}).Count==2,
+                "snapshot diagnostics locate the changed byte within the observed range without logging key contents");
+            Fixture entrySettles=new Fixture();entrySettles.SetupRoster();ulong entryAt=entrySettles.Physical(Fixture.REntries+0x20);bool replaced=false;
+            entrySettles.Memory.AfterRead=delegate(ulong p,int n){if(p==entryAt && n==80 && !replaced){replaced=true;entrySettles.REntry(1,0);}};
+            PlayerObjectResult newEntries=entrySettles.Run();
+            Check(newEntries.RosterStatus=="TYPED_COLLECTION_VERIFIED" && newEntries.RosterAttempts==2 && newEntries.MatchPlayers.Length==1 && newEntries.RosterNullValues==1 && newEntries.RosterOtherVerified==0,
+                "retry rebuilds the entry snapshot and never merges a discarded member into a later accepted collection");
+            Fixture rosterHotfix=new Fixture();rosterHotfix.SetupRoster();ulong patchAt=rosterHotfix.Physical(Fixture.REntries+0x20);
+            rosterHotfix.Memory.AfterRead=delegate(ulong p,int n){if(p==patchAt && n==80)rosterHotfix.U64(Fixture.Array+0x20UL+0x1bfUL*8UL,Fixture.Other);};
+            PlayerObjectResult patchedRoster=rosterHotfix.Run();
+            Check(patchedRoster.RosterStatus=="HOTFIX_ACTIVE_COLLECTION_GETTER" && patchedRoster.RosterAttempts==2 && patchedRoster.MatchPlayers.Length==0,
+                "a retry checks the hotfix gate again and cannot accept the original collection path after an override");
+            Fixture rosterBudget=new Fixture();rosterBudget.SetupRoster();ulong budgetAt=rosterBudget.Physical(rosterBudget.Module.LoadBias+RosterReference.Anchors[0].Address);bool burn=false;int start=0;
+            rosterBudget.Memory.AfterRead=delegate(ulong p,int n){if(p==budgetAt && !burn){burn=true;start=rosterBudget.Reader.PhysicalCalls;for(int i=0;i<4501;i++)rosterBudget.Reader.Physical(0,1);}};
+            PlayerObjectResult budgetRoster=rosterBudget.Run();
+            Check(budgetRoster.RosterStatus=="NOT_READY_READ_BUDGET" && budgetRoster.RosterAttempts==1 && budgetRoster.MatchPlayers.Length==0 && rosterBudget.Reader.PhysicalCalls>start+4500,
+                "roster call scope stops a costly observation and restores allowance for final object checks");
             Fixture many=new Fixture();many.SetupRoster();many.U32(Fixture.RDict+0x20,20);many.U64(Fixture.REntries+0x18,20);
             for(int i=1;i<20;i++){ulong address=Fixture.Other+(ulong)(i-1)*4096UL;many.U64(address,Fixture.Class(32360));many.Put(address+0x420,new byte[]{0});many.REntry(i,address);}
             PlayerObjectResult rosterBounded=many.Run();
@@ -479,6 +504,15 @@ namespace HeadBridge.Mapping.Tests
             Check(otherCore.HeadWorldX==104 && one.Samples[0].Provider==otherRegion && one.Samples[0].RosterIndex==1,
                 "other-head sampling preserves the local sample and reports the exact collection member");
             Check(other.Reader.PhysicalCalls>beforeOther && other.Reader.PhysicalCalls-beforeOther<=6000,"other-head phase consumes the same shared Reader within its additional-call bound");
+            moving.SetupRoster();moving.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult motionCore=moving.Run();OtherHeadResult despiteMotion=moving.OtherHeads(motionCore);
+            Check(motionCore.HeadWorldStatus=="NOT_READY_MOTION" && despiteMotion.Sampled==1 && despiteMotion.Samples[0].X==31,
+                "an unavailable moving local pose does not prevent an independently verified other-head sample");
+            Fixture remoteMotion=new Fixture();remoteMotion.SetupNative();remoteMotion.SetupRoster();remoteMotion.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult remoteCore=remoteMotion.Run();
+            ulong remoteAt=remoteMotion.Physical(otherRegion+0x4000);int remoteCopies=0;
+            remoteMotion.Memory.AfterRead=delegate(ulong p,int n){if(p==remoteAt && n==48)remoteMotion.Put(otherRegion+0x4000,BitConverter.GetBytes(++remoteCopies%2==1 ? 41f : 31f));};
+            OtherHeadResult noRemotePose=remoteMotion.OtherHeads(remoteCore);
+            Check(noRemotePose.Sampled==0 && noRemotePose.Samples[0].Status=="NOT_READY_MOTION" && noRemotePose.Samples[0].Attempts==3 && remoteCopies==6 && noRemotePose.Samples[0].X==0,
+                "an animated other head is reported as unavailable with no XYZ after the same three-attempt limit");
             Fixture absent=new Fixture();absent.SetupNative();absent.SetupRoster();absent.SetupOtherHead(Fixture.Other,otherRegion,31);absent.U64(Fixture.Other+0xa00,0);
             OtherHeadResult noHead=absent.OtherHeads(absent.Run());
             Check(noHead.Sampled==0 && noHead.Samples[0].Status=="NOT_READY_MODEL_CACHE_NULL","an uncached other head is reported without initializing Unity or substituting the local head");

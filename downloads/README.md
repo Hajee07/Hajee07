@@ -1,10 +1,11 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V17**. V16 verified all 14 observed dictionary members
-(local plus 13 others) and repeated the live local-head sample. V17 attempts
-head samples for at most two verified nonlocal members with fresh context/entry
-checks and a separate bounded read allowance. 223 offline checks pass; V17 live
-validation is pending. See [the probe instructions](bluestacks-process-map/README.md).
+Current process probe: **V18**. V17 passed exact module/layout and managed
+local-head validation, but moving TRS rows and a changed collection snapshot
+prevented coordinates and other-head attempts. V18 reports unavailable moving
+poses separately and adds one bounded fresh collection retry with precise
+change diagnostics. 229 offline checks pass; live V18 validation is pending.
+See [the probe instructions](bluestacks-process-map/README.md).
 Team/alive/visibility semantics and aim control remain incomplete.
 
 Download `head-aim-dll-x64.zip` and extract it on Windows. The archive contains C++ source, a Windows x64 DLL, and an own-process DLL smoke loader.
