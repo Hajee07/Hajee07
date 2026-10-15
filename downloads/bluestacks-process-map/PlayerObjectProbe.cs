@@ -18,7 +18,9 @@ namespace HeadBridge.Mapping
     public sealed class PlayerObjectResult
     {
         public ulong CurrentGame, Match, LocalPlayer, HeadProvider, HeadTransform;
-        public string PlayerClass, HeadStatus;
+        public string PlayerClass, HeadStatus, HeadSource;
+        public ulong HeadModel;
+        public int HeadCacheEntries;
         public int Observations;
     }
     public sealed partial class Reader
@@ -190,10 +192,14 @@ namespace HeadBridge.Mapping
             Expect(reads.Byte(result.LocalPlayer + 0x420) == 1, "local-player bool marker");
             result.PlayerClass = player.Name;
             result.HeadStatus = "NOT_READY_PROVIDER_NULL";
+            result.HeadSource = "NONE";
             if (HotfixEntry(reads, wrappers, length, 0x34e)) result.HeadStatus = "HOTFIX_ACTIVE_HEAD_GETTER";
             else
             {
+                result.HeadSource = "PLAYER_FIELD";
                 result.HeadProvider = reads.Value(result.LocalPlayer + 0xa00);
+                if (result.HeadProvider == 0)
+                    result.HeadProvider = FindCachedHead(reads, game, module, layout, result, player, wrappers, length, progress);
                 if (result.HeadProvider != 0)
                 {
                     ObjectReads.User(result.HeadProvider, 8, "head provider");

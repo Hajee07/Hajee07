@@ -53,3 +53,9 @@ use of opaque native-size words as exact expectations. It verifies bounded
 runtime sizes and IFix's actual static-field metadata/layout, and adds a bounded
 fresh scan for outer order/backlink inconsistencies. 142 offline checks pass.
 Live player/head validation and aim integration still require further work.
+
+V12 verified the live local PlayerNetwork chain, including the corrected IFix
+runtime layout. Its head-provider cache was null. V13 adds a bounded exact-name
+bone_Head lookup in the already populated model dictionary, with generic type,
+vtable/hotfix, String and node checks. 155 offline checks pass. No initialization
+or memory writes are used; live head Transform and world-position work is pending.

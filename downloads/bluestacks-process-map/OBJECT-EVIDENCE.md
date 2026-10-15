@@ -3,13 +3,13 @@
 V10 passed live kernel, process, ARM64 module, runtime metadata header and all
 80 registration checks in both rounds, with no mismatches or observed changes.
 It used 9692 physical reads, 1121 cache hits, 714 outer VMAs and a 16-VMA module
-window. All cleanup steps passed. V11's new object stage still needs a live run.
+window. All cleanup steps passed. V12 subsequently passed live local-player validation, with a null head-provider cache. V13's dictionary fallback needs a live run.
 
 ## Input provenance and reproduction
 
 Build-ObjectReference.py uses Recover-GameLayout.py to verify the same complete
-ELF and metadata SHA-256 inputs. It derives parent relationships, 104 supported
-class records, native type/size data, four type-usage roots and 47 code/GOT
+ELF and metadata SHA-256 inputs. It derives parent relationships, 105 supported
+normal class records plus separate String/generic-definition profiles, native type/size data, four type-usage roots and 70 code/GOT
 references. The JSON and C# outputs reproduce byte-for-byte. No live PID, object
 address, metadata base or module load bias is a runtime constant.
 
@@ -96,8 +96,8 @@ verified RAM bounds and fresh page-table walks. No game functions, object writes
 VM pause, GC rooting or guest locks are used. These checks detect observed
 changes but cannot eliminate all object-lifetime races in a non-atomic scan.
 
-142 offline checks pass: 46 kernel/reader, 31 module, 30 registration and 35
-object checks. The synthetic valid object fixture takes 1890 reads and 114
+155 offline checks pass: 46 kernel/reader, 31 module, 30 registration and 48
+object checks. The synthetic valid object fixture takes 2144 reads and 114
 observations. Negatives cover wrong identities/flags, metadata records and
 sizes, active hotfixes, null/unresolved states, changed chains/processes, wrong
 interface/getter targets and bounds. These fixtures do not prove Windows object
@@ -156,3 +156,58 @@ synthetic 48-byte IFix instance is accepted only with all independent field
 identity checks satisfied; that fixture size is not a claimed Windows result.
 V12 also reports exact class difference values. Live local-player and managed
 head Transform success still requires the Windows run.
+
+## V12 live success and V13 uncached-head read path
+
+The user reported LocalPlayerObjects=PASS for game PID 6313, class
+COW.GamePlay.PlayerNetwork (type 32360), with 128 observations and inactive
+original-path hotfix slots. IFix's runtime instance size was 40. The derived
+match class EPPMGCJDEDC was 1664 bytes against the required base extent 1592.
+Player+0xa00 was zero, so no managed head Transform was obtained. Metadata/module
+checks and all cleanup stages passed. Total reads=12410, cache hits=1675.
+
+The original lazy getter at 0x6f37c58 reads usage cell 0xad7e5b8 through GOT
+0xa753ac0. Its on-disk value 0xa001562d has usage kind 5 (StringLiteral), index
+43798. The exact decoded literal is bone_Head, nine UTF-8 characters. This is a
+string argument, not MethodInfo. The getter invokes virtual slot 29 before
+writing the returned provider into Player+0xa00; the probe does not execute it.
+
+The metadata vtable entries for Player and PlayerNetwork both encode 0x600677bf,
+method-definition index 211935 after removing the usage tag/low flag bit. Its
+method token maps to GetTransformNode at RVA 0x7013344. The original branch
+returns the result of LBJCFPMCLMN.GetTransformNode at 0x70e1318 using Player's
+NJMKOAOGOIF field at +0x1530. That method first queries its cache field
+FCHOLNKBLGH at +0x10, declared Dictionary<string,BFOONIGAIFK>. A hit returns the
+cached node. On a miss the game may search Unity's hierarchy and allocate/write
+a node. V13 implements only the existing-entry read path.
+
+The generator cross-checks all these metadata/registration relationships and
+preserves complete input hashes. It emits the String and Dictionary definition
+records separately: primitive String and closed generic classes do not use the
+same by-value data representation as a normal class. String's opaque initial
+size is not used as a runtime expectation.
+
+V13 verifies the Player vtable metadata and function pointer, plus inactive
+hotfix slots 0x21f1a and 0x4f35. It validates the model class, dictionary metadata
+record/token/name, closed generic class/cached-class relationship, argument count
+and String/BFOONIGAIFK arguments against the declared descriptor. The dictionary
+entry-array pointer is at +0x18, used count at +0x20 and version at +0x24. The
+exact lookup code uses 24-byte entries: signed hash at 0, link at 4, key at 8
+and node value at 16, after the array header +0x20. These instruction bytes are
+included in the new references. Negative hashes mark removed entries.
+
+The reader bounds used entries to 512, capacity to 8192 and key lengths to 256,
+checks String metadata identity and compares exactly nine UTF-16 characters.
+It scans the bounded payload in blocks of at most 4096 bytes and rejects duplicate
+active head keys. It does not reproduce hash buckets/custom comparer behavior.
+The result identifies an observed exact-name cache entry, not a simulated method
+invocation. A node must have the exact BFOONIGAIFK class and pass the existing
+head interface/getter/Transform checks. A miss returns NOT_READY and does not
+follow the default node, invoke Unity, allocate, initialize or write anything.
+All cache/context/key/node observations are included in the final reread and
+unchanged global budgets. Identical samples still are not an atomic GC snapshot.
+
+155 offline checks pass, with 13 new cache cases. The synthetic fallback uses
+2825 reads and 169 observations. Live cache availability and the fallback
+representation still require the v13 Windows run. Head world coordinates,
+other-player enumeration and aim updates remain unimplemented.

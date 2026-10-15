@@ -12,6 +12,7 @@ namespace HeadBridge.Mapping {
             new ObjectClassProfile(30530, "COW.Gameplay.MultiplePlayerWereWolvesGame", 4, 34109, 7596699UL, 7594563UL, "07575500af4e55001fae0000ffffffff7f5700001fae0000ffffffff00001000cbbd0300840e0300ffffffff0a2900008b1f0000ffffffff6fe80700ae5f000043000a00120000000400910000000100000c00003f770002", 1179648U, 1160U, 0U, 33584959U, 0UL, 592U, true),
             new ObjectClassProfile(30536, "COW.Gameplay.PlayerArmsRace", 16, 32360, 7598520UL, 7594563UL, "245e5500af4e550048ba0000ffffffff9aba000048ba0000ffffffff0000100006be0300ef0e0300ffffffffffffffffffffffffffffffff72e90700bb5f000009000000020000000000fb0100000a00000c000049770002", 1179648U, 9744U, 0U, 33584969U, 0UL, 9328U, true),
             new ObjectClassProfile(31705, "BFOONIGAIFK", 128, -1, 7909900UL, 2003876UL, "781e5a0010000000a33b010037ba00009eb40000a33b0100ffffffff02001000d7dd03002a440300ffffffffac300000ffffffffb9150000e31c08008862000006000100020000000000050001000100000c0000db7b0002", 1179648U, 32U, 0U, 33586139U, 118361000UL, 24U, true),
+            new ObjectClassProfile(31706, "LBJCFPMCLMN", 256, -1, 7910013UL, 2003876UL, "e91e5a00100000006d3c010037ba00009eb400006d3c0100ffffffff02001000d9dd030030440300ffffffffffffffffffffffffffffffffe81c0800ffffffff09000000060000000000040000000000080c0000dc7b0002", 1179648U, 48U, 16U, 33586140U, 0UL, 48U, true),
             new ObjectClassProfile(31824, "COW.GamePlay.Player", 16, 31911, 2023899UL, 7768922UL, "474e0000c6f7570037ba0000ffffffff1f5c000037ba0000ffffffff0000100019d6030085330300ffffffffe02d000005210000f7150000dc1808004a6200002810ca0299060000b500b00106000900080c00009b7b0002", 1179648U, 9328U, 536U, 33586075U, 0UL, 9328U, true),
             new ObjectClassProfile(32133, "COW.GamePlay.JMAGGLCNGIG", 8, -1, 7973708UL, 7768922UL, "b8175b00c6f75700969e0000ffffffff9eb40000969e0000ffffffff0000100011e70300fe500300ffffffffd7310000ea210000ffffffff6f300800ffffffff27025500000100001f00090000000000080c0000677d0002", 1179648U, 1592U, 40U, 33586535U, 0UL, 1592U, true),
             new ObjectClassProfile(32220, "COW.GamePlay.IKPGFONFBGK", 4, 32251, 7995018UL, 7768922UL, "f66a5b00c6f7570010980000ffffffff41b7000010980000ffffffff0000100097e9030095550300ffffffffffffffffffffffffffffffff1a3408003564000014000000060000000000920000000100000c0000dd7d0002", 1179648U, 1104U, 0U, 33586653U, 0UL, 592U, true),
@@ -152,10 +153,33 @@ namespace HeadBridge.Mapping {
             new GameLayoutCheck("dynamic_size2_32", 0xa381904UL, "a802891a68fa00b9"),
             new GameLayoutCheck("static_alloc_0", 0xa381910UL, "600e41b900010034e1031faae3390094605e00f9e06100d0"),
             new GameLayoutCheck("field_layout_0", 0xa354c38UL, "080840f9091880b9085d40f90001098bc0035fd6"),
+            new GameLayoutCheck("head_lazy_path_0", 0x6f37c58UL, "e8c00190086145f9600240f975022891140140f9bb77d094680240f9e00313aa"),
+            new GameLayoutCheck("head_lazy_path_32", 0x6f37c78UL, "e10314aa098541f9028941f920013fd6e10300aa600205f9e00315aabb73d094"),
+            new GameLayoutCheck("head_lazy_path_64", 0x6f37c98UL, "740245f9d40300b4"),
+            new GameLayoutCheck("node_getter_0", 0x7013344UL, "fe0f1ef8f44f01a9f40300aa40e38352f30301aa4000a072e1031faaaf5d6094"),
+            new GameLayoutCheck("node_getter_32", 0x7013364UL, "8001003640e383524000a072e1031faad75d6094c00100b4e10314aae20313aa"),
+            new GameLayoutCheck("node_getter_64", 0x7013384UL, "f44f41a9e3031faafe0742f869015914809a4af9c00000b4e10313aaf44f41a9"),
+            new GameLayoutCheck("node_getter_96", 0x70133a4UL, "e2031faafe0742f8db370314b206cd94"),
+            new GameLayoutCheck("model_lookup_0", 0x70e1318UL, "fe0f1df8f65701a9f44f02a935f601b0a83e4639f30301aaf40300aa48020037"),
+            new GameLayoutCheck("model_lookup_32", 0x70e1338UL, "40bb01b0007c43f927cec99440bb01b0008443f924cec99440bb01b0008843f9"),
+            new GameLayoutCheck("model_lookup_64", 0x70e1358UL, "21cec994e0b201d000e443f91ecec994c0b20190003446f91bcec99428008052"),
+            new GameLayoutCheck("model_lookup_96", 0x70e1378UL, "a83e0639a0e68952e1031faaa6255d9440010036a0e68952e1031faacf255d94"),
+            new GameLayoutCheck("model_lookup_128", 0x70e1398UL, "000a00b4e10314aae20313aae3031faa59a6519447000014ff0700f9800a40f9"),
+            new GameLayoutCheck("dictionary_lookup_0", 0x9155c64UL, "fe57bea9f44f01a9681040f9f30302aaf50301aaf40300aa086140f9027d40f9"),
+            new GameLayoutCheck("dictionary_lookup_32", 0x9155c84UL, "a2000036e1038052e00308aa7ee04694e20300aae00314aae10315aaf3faff97"),
+            new GameLayoutCheck("dictionary_lookup_64", 0x9155ca4UL, "f503002aa001f837880e40f9280200b4091940b9bf02096be201005409038052"),
+            new GameLayoutCheck("dictionary_lookup_96", 0x9155cc4UL, "a822a99b011940f9e00313aa610200f9abfb4794020000147f0200f9f44f41a9"),
+            new GameLayoutCheck("dictionary_layout_0", 0x915499cUL, "391100b4281b40b9b6060051df02086b620f0054f40300aaf8031f2a1a038052"),
+            new GameLayoutCheck("dictionary_layout_32", 0x91549bcUL, "c9663a9b292140b9db7e40933f01176bc1010054940f00b468671a9b800240f9"),
+            new GameLayoutCheck("dictionary_layout_64", 0x91549dcUL, "151540f9"),
+            new GameLayoutCheck("generic_type_0", 0xa345e7cUL, "882a40b9893a40b9aa028052e00314aa481d1033aa02a4522961081229010a2a"),
+            new GameLayoutCheck("generic_type_32", 0xa345e9cUL, "882a00b9150c02f8951a00f9893a00b9"),
+            new GameLayoutCheck("generic_token_0", 0xa345f28UL, "8a1601b98a0a01b9681e41b9881e01b9"),
             new GameLayoutCheck("got_Facade", 0xa73f0c0UL, 0xac2f570UL),
             new GameLayoutCheck("got_MatchGame", 0xa7759c0UL, 0xac340a8UL),
             new GameLayoutCheck("got_Hotfix", 0xa899b98UL, 0xac30d18UL),
             new GameLayoutCheck("got_HeadInterface", 0xa74bec8UL, 0xac31400UL),
+            new GameLayoutCheck("head_literal_got", 0xa753ac0UL, 0xad7e5b8UL),
         };
         internal const ulong FacadeCell = 0xac2f570UL;
         internal const ulong MatchGameCell = 0xac340a8UL;
@@ -165,5 +189,10 @@ namespace HeadBridge.Mapping {
         internal const uint WrapperFieldToken = 67396131U, WrapperTypeBits = 1900566U;
         internal const ulong WrapperFieldNameOffset = 9123849UL, WrapperTypeRva = 173919008UL, WrapperMetadataOffset = 45420568UL;
         internal const string WrapperFieldRecordHex = "75a46c003552000023620404";
+        internal static readonly ObjectClassProfile HeadStringProfile = new ObjectClassProfile(37434, "System.String", 0, -1, 2085062UL, 3890860UL, "323d010018cb1c00a9c80000ffffffff9eb40000a9c80000ffffffff01211000a7d90600986c0400ffffffff6241000035280000ef190000f8770a009f7c0000cf0002000700000002001b0007000700000c00005d000002", 917504U, 2172748065U, 2172748161U, 33554525U, 0UL, 20U, false);
+        internal static readonly ObjectClassProfile HeadDictionaryProfile = new ObjectClassProfile(38851, "System.Collections.Generic.Dictionary`2", 0, -1, 17373542UL, 17373481UL, "d285ea009585ea00cc790000ffffffff9eb40000cc79000027030000012010008cf20600d5990400ffffffffd948000014290000711c0000f5c20a001083000034000f000e00000004002a000a000a00000c0000e2050002", 1179648U, 0U, 0U, 33555938U, 0UL, 40U, false);
+        internal const ulong HeadDictionaryTypeRva = 174011152UL, VtableTableOffset = 47825884UL;
+        internal const uint HeadDictionaryTypeBits = 1376257U;
+        internal const string HeadKeyUtf16Hex = "62006f006e0065005f004800650061006400";
     }
 }

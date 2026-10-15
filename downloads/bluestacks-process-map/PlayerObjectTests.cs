@@ -55,10 +55,44 @@ namespace HeadBridge.Mapping.Tests
                 foreach (int id in new int[] { 0x1c6, 0x139, 0x1c5, 0x12b, 0x34e }) U64(Array + 0x20UL + (ulong)id * 8UL, 0);
                 U64(FacadeStatics, Current); U64(Current, Class(12425)); U64(Current + 0x90, Match); U64(Match, Class(32133));
                 U64(Match + 0xd8, Player); U64(Player, Class(31824)); Put(Player + 0x420, new byte[] { 1 }); U64(Player + 0xa00, Provider);
+                U64(Player + 0x1530, 0);
+                foreach (ObjectClassProfile c in ObjectReference.Classes)
+                    if (c.Index == 31824 || c.Index == 32360)
+                    {
+                        U64(Class(c.Index) + 0x308, Module.LoadBias + 0x7013344);
+                        int start = BitConverter.ToInt32(Reader.Hex(c.RecordHex), 0x38);
+                        U32(Layout.RuntimeMetadataBase + ObjectReference.VtableTableOffset + ((ulong)start + 29UL) * 4UL, 0x600677bf);
+                    }
                 U64(Provider, Class(36295)); U64(Provider + 0x10, Transform); U64(Transform, Class(ObjectReference.TransformIndex));
                 Put(Class(36295) + 0x12e, BitConverter.GetBytes((ushort)1)); U64(Class(36295) + 0xb0, Interfaces);
                 Put(Interfaces, new byte[16]); U64(Interfaces, Class(36294)); U64(Class(36295) + 0x138, Module.LoadBias + 0x8259e90);
                 Reader = new Reader(Memory.Transport, new RamRange[] { new RamRange(0, 0xffffffff) });
+            }
+            internal const ulong Model = 0x4a010000, DictionaryClass = 0x4b000000, Dictionary = 0x4b010000, Generic = 0x4c000000,
+                Definition = 0x4c001000, Instance = 0x4c002000, Arguments = 0x4c003000, StringType = 0x4c004000, ValueType = 0x4c005000,
+                StringClass = 0x4d000000, Key = 0x4e000000, Entries = 0x4f000000;
+            private void MetadataIdentity(ulong klass, ObjectClassProfile profile)
+            {
+                ulong row = Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + (ulong)profile.Index * 88UL;
+                Put(row, Reader.Hex(profile.RecordHex)); U64(klass + 0x68, row); U64(klass + 0x78, klass); U32(klass + 0x11c, profile.Token);
+                U64(klass + 0x10, Layout.RuntimeMetadataBase + profile.NameOffset); U64(klass + 0x18, Layout.RuntimeMetadataBase + profile.NamespaceOffset);
+            }
+            internal void SetupHeadCache()
+            {
+                U64(Player + 0xa00, 0); U64(Player + 0x1530, Model); U64(Model, Class(31706)); U64(Model + 0x10, Dictionary);
+                MetadataIdentity(DictionaryClass, ObjectReference.HeadDictionaryProfile); MetadataIdentity(StringClass, ObjectReference.HeadStringProfile);
+                U64(Dictionary, DictionaryClass); U64(DictionaryClass + 0x60, Generic); U64(DictionaryClass + 0x20, Generic); U32(DictionaryClass + 0x28, 0x150000);
+                U32(DictionaryClass + 0xf8, 80); U64(Module.LoadBias + ObjectReference.HeadDictionaryTypeRva, Generic);
+                U32(Module.LoadBias + ObjectReference.HeadDictionaryTypeRva + 8, ObjectReference.HeadDictionaryTypeBits);
+                U64(Generic, Definition); U64(Generic + 8, Instance); U64(Generic + 0x18, DictionaryClass);
+                U64(Definition, Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + (ulong)ObjectReference.HeadDictionaryProfile.Index * 88UL);
+                U32(Definition + 8, 0x120000); U32(Instance, 2); U64(Instance + 8, Arguments);
+                U64(Arguments, StringType); U64(Arguments + 8, ValueType); U32(StringType + 8, 0xe0000);
+                U32(ValueType + 8, 0x120000); U64(ValueType, Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + 31705UL * 88UL);
+                U32(StringClass + 0x28, 0xe0000); U64(Key, StringClass); U32(Key + 0x10, 9); Put(Key + 0x14, Reader.Hex(ObjectReference.HeadKeyUtf16Hex));
+                U32(Dictionary + 0x20, 1); U32(Dictionary + 0x24, 1); U64(Dictionary + 0x18, Entries); U64(Entries, 0x4f100000); U64(Entries + 0x18, 1);
+                Put(Entries + 0x20, new byte[24]); U32(Entries + 0x20, 1234); U32(Entries + 0x24, 0xffffffff); U64(Entries + 0x28, Key); U64(Entries + 0x30, Provider);
+                U64(Provider, Class(31705)); U64(Class(31705) + 0xb0, Interfaces); U64(Class(31705) + 0x138, Module.LoadBias + 0x70e0ba8);
             }
             internal void Put(ulong address, byte[] bytes)
             {
@@ -110,7 +144,7 @@ namespace HeadBridge.Mapping.Tests
             Fixture array = new Fixture(); array.U64(Fixture.Array + 0x18, 1000001);
             Reject(array, "array length bound", "malformed hotfix array lengths are bounded");
             Fixture providerNull = new Fixture(); providerNull.U64(Fixture.Player + 0xa00, 0);
-            Check(providerNull.Run().HeadStatus == "NOT_READY_PROVIDER_NULL", "a null lazy head provider does not fabricate a Transform");
+            Check(providerNull.Run().HeadStatus == "NOT_READY_MODEL_CACHE_NULL", "a null lazy head provider does not fabricate a Transform");
             Fixture headPatch = new Fixture(); headPatch.U64(Fixture.Array + 0x20UL + 0x34eUL * 8UL, 0x50000000);
             Check(headPatch.Run().HeadStatus == "HOTFIX_ACTIVE_HEAD_GETTER", "a head getter hotfix is reported separately from the verified local-player chain");
             Fixture method = new Fixture(); method.U64(Fixture.Class(36295) + 0x138, method.Module.LoadBias + 0x37987c4);
@@ -166,6 +200,37 @@ namespace HeadBridge.Mapping.Tests
             foreach (ObjectClassProfile c in ObjectReference.Classes) if (c.Index == 36294)
                 interfaceZero = c.InstanceSizeExact && c.InstanceSize == 0 && c.MinimumInstanceSize == 0;
             Check(interfaceZero, "interface class size zero remains valid without treating it as an object instance");
+            Fixture cache = new Fixture(); cache.SetupHeadCache(); PlayerObjectResult cached = cache.Run();
+            Check(cached.HeadStatus == "MANAGED_TRANSFORM_VERIFIED" && cached.HeadSource == "MODEL_DICTIONARY" && cached.HeadCacheEntries == 1 && cached.HeadTransform == Fixture.Transform,
+                "a null player cache can resolve the exact cached bone_Head Transform without initialization");
+            Check(cache.Reader.PhysicalCalls < 7000 && cached.Observations < 1024, "model-cache lookup stays within the shared read and snapshot bounds");
+            Console.WriteLine("HEAD_CACHE_FIXTURE_READ_CALLS=" + cache.Reader.PhysicalCalls + " OBSERVATIONS=" + cached.Observations);
+            Fixture miss = new Fixture(); miss.SetupHeadCache(); miss.Put(Fixture.Key + 0x14, new byte[] { 0x78 });
+            Check(miss.Run().HeadStatus == "NOT_READY_BONE_NOT_CACHED", "different bone names cannot substitute for bone_Head");
+            Fixture removed = new Fixture(); removed.SetupHeadCache(); removed.U32(Fixture.Entries + 0x20, 0xffffffff);
+            Check(removed.Run().HeadStatus == "NOT_READY_BONE_NOT_CACHED", "removed dictionary entries are ignored");
+            Fixture duplicate = new Fixture(); duplicate.SetupHeadCache(); duplicate.U32(Fixture.Dictionary + 0x20, 2); duplicate.U64(Fixture.Entries + 0x18, 2);
+            duplicate.Put(Fixture.Entries + 0x38, duplicate.Memory.Bytes(duplicate.Physical(Fixture.Entries + 0x20), 24));
+            Reject(duplicate, "duplicate bone_Head", "duplicate active head keys fail rather than choosing an arbitrary entry");
+            Fixture tooMany = new Fixture(); tooMany.SetupHeadCache(); tooMany.U32(Fixture.Dictionary + 0x20, 513);
+            Reject(tooMany, "used-entry bound", "model dictionary scan is bounded to 512 used entries");
+            Fixture wrongArgument = new Fixture(); wrongArgument.SetupHeadCache(); wrongArgument.U64(Fixture.ValueType,
+                wrongArgument.Layout.RuntimeMetadataBase + GameLayoutReference.TypeDefinitionsOffset + 31824UL * 88UL);
+            Reject(wrongArgument, "value must be BFOONIGAIFK", "closed generic dictionary arguments must match the exact declared cache type");
+            Fixture cacheChanged = new Fixture(); cacheChanged.SetupHeadCache(); ulong chars = cacheChanged.Physical(Fixture.Key + 0x14);
+            cacheChanged.Memory.AfterRead = delegate(ulong address, int length) { if (address == chars && length == 18) cacheChanged.U32(Fixture.Dictionary + 0x24, 2); };
+            Reject(cacheChanged, "final recheck", "dictionary version changes invalidate the lookup result");
+            Fixture lookupPatch = new Fixture(); lookupPatch.SetupHeadCache(); lookupPatch.U64(Fixture.Array + 0x18, 0x30000);
+            lookupPatch.U64(Fixture.Array + 0x20UL + 0x21f1aUL * 8UL, 0x50000000);
+            Check(lookupPatch.Run().HeadStatus == "HOTFIX_ACTIVE_MODEL_LOOKUP", "model lookup hotfixes prevent following the original cache path");
+            Fixture target = new Fixture(); target.SetupHeadCache(); target.U64(Fixture.Class(31824) + 0x308, target.Module.LoadBias + 0x70e0ba8);
+            Check(target.Run().HeadStatus == "UNSUPPORTED_MODEL_VIRTUAL_TARGET", "unsupported virtual overrides are reported without guessing their field layout");
+            Fixture wrongNode = new Fixture(); wrongNode.SetupHeadCache(); wrongNode.U64(Fixture.Provider, Fixture.Class(36295));
+            Reject(wrongNode, "cached head node value class", "cache values must match the declared concrete node type");
+            Fixture longKey = new Fixture(); longKey.SetupHeadCache(); longKey.U32(Fixture.Key + 0x10, 257);
+            Reject(longKey, "key length bound", "string reads remain bounded even for corrupted dictionary keys");
+            Fixture wrongString = new Fixture(); wrongString.SetupHeadCache(); wrongString.U64(Fixture.Key, Fixture.Class(31824));
+            Reject(wrongString, "head cache class identity", "cache key objects must be the exact System.String class");
             Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects and managed Transform)");
         }
     }

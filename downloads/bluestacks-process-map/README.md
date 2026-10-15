@@ -41,7 +41,7 @@ endpoint displayed by BlueStacks. An explicit disconnected localhost endpoint
 is reconnected once and verified. Other devices are not selected automatically.
 The runner discovers the current host/game PIDs; old PIDs are not constants.
 
-The package checks DLL and all seven runtime C# source digests, plus the exact
+The package checks DLL and all eight runtime C# source digests, plus the exact
 loaded VMM fingerprint. It
 loads the same native DLL used in the successful probe, uses its read-only info
 handler, and unloads and releases its shared session in `finally`. The DLL bytes
@@ -176,7 +176,7 @@ Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-142 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+155 checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -227,31 +227,33 @@ Reproduce with the extracted ELF available locally:
 .\Run-CoreTests.ps1 -KernelElfPath C:\path\to\vmlinux
 ```
 
-The 35 object checks cover exact class/metadata identity, supported derived
+The 48 object checks cover exact class/metadata identity, supported derived
 Player ancestry, original-path hotfix gates, null/unresolved state, wrong local
 flags, changed pointers/mm, code samples, head interface dispatch, Transform
 identity, and interface/vtable bounds. The complete valid object fixture uses
-1890 physical reads and 114 bounded observations. These are offline measurements.
+2144 physical reads and 114 bounded observations. These are offline measurements.
 
 Tests validate the reader against controlled fixtures. They do not establish
 live Windows COM behavior, runtime object lifetime, or a working aim lock.
 
 ## Version 11 local-player and managed head Transform stage
 
-After metadata validation, the runner checks 47 additional exact code/GOT
+After metadata validation, the runner checks 70 additional exact code/GOT
 references and follows the original CurrentLocalPlayer path. Four relevant
 hotfix entries must be inactive. It validates CurrentGame as MatchGame or a
 supported derived class, then the current match and the locally marked Player.
 Classes must match exact metadata records, by-value types, names/namespaces,
 self pointers, tokens, supported runtime-size rules and runtime parent chains. The supported
-profile contains 104 classes derived from the exact metadata, not live addresses.
+profile contains 105 normal class profiles plus String/generic-definition records derived from the exact metadata, not live addresses.
 
 If the head getter's hotfix entry is active, this is reported separately and the
 head-provider path is not followed. Otherwise, a non-null provider must match
 one of the three exact interface implementations. Its interface entry and
 vtable target must resolve to the original eight-byte get_transform function.
 That getter returns provider+0x10, which must identify UnityEngine.Transform.
-A null lazy provider or Transform is a distinct NOT_READY status. No managed or
+When the lazy provider is null, version 13 also searches the model cache for an
+already cached bone_Head entry. A missing cache/key or null Transform is a
+distinct NOT_READY status. No managed or
 native game function is called to initialize them.
 
 A successful result includes `LocalPlayerObjects=PASS` and, when ready,
@@ -298,3 +300,31 @@ Class token and size failures now report separately. ObjectClassSizeObservation
 records bounded runtime sizes; ObjectClassLayoutDifference reports expected and
 actual class data on failure. This is a reference-generation correction, not
 proof the live object chain now passes. Share the complete v12 Windows report.
+
+## Version 13 model-cache head lookup
+
+The v12 Windows run verified the local PlayerNetwork object and its parent chain,
+but Player+0xa00 was null. V13 follows the original getter's underlying cache
+read path without calling its initialization code. It verifies virtual slot 29
+and the additional hotfix gates, then reads Player+0x1530 (LBJCFPMCLMN) and its
+Dictionary<string,BFOONIGAIFK> at +0x10. It validates the exact closed generic
+identity/arguments and metadata before scanning at most 512 used entry slots for
+an exact UTF-16 bone_Head key. Removed slots are skipped; duplicates fail. Array
+capacity is bounded to 8192 and string lengths to 256 characters. Snapshot and
+global read/time limits can stop the scan earlier.
+
+A cache hit must identify a BFOONIGAIFK node, after which the existing interface
+and managed Transform checks still apply. A miss never invokes Unity lookup,
+creates a node, writes either cache, or substitutes the model root. Exact-name
+linear lookup does not reproduce custom comparers or prove bucket/hash integrity;
+it verifies the observed active entry and its managed Transform. Dictionary data,
+version, class context, key and result pointers join the final snapshot recheck.
+
+On success the report includes HeadCacheLookup ... Key=bone_Head Matches=1 and
+ManagedHeadTransform=MANAGED_TRANSFORM_VERIFIED Source=MODEL_DICTIONARY.
+The former is provisional until the final checks and result line succeed.
+Null model/cache, missing key, active lookup hotfix or unsupported virtual target
+are distinct statuses. A matching non-null Player cache keeps Source=PLAYER_FIELD.
+The synthetic fallback fixture takes 2825 reads and 169 observations. Thirteen
+new tests cover the hit/miss path, removed/duplicate entries, bounds, wrong types,
+version changes and hotfix/virtual-target guards. Live v13 validation is pending.

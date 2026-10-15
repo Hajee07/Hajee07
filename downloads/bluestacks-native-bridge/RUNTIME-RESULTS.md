@@ -335,3 +335,20 @@ Plausible native-size profiles and all class identity checks remain exact.
 It also adds one bounded rescan for outer order/backlink inconsistencies and
 precise diagnostics. 142 offline checks pass. Live object/head validation and
 aim integration remain pending; actual IFix token/size values were not in v11.
+
+## V12 report: local-player success, head-provider cache null
+
+PID 6313 passed all kernel/process/module and both 80-check metadata rounds.
+Runtime metadata base was 0x777da17aa000. IFix actual instance size=40 and derived
+match EPPMGCJDEDC size=1664 passed the corrected bounds. The runtime ancestry
+34188 -> 34109 -> 34107 -> 12425 and 33936 -> 32133 was observed; local player
+32360 -> 31824 passed with its local marker. LocalPlayerObjects=PASS reported
+128 observations. ManagedHeadTransform=NOT_READY_PROVIDER_NULL: no head Transform
+or world position was verified. Physical reads=12410, cache hits=1675, outer
+VMAs=886, inspected files=180, skipped repeats=205. All cleanup stages passed.
+
+V13 adds a bounded read-only exact-name bone_Head lookup in the underlying model
+cache when the player cache is null. It verifies the original virtual/hotfix
+path, closed generic dictionary identity, String key and returned node before
+using the existing managed Transform checks. 155 offline checks pass. A cache
+miss remains NOT_READY; live fallback validation and aim integration are pending.

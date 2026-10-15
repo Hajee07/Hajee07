@@ -1,4 +1,46 @@
 {
+  "cache_reference": {
+    "key": "bone_Head",
+    "key_utf16_hex": "62006f006e0065005f004800650061006400",
+    "string_profile": {
+      "minimum_instance_size": 20,
+      "instance_size_exact": false,
+      "index": 37434,
+      "name": "System.String",
+      "family": 0,
+      "parent": -1,
+      "name_offset": 2085062,
+      "namespace_offset": 3890860,
+      "record_hex": "323d010018cb1c00a9c80000ffffffff9eb40000a9c80000ffffffff01211000a7d90600986c0400ffffffff6241000035280000ef190000f8770a009f7c0000cf0002000700000002001b0007000700000c00005d000002",
+      "bits": 917504,
+      "instance_size": 2172748065,
+      "static_size": 2172748161,
+      "token": 33554525,
+      "getter": 0
+    },
+    "dictionary_profile": {
+      "minimum_instance_size": 40,
+      "instance_size_exact": false,
+      "index": 38851,
+      "name": "System.Collections.Generic.Dictionary`2",
+      "family": 0,
+      "parent": -1,
+      "name_offset": 17373542,
+      "namespace_offset": 17373481,
+      "record_hex": "d285ea009585ea00cc790000ffffffff9eb40000cc79000027030000012010008cf20600d5990400ffffffffd948000014290000711c0000f5c20a001083000034000f000e00000004002a000a000a00000c0000e2050002",
+      "bits": 1179648,
+      "instance_size": 0,
+      "static_size": 0,
+      "token": 33555938,
+      "getter": 0
+    },
+    "dictionary_type_rva": 174011152,
+    "dictionary_type_bits": 1376257,
+    "vtable_table_offset": 47825884,
+    "vtable_slot": 29,
+    "vtable_encoded": 1611036607,
+    "node_getter_rva": 117519172
+  },
   "wrapper_field": {
     "local_index": 3,
     "token": 67396131,
@@ -184,6 +226,22 @@
       "static_size": 0,
       "token": 33586139,
       "getter": 118361000
+    },
+    {
+      "minimum_instance_size": 48,
+      "instance_size_exact": true,
+      "index": 31706,
+      "name": "LBJCFPMCLMN",
+      "family": 256,
+      "parent": -1,
+      "name_offset": 7910013,
+      "namespace_offset": 2003876,
+      "record_hex": "e91e5a00100000006d3c010037ba00009eb400006d3c0100ffffffff02001000d9dd030030440300ffffffffffffffffffffffffffffffffe81c0800ffffffff09000000060000000000040000000000080c0000dc7b0002",
+      "bits": 1179648,
+      "instance_size": 48,
+      "static_size": 16,
+      "token": 33586140,
+      "getter": 0
     },
     {
       "minimum_instance_size": 9328,
@@ -1923,6 +1981,116 @@
       "hex": "080840f9091880b9085d40f90001098bc0035fd6"
     },
     {
+      "name": "head_lazy_path_0",
+      "rva": 116620376,
+      "hex": "e8c00190086145f9600240f975022891140140f9bb77d094680240f9e00313aa"
+    },
+    {
+      "name": "head_lazy_path_32",
+      "rva": 116620408,
+      "hex": "e10314aa098541f9028941f920013fd6e10300aa600205f9e00315aabb73d094"
+    },
+    {
+      "name": "head_lazy_path_64",
+      "rva": 116620440,
+      "hex": "740245f9d40300b4"
+    },
+    {
+      "name": "node_getter_0",
+      "rva": 117519172,
+      "hex": "fe0f1ef8f44f01a9f40300aa40e38352f30301aa4000a072e1031faaaf5d6094"
+    },
+    {
+      "name": "node_getter_32",
+      "rva": 117519204,
+      "hex": "8001003640e383524000a072e1031faad75d6094c00100b4e10314aae20313aa"
+    },
+    {
+      "name": "node_getter_64",
+      "rva": 117519236,
+      "hex": "f44f41a9e3031faafe0742f869015914809a4af9c00000b4e10313aaf44f41a9"
+    },
+    {
+      "name": "node_getter_96",
+      "rva": 117519268,
+      "hex": "e2031faafe0742f8db370314b206cd94"
+    },
+    {
+      "name": "model_lookup_0",
+      "rva": 118362904,
+      "hex": "fe0f1df8f65701a9f44f02a935f601b0a83e4639f30301aaf40300aa48020037"
+    },
+    {
+      "name": "model_lookup_32",
+      "rva": 118362936,
+      "hex": "40bb01b0007c43f927cec99440bb01b0008443f924cec99440bb01b0008843f9"
+    },
+    {
+      "name": "model_lookup_64",
+      "rva": 118362968,
+      "hex": "21cec994e0b201d000e443f91ecec994c0b20190003446f91bcec99428008052"
+    },
+    {
+      "name": "model_lookup_96",
+      "rva": 118363000,
+      "hex": "a83e0639a0e68952e1031faaa6255d9440010036a0e68952e1031faacf255d94"
+    },
+    {
+      "name": "model_lookup_128",
+      "rva": 118363032,
+      "hex": "000a00b4e10314aae20313aae3031faa59a6519447000014ff0700f9800a40f9"
+    },
+    {
+      "name": "dictionary_lookup_0",
+      "rva": 152394852,
+      "hex": "fe57bea9f44f01a9681040f9f30302aaf50301aaf40300aa086140f9027d40f9"
+    },
+    {
+      "name": "dictionary_lookup_32",
+      "rva": 152394884,
+      "hex": "a2000036e1038052e00308aa7ee04694e20300aae00314aae10315aaf3faff97"
+    },
+    {
+      "name": "dictionary_lookup_64",
+      "rva": 152394916,
+      "hex": "f503002aa001f837880e40f9280200b4091940b9bf02096be201005409038052"
+    },
+    {
+      "name": "dictionary_lookup_96",
+      "rva": 152394948,
+      "hex": "a822a99b011940f9e00313aa610200f9abfb4794020000147f0200f9f44f41a9"
+    },
+    {
+      "name": "dictionary_layout_0",
+      "rva": 152390044,
+      "hex": "391100b4281b40b9b6060051df02086b620f0054f40300aaf8031f2a1a038052"
+    },
+    {
+      "name": "dictionary_layout_32",
+      "rva": 152390076,
+      "hex": "c9663a9b292140b9db7e40933f01176bc1010054940f00b468671a9b800240f9"
+    },
+    {
+      "name": "dictionary_layout_64",
+      "rva": 152390108,
+      "hex": "151540f9"
+    },
+    {
+      "name": "generic_type_0",
+      "rva": 171204220,
+      "hex": "882a40b9893a40b9aa028052e00314aa481d1033aa02a4522961081229010a2a"
+    },
+    {
+      "name": "generic_type_32",
+      "rva": 171204252,
+      "hex": "882a00b9150c02f8951a00f9893a00b9"
+    },
+    {
+      "name": "generic_token_0",
+      "rva": 171204392,
+      "hex": "8a1601b98a0a01b9681e41b9881e01b9"
+    },
+    {
       "name": "got_Facade",
       "rva": 175370432,
       "target_rva": 180548976
@@ -1941,6 +2109,11 @@
       "name": "got_HeadInterface",
       "rva": 175423176,
       "target_rva": 180556800
+    },
+    {
+      "name": "head_literal_got",
+      "rva": 175454912,
+      "target_rva": 181921208
     }
   ],
   "local_flag": {
