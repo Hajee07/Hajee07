@@ -119,12 +119,29 @@ the ADB PID is rechecked before final success. The native plugin remains read-on
 registration/code observations agree with the supplied APK. It does not mean
 that player enumeration, active-object lifetime, head world coordinates,
 visibility semantics, hotfix behavior, ARM64 calls, or aim writes work.
-Live version 6 verification is pending.
+The user subsequently ran version 6 with game PID 5132. Module verification
+passed again (eight segments, 16 window VMAs, four fingerprints), but the first
+`COW.GameFacade.CurrentGame.type_descriptor` check at RVA 0xadabba0 failed in
+pass one. Total physical reads: 9123. Plugin unload, handler cleanup, and session
+release passed. Actual bytes were not reported, so the cause is unresolved.
+The on-disk descriptor reference is `aa8d00000000000016001200`. Its first eight
+bytes encode the static type-definition index 36266; that does not establish
+that the same representation remains valid at runtime.
 
-Seventy-two offline C# checks pass (46 reader/header, 18 module, 8 registration).
+Version 7 retains these references and adds bounded comparison diagnostics.
+It compares all 80 fixed ranges in both rounds after a byte mismatch, prints up
+to 32 expected and actual bytes per difference, and identifies between-round
+changes. No pointer from these observations is followed. All mismatch outcomes
+still fail; identity/translation/read/budget errors still stop immediately.
+This resolves the missing-observation problem, not the descriptor mismatch.
+Runtime descriptor conversion is a hypothesis awaiting the user's output.
+
+Seventy-nine offline C# checks pass (46 reader/header, 18 module, 15 registration).
 The registration fixture needs 1018 reads. It rejects changed field offsets,
 unrelocated method pointers, altered code, between-round mutation, changed
-process mm, and the wrong module profile. Metadata recovery reproduces identical
+process mm, and the wrong module profile. Seven additional checks cover exact
+12-byte descriptor diagnostics, stable and changing observations, continuing
+through later mismatches, and rejection even without a logging callback. Metadata recovery reproduces identical
 JSON/C# outputs. Five negative Python checks reject wrong input hashes, an
 invalid method owner, an out-of-range string index, and an invalid parameter
 range. Runner syntax and the established RAM/CPU parsers also pass.

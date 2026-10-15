@@ -230,3 +230,20 @@ Seventy-two offline C# checks and five metadata-negative checks pass; regenerate
 reference outputs match. Live version 6 verification remains pending. Player
 objects, head world positions, visibility semantics, and aim writes remain
 unimplemented/unverified. See the process probe's `GAME-LAYOUT-EVIDENCE.md`.
+
+## Process mapping version 6: registration mismatch
+
+User-reported game PID 5132 was discovered independently (151 tasks visited).
+Kernel, process, and ARM64 module identity passed. The module window contained
+16 VMAs; eight segments and four fingerprints matched the same build ID as v5.
+The outer scan visited 778 VMAs, inspected 188 files, and skipped 167 repeats.
+The first failed check was COW.GameFacade.CurrentGame.type_descriptor at RVA
+0xadabba0 in pass one. PhysicalReadCalls=9123, TranslationCacheHits=1074.
+Plugin unload, handler cleanup, and shared-session release all passed.
+
+V6 did not report actual bytes, so descriptor conversion is an unconfirmed
+hypothesis. V7 collects bounded exact differences over both rounds without
+weakening comparisons or following observed pointers. It still fails on any
+mismatch and immediately stops on read/translation/identity/budget errors.
+79 offline C# checks pass. The V7 Windows report is required to diagnose the
+mismatch; active objects, head world positions, and aim updates remain pending.

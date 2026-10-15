@@ -12,7 +12,9 @@ selected the second IL2CPP mapping after rejecting the whole-file-sized mapping,
 verified all eight load segments and four fingerprints, and completed in 10847
 reads with successful cleanup. Version 6 adds registration/code verification for
 nine field and nine method candidates recovered from the exact APK metadata.
-Its live run is pending. See `GAME-LAYOUT-EVIDENCE.md` and `game-layout.json` for
+Version 6 passed live module verification but failed the first selected type
+descriptor comparison. Version 7 adds bounded exact-byte mismatch diagnostics;
+its live run is pending. See `GAME-LAYOUT-EVIDENCE.md` and `game-layout.json` for
 the recovery and its limits. Live player objects, head world positions, visibility
 semantics, and aim-control writes remain unimplemented/unverified.
 
@@ -87,12 +89,27 @@ Reaching the list end without a matching module is a failure. The core's separat
 `Libraries` and `ProbeLibrary` methods retain the previous enumeration/header
 workflows for offline regression checks; the Windows runner uses `ProbeModule`.
 
-The next stage verifies 80 registration/code references twice. It checks the
+The next stage compares 80 registration/code references twice. It checks the
 runtime-relocated pointer values separately from raw data and compares selected
 field offsets, type descriptors, type sizes, and method/instruction bytes. These
 references come from the exact SHA-256-checked metadata and ELF inputs. It does
 not dereference player objects or call any game method. The global budgets are
 shared with the preceding scan; process identity is rechecked between rounds.
+
+Version 7 retains all exact reference comparisons. A value mismatch is recorded
+and the remaining fixed checks continue in both rounds. Each difference prints
+its name, RVA, pass, byte count, expected/actual hex (at most 32 bytes each), and
+whether the value changed since round one. No observed pointer is dereferenced.
+A summary counts distinct mismatches, mismatch observations, and changed checks.
+Any mismatch still fails registration verification, even if it later disappears.
+Read/translation/identity/budget failures still stop immediately. Differences
+reported before a failed process recheck are provisional. These are non-atomic
+samples; identical rounds do not prove uninterrupted stability.
+
+The version 6 report did not include actual descriptor bytes. Runtime conversion
+of the descriptor payload is one hypothesis, not a confirmed diagnosis. The
+original 12-byte reference is retained until evidence establishes its meaning;
+no descriptor bytes are masked, skipped, or assumed to be live pointers.
 
 The task scan is bounded to 2048 nodes and the VMA scan to 4096 nodes. Only the
 selected game's Unity/IL2CPP/metadata mapping names and ranges are logged. Game
@@ -119,7 +136,7 @@ Oracle/BlueStacks system binaries are included in this package.
 
 ## Offline checks
 
-Seventy-two checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
+Seventy-nine checks passed using PowerShell 7.4.6 with C# 5 language compatibility.
 The original forty-six cover:
 page sizes and PCID, cross-page reads, noncanonical/nonpresent addresses, RAM
 bounds, changing mappings, malformed replies, matching/mismatching real extracted
@@ -147,10 +164,12 @@ verification, and exercise the 128-VMA window boundary. The normal module fixtur
 uses 681 reads and nine window VMAs; these are offline measurements. Reference
 generation reproduces identical bytes and rejects an incorrect source digest.
 
-Eight registration checks validate matching relocated data and reject altered
+Fifteen registration checks validate matching relocated data and reject altered
 field offsets, relative-RVA-as-pointer mistakes, method bytes, between-round
 changes, and process/profile mismatches. The registration fixture uses 1018
-reads. The metadata decoder validates all recovered records, reproduces the
+reads. Diagnostic regressions cover descriptor byte reporting, stable mismatches
+in both rounds, later mismatches after the first, changed observations, and
+failure without a logging callback. The metadata decoder validates all recovered records, reproduces the
 same JSON/C# reference, and passes five malformed-input checks. These checks do
 not establish live object layouts or aim behavior.
 
