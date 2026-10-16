@@ -1,10 +1,13 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V32**. Separate `-ProbeWeaponAmmo` mode verifies a
-runtime-bound original Int32 weapon counter used by ammo UI. 626 offline checks
-pass; live V32 validation pending. Magazine/reserve, unlimited policy, full
-readiness, LOS and aiming remain unverified.
-See [counter evidence](bluestacks-process-map/WEAPON-AMMO-EVIDENCE.md).
+Current process probe: **V33**. Native job-only transitions discard the attempt
+and use the existing bounded fresh-attempt path; other identity failures remain
+hard failures. 635 offline checks pass; live V33 validation pending.
+Rerun `-ProbeWeaponAmmo`. See [retry evidence](bluestacks-process-map/HEAD-JOB-RETRY-EVIDENCE.md).
+
+V32 accepted counter 2 / runtime field 105 with stable membership and cleanup,
+but rejected the head sample after a changed job handle. It was a mixed result,
+not a full PASS. Magazine/reserve, full readiness, LOS and aiming remain unverified.
 
 V31's cache branch passed live: selected Firing=False, CacheEnabled=True,
 selected membership and all cleanup PASS. State-ID route remains offline-tested.

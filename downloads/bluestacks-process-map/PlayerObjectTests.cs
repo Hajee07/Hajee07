@@ -387,8 +387,8 @@ namespace HeadBridge.Mapping.Tests
             Fixture jobChange=new Fixture();jobChange.SetupNative();ulong jobAt=jobChange.Physical(Fixture.Matrices);
             jobChange.Memory.AfterRead=delegate(ulong at,int length){if(at==jobAt && length==144)jobChange.U64(Fixture.Hierarchy,0x12340000);};
             PlayerObjectResult jobChanged=jobChange.Run();
-            Check(jobChanged.HeadWorldStatus=="FAIL" && jobChanged.HeadSampleAttempts==1 && jobChanged.HeadWorldX==0 && jobChanged.HeadWorldError.Contains("Field=Hierarchy.JobHandle"),
-                "a job handle that changes during native capture remains an identity failure with a precise field label");
+            Check(jobChanged.HeadWorldStatus=="NOT_READY_HIERARCHY_JOB_PENDING" && jobChanged.HeadSampleAttempts==2 && jobChanged.HeadWorldX==0 && jobChange.Progress.Exists(delegate(string line){return line.Contains("NativeHeadSampleJobChange") && line.Contains("Field=Hierarchy.JobHandle");}),
+                "a job-only change discards the attempt and the fresh pending job prevents accepting a pose");
             Fixture gaps=new Fixture(); gaps.SetupNative(); gaps.NativeIndices(2,4); ulong gapsAt=gaps.Physical(Fixture.Matrices); int gapCopies=0;
             gaps.Memory.AfterRead=delegate(ulong at,int length) {
                 if(at==gapsAt && length==240) gaps.Put(Fixture.Matrices+48,BitConverter.GetBytes(++gapCopies));
@@ -621,9 +621,9 @@ namespace HeadBridge.Mapping.Tests
             Fixture remoteIdentity=new Fixture();remoteIdentity.SetupNative();remoteIdentity.SetupRoster();remoteIdentity.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult identityCore=remoteIdentity.Run();
             ulong identityPose=remoteIdentity.Physical(otherRegion+0x4000);remoteIdentity.Memory.AfterRead=delegate(ulong at,int length){if(at==identityPose && length==48)remoteIdentity.U64(otherRegion+0x3000,0x12340000);};
             OtherHeadResult badIdentity=remoteIdentity.OtherHeads(identityCore);
-            Check(badIdentity.Sampled==0 && badIdentity.StopReason=="SAMPLE_FAILED" && badIdentity.Samples[0].Status=="FAIL" && badIdentity.Samples[0].Attempts==1 &&
-                badIdentity.Samples[0].Detail.Contains("Field=Hierarchy.JobHandle") && badIdentity.Samples[0].X==0,
-                "a remote native identity change remains a hard failure with the attempted count and field label");
+            Check(badIdentity.Sampled==0 && badIdentity.StopReason=="SELECTED_OBJECTS_EXHAUSTED" && badIdentity.Samples[0].Status=="NOT_READY_HIERARCHY_JOB_PENDING" && badIdentity.Samples[0].Attempts==2 &&
+                remoteIdentity.Progress.Exists(delegate(string line){return line.Contains("NativeHeadSampleJobChange") && line.Contains("Field=Hierarchy.JobHandle");}) && badIdentity.Samples[0].X==0,
+                "a remote job-only change gets a fresh bounded attempt and remains unready while the job is pending");
             Fixture two=new Fixture();two.SetupNative();two.SetupRoster();two.U32(Fixture.RDict+0x20,4);two.U64(Fixture.REntries+0x18,4);
             two.SetupOtherHead(Fixture.Other,otherRegion,31);two.SetupOtherHead(secondOwner,secondRegion,41);two.U64(thirdOwner,Fixture.Class(32360));two.Put(thirdOwner+0x420,new byte[]{0});
             two.REntry(2,secondOwner);two.REntry(3,thirdOwner);OtherHeadResult twoResult=two.OtherHeads(two.Run());
@@ -660,6 +660,7 @@ namespace HeadBridge.Mapping.Tests
             RunWeaponTests();
             RunWeaponFiringTests();
             RunWeaponAmmoTests();
+            RunNativeJobRetryTests();
             Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects, native head sample, match dictionary and state)");
         }
     }

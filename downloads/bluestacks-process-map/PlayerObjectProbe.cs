@@ -91,14 +91,23 @@ namespace HeadBridge.Mapping
                 if (pointer == 0) throw new InvalidOperationException("Object not ready: " + label + " is null. Leave the spawned character in Training Ground.");
                 User(pointer, 8, label); return pointer;
             }
-            internal int Recheck()
+            internal int Recheck() { return RecheckNativeHierarchy(0); }
+            internal int RecheckNativeHierarchy(ulong hierarchy)
             {
-                for (int i = addresses.Count - 1; i >= 0; i--)
+                ObjectObservationChangedException jobChange=null;
+                for (int i=addresses.Count-1;i>=0;i--)
                 {
-                    byte[] actual=reader.Virtual(root, addresses[i], snapshots[i].Length);
-                    if (!EqualBytes(actual, snapshots[i]))
-                        throw new ObjectObservationChangedException(addresses[i],snapshots[i],actual,true,labels[addresses[i].ToString("x")+":"+snapshots[i].Length]);
+                    byte[] actual=reader.Virtual(root,addresses[i],snapshots[i].Length);
+                    if(EqualBytes(actual,snapshots[i]))continue;
+                    string label=labels[addresses[i].ToString("x")+":"+snapshots[i].Length];
+                    ObjectObservationChangedException error=new ObjectObservationChangedException(addresses[i],snapshots[i],actual,true,label);
+                    bool job=hierarchy!=0 && ((addresses[i]==hierarchy && snapshots[i].Length==8 && label=="Hierarchy.JobHandle") ||
+                        (addresses[i]==checked(hierarchy+8UL) && snapshots[i].Length==4 && label=="Hierarchy.JobTag"));
+                    if(!job)throw error;
+                    if(jobChange==null)jobChange=error;
+                    // Do not accept a changed job or stop before checking other identities.
                 }
+                if(jobChange!=null)throw new NativeHeadJobChangedException(jobChange.Message);
                 return addresses.Count;
             }
         }
@@ -267,6 +276,7 @@ namespace HeadBridge.Mapping
             result.PlayerClass = player.Name;
             ResolveManagedPlayerHead(reads,game,module,layout,result,player,wrappers,length,progress);
             try { ReadNativeHeadPosition(game, module, result, progress); }
+            catch (NativeHeadJobChangedException error) { result.HeadWorldStatus = "NOT_READY_HIERARCHY_JOB_CHANGED"; result.HeadWorldError = error.Message; }
             catch (NativeHeadMotionException error) { result.HeadWorldStatus = "NOT_READY_MOTION"; result.HeadWorldError = error.Message; }
             catch (Exception error) { result.HeadWorldStatus = "FAIL"; result.HeadWorldError = error.Message; }
             try { ReadMatchPlayerDictionary(game,module,layout,result,wrappers,length,progress); }

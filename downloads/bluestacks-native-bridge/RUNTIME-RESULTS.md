@@ -785,3 +785,27 @@ FieldInfo binding among eleven unbound source candidates. 626 offline checks
 pass; fixture additional reads=3870 (direct), 4359 (A0). Live validation pending.
 All earlier modes, plugin and limits remain available. No magazine/reserve,
 readiness, LOS or aiming claim. No calls, initialization or writes.
+
+## V32 mixed live result: accepted counter, rejected head sample
+
+Host 11784 / guest 9214 passed module identity and both 80-check layout passes.
+All 15 active roster objects were verified on attempt one. The counter phase
+accepted value 2, original Int32 getter, A0 hand path and unique runtime field
+105 NJEENAEMFAO with RESOLVED_OFFSET. Selected membership and both counter audits
+were stable. Phase observations=154, additional reads=4284, total reads=26986.
+All cleanup checks passed; no calls or writes occurred.
+
+The head phase did not pass: two TRS-motion attempts were discarded, then
+Hierarchy.JobHandle changed during final identity verification on attempt three.
+HeadWorldStatus=FAIL and no head coordinate was accepted. This report is not an
+overall PASS. V33 changes the bounded retry/status handling for job-only changes;
+it does not retroactively accept the rejected pose. Counter 2 remains a generic
+original weapon counter, not a proven magazine/reserve or readiness value.
+
+## V33 bounded native job-transition handling
+
+Native-only rechecks defer precise job changes until every other identity has
+been checked. A job-only transition discards the attempt; three shared attempts
+and all call/time ceilings remain unchanged. Persistent changes are NOT_READY;
+hard identity and transport errors still fail immediately. No coordinates from
+discarded attempts are accepted. 635 offline checks pass; live validation pending.

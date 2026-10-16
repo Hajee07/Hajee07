@@ -43,6 +43,8 @@ namespace HeadBridge.Mapping
             }
             return result;
         }
+        private sealed class NativeHeadJobChangedException : InvalidOperationException
+        { internal NativeHeadJobChangedException(string detail) : base(detail) { } }
         private sealed class NativeHeadMotionException : InvalidOperationException
         { internal NativeHeadMotionException(string detail) : base(detail) { } }
         private sealed class NativeTrsChunk
@@ -80,10 +82,11 @@ namespace HeadBridge.Mapping
             }
             return rows;
         }
-        private static int NativeIdentityRecheck(ObjectReads reads)
+        private static int NativeIdentityRecheck(ObjectReads reads,ulong hierarchy=0)
         {
-            try { return reads.Recheck(); }
+            try { return hierarchy==0 ? reads.Recheck() : reads.RecheckNativeHierarchy(hierarchy); }
             catch (PhysicalScopeLimitException) { throw; }
+            catch (NativeHeadJobChangedException) { throw; }
             catch (InvalidOperationException error)
             { throw new InvalidOperationException("Native identity recheck failed: " + error.Message, error); }
         }
@@ -94,11 +97,18 @@ namespace HeadBridge.Mapping
                 result.HeadSampleAttempts=attempt;
                 if (progress!=null) progress("NativeHeadSampleAttempt Attempt="+attempt+" MaximumAttempts=3");
                 try { ReadNativeHeadAttempt(game,module,result); return; }
+                catch (NativeHeadJobChangedException error)
+                {
+                    if(progress!=null)progress("NativeHeadSampleJobChange Attempt="+attempt+" Discarded=True Detail="+error.Message);
+                    if(attempt==3)throw;
+                    // The entire attempt is discarded. A fresh attempt must revalidate
+                    // code, bindings, hierarchy, zero jobs and both TRS captures.
+                }
                 catch (NativeHeadMotionException error)
                 {
                     if (progress!=null) progress("NativeHeadSampleMotion Attempt="+attempt+" Discarded=True Detail="+error.Message);
                     if (attempt==3) throw;
-                    // Only a changed selected TRS row is retryable. Each fresh
+                    // Changed selected TRS rows are also retryable. Each fresh
                     // attempt revalidates bindings, hierarchy and backlinks.
                     // Reader-global call/time budgets are never reset.
                 }
@@ -142,7 +152,7 @@ namespace HeadBridge.Mapping
             {
                 result.HeadWorldStatus = "NOT_READY_HIERARCHY_JOB_PENDING";
                 result.HeadWorldError = "Job=0x" + job.ToString("x") + " Tag=" + jobTag;
-                NativeIdentityRecheck(reads); return;
+                NativeIdentityRecheck(reads,data); return;
             }
             uint capacity = reads.Word(data + 0x10,"Hierarchy.Capacity");
             Expect(capacity > 0 && capacity <= 65536 && index >= 0 && (uint)index < capacity, "native hierarchy capacity/index bound");
@@ -163,7 +173,7 @@ namespace HeadBridge.Mapping
                 Expect(parent >= 0 && (uint)parent < capacity && expectedNative != 0, "native parent-index/Transform link");
                 index = parent;
             }
-            NativeIdentityRecheck(reads);
+            NativeIdentityRecheck(reads,data);
             List<NativeTrsChunk> chunks = NativeChunks(chain);
             // Keep all code/identity verification outside the two TRS copies.
             // Nearby rows share a bounded transport read, but only selected
@@ -173,7 +183,7 @@ namespace HeadBridge.Mapping
             foreach (int slot in chain)
                 if (!EqualBytes(first[slot],second[slot]))
                 {
-                    NativeIdentityRecheck(reads);
+                    NativeIdentityRecheck(reads,data);
                     throw new NativeHeadMotionException("TRS_CHANGED Index="+slot+" Address=0x"+(matrices+(ulong)slot*48UL).ToString("x")+" Bytes=48");
                 }
             float[] position = null;
@@ -186,7 +196,7 @@ namespace HeadBridge.Mapping
                     Expect(!float.IsNaN(position[axis]) && !float.IsInfinity(position[axis]) && Math.Abs(position[axis])<=10000000,
                         "finite bounded head world position");
             }
-            int observations = NativeIdentityRecheck(reads)+chain.Count;
+            int observations = NativeIdentityRecheck(reads,data)+chain.Count;
             result.HeadCaptureChunks=chunks.Count;
             result.NativeHeadTransform = native; result.HeadHierarchyCapacity = capacity;
             result.HeadWorldX = position[0]; result.HeadWorldY = position[1]; result.HeadWorldZ = position[2];

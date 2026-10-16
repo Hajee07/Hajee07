@@ -1,6 +1,6 @@
 # V32 original selected-weapon counter
 
-Live Windows validation is pending. Run `Run-ProcessMap.ps1 -ProbeWeaponAmmo`.
+The V32 counter phase passed live, but its head phase failed (mixed report below). Run `Run-ProcessMap.ps1 -ProbeWeaponAmmo`.
 This ninth mutually exclusive optional mode replaces the data-ID/reload/firing
 phases. Existing modes and read costs remain available. It reads one original
 weapon counter used in ammo-related UI; it does not label magazine or reserve.
@@ -73,3 +73,19 @@ WeaponAmmoSamples and ResultFile. A sampled row can still contain an explicit
 unknown counter status. Magazine, reserve, unlimited policy, ballistics, complete
 readiness, LOS and aim integration remain unverified. Earlier reports' ID/reload/
 firing results are not combined into this capture or an accuracy percentage.
+
+## V32 mixed live result: accepted counter, rejected head sample
+
+Host 11784 / guest 9214 passed module identity and both 80-check layout passes.
+All 15 active roster objects were verified on attempt one. The counter phase
+accepted value 2, original Int32 getter, A0 hand path and unique runtime field
+105 NJEENAEMFAO with RESOLVED_OFFSET. Selected membership and both counter audits
+were stable. Phase observations=154, additional reads=4284, total reads=26986.
+All cleanup checks passed; no calls or writes occurred.
+
+The head phase did not pass: two TRS-motion attempts were discarded, then
+Hierarchy.JobHandle changed during final identity verification on attempt three.
+HeadWorldStatus=FAIL and no head coordinate was accepted. This report is not an
+overall PASS. V33 changes the bounded retry/status handling for job-only changes;
+it does not retroactively accept the rejected pose. Counter 2 remains a generic
+original weapon counter, not a proven magazine/reserve or readiness value.

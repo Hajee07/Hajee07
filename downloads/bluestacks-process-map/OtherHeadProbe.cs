@@ -85,6 +85,7 @@ namespace HeadBridge.Mapping
             ResolveManagedPlayerHead(reads,game,module,layout,head,profile,wrappers,length,note);
             sample.Provider=head.HeadProvider;sample.Transform=head.HeadTransform;sample.Source=head.HeadSource;
             try { ReadNativeHeadPosition(game,module,head,note); }
+            catch(NativeHeadJobChangedException error){head.HeadWorldStatus="NOT_READY_HIERARCHY_JOB_CHANGED";head.HeadWorldError=error.Message;}
             catch(NativeHeadMotionException error){head.HeadWorldStatus="NOT_READY_MOTION";head.HeadWorldError=error.Message;}
             finally { sample.Attempts=head.HeadSampleAttempts; }
             Recheck(kernel,game);byte[] finalCounters=OtherCounterAudit(game,core,member,"AFTER");

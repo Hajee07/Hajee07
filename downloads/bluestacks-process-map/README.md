@@ -7,12 +7,19 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 32. Separate read-only weapon counter mode.**
-Run `-ProbeWeaponAmmo` to sample the original selected-weapon Int32 getter used
-by ammo UI, after unique runtime field binding. 626 offline checks pass; live
-V32 validation pending. It replaces other optional phases. Magazine/reserve,
-unlimited-ammo policy, full readiness, LOS and aiming remain unverified.
-See [counter evidence](WEAPON-AMMO-EVIDENCE.md).
+**Current version: 33. Bounded retry for native hierarchy-job changes.**
+Rerun `-ProbeWeaponAmmo`. A job-only transition discards the native attempt and
+can take a fresh attempt within the existing shared three-attempt/read/time
+bounds. All non-job identity checks still run and take hard-failure precedence.
+635 offline checks pass; live V33 validation pending.
+See [job retry evidence](HEAD-JOB-RETRY-EVIDENCE.md).
+
+**V32 mixed live result:** the counter phase accepted value 2, runtime field 105
+NJEENAEMFAO, selected membership and all cleanup PASS (phase 4284, total 26986).
+All 15 roster objects verified. The head phase failed on a changed job handle
+after two discarded TRS attempts, so the overall run was not a full PASS.
+See [counter evidence](WEAPON-AMMO-EVIDENCE.md). Magazine/reserve, complete
+readiness, LOS and aiming remain unverified.
 
 **V31 firing cache branch passed live.** `-ProbeWeaponFiring` accepted the
 selected weapon's original cached predicate=False, CacheEnabled=True, selected
