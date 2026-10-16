@@ -7,19 +7,19 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 25. Read-only zone-array failure diagnostics.** Run with
-`-ProbeZoneProtection` to identify the component behind V24's `zone array element
-type` rejection. The failure detail reports expected/actual element type indices,
-array self pointers, type bits and type-data pointers, explicitly marked as an
-unverified failure context. Existing array acceptance checks remain unchanged;
-no zone/protection value is accepted after failure. 437 offline checks pass.
-Live V25 diagnostics are pending. See [zone/protection evidence](ZONE-PROTECTION-EVIDENCE.md).
+**Current version: 26. Correct runtime array type-data validation.** Run with
+`-ProbeZoneProtection`. The inspected IL2CPP array constructor stores the element
+class's embedded byval argument in runtime SZARRAY type data. V26 requires that
+exact pointer, replacing V24/V25's incorrect ELF-descriptor expectation. The
+constructor code and element metadata identity are independently verified;
+expected/actual diagnostics remain. 441 offline checks pass; live V26 validation
+is pending. See [zone/protection evidence](ZONE-PROTECTION-EVIDENCE.md).
 
 Optional `-ZoneRosterIndex N` still selects a nonlocal member from that run's
-capped roster. The V24 rerun verified all 14 roster candidates and sampled the
-local head, but accepted zero zone/protection samples because of that array check.
-Total reads were 23575, with all cleanup passing. Combat eligibility, complete
-damage immunity and LOS remain unverified.
+capped roster. V25 identified only TypeDataMatch=False, with the observed pointer
+equal to elementClass+0x20 and every other array component matching. It accepted
+no zone/protection sample. Complete combat eligibility, damage immunity and LOS
+remain unverified. All existing optional modes and limits remain available.
 
 **V23 combat-state mode remains available.** Use `-ProbeCombatState`, optionally
 with `-CombatRosterIndex N`. Two live reports accepted watching/dead/revive/ghost/

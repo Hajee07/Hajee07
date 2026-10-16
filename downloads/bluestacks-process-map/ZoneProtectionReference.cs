@@ -1,6 +1,7 @@
 // Generated from exact SHA-256-verified ELF/metadata inputs.
 namespace HeadBridge.Mapping {
     internal static class ZoneProtectionReference {
+        internal const ulong ArrayElementByvalOffset = 0x20UL;
         internal const ulong InterfaceCell = 0xac31240UL;
         internal static readonly ObjectClassProfile[] Classes = {
             new ObjectClassProfile(31911,"COW.GamePlay.AttackableEntity",0,31912,7942031UL,7768922UL,"fb9b5a00c6f757001f5c0000ffffffff0f6600001f5c0000ffffffff8000100034e203002f4b0300ffffffff32310000ffffffff0a1600009f270800696300001d0004000200000000004f0001000300000c0000a87c0002",1179648U,136U,0U,33586344U,0,0,true),
@@ -65,6 +66,12 @@ namespace HeadBridge.Mapping {
             new GameLayoutCheck("GetDataUInt8_268413_64",0x82efcc8UL,"fe0741f8c0035fd66a9481946b948194"),
             new GameLayoutCheck("GetDataUInt8_268509_0",0x82f27b4UL,"fe0f1ff8091880b9e803012a1f0109eb8a010054090840f9a90100b42a1940b95f01016b69010054280d088b081140f9880000b4080d40f90001403902000014"),
             new GameLayoutCheck("GetDataUInt8_268509_64",0x82f27f4UL,"e0031f2afe0741f8c0035fd69e8981949f898194"),
+            new GameLayoutCheck("array_constructor_element_argument_0",0xa336538UL,"f403022ae203172af303012af50300aadf000094"),
+            new GameLayoutCheck("array_constructor_array_alias_0",0xa3366c4UL,"f70340f9"),
+            new GameLayoutCheck("array_constructor_byval_and_szarray_0",0xa336700UL,"04280194e00315aa0733019408008012b6820091e00601b9e81601b9e80a01b9e00316aaa94d0094600000360824805205000014a8d604910801407908011b12"),
+            new GameLayoutCheck("array_constructor_byval_and_szarray_64",0xa336740UL,"08011832e9d604912a014079ebdb9f524a010b0a08010a2a28010079f52200f9e00317aa32fcff977f060071e8979f1a1401142ab40100362000805201048052"),
+            new GameLayoutCheck("array_constructor_byval_and_szarray_128",0xa336780UL,"2949ff97e80340f98902805209a90039001100f9160000f913200039f30340f9e8031f2a06000014f30340f9a803805268aa0039a8008052761200f9600ac03d"),
+            new GameLayoutCheck("array_constructor_byval_and_szarray_192",0xa3367c0UL,"60820091685a0279600e803d693a40b929010332693a00b95a3d0194"),
         };
         internal static readonly ZonePool[] Pools = {
             new ZonePool(36651,36647,36644,49,51116572UL,"a599000031000000",new TeamVirtual(36651,60,50540600UL,0x600830fbU,0x82efc88UL),0xae06ee0UL),

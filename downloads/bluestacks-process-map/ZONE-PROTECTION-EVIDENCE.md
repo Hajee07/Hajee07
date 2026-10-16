@@ -143,3 +143,47 @@ byval pointer remains rejected. The successful baseline still uses 5769 calls.
 The five existing modes, bounds and reference files remain unchanged. V25's
 extracted package is checked with the same syntax, manifest and compiled suite.
 Send the full output, especially the ZoneArrayDiagnostic failure detail.
+
+## V25 live diagnosis and V26 correction
+
+The V25 live report identified exactly one failed component. For managed
+PRIDataPool (type 36651), element type 36644, class identity, self pointer and
+SZARRAY bits matched. TypeDataMatch alone failed: the observed type-data pointer
+was elementClass+0x20 (TypeDataEqualsElementByvalArg=True), rather than the ELF
+Il2CppType descriptor address V24/V25 expected. No row was accepted. Total reads
+were 22468 and all cleanup passed.
+
+V26 corrects that probe expectation using the inspected IL2CPP array constructor
+at RVA 0xa336514. Its entry saves element-class argument x0 as x21 (0xa336544).
+The constructor loads its array-class allocation from sp into x23 (0xa3366c4),
+computes x22=x21+0x20 (0xa336710), and stores x21 as the array element_class at
+arrayClass+0x40 (0xa33675c). On the SZARRAY branch it writes type 0x1d at +0x2a
+(0xa3367ac/0xa3367b0), reloads the same allocation as x19, and stores x22 at
+arrayClass+0x20 (0xa3367b8). Thus this array's runtime Il2CppType.data points to
+the validated element class's embedded byval_arg, not the ELF descriptor.
+
+The builder verifies the key instructions against exact words after the full
+input SHA checks and emits six additional live code anchors for the argument,
+allocation alias and constructor dataflow/branch. These anchors are checked
+before capture and at phase end. The new rule requires typeData ==
+elementClass+0x20; it does not accept both representations or bypass other checks.
+The element class's own embedded byval data/flags, metadata record, name/token,
+self identity and extent remain independently verified by ZoneClass. Expected/
+actual diagnostics remain available and now name ELEMENT_CLASS_BYVAL_ARG.
+
+The ELF element descriptor still correctly describes the declared pool array
+field. ZoneSchema continues to validate that distinct field descriptor and its
+resolved element metadata. It is only the runtime array class's type-data
+expectation that changes. Rank/type flags, interface dispatch, data element,
+owner, masks, code/schema and snapshot checks remain required.
+
+441 offline checks pass. Both managed and unsafe positive fixtures now use the
+constructor-established representation. The old ELF pointer, an element class
+pointer, neighboring byref member, invalid embedded descriptor, incorrect type/
+self/flags and changed constructor code remain rejected. A constructor-code
+change during capture discards all tentative values at final verification.
+The baseline optional phase uses 5833 calls inside the unchanged 6000 limit;
+global 30000-call/120-second bounds and the 1500-call final reserve remain.
+Reference outputs reproduce byte-for-byte, and the extracted package is parsed,
+compiled/tested and hash-checked. Live V26 zone/protection validation is pending;
+no combat eligibility, damage-immunity or LOS result is claimed.

@@ -27,6 +27,13 @@ for index,name,address,length in [(212886,'get_CurrentTrainingZoneType',0x6f359e
  assert m.string(q[0])==name and e.pointer(slot)==address,(index,m.string(q[0]),hex(e.pointer(slot)))
  methods.append(dict(index=index,name=name,rva=address,pointer_rva=slot,metadata_offset=m.header[12]+index*40,record_hex=struct.pack('<8i4H',*q).hex()))
  for off in range(0,length,64):anchors.append(dict(name=name+'_'+str(index)+'_'+str(off),rva=address+off,hex=e.bytes(address+off,min(64,length-off)).hex()))
+# Exact IL2CPP array constructor: x21 is the element class, x22 its
+# embedded byval_arg, and SZARRAY type data uses x22 (not the ELF type record).
+for address,word in [(0xa336544,0xaa0003f5),(0xa336710,0x910082b6),(0xa33675c,0xf90022f5),
+                     (0xa3367ac,0x528003a8),(0xa3367b0,0x3900aa68),(0xa3367b8,0xf9001276)]:
+ assert struct.unpack('<I',e.bytes(address,4))[0]==word,hex(address)
+for name,address,length in [('array_constructor_element_argument',0xa336538,0x14),('array_constructor_array_alias',0xa3366c4,4),('array_constructor_byval_and_szarray',0xa336700,0xdc)]:
+ for off in range(0,length,64):anchors.append(dict(name=name+'_'+str(off),rva=address+off,hex=e.bytes(address+off,min(64,length-off)).hex()))
 cell=e.pointer(0xa8342a8);enc=e.pointer(cell);assert ti((enc>>1)&0xfffffff)[1]==36648
 pools=[]
 for index,base,data in [(36651,36647,36644),(36655,36654,36653)]:
@@ -40,9 +47,9 @@ for index,base,data in [(36651,36647,36644),(36655,36654,36653)]:
  f=m.fields[m.types[base][8]];desc,_,bits=ti(f[1]);element=e.pointer(desc);assert bits>>16&255==29 and e.pointer(element)==data and struct.unpack('<I',e.bytes(element+8,4))[0]==0x120000,(index,base,data,hex(element),hex(bits),e.pointer(element))
  pools.append(dict(index=index,base_index=base,data_index=data,interface_offset=offset,interface_metadata_offset=ipos,interface_hex=m.data[ipos:ipos+8].hex(),slot=slot,metadata_offset=pos,encoded=enc,rva=target,element_descriptor=element))
 report=dict(elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,classes=classes,fields=fields,methods=methods,anchors=anchors,pools=pools,interface_cell=cell,
- scope='One selected nonlocal player: original CurrentTrainingZoneType and IsInvincible predicate only. No complete attackability, invulnerability policy, LOS or aim assertion.')
+ array_element_byval_offset=32,scope='One selected nonlocal player: original CurrentTrainingZoneType and IsInvincible predicate only. No complete attackability, invulnerability policy, LOS or aim assertion.')
 out=Path(a.output_directory);out.mkdir(parents=True,exist_ok=True);(out/'zone-protection-reference.json').write_text(json.dumps(report,indent=2)+'\n')
-lines=['// Generated from exact SHA-256-verified ELF/metadata inputs.','namespace HeadBridge.Mapping {','    internal static class ZoneProtectionReference {','        internal const ulong InterfaceCell = 0x%xUL;'%cell,'        internal static readonly ObjectClassProfile[] Classes = {']
+lines=['// Generated from exact SHA-256-verified ELF/metadata inputs.','namespace HeadBridge.Mapping {','    internal static class ZoneProtectionReference {','        internal const ulong ArrayElementByvalOffset = 0x20UL;','        internal const ulong InterfaceCell = 0x%xUL;'%cell,'        internal static readonly ObjectClassProfile[] Classes = {']
 for c in classes:lines.append('            new ObjectClassProfile(%d,%s,0,%d,%dUL,%dUL,%s,%dU,%dU,%dU,%dU,0,0,true),'%(c['index'],json.dumps(c['name']),c['parent'],c['name_offset'],c['namespace_offset'],json.dumps(c['record_hex']),c['bits'],c['instance_size'],c['static_size'],c['token']))
 lines+=['        };','        internal static readonly StateField[] Fields = {']
 for f in fields:lines.append('            new StateField(%d,%d,%s,0x%xUL,0x%xUL,0x%xUL,%dU,%d,%dUL,%dU,%dUL,%s),'%(f['owner'],f['local'],json.dumps(f['name']),f['offset'],f['offset_rva'],f['descriptor'],f['bits'],f['type_index'],f['name_offset'],f['token'],f['metadata_offset'],json.dumps(f['record_hex'])))

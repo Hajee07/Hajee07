@@ -43,7 +43,7 @@ namespace HeadBridge.Mapping.Tests
                 ZonePool selected=null;foreach(ZonePool pool in ZoneProtectionReference.Pools)if(pool.Index==(unsafePool?36655:36651))selected=pool;
                 U64(Other+0x70,ZonePoolObject);U64(ZonePoolObject,Class(selected.Index));U64(ZonePoolObject+0x10,ZoneArray);U32(ZonePoolObject+0x18,100);
                 U64(ZoneArray,ZoneArrayClass);U64(ZoneArray+0x18,100);U64(ZoneArray+0x20+37*8,ZoneData);U64(ZoneArrayClass+0x78,ZoneArrayClass);
-                U64(ZoneArrayClass+0x40,Class(selected.DataIndex));U32(ZoneArrayClass+0x28,0x1d0000);U64(ZoneArrayClass+0x20,Module.LoadBias+selected.ElementDescriptor);
+                U64(ZoneArrayClass+0x40,Class(selected.DataIndex));U32(ZoneArrayClass+0x28,0x1d0000);U64(ZoneArrayClass+0x20,Class(selected.DataIndex)+ZoneProtectionReference.ArrayElementByvalOffset);
                 U64(ZoneData,Class(selected.DataIndex));if(unsafePool){U64(ZoneData+0x18,ZoneUnsafeValue);Put(ZoneUnsafeValue,new byte[]{2});}else Put(ZoneData+0x18,new byte[]{2});
                 U64(Other+0x768,ZoneAttributes);U64(ZoneAttributes,Class(34539));U64(ZoneAttributes+0x20,Other);U64(ZoneAttributes+0x2b0,ZoneMask);
                 U64(ZoneMask,Class(36356));U32(ZoneMask+0x10,0);U32(ZoneMask+0x18,1);
@@ -111,10 +111,22 @@ namespace HeadBridge.Mapping.Tests
                     detail.Contains("ActualBits=0x") && detail.Contains("ExpectedTypeData=0x") && detail.Contains("ActualTypeData=0x"),
                     "array diagnostic identifies "+component+" mismatch without accepting a typed sample");
             }
-            Fixture alternate=ZoneFixture();PlayerObjectResult ac=alternate.Run();alternate.U64(Fixture.ZoneArrayClass+0x20,Fixture.Class(36653)+0x20);
-            PlayerStateResult alternative=alternate.Zone(ac);
-            Check(alternative.Sampled==0 && alternative.Samples[0].Detail.Contains("TypeDataEqualsElementByvalArg=True") &&
-                alternative.Samples[0].Detail.Contains("TypeDataMatch=False"),"observed alternative type pointer is reported and remains rejected");
+            Fixture original=ZoneFixture();PlayerObjectResult originalCore=original.Run();ZonePool unsafeReference=null;
+            foreach(ZonePool pool in ZoneProtectionReference.Pools)if(pool.Index==36655)unsafeReference=pool;
+            original.U64(Fixture.ZoneArrayClass+0x20,original.Module.LoadBias+unsafeReference.ElementDescriptor);PlayerStateResult oldPointer=original.Zone(originalCore);
+            Check(oldPointer.Sampled==0 && oldPointer.Samples[0].Detail.Contains("ExpectedRepresentation=ELEMENT_CLASS_BYVAL_ARG") &&
+                oldPointer.Samples[0].Detail.Contains("TypeDataMatch=False"),"the erroneous V24/V25 ELF-descriptor expectation is now rejected");
+            Fixture interior=ZoneFixture();PlayerObjectResult interiorCore=interior.Run();interior.U64(Fixture.ZoneArrayClass+0x20,Fixture.Class(36653)+0x30);PlayerStateResult interiorResult=interior.Zone(interiorCore);
+            Check(interiorResult.Sampled==0 && !interiorResult.Samples[0].TrainingZone.HasValue,"a neighboring element-class member cannot substitute for byval_arg");
+            Fixture code=ZoneFixture();PlayerObjectResult codeCore=code.Run();code.Put(code.Module.LoadBias+0xa3367b8,new byte[]{0});PlayerStateResult codeResult=code.Zone(codeCore);
+            Check(codeResult.Sampled==0 && codeResult.Samples.Length==0 && codeResult.Detail.Contains("zone code array_constructor"),"array constructor rule must match live code before the new representation is accepted");
+            Fixture embedded=ZoneFixture();PlayerObjectResult embeddedCore=embedded.Run();embedded.U64(Fixture.Class(36653)+0x20,0);PlayerStateResult embeddedResult=embedded.Zone(embeddedCore);
+            Check(embeddedResult.Sampled==0 && !embeddedResult.Samples[0].TrainingZone.HasValue && embeddedResult.Samples[0].Detail.Contains("combat class identity"),
+                "a matching byval pointer cannot bypass element descriptor identity verification");
+            Fixture lateCode=ZoneFixture();PlayerObjectResult lateCore=lateCode.Run();ulong lateAt=lateCode.Physical(Fixture.ZoneMask+0x10);
+            lateCode.Memory.AfterRead=delegate(ulong p,int n){if(p==lateAt && n==4)lateCode.Put(lateCode.Module.LoadBias+0xa3367b8,new byte[]{0});};PlayerStateResult lateResult=lateCode.Zone(lateCore);
+            Check(lateResult.Sampled==0 && lateResult.Samples.Length==0 && lateResult.StopReason=="FINAL_CONTEXT_FAILED",
+                "constructor-code change during capture discards every tentative zone/protection value");
             Fixture changed=ZoneFixture();PlayerObjectResult cc=changed.Run();ulong ca=changed.Physical(Fixture.ZoneUnsafeValue);bool flip=false;
             changed.Memory.AfterRead=delegate(ulong p,int n){if(!flip && p==ca && n==1){flip=true;changed.Put(Fixture.ZoneUnsafeValue,new byte[]{3});}};
             PlayerStateResult cr=changed.Zone(cc);Check(cr.Sampled==0 && !cr.Samples[0].TrainingZone.HasValue && !cr.Samples[0].Invincible.HasValue,"zone byte mutation invalidates all tentative values");

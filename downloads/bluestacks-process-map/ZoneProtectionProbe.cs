@@ -77,7 +77,7 @@ namespace HeadBridge.Mapping
             ulong arraySelf=reads.Value(arrayClass+0x78,"Zone.ArraySelf"),arrayTypeData=reads.Value(arrayClass+0x20,"Zone.ArrayTypeData");
             uint arrayTypeBits=reads.Word(arrayClass+0x28,"Zone.ArrayTypeBits");
             bool elementMatches=dp!=null && dp.Index==reference.DataIndex,selfMatches=arraySelf==arrayClass,
-                bitsMatch=arrayTypeBits==0x1d0000,dataMatches=arrayTypeData==module.LoadBias+reference.ElementDescriptor;
+                bitsMatch=arrayTypeBits==0x1d0000,dataMatches=arrayTypeData==elementClass+ZoneProtectionReference.ArrayElementByvalOffset;
             if(!elementMatches || !selfMatches || !bitsMatch || !dataMatches)
             {
                 ulong row=reads.Value(elementClass+0x68,"Zone.ElementTypeRow"),first=layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset;
@@ -89,8 +89,8 @@ namespace HeadBridge.Mapping
                     " ActualElementTypeIndex="+((row-first)/88UL)+" ElementClassVerified="+(dp!=null)+
                     " ExpectedSelf=0x"+arrayClass.ToString("x")+" ActualSelf=0x"+arraySelf.ToString("x")+
                     " ExpectedBits=0x001d0000 ActualBits=0x"+arrayTypeBits.ToString("x8")+
-                    " ExpectedTypeData=0x"+(module.LoadBias+reference.ElementDescriptor).ToString("x")+" ActualTypeData=0x"+arrayTypeData.ToString("x")+
-                    " TypeDataEqualsElementClass="+(arrayTypeData==elementClass)+" TypeDataEqualsElementByvalArg="+(arrayTypeData==elementClass+0x20UL)+
+                    " ExpectedTypeData=0x"+(elementClass+ZoneProtectionReference.ArrayElementByvalOffset).ToString("x")+" ActualTypeData=0x"+arrayTypeData.ToString("x")+
+                    " ExpectedRepresentation=ELEMENT_CLASS_BYVAL_ARG TypeDataEqualsElementClass="+(arrayTypeData==elementClass)+" TypeDataEqualsElementByvalArg="+(arrayTypeData==elementClass+0x20UL)+
                     " ElementMatch="+elementMatches+" SelfMatch="+selfMatches+" BitsMatch="+bitsMatch+" TypeDataMatch="+dataMatches;
                 Expect(false,diagnostic);
             }

@@ -517,6 +517,36 @@
       "name": "GetDataUInt8_268509_64",
       "rva": 137308148,
       "hex": "e0031f2afe0741f8c0035fd69e8981949f898194"
+    },
+    {
+      "name": "array_constructor_element_argument_0",
+      "rva": 171140408,
+      "hex": "f403022ae203172af303012af50300aadf000094"
+    },
+    {
+      "name": "array_constructor_array_alias_0",
+      "rva": 171140804,
+      "hex": "f70340f9"
+    },
+    {
+      "name": "array_constructor_byval_and_szarray_0",
+      "rva": 171140864,
+      "hex": "04280194e00315aa0733019408008012b6820091e00601b9e81601b9e80a01b9e00316aaa94d0094600000360824805205000014a8d604910801407908011b12"
+    },
+    {
+      "name": "array_constructor_byval_and_szarray_64",
+      "rva": 171140928,
+      "hex": "08011832e9d604912a014079ebdb9f524a010b0a08010a2a28010079f52200f9e00317aa32fcff977f060071e8979f1a1401142ab40100362000805201048052"
+    },
+    {
+      "name": "array_constructor_byval_and_szarray_128",
+      "rva": 171140992,
+      "hex": "2949ff97e80340f98902805209a90039001100f9160000f913200039f30340f9e8031f2a06000014f30340f9a803805268aa0039a8008052761200f9600ac03d"
+    },
+    {
+      "name": "array_constructor_byval_and_szarray_192",
+      "rva": 171141056,
+      "hex": "60820091685a0279600e803d693a40b929010332693a00b95a3d0194"
     }
   ],
   "pools": [
@@ -548,5 +578,6 @@
     }
   ],
   "interface_cell": 180556352,
+  "array_element_byval_offset": 32,
   "scope": "One selected nonlocal player: original CurrentTrainingZoneType and IsInvincible predicate only. No complete attackability, invulnerability policy, LOS or aim assertion."
 }

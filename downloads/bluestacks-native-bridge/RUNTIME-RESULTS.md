@@ -628,3 +628,24 @@ The details are UNVERIFIED_FAILURE_CONTEXT; they do not authorize property reads
 or semantic output through a rejected array. 437 offline checks pass, including
 five diagnostic cases. Baseline reads remain 5769 and all existing bounds remain
 unchanged. Live V25 diagnostics are pending; no array-representation fix is claimed.
+
+
+## V25 diagnosis and V26 runtime array correction
+
+The V25 report isolated TypeDataMatch=False: managed pool type 36651 and element
+36644 matched, with correct array self/type flags, while actual type data was
+elementClass+0x20 rather than the expected ELF descriptor. It accepted no row,
+used 22468 total reads and completed all cleanup.
+
+The exact IL2CPP constructor at 0xa336514 establishes that runtime representation:
+its SZARRAY branch stores the element class's embedded byval_arg in the array
+class's type data. V26 pins the relevant constructor code/dataflow and requires
+that exact pointer, with independent element metadata/class verification. The
+old ELF expectation is rejected; declared pool-field ELF type validation remains
+separate and unchanged. No alternate pointer fallback is added.
+
+441 offline checks pass, covering both backends, pointer/descriptor failures and
+constructor changes before/during capture. Baseline optional reads=5833, within
+all existing limits. Extracted-package verification and reference reproduction
+pass. Live V26 validation is pending; zone/protection, complete combat eligibility,
+LOS and aiming are not claimed from the rejected V25 report.
