@@ -110,3 +110,36 @@ checked for PowerShell syntax, five mutually exclusive parameter sets, source
 manifest/plugin hashes, ZIP integrity and the same compiled tests. Live Windows
 validation is still required. Send the complete V24 report including
 ZoneProtectionSamples, TrainingZone, InvincibilityPredicate and ResultFile.
+
+## V24 live results and V25 diagnostics
+
+The first V24 user run retried library traversal after a repeated VMA node.
+That run exhausted the optional read allowance before accepting a zone sample:
+READ_LIMIT_REACHED, Sampled=0, total calls=29818. A rerun without a library retry
+reached array verification, then failed `zone array element type`; Sampled=0,
+phase calls=4091, total=23575. The rerun verified all 14 roster candidates and
+accepted the local head on attempt one. Both runs completed plugin unload,
+handler cleanup and session release. No zone/protection value was accepted.
+
+V25 retains the same acceptance predicate and adds failure-only
+ZoneArrayDiagnostic details. It reports the concrete pool type, array and element
+class pointers, expected/actual element type indices, array self pointers,
+Il2CppType bits and type-data pointers. ElementMatch, SelfMatch, BitsMatch and
+TypeDataMatch identify which component failed. Comparisons with the observed
+element class/byval-argument addresses are included without accepting either
+alternative representation. No unknown pointer is dereferenced to guess its type.
+
+Diagnostics are explicitly labelled Observation=UNVERIFIED_FAILURE_CONTEXT.
+They describe the reads that failed validation, not an accepted stable snapshot.
+As before, a failed row discards all tentative semantic values and never reads
+property 37 through the rejected array. An earlier class-record/layout error can
+still stop before this diagnostic. This is instrumentation for the next live
+report, not a claimed correction of the array representation.
+
+437 offline checks pass (five new diagnostic cases). Independent changes to each
+of the four checked components remain rejected, expected/actual details survive
+in the failure message, semantic values are discarded, and the alternative
+byval pointer remains rejected. The successful baseline still uses 5769 calls.
+The five existing modes, bounds and reference files remain unchanged. V25's
+extracted package is checked with the same syntax, manifest and compiled suite.
+Send the full output, especially the ZoneArrayDiagnostic failure detail.

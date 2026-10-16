@@ -599,7 +599,7 @@ combat eligibility, mode-zone rules, invulnerability, LOS or aiming. Existing
 head, player-state and team-policy modes remain available and mutually exclusive.
 
 
-## V24 zone/protection probe (live validation pending)
+## V24 zone/protection probe
 
 The optional -ProbeZoneProtection mode samples one nonlocal member's original
 CurrentTrainingZoneType, IsInBattleZone/IsInShootingRange and PlayerAttributes
@@ -611,3 +611,20 @@ mask/mode and original gates, then rechecks selected membership and inputs.
 unchanged 6000-phase/30000-global limits. V23 live evidence is preserved above.
 Live V24 validation is pending. Complete damage immunity, combat eligibility,
 hostility, LOS and aim integration remain unverified; no game write occurs.
+
+
+## V24 live rejection and V25 array diagnostics
+
+The first V24 report retried a repeated-node library traversal and exhausted the
+read allowance (29818 total), accepting no zone/protection row. Its rerun reached
+array verification, then rejected `zone array element type` (4091 phase calls,
+23575 total, zero accepted rows). The rerun verified 14 roster members and
+sampled the local head. Both reports completed all cleanup steps. No zone or
+invincibility value is established by these reports.
+
+V25 retains the predicate and adds failure-only expected/actual element indices,
+array self/type flags/type-data pointers and four independent match indicators.
+The details are UNVERIFIED_FAILURE_CONTEXT; they do not authorize property reads
+or semantic output through a rejected array. 437 offline checks pass, including
+five diagnostic cases. Baseline reads remain 5769 and all existing bounds remain
+unchanged. Live V25 diagnostics are pending; no array-representation fix is claimed.

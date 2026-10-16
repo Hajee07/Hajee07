@@ -1,9 +1,10 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V24**. Optional `-ProbeZoneProtection` samples one
-verified nonlocal player's original training-zone and invincibility predicates.
-432 offline checks pass; live V24 validation is pending. This does not establish
-complete combat eligibility, damage immunity or line of sight.
+Current process probe: **V25**. `-ProbeZoneProtection` now reports the
+expected/actual components of V24's array-type validation failure. Existing
+acceptance checks remain unchanged. 437 offline checks pass; live V25 diagnostics
+are pending. V24 accepted no zone/protection sample. Complete combat eligibility,
+damage immunity and LOS remain unverified.
 See [zone/protection evidence](bluestacks-process-map/ZONE-PROTECTION-EVIDENCE.md).
 
 V23's combat-state mode remains available. Two live reports accepted its original

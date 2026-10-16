@@ -74,8 +74,26 @@ namespace HeadBridge.Mapping
             int maximum=unchecked((int)reads.Word(pool+0x18,"Zone.PoolMaximum"));if(maximum<=37){ZoneValue(sample,0,reads,wrappers,length);return;}
             Expect(maximum<=1000000,"zone pool maximum bound");ulong dataArray=reads.Value(pool+0x10,"Zone.Array");sample.ZoneStatus="NOT_READY_POOL_ARRAY_NULL";if(dataArray==0)return;
             ObjectReads.User(dataArray,8,"zone data array");ulong arrayClass=reads.Pointer(dataArray,"zone array class"),elementClass=reads.Pointer(arrayClass+0x40,"zone array element");ObjectClassProfile dp=ZoneClass(reads,elementClass,layout);
-            Expect(dp!=null && dp.Index==reference.DataIndex && reads.Value(arrayClass+0x78)==arrayClass && reads.Word(arrayClass+0x28)==0x1d0000 &&
-                reads.Value(arrayClass+0x20)==module.LoadBias+reference.ElementDescriptor,"zone array element type");
+            ulong arraySelf=reads.Value(arrayClass+0x78,"Zone.ArraySelf"),arrayTypeData=reads.Value(arrayClass+0x20,"Zone.ArrayTypeData");
+            uint arrayTypeBits=reads.Word(arrayClass+0x28,"Zone.ArrayTypeBits");
+            bool elementMatches=dp!=null && dp.Index==reference.DataIndex,selfMatches=arraySelf==arrayClass,
+                bitsMatch=arrayTypeBits==0x1d0000,dataMatches=arrayTypeData==module.LoadBias+reference.ElementDescriptor;
+            if(!elementMatches || !selfMatches || !bitsMatch || !dataMatches)
+            {
+                ulong row=reads.Value(elementClass+0x68,"Zone.ElementTypeRow"),first=layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset;
+                // ZoneClass already bounded and aligned this metadata row. These
+                // failure observations do not authorize a typed array read.
+                string diagnostic="zone array element type ZoneArrayDiagnostic Observation=UNVERIFIED_FAILURE_CONTEXT"+
+                    " PoolTypeIndex="+p.Index+" DataArray=0x"+dataArray.ToString("x")+" ArrayClass=0x"+arrayClass.ToString("x")+
+                    " ElementClass=0x"+elementClass.ToString("x")+" ExpectedElementTypeIndex="+reference.DataIndex+
+                    " ActualElementTypeIndex="+((row-first)/88UL)+" ElementClassVerified="+(dp!=null)+
+                    " ExpectedSelf=0x"+arrayClass.ToString("x")+" ActualSelf=0x"+arraySelf.ToString("x")+
+                    " ExpectedBits=0x001d0000 ActualBits=0x"+arrayTypeBits.ToString("x8")+
+                    " ExpectedTypeData=0x"+(module.LoadBias+reference.ElementDescriptor).ToString("x")+" ActualTypeData=0x"+arrayTypeData.ToString("x")+
+                    " TypeDataEqualsElementClass="+(arrayTypeData==elementClass)+" TypeDataEqualsElementByvalArg="+(arrayTypeData==elementClass+0x20UL)+
+                    " ElementMatch="+elementMatches+" SelfMatch="+selfMatches+" BitsMatch="+bitsMatch+" TypeDataMatch="+dataMatches;
+                Expect(false,diagnostic);
+            }
             ulong capacity=reads.Value(dataArray+0x18,"Zone.ArrayCapacity");Expect(capacity<=1000000,"zone array capacity bound");sample.ZoneStatus="NOT_READY_POOL_ARRAY_BOUNDS";if(capacity<=37)return;
             ulong data=reads.Value(dataArray+0x20+37*8,"Zone.Property37");if(data==0){ZoneValue(sample,0,reads,wrappers,length);return;}
             ObjectReads.User(data,8,"zone replication data");ulong dataClass=reads.Pointer(data,"zone data class");ObjectClassProfile actual=ZoneClass(reads,dataClass,layout);

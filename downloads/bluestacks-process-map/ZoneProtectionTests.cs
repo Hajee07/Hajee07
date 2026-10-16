@@ -97,6 +97,24 @@ namespace HeadBridge.Mapping.Tests
             Check(ir.Sampled==0 && ir.Samples[0].Detail.Contains("interface offset metadata"),"native interface offset must match the exact metadata");
             Fixture array=ZoneFixture();array.U64(Fixture.ZoneArrayClass+0x40,Fixture.Class(36644));PlayerStateResult ar=array.Zone(array.Run());
             Check(ar.Sampled==0 && ar.Samples[0].Detail.Contains("array element type"),"unsafe replication data array requires its exact element type");
+            foreach(string component in new string[]{"Element","Self","Bits","TypeData"})
+            {
+                Fixture x=ZoneFixture();PlayerObjectResult xc=x.Run();
+                if(component=="Element")x.U64(Fixture.ZoneArrayClass+0x40,Fixture.Class(36644));
+                else if(component=="Self")x.U64(Fixture.ZoneArrayClass+0x78,Fixture.ZoneArrayClass+8);
+                else if(component=="Bits")x.U32(Fixture.ZoneArrayClass+0x28,0x801d0000);
+                else x.U64(Fixture.ZoneArrayClass+0x20,Fixture.Class(36653));
+                PlayerStateResult r=x.Zone(xc);PlayerStateObservation observation=r.Samples[0];string detail=observation.Detail;
+                Check(r.Sampled==0 && observation.Status=="FAIL" && !observation.TrainingZone.HasValue && !observation.Invincible.HasValue &&
+                    detail.Contains("ZoneArrayDiagnostic Observation=UNVERIFIED_FAILURE_CONTEXT") && detail.Contains(component+"Match=False") &&
+                    detail.Contains("ExpectedElementTypeIndex=36653") && detail.Contains("ActualElementTypeIndex=") && detail.Contains("ExpectedBits=0x001d0000") &&
+                    detail.Contains("ActualBits=0x") && detail.Contains("ExpectedTypeData=0x") && detail.Contains("ActualTypeData=0x"),
+                    "array diagnostic identifies "+component+" mismatch without accepting a typed sample");
+            }
+            Fixture alternate=ZoneFixture();PlayerObjectResult ac=alternate.Run();alternate.U64(Fixture.ZoneArrayClass+0x20,Fixture.Class(36653)+0x20);
+            PlayerStateResult alternative=alternate.Zone(ac);
+            Check(alternative.Sampled==0 && alternative.Samples[0].Detail.Contains("TypeDataEqualsElementByvalArg=True") &&
+                alternative.Samples[0].Detail.Contains("TypeDataMatch=False"),"observed alternative type pointer is reported and remains rejected");
             Fixture changed=ZoneFixture();PlayerObjectResult cc=changed.Run();ulong ca=changed.Physical(Fixture.ZoneUnsafeValue);bool flip=false;
             changed.Memory.AfterRead=delegate(ulong p,int n){if(!flip && p==ca && n==1){flip=true;changed.Put(Fixture.ZoneUnsafeValue,new byte[]{3});}};
             PlayerStateResult cr=changed.Zone(cc);Check(cr.Sampled==0 && !cr.Samples[0].TrainingZone.HasValue && !cr.Samples[0].Invincible.HasValue,"zone byte mutation invalidates all tentative values");

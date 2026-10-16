@@ -7,15 +7,19 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 24. Optional read-only zone/protection probe.** Run with
-`-ProbeZoneProtection` to sample one verified nonlocal player's original training
-zone, battle-zone/shooting-range getters and PlayerAttributes.IsInvincible
-predicate. Optional `-ZoneRosterIndex N` selects a member of that run's capped
-roster. Managed/unsafe pool dispatch, array element types, attributes owner,
-mask/mode, original gates and selected membership are verified. Unsupported
-paths are UNKNOWN. 432 offline checks pass; live V24 validation is pending.
-Combat eligibility, complete damage immunity and LOS remain unverified.
-See [zone/protection evidence](ZONE-PROTECTION-EVIDENCE.md).
+**Current version: 25. Read-only zone-array failure diagnostics.** Run with
+`-ProbeZoneProtection` to identify the component behind V24's `zone array element
+type` rejection. The failure detail reports expected/actual element type indices,
+array self pointers, type bits and type-data pointers, explicitly marked as an
+unverified failure context. Existing array acceptance checks remain unchanged;
+no zone/protection value is accepted after failure. 437 offline checks pass.
+Live V25 diagnostics are pending. See [zone/protection evidence](ZONE-PROTECTION-EVIDENCE.md).
+
+Optional `-ZoneRosterIndex N` still selects a nonlocal member from that run's
+capped roster. The V24 rerun verified all 14 roster candidates and sampled the
+local head, but accepted zero zone/protection samples because of that array check.
+Total reads were 23575, with all cleanup passing. Combat eligibility, complete
+damage immunity and LOS remain unverified.
 
 **V23 combat-state mode remains available.** Use `-ProbeCombatState`, optionally
 with `-CombatRosterIndex N`. Two live reports accepted watching/dead/revive/ghost/
