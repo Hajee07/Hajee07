@@ -3,13 +3,19 @@ param(
     [Parameter(ParameterSetName='Heads')]
     [Parameter(ParameterSetName='PlayerState')]
     [Parameter(ParameterSetName='TeamPolicy')]
+    [Parameter(ParameterSetName='CombatState')]
     [string] $MachineName = 'Pie64',
     [ValidatePattern('^[A-Za-z0-9_.:-]+$')]
     [string] $Device = '127.0.0.1:5555',
     [Parameter(ParameterSetName='PlayerState')]
     [switch] $ProbePlayerState,
     [Parameter(ParameterSetName='TeamPolicy')]
-    [switch] $ProbeTeamPolicy
+    [switch] $ProbeTeamPolicy,
+    [Parameter(ParameterSetName='CombatState')]
+    [switch] $ProbeCombatState,
+    [Parameter(ParameterSetName='CombatState')]
+    [ValidateRange(-1, 15)]
+    [int] $CombatRosterIndex = -1
 )
 Set-StrictMode -Version 2
 $ErrorActionPreference = 'Stop'
@@ -85,10 +91,12 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=22 ReadOnly=1'
+Record 'ProcessMapVersion=23 ReadOnly=1'
 Record "PlayerStateMode=$($ProbePlayerState.IsPresent)"
 Record "TeamPolicyMode=$($ProbeTeamPolicy.IsPresent)"
+Record "CombatStateMode=$($ProbeCombatState.IsPresent) RequestedRosterIndex=$CombatRosterIndex"
 try {
+    if ($PSBoundParameters.ContainsKey('CombatRosterIndex') -and -not $ProbeCombatState.IsPresent) { throw 'Use -ProbeCombatState with -CombatRosterIndex.' }
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
     }
@@ -113,6 +121,8 @@ try {
     $stateReferencePath = Join-Path $PSScriptRoot 'PlayerStateReference.cs'
     $teamPath = Join-Path $PSScriptRoot 'TeamPolicyProbe.cs'
     $teamReferencePath = Join-Path $PSScriptRoot 'TeamPolicyReference.cs'
+    $combatPath = Join-Path $PSScriptRoot 'CombatStateProbe.cs'
+    $combatReferencePath = Join-Path $PSScriptRoot 'CombatStateReference.cs'
     if ($manifest.plugin -cne 'VBoxDbgHeadAimBridge.dll' -or $manifest.sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.mapping_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.module_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
@@ -130,7 +140,9 @@ try {
         $manifest.state_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.state_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.team_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
-        $manifest.team_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
+        $manifest.team_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.combat_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.combat_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
     if ((Get-FileHash -LiteralPath $pluginPath -Algorithm SHA256).Hash -ine $manifest.sha256 -or
         (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash -ine $manifest.mapping_source_sha256 -or
         (Get-FileHash -LiteralPath $modulePath -Algorithm SHA256).Hash -ine $manifest.module_source_sha256 -or
@@ -148,10 +160,12 @@ try {
         (Get-FileHash -LiteralPath $statePath -Algorithm SHA256).Hash -ine $manifest.state_source_sha256 -or
         (Get-FileHash -LiteralPath $stateReferencePath -Algorithm SHA256).Hash -ine $manifest.state_reference_sha256 -or
         (Get-FileHash -LiteralPath $teamPath -Algorithm SHA256).Hash -ine $manifest.team_source_sha256 -or
-        (Get-FileHash -LiteralPath $teamReferencePath -Algorithm SHA256).Hash -ine $manifest.team_reference_sha256) {
+        (Get-FileHash -LiteralPath $teamReferencePath -Algorithm SHA256).Hash -ine $manifest.team_reference_sha256 -or
+        (Get-FileHash -LiteralPath $combatPath -Algorithm SHA256).Hash -ine $manifest.combat_source_sha256 -or
+        (Get-FileHash -LiteralPath $combatReferencePath -Algorithm SHA256).Hash -ine $manifest.combat_reference_sha256) {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
-    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath) -ErrorAction Stop
+    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath) -ErrorAction Stop
     $classId = (Get-Item -LiteralPath 'Registry::HKEY_CLASSES_ROOT\VirtualBox.VirtualBoxClient\CLSID').GetValue('')
     $server = [Environment]::ExpandEnvironmentVariables([string](Get-Item -LiteralPath "Registry::HKEY_CLASSES_ROOT\CLSID\$classId\InprocServer32").GetValue(''))
     if ([IO.Path]::GetFileName($server.Trim().Trim('"')) -ine 'BstkC.dll') { throw 'COM client is not the verified BlueStacks server.' }
@@ -289,7 +303,38 @@ try {
     if ($objects.RosterError) { Record "MatchPlayerDictionaryError=$($objects.RosterError)" }
     $otherHeads = [HeadBridge.Mapping.OtherHeadResult]::new()
     $teamSummary = 'NOT_REQUESTED'
-    if ($ProbeTeamPolicy) {
+    $combatSummary = 'NOT_REQUESTED'
+    if ($ProbeCombatState) {
+        $stage = 'CombatStateSamples'
+        $combatStart = $reader.PhysicalCalls
+        $combat = $reader.SampleCombatState($kernel, $game, $module, $layout, $objects, $CombatRosterIndex, $progress)
+        if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during combat-state sampling.' }
+        $combatSummary = $combat.StopReason
+        Record "CombatStateSamples AdditionalPhysicalReads=$($reader.PhysicalCalls - $combatStart) Attempted=$($combat.Samples.Length) Sampled=$($combat.Sampled) StopReason=$($combat.StopReason) Detail=$($combat.Detail)"
+        foreach ($sample in $combat.Samples) {
+            if ($sample.Status -ceq 'SAMPLED_READ_ONLY') {
+                $watching = if ($null -eq $sample.IsWatching) { 'UNKNOWN' } else { [string]$sample.IsWatching }
+                $ghost = if ($null -eq $sample.IsInAnyGhost) { 'UNKNOWN' } else { [string]$sample.IsInAnyGhost }
+                $dying = if ($null -eq $sample.IsDieing) { 'UNKNOWN' } else { [string]$sample.IsDieing }
+                $reallyDead = if ($null -eq $sample.ReallyDead) { 'UNKNOWN' } else { [string]$sample.ReallyDead }
+                $movement = if ($null -eq $sample.MovementStateRaw) { 'UNKNOWN' } else { [string]$sample.MovementStateRaw }
+                $stateId = if ($null -eq $sample.ControllerStateRaw) { 'UNKNOWN' } else { [string]$sample.ControllerStateRaw }
+                $selector = if ($null -eq $sample.DirectMovementSelector) { 'UNKNOWN' } else { [string]$sample.DirectMovementSelector }
+                Record "CombatState=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) IsLocal=$($sample.IsLocal) GameModeRaw=$($sample.GameModeRaw) GameModeStatus=$($sample.GameModeStatus) BaseDeadRaw=$($sample.BaseDeadRaw) PendingReviveRaw=$($sample.PendingReviveRaw) ReallyDead=$reallyDead ReallyDeadStatus=$($sample.ReallyDeadStatus) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Observations=$($sample.Observations)"
+                Record "WatchingPredicate=$watching Status=$($sample.WatchingStatus) GameClass=$($sample.WatchingGameClass) BooleanOnly=True CounterWrites=NONE"
+                Record "GhostPredicate=$ghost Status=$($sample.GhostStatus) GhostKindRaw=$($sample.GhostKindRaw)"
+                Record "DyingPredicate=$dying Status=$($sample.DyingStatus) DirectMovementSelector=$selector MovementStateRaw=$movement ControllerStateRaw=$stateId ControllerStateClass=$($sample.ControllerStateClass)"
+            } else {
+                Record "CombatState=$($sample.Status) RosterIndex=$($sample.RosterIndex) Class=$($sample.Class) Detail=$($sample.Detail)"
+                if ($sample.Status -ceq 'FAIL') { $failed = $true }
+            }
+        }
+        if ($combat.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
+        Record 'CombatSemantics CombatEligibility=UNVERIFIED Hostility=UNVERIFIED ModeZoneRules=UNVERIFIED Invulnerability=UNVERIFIED LineOfSight=UNVERIFIED Writes=NONE'
+        Record 'OtherHeadSamples=NOT_REQUESTED_COMBAT_MODE'
+        Record 'PlayerStateSamples=NOT_REQUESTED_COMBAT_MODE'
+        Record 'TeamPolicy=NOT_REQUESTED_COMBAT_MODE'
+    } elseif ($ProbeTeamPolicy) {
         $stage = 'TeamPolicy'
         $teamStart = $reader.PhysicalCalls
         $team = $reader.SampleTeamPolicy($kernel, $game, $module, $layout, $objects, $progress)
@@ -347,7 +392,7 @@ try {
         }
         if ($otherHeads.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
     }
-    Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadPositionsSampled=$($otherHeads.Sampled) TeamPolicy=$teamSummary TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
+    Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadPositionsSampled=$($otherHeads.Sampled) TeamPolicy=$teamSummary CombatState=$combatSummary TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
 } catch { $failed = $true; Failure $stage $_.Exception }
 finally {
     if ($null -ne $reader) {

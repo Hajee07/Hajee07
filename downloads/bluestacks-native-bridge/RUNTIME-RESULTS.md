@@ -552,7 +552,7 @@ continuous tracking and aim integration remain unverified. No runtime source,
 manifest or ZIP was changed for this documentation-only update. The previously
 passed 277 offline checks were not rerun.
 
-## V22 team-policy probe (live validation pending)
+## V22 team-policy probe
 
 The new `-ProbeTeamPolicy` mode validates the original GameFacade.IsSameTeam
 route for one verified local/nonlocal pair. Static evidence shows a mode-58
@@ -571,4 +571,25 @@ is made from SameTeam=false. No game methods, initialization or writes occur.
 317 offline checks pass (40 new policy cases). The optional phase retains the
 6000-read ceiling with 1500 reserved for final checks within the existing global
 30000-call/120-second bounds. Default head and V21 state modes remain available;
-optional modes are mutually exclusive. A live V22 Windows report is still needed.
+optional modes are mutually exclusive. The user's live V22 report subsequently accepted the original packed-byte route
+in raw mode 23, with policy bytes 15 and 6 and SameTeam=False. Context and both
+selected entries revalidated; counters changed since roster capture but not
+during policy capture. Phase reads=5023, total=25950, cleanup all PASS. Fifteen
+roster objects were verified. Local-head capture independently stopped with
+NOT_READY_MOTION after three TRS changes. No aim write occurred.
+
+
+## V23 combat-state probe (live validation pending)
+
+The optional -ProbeCombatState mode observes one verified nonlocal roster member,
+with optional -CombatRosterIndex for an explicit current-run member. It validates
+the original Watching Boolean (including the game-family branch without its
+counter side effect), dead/revive flags, ghost predicate and IsDieing controller
+branches. The selector, class layouts/ancestry, runtime fields/dispatch, code,
+metadata, hotfix gates and exact selected entry are rechecked. One member keeps
+the phase within the unchanged 6000-read allowance / global 30000-call limit.
+
+385 offline checks pass (68 new cases). Baseline synthetic phase calls=4805.
+Live Windows validation is pending. This does not establish hostility, complete
+combat eligibility, mode-zone rules, invulnerability, LOS or aiming. Existing
+head, player-state and team-policy modes remain available and mutually exclusive.

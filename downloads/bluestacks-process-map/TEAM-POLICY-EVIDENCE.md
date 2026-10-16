@@ -4,7 +4,7 @@ Run `Run-ProcessMap.ps1 -ProbeTeamPolicy` after spawning in Training Ground.
 This mode replaces the optional state/other-head phase for that run. Existing
 kernel, process, module, layout, local-head and roster checks still run first.
 The two optional switches are mutually exclusive; default head mode and
-`-ProbePlayerState` remain available. V22 awaits a live Windows policy report.
+`-ProbePlayerState` remain available. V22 has one accepted live Windows policy report (below).
 
 ## What it establishes
 
@@ -110,3 +110,20 @@ SameTeamPredicate. A supported predicate result establishes only that observed
 pair and route. A populated dynamic dictionary, faction mode or custom override
 is a concrete remaining dependency, not a reason to relax checks. Hostility,
 combat eligibility, LOS, continuous tracking and aim integration remain unfinished.
+
+## First live V22 report
+
+The user's run (host PID 7644, guest PID 2990) passed module identity and both
+80-check layout comparisons. All 15 unique active roster members were verified
+(local plus 14 others). The team phase accepted the first nonlocal pair:
+ORIGINAL_PREDICATE_SAMPLED, ContextVerified=True, PACKED_PLAYER_ID_BYTE,
+GameModeRaw=23, EnableDynamicTeamID=False, LocalPolicyByte=15,
+OtherPolicyByte=6 and SameTeamPredicate=False. Both selected entries revalidated;
+counters changed since roster capture but not during policy capture.
+
+The phase used 5023 additional reads and 25950 total. Plugin unload, handler
+cleanup and session release passed. The local-head phase separately reported
+NOT_READY_MOTION after three changed TRS captures; no head XYZ was accepted.
+This does not invalidate the independently rechecked team snapshot. Other heads
+and state samples were intentionally not requested. Combat eligibility, hostility,
+LOS and aim control remain incomplete; no aim writes occurred.

@@ -1,10 +1,15 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V22**. Optional `-ProbeTeamPolicy` validates the original
-SameTeam route for one local/nonlocal pair. Supported original paths can report
-the predicate; faction, non-null dynamic dictionary, custom override and hotfix
-paths report unknown. 317 offline checks pass; live V22 validation is pending.
-See [team-policy evidence](bluestacks-process-map/TEAM-POLICY-EVIDENCE.md).
+Current process probe: **V23**. Optional `-ProbeCombatState` samples one verified
+nonlocal player's original watching, dead/revive, ghost and IsDieing predicates.
+385 offline checks pass; live V23 validation is pending. This does not establish
+combat eligibility, mode-zone rules, invulnerability or line of sight.
+See [combat-state evidence](bluestacks-process-map/COMBAT-STATE-EVIDENCE.md).
+
+V22's `-ProbeTeamPolicy` remains available. The user's live run verified the
+original packed-ID-byte predicate in raw mode 23, SameTeam=False, within the
+read budget and with all cleanup passing. No hostility/attackability follows
+from that predicate alone.
 
 V21's optional `-ProbePlayerState` samples raw team
 index, dead/revive flags and supported original model visibility from at most

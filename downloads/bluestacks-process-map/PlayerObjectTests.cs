@@ -654,6 +654,7 @@ namespace HeadBridge.Mapping.Tests
             Console.WriteLine("NATIVE_HEAD_FIXTURE_READ_CALLS=" + native.Reader.PhysicalCalls + " OBSERVATIONS=" + world.HeadWorldObservations);
             RunStateTests();
             RunTeamTests();
+            RunCombatTests();
             Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects, native head sample, match dictionary and state)");
         }
     }

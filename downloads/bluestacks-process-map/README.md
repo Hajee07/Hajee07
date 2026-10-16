@@ -7,13 +7,22 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 22. Optional read-only team-policy probe.** Run with
-`-ProbeTeamPolicy` to identify the active original SameTeam route for one
-verified local/nonlocal pair. Supported packed-ID-byte and null dynamic-dictionary
-paths can yield a predicate value. Faction mode, populated dynamic dictionaries,
-custom virtual implementations and active hotfixes remain explicitly unknown.
-No enemy/hostility decision is inferred. 317 offline checks pass; live V22
-policy validation is pending. See [team-policy evidence](TEAM-POLICY-EVIDENCE.md).
+**Current version: 23. Optional read-only combat-state probe.** Run with
+`-ProbeCombatState` to sample one verified nonlocal player's original watching,
+dead/revive, ghost and IsDieing predicates. Optional `-CombatRosterIndex N` selects
+a nonlocal member from that run's capped roster. Mode, class/virtual dispatch,
+controller/state, original gates and selected membership are verified. Unsupported
+paths produce UNKNOWN. 385 offline checks pass; live V23 validation is pending.
+Combat eligibility, mode zones, invulnerability and LOS remain unverified.
+See [combat-state evidence](COMBAT-STATE-EVIDENCE.md).
+
+**V22 team-policy mode remains available.** Run `-ProbeTeamPolicy` for one
+local/nonlocal pair. The user's V22 Windows run reproduced the original
+packed-ID-byte route in raw mode 23: SameTeam=False (bytes 15 and 6), with both
+selected entries revalidated and all cleanup passing. This establishes one
+observed pair and route, not hostility or attackability. The V22 run's three
+local-head attempts were discarded for TRS motion; team validation still passed.
+See [team-policy evidence](TEAM-POLICY-EVIDENCE.md).
 
 **V21 player-state mode remains available.** Run with
 `-ProbePlayerState` to sample raw team index, dead/revive fields and supported
