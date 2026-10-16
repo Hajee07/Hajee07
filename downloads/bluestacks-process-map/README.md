@@ -7,15 +7,14 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 41. Native camera-function cache observations.**
-`-ProbeAimState` retains the original local Quaternion/basis and checks camera
-getter/wrapper source, owning-module registration and metadata before reading two
-icall function-pointer caches. No function is executed; camera objects/pose are
-not read. 819 offline checks pass; live V41 pending. Prior V39 yaw and V40 pitch
-manual correlations passed. Camera/shot convention, actual pose and aim integration
-remain unverified. See [camera-binding evidence](CAMERA-BINDING-EVIDENCE.md).
-Manual [yaw](CAMERA-YAW-COMPARISON-EVIDENCE.md), [pitch](CAMERA-PITCH-COMPARISON-EVIDENCE.md)
-and [three-stage](AIM-BASIS-COMPARISON-EVIDENCE.md) workflows retain their criteria.
+**Current version: 42. Camera native-entry code identity.**
+`-ProbeAimState` checks that the two native camera cache pointers resolve to the
+same reference Unity ELF and registered entry/code windows. Main=24 bytes,
+component=256 bytes. 836 offline checks pass; live V42 pending. V41 cache reads
+passed; functions/objects/pose remain unexecuted/unread. Actual camera/shot
+convention and aiming remain unverified. See [native code evidence](CAMERA-NATIVE-CODE-EVIDENCE.md).
+Prior [binding](CAMERA-BINDING-EVIDENCE.md), manual [yaw](CAMERA-YAW-COMPARISON-EVIDENCE.md)
+and [pitch](CAMERA-PITCH-COMPARISON-EVIDENCE.md) evidence retain their scopes.
 
 **V34 manual comparison produced two matching experiments:** reported HUD and
 counter values 2->1->2 and 7->6->7, with stable per-experiment context and cleanup.

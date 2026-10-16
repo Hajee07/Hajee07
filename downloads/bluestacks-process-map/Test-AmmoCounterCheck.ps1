@@ -19,6 +19,8 @@ $fixture=@(
 'WeaponAmmoMembership RosterIndex=0 Player=0x77f1c2835000 IsLocal=True Proof=SELECTED_ENTRY_REVALIDATED CountersChangedSinceRoster=False CountersChangedDuringCapture=False Observations=154',
 'PhysicalReadCalls=24208 TranslationCacheHits=3472','PluginUnload=PASS','HandlerCleanup=PASS','SharedSession=RELEASED'
 )
+$version42=@($fixture | ForEach-Object { $_.Replace("ProcessMapVersion=34","ProcessMapVersion=42") })
+Check-Comparison ((ConvertFrom-AmmoCounterReport $version42).Version -eq 42) "comparison workflow accepts unchanged counter contract from V42"
 $version41=@($fixture | ForEach-Object { $_.Replace("ProcessMapVersion=34","ProcessMapVersion=41") })
 Check-Comparison ((ConvertFrom-AmmoCounterReport $version41).Version -eq 41) "comparison workflow accepts unchanged counter contract from V41"
 $version40=@($fixture | ForEach-Object { $_.Replace("ProcessMapVersion=34","ProcessMapVersion=40") })

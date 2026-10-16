@@ -112,7 +112,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=41 ReadOnly=1'
+Record 'ProcessMapVersion=42 ReadOnly=1'
 Record "PlayerStateMode=$($ProbePlayerState.IsPresent)"
 Record "TeamPolicyMode=$($ProbeTeamPolicy.IsPresent)"
 Record "CombatStateMode=$($ProbeCombatState.IsPresent) RequestedRosterIndex=$CombatRosterIndex"
@@ -388,6 +388,7 @@ try {
                     Record "AimQuaternion X=$($sample.AimX) Y=$($sample.AimY) Z=$($sample.AimZ) W=$($sample.AimW) NormSquared=$($sample.AimNormSquared) NormalizedByProbe=False"
                     Record "QuaternionPositiveZBasis X=$($sample.BasisX) Y=$($sample.BasisY) Z=$($sample.BasisZ) InputBasis=0,0,1 Math=VERIFIED_UNITY_QUATERNION_VECTOR_MULTIPLY NormalizedByProbe=False CameraConvention=UNVERIFIED ShotDirection=UNVERIFIED"
                     Record "CameraNativeBindings Status=$($sample.CameraBindingStatus) MainFunction=0x$($sample.CameraMainICall.ToString('x')) ComponentTransformFunction=0x$($sample.ComponentTransformICall.ToString('x')) Scope=ICALL_FUNCTION_POINTERS_ONLY CameraObjects=NOT_READ CameraPose=UNVERIFIED GameGetterHotfix=NOT_EVALUATED FunctionsInvoked=False"
+                    Record "CameraUnityCode Status=$($sample.CameraUnityCodeStatus) LoadBias=0x$($sample.CameraUnityLoadBias.ToString('x')) BuildId=667862f2d29b22ee ReferenceFileSHA256=1029519376944ff6310fcbbe84356976a839e080da67da716b3aae470f80dd77 MainRVA=0x41d8c4 ComponentTransformRVA=0x453d04 CodeScope=MAIN_24_COMPONENT_256_BYTES CameraObjects=NOT_READ CameraPose=UNVERIFIED FunctionsInvoked=False"
                 }
                 Record "AimStateMembership RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) IsLocal=$($sample.IsLocal) Proof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Observations=$($sample.Observations)"
             } else {

@@ -22,12 +22,30 @@ ilanchors=[dict(name=name,rva=start,hex=il.bytes(start,size).hex()) for name,sta
 header=e.bytes(0,64);phoff=struct.unpack_from('<Q',header,32)[0];stride,count=struct.unpack_from('<HH',header,54);programs=e.bytes(phoff,stride*count)
 assert phoff==64 and stride==56 and count==10
 note=e.bytes(0x308,24);assert note[:16].hex()=='040000000800000003000000474e5500'
-report=dict(unity_sha256=sha,unity_build_id=note[16:].hex(),header_hex=header.hex(),programs_hex=programs.hex(),note_rva=0x308,note_hex=note.hex(),unity_anchors=anchors,il2cpp_anchors=ilanchors,coefficients=coefficients,bindings=[dict(cell=0xafb9e00,target=0x45ea4c),dict(cell=0xafb9e10,target=0x45ec64)],scope='Exact resolved icall binding and bounded sampled local-head native hierarchy; no game calls or writes.')
+# Camera native targets are proved by exact named icall registration stubs.
+def adrp(word,at):
+ assert word&0x9f000000==0x90000000
+ imm=((word>>5)&0x7ffff)*4+((word>>29)&3);imm-= (1<<21) if imm&(1<<20) else 0
+ return (at&~4095)+imm*4096,word&31
+def pair(base,word):
+ assert word&0xffc00000==0x91000000 and (word>>5)&31==base[1] and word&31==base[1]
+ return base[0]+((word>>10)&4095)
+camera_anchors=[];camera_bindings=[]
+for name,stub,text,target,size in [('CameraMain',0x468ddc,0x11aa87,0x41d8c4,24),('ComponentTransform',0x46dabc,0x125f6b,0x453d04,256)]:
+ words=struct.unpack('<5I',e.bytes(stub,20));assert pair(adrp(words[0],stub),words[2])==text and pair(adrp(words[1],stub+4),words[3])==target
+ assert words[4]&0xfc000000==0x14000000
+ raw=('UnityEngine.Camera::get_main' if name=='CameraMain' else 'UnityEngine.Component::get_transform').encode()+b'\0';assert e.bytes(text,len(raw))==raw
+ executable=[x for x in e.loads if x[1]&1 and x[3]<=target and target+size<=x[3]+x[5]];assert len(executable)==1
+ camera_bindings.append(dict(name=name,stub_rva=stub,string_rva=text,target_rva=target,code_bytes=size,executable_start=executable[0][3],executable_end=executable[0][3]+executable[0][5]))
+ for label,at,length in [(name+'_registration',stub,20),(name+'_icall_name',text,len(raw)),(name+'_code',target,size)]:
+  for off in range(0,length,64):camera_anchors.append(dict(name=label+'_'+str(off),rva=at+off,hex=e.bytes(at+off,min(64,length-off)).hex()))
+assert camera_bindings[0]['executable_start']==camera_bindings[1]['executable_start'] and camera_bindings[0]['executable_end']==camera_bindings[1]['executable_end']
+report=dict(unity_sha256=sha,unity_build_id=note[16:].hex(),header_hex=header.hex(),programs_hex=programs.hex(),note_rva=0x308,note_hex=note.hex(),unity_anchors=anchors,camera_anchors=camera_anchors,camera_bindings=camera_bindings,il2cpp_anchors=ilanchors,coefficients=coefficients,bindings=[dict(cell=0xafb9e00,target=0x45ea4c),dict(cell=0xafb9e10,target=0x45ec64)],scope='Exact resolved icall binding and bounded sampled local-head native hierarchy; no game calls or writes.')
 out=Path(a.output_directory);out.mkdir(parents=True,exist_ok=True);(out/'transform-reference.json').write_text(json.dumps(report,indent=2)+'\n')
 lines=['// Generated from exact SHA-256-verified Unity/IL2CPP ELF inputs.','namespace HeadBridge.Mapping {','    internal static class NativeTransformReference {']
 for name,val in [('FileSha256',sha),('BuildId',report['unity_build_id']),('HeaderHex',header.hex()),('ProgramsHex',programs.hex()),('NoteHex',note.hex())]:lines.append('        internal const string %s = %s;'%(name,json.dumps(val)))
-for label,items in [('UnityAnchors',anchors),('Il2CppAnchors',ilanchors)]:
+for label,items in [('UnityAnchors',anchors),('CameraAnchors',camera_anchors),('Il2CppAnchors',ilanchors)]:
  lines.append('        internal static readonly GameLayoutCheck[] %s = new GameLayoutCheck[] {'%label)
  for x in items:lines.append('            new GameLayoutCheck(%s, 0x%xUL, %s),'%(json.dumps(x['name']),x['rva'],json.dumps(x['hex'])))
  lines.append('        };')
-lines+=['    }','}',''];(out/'NativeTransformReference.cs').write_text('\n'.join(lines));print('UnityBuildId='+report['unity_build_id']+' UnityAnchors='+str(len(anchors))+' Il2CppAnchors='+str(len(ilanchors)))
+lines+=['        internal const ulong CameraMainTarget=0x41d8c4UL, ComponentTransformTarget=0x453d04UL;','        internal const ulong CameraExecutableStart=0x%xUL, CameraExecutableEnd=0x%xUL;'%(camera_bindings[0]['executable_start'],camera_bindings[0]['executable_end']),'    }','}',''];(out/'NativeTransformReference.cs').write_text('\n'.join(lines));print('UnityBuildId='+report['unity_build_id']+' UnityAnchors='+str(len(anchors))+' Il2CppAnchors='+str(len(ilanchors)))

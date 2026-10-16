@@ -32,6 +32,22 @@ namespace HeadBridge.Mapping
             float t0=p2+p3,p8=1f*c,t1=p0+p4,t2=p1+p5;
             return new float[]{p6+t1,p7+t2,t0+p8};
         }
+        private static void ReadCameraUnityCode(ObjectReads reads,PlayerStateObservation sample,ulong camera,ulong transform)
+        {
+            sample.CameraUnityCodeStatus="NOT_READY_UNINITIALIZED_ICALL";
+            if(camera==0 || transform==0)return;
+            Expect(camera>NativeTransformReference.CameraMainTarget && transform>NativeTransformReference.ComponentTransformTarget,"camera Unity bias subtraction");
+            ulong bias=camera-NativeTransformReference.CameraMainTarget;
+            Expect(transform-NativeTransformReference.ComponentTransformTarget==bias && (bias&4095UL)==0,"camera Unity consistent page-aligned bias");
+            ObjectReads.User(bias,4096,"camera Unity load bias");
+            Expect(camera>=checked(bias+NativeTransformReference.CameraExecutableStart) && camera<checked(bias+NativeTransformReference.CameraExecutableEnd) &&
+                transform>=checked(bias+NativeTransformReference.CameraExecutableStart) && transform<checked(bias+NativeTransformReference.CameraExecutableEnd),"camera targets in expected executable ELF load segment");
+            Expect(EqualBytes(reads.Read(bias,64),Hex(NativeTransformReference.HeaderHex)),"camera Unity ELF header");
+            Expect(EqualBytes(reads.Read(bias+64,NativeTransformReference.ProgramsHex.Length/2),Hex(NativeTransformReference.ProgramsHex)),"camera Unity ELF program tables");
+            Expect(EqualBytes(reads.Read(bias+0x308,24),Hex(NativeTransformReference.NoteHex)),"camera Unity build ID");
+            NativeAnchors(reads,bias,NativeTransformReference.CameraAnchors);
+            sample.CameraUnityLoadBias=bias;sample.CameraUnityCodeStatus="REGISTERED_ENTRIES_AND_CODE_VERIFIED";
+        }
         private static void ReadAimState(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length)
         {
             Expect(sample.IsLocal,"aim snapshot is local only");sample.AimRotationStatus="UNVERIFIED_AIM_GETTER_HOTFIX_ACTIVE";
@@ -55,6 +71,7 @@ namespace HeadBridge.Mapping
             if(transform!=0)ObjectReads.User(transform,1,"component transform icall function pointer");
             sample.CameraMainICall=camera;sample.ComponentTransformICall=transform;
             sample.CameraBindingStatus=camera==0 || transform==0 ? "NOT_READY_UNINITIALIZED_ICALL" : "NONZERO_FUNCTION_POINTERS_ONLY";
+            ReadCameraUnityCode(reads,sample,camera,transform);
             sample.AimRotationStatus="ORIGINAL_LOCAL_GET_AIM_ROTATION_SAMPLED";
         }
         public PlayerStateResult SampleAimState(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)

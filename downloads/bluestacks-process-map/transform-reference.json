@@ -152,6 +152,73 @@
       "hex": "000000c0000000c00000004000000000"
     }
   ],
+  "camera_anchors": [
+    {
+      "name": "CameraMain_registration_0",
+      "rva": 4623836,
+      "hex": "80e5ffd0a1fdffb0001c2a912110239165a50a14"
+    },
+    {
+      "name": "CameraMain_icall_name_0",
+      "rva": 1157767,
+      "hex": "556e697479456e67696e652e43616d6572613a3a6765745f6d61696e00"
+    },
+    {
+      "name": "CameraMain_code_0",
+      "rva": 4315332,
+      "hex": "fe0f1ff874ac0794400000b4450d0c94fe0741f8c0035fd6"
+    },
+    {
+      "name": "ComponentTransform_registration_0",
+      "rva": 4643516,
+      "hex": "c0e5ff9021ffffd000ac3d91211034912d920a14"
+    },
+    {
+      "name": "ComponentTransform_icall_name_0",
+      "rva": 1204075,
+      "hex": "556e697479456e67696e652e436f6d706f6e656e743a3a6765745f7472616e73666f726d00"
+    },
+    {
+      "name": "ComponentTransform_code_0",
+      "rva": 4537604,
+      "hex": "ff4301d1fe1b00f9f44f04a9747d0090946243f9f30300aae1230091e0031faa880240f9e2031faaff7f02a9ff0700f900013fd6880240f9e1e30091e0031faa"
+    },
+    {
+      "name": "ComponentTransform_code_64",
+      "rva": 4537668,
+      "hex": "e20313aaff0b00f9ff63003900013fd6e21f40f9880240f9e1e30091e0031faaff1f00f900013fd6e21f40f9880240f9e1230091e0031faa00013fd6e8634039"
+    },
+    {
+      "name": "ComponentTransform_code_128",
+      "rva": 4537732,
+      "hex": "68020034e00b40f9000300b4131840f9d30400b4880240f9e1830091e0031faae2031faa00013fd6ff1700f9681a40f9140540f9882240b91f090071e1040054"
+    },
+    {
+      "name": "ComponentTransform_code_192",
+      "rva": 4537796,
+      "hex": "931640f9d30500b529000014e00740f9400000b47e2e0b9428008052e00b00f9e863003940fdffb5880240f9e1e30091e20313aa00013fd6e01f40f9472d0b94"
+    }
+  ],
+  "camera_bindings": [
+    {
+      "name": "CameraMain",
+      "stub_rva": 4623836,
+      "string_rva": 1157767,
+      "target_rva": 4315332,
+      "code_bytes": 24,
+      "executable_start": 4274688,
+      "executable_end": 20665712
+    },
+    {
+      "name": "ComponentTransform",
+      "stub_rva": 4643516,
+      "string_rva": 1204075,
+      "target_rva": 4537604,
+      "code_bytes": 256,
+      "executable_start": 4274688,
+      "executable_end": 20665712
+    }
+  ],
   "il2cpp_anchors": [
     {
       "name": "get_position",

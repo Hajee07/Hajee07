@@ -1016,3 +1016,23 @@ then reads/rechecks their function-pointer caches without invoking functions or
 reading camera objects. 819 offline checks pass, fixture phase reads=3553.
 Live V41 pending. A nonzero cache is not camera pose or executable mapping proof.
 All original limits/local identity checks remain; camera/aim integration incomplete.
+
+## Accepted V41 native-function cache observation
+
+The uploaded V41 run reported NONZERO_FUNCTION_POINTERS_ONLY:
+Camera.main=0x37198c4, Component.transform=0x374fd04. Source/runtime wrappers,
+metadata, original local Quaternion and membership rechecks passed. The local
+head phase independently reported Unity load bias 0x32fc000. Subtracting that
+bias gives RVAs 0x41d8c4 and 0x453d04, matching the exact Unity icall registration
+targets recovered during the subsequent source investigation. This arithmetic
+match alone does not validate the live target bytes. Aim phase reads=3613,
+total=24009; plugin unload, handler cleanup and session release passed. V41 did
+not execute the functions or read camera objects/pose.
+
+## V42 camera native code identity
+
+-ProbeAimState verifies consistent bias, exact Unity header/program/note,
+registered camera icall stubs/names and entry code windows. Main=24 bytes,
+component=256 bytes. Zero caches remain NOT_READY; no initialization/calls.
+836 offline checks pass; fixture phase reads=3697. Live V42 pending. No camera
+object/pose, complete accessor graph or runtime executable permissions claimed.

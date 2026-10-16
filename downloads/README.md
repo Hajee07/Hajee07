@@ -1,14 +1,14 @@
 # Standalone head-direction DLL core
 
-Current package: **V41**. `-ProbeAimState` adds source-verified native camera
-function-cache observations. No functions are invoked or camera objects/pose
-read. 819 offline checks pass; live V41 pending. V39/V40 manual yaw/pitch
-correlations passed; camera/shot convention and aiming remain unverified.
-See [camera-binding evidence](bluestacks-process-map/CAMERA-BINDING-EVIDENCE.md).
+Current package: **V42**. `-ProbeAimState` verifies camera native entries against
+the reference Unity ELF, named registration and code windows without executing
+functions or reading camera objects/pose. 836 offline checks pass; live V42 pending.
+V41 cache observations passed. Actual camera/shot direction and aiming remain
+unverified. See [native code evidence](bluestacks-process-map/CAMERA-NATIVE-CODE-EVIDENCE.md).
 
 V34 comparison matched two per-experiment HUD/counter patterns (2->1->2,
 7->6->7). Model names were not captured; evidence remains manual HUD correlation.
-The comparison workflow remains available in V41.
+The comparison workflow remains available in V42.
 
 V33 stable head/counter path passed live: 16 roster objects, counter 2 / field 105,
 all cleanup PASS. No job transition was observed; retries remain offline-tested.

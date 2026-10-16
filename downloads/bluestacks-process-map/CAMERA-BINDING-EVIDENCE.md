@@ -66,3 +66,17 @@ and run the complete suite. No live V41 result is claimed.
 Next evidence is the live cache status/addresses. Actual camera-object access
 still requires a separately verified native accessor/runtime context; this step
 does not provide or execute that accessor.
+
+## Accepted V41 native-function cache observation
+
+The uploaded V41 run reported NONZERO_FUNCTION_POINTERS_ONLY:
+Camera.main=0x37198c4, Component.transform=0x374fd04. Source/runtime wrappers,
+metadata, original local Quaternion and membership rechecks passed. The local
+head phase independently reported Unity load bias 0x32fc000. Subtracting that
+bias gives RVAs 0x41d8c4 and 0x453d04, matching the exact Unity icall registration
+targets recovered during the subsequent source investigation. This arithmetic
+match alone does not validate the live target bytes. Aim phase reads=3613,
+total=24009; plugin unload, handler cleanup and session release passed. V41 did
+not execute the functions or read camera objects/pose.
+
+V42 adds live native entry/code checks; see [native code evidence](CAMERA-NATIVE-CODE-EVIDENCE.md).
