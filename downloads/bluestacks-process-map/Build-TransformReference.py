@@ -40,12 +40,20 @@ for name,stub,text,target,size in [('CameraMain',0x468ddc,0x11aa87,0x41d8c4,24),
  for label,at,length in [(name+'_registration',stub,20),(name+'_icall_name',text,len(raw)),(name+'_code',target,size)]:
   for off in range(0,length,64):camera_anchors.append(dict(name=label+'_'+str(off),rva=at+off,hex=e.bytes(at+off,min(64,length-off)).hex()))
 assert camera_bindings[0]['executable_start']==camera_bindings[1]['executable_start'] and camera_bindings[0]['executable_end']==camera_bindings[1]['executable_end']
-report=dict(unity_sha256=sha,unity_build_id=note[16:].hex(),header_hex=header.hex(),programs_hex=programs.hex(),note_rva=0x308,note_hex=note.hex(),unity_anchors=anchors,camera_anchors=camera_anchors,camera_bindings=camera_bindings,il2cpp_anchors=ilanchors,coefficients=coefficients,bindings=[dict(cell=0xafb9e00,target=0x45ea4c),dict(cell=0xafb9e10,target=0x45ec64)],scope='Exact resolved icall binding and bounded sampled local-head native hierarchy; no game calls or writes.')
+selector_anchors=[]
+for nm,rv,sz in [('main_selector',0x608a98,0x7c),('tag_manager_global',0x52aa2c,12),('tag_list_lookup',0x471588,0xb4),('tag_hash_lookup',0x47163c,0xe4),('component_type_lookup',0x52aeac,0x44)]:
+ for off in range(0,sz,64):selector_anchors.append(dict(name=nm+'_'+str(off),rva=rv+off,hex=e.bytes(rv+off,min(64,sz-off)).hex()))
+word0,word1=struct.unpack('<2I',e.bytes(0x52aa2c,8));base,reg=adrp(word0,0x52aa2c);assert word1&0xffc00000==0xf9400000 and (word1>>5)&31==reg
+manager_cell=base+((word1>>10)&4095)*8
+word0,word1=struct.unpack('<2I',e.bytes(0x608ac4,8));descriptor=pair(adrp(word0,0x608ac4),word1)
+assert manager_cell==0x143dd68 and descriptor==0x1409040
+assert struct.unpack('<I',e.bytes(0x608aa8,4))[0]==0x528000a1 # mov w1,#5
+report=dict(unity_sha256=sha,unity_build_id=note[16:].hex(),header_hex=header.hex(),programs_hex=programs.hex(),note_rva=0x308,note_hex=note.hex(),unity_anchors=anchors,camera_anchors=camera_anchors,camera_selector_anchors=selector_anchors,camera_tag_manager_cell=manager_cell,camera_type_descriptor=descriptor,camera_bindings=camera_bindings,il2cpp_anchors=ilanchors,coefficients=coefficients,bindings=[dict(cell=0xafb9e00,target=0x45ea4c),dict(cell=0xafb9e10,target=0x45ec64)],scope='Exact resolved icall binding and bounded sampled local-head native hierarchy; no game calls or writes.')
 out=Path(a.output_directory);out.mkdir(parents=True,exist_ok=True);(out/'transform-reference.json').write_text(json.dumps(report,indent=2)+'\n')
 lines=['// Generated from exact SHA-256-verified Unity/IL2CPP ELF inputs.','namespace HeadBridge.Mapping {','    internal static class NativeTransformReference {']
 for name,val in [('FileSha256',sha),('BuildId',report['unity_build_id']),('HeaderHex',header.hex()),('ProgramsHex',programs.hex()),('NoteHex',note.hex())]:lines.append('        internal const string %s = %s;'%(name,json.dumps(val)))
-for label,items in [('UnityAnchors',anchors),('CameraAnchors',camera_anchors),('Il2CppAnchors',ilanchors)]:
+for label,items in [('UnityAnchors',anchors),('CameraAnchors',camera_anchors),('CameraSelectorAnchors',selector_anchors),('Il2CppAnchors',ilanchors)]:
  lines.append('        internal static readonly GameLayoutCheck[] %s = new GameLayoutCheck[] {'%label)
  for x in items:lines.append('            new GameLayoutCheck(%s, 0x%xUL, %s),'%(json.dumps(x['name']),x['rva'],json.dumps(x['hex'])))
  lines.append('        };')
-lines+=['        internal const ulong CameraMainTarget=0x41d8c4UL, ComponentTransformTarget=0x453d04UL;','        internal const ulong CameraExecutableStart=0x%xUL, CameraExecutableEnd=0x%xUL;'%(camera_bindings[0]['executable_start'],camera_bindings[0]['executable_end']),'    }','}',''];(out/'NativeTransformReference.cs').write_text('\n'.join(lines));print('UnityBuildId='+report['unity_build_id']+' UnityAnchors='+str(len(anchors))+' Il2CppAnchors='+str(len(ilanchors)))
+lines+=['        internal const ulong CameraTagManagerCell=0x143dd68UL, CameraTypeDescriptor=0x1409040UL;','        internal const ulong CameraMainTarget=0x41d8c4UL, ComponentTransformTarget=0x453d04UL;','        internal const ulong CameraExecutableStart=0x%xUL, CameraExecutableEnd=0x%xUL;'%(camera_bindings[0]['executable_start'],camera_bindings[0]['executable_end']),'    }','}',''];(out/'NativeTransformReference.cs').write_text('\n'.join(lines));print('UnityBuildId='+report['unity_build_id']+' UnityAnchors='+str(len(anchors))+' Il2CppAnchors='+str(len(ilanchors)))

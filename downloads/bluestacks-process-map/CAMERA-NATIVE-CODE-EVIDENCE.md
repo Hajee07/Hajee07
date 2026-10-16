@@ -63,3 +63,14 @@ reproduction and the extracted-package suite pass. Live V42 remains pending.
 The fixture phase uses 3697 reads. Global 30000-call/120-second, 6000 optional
 phase and 1500 final-reserve limits remain unchanged. No automatic retries or
 polling are added.
+
+## Accepted V42 live native-entry identity
+
+The uploaded V42 report returned REGISTERED_ENTRIES_AND_CODE_VERIFIED at Unity
+bias 0x32fc000, build ID 667862f2d29b22ee. Main entry=0x37198c4 (RVA 0x41d8c4),
+component entry=0x374fd04 (RVA 0x453d04), checked scopes 24/256 bytes. Original
+local snapshot and unchanged local membership passed; aim phase reads=3757,
+total=23790. Plugin unload, handler cleanup and session release passed.
+Functions were not invoked and camera objects/pose were not read in V42.
+
+V43 adds bounded candidate discovery; see [candidate evidence](CAMERA-CANDIDATE-EVIDENCE.md).

@@ -48,6 +48,64 @@ namespace HeadBridge.Mapping
             NativeAnchors(reads,bias,NativeTransformReference.CameraAnchors);
             sample.CameraUnityLoadBias=bias;sample.CameraUnityCodeStatus="REGISTERED_ENTRIES_AND_CODE_VERIFIED";
         }
+        internal static uint CameraTagHash(uint key)
+        {
+            unchecked {
+                uint v=key+(key<<12)+0x7ed55d16U;v^=v>>19;v^=0xc761c23cU;v+=v<<5;
+                v=(v+0xe9f8cc1dU)^(0xaccf6200U+(v<<9));v+=v<<3;v+=0xfd7046c5U;v^=v>>16;return v^0xb55a4f09U;
+            }
+        }
+        private static void ReadNativeCameraCandidate(ObjectReads reads,PlayerStateObservation sample)
+        {
+            sample.CameraCandidateStatus="NOT_READY_UNITY_CODE";
+            if(sample.CameraUnityCodeStatus!="REGISTERED_ENTRIES_AND_CODE_VERIFIED")return;
+            ulong bias=sample.CameraUnityLoadBias;NativeAnchors(reads,bias,NativeTransformReference.CameraSelectorAnchors);
+            sample.CameraCandidateStatus="NOT_READY_TAG_MANAGER_NULL";
+            ulong manager=reads.Value(bias+NativeTransformReference.CameraTagManagerCell,"Camera.TagManager");if(manager==0)return;
+            ObjectReads.User(manager,8,"camera tag manager");byte[] header=reads.Read(manager,16,"Camera.TagMapHeader");
+            ulong buckets=BitConverter.ToUInt64(header,0);uint mask=BitConverter.ToUInt32(header,8);
+            uint capacity=(mask>>3)+1;Expect((mask&7)==0 && capacity>=2 && capacity<=4096 && (capacity&(capacity-1))==0,"camera tag map mask/capacity");
+            ObjectReads.User(buckets,8,"camera tag buckets");uint hash=CameraTagHash(5),index=hash&mask,step=8;ulong head=0;
+            sample.CameraCandidateStatus="NOT_READY_TAG_LOOKUP_LIMIT";
+            for(int probe=0;probe<16;probe++)
+            {
+                sample.CameraTagProbes=probe+1;byte[] slot=reads.Read(checked(buckets+(ulong)index*3UL),24,"Camera.Tag5Probe"+probe);
+                uint stored=BitConverter.ToUInt32(slot,0);
+                if(stored==(hash&0xfffffffcU) && BitConverter.ToUInt32(slot,8)==5){head=BitConverter.ToUInt64(slot,16);break;}
+                if(stored==uint.MaxValue){sample.CameraCandidateStatus="NOT_READY_TAG5_ABSENT";return;}
+                index=unchecked(index+step)&mask;step=unchecked(step+8);
+            }
+            if(head==0){sample.CameraCandidateStatus="NOT_READY_TAG_LIST_NULL_OR_LOOKUP_LIMIT";return;}
+            ObjectReads.User(head,8,"camera tag list sentinel");byte[] sentinel=reads.Read(head,16,"Camera.TagListSentinel");
+            ulong node=BitConverter.ToUInt64(sentinel,8),previous=head;System.Collections.Generic.HashSet<ulong> visited=new System.Collections.Generic.HashSet<ulong>();
+            byte[] range=reads.Read(bias+NativeTransformReference.CameraTypeDescriptor+0x30,8,"Camera.NativeTypeRange");uint first=BitConverter.ToUInt32(range,0),span=BitConverter.ToUInt32(range,4);
+            sample.CameraCandidateStatus="NOT_READY_CAMERA_TYPE_RANGE";if(span==0 || span>4096)return;
+            for(int n=0;n<2;n++)
+            {
+                if(node==head){sample.CameraCandidateStatus="NOT_READY_NO_CAMERA_IN_VISITED_NODES";return;}
+                ObjectReads.User(node,8,"camera tag node");Expect(visited.Add(node),"camera tag-list cycle");sample.CameraNodesVisited=n+1;
+                byte[] item=reads.Read(node,24,"Camera.TagNode"+n);Expect(BitConverter.ToUInt64(item,0)==previous,"camera tag-list previous link");
+                ulong obj=BitConverter.ToUInt64(item,16);ObjectReads.User(obj,8,"tagged native game object");
+                byte[] components=reads.Read(obj+0x30,24,"Camera.ComponentArrayHeader"+n);ulong entries=BitConverter.ToUInt64(components,0),count=BitConverter.ToUInt64(components,16);
+                sample.CameraCandidateStatus="NOT_READY_COMPONENT_BOUND";if(count>256)return;
+                if(count!=0)
+                {
+                    ObjectReads.User(entries,8,"camera component array");byte[] rows=reads.Read(entries,checked((int)count*16),"Camera.ComponentArray"+n);
+                    for(int c=0;c<(int)count;c++)
+                    {
+                        uint id=BitConverter.ToUInt32(rows,c*16);if(unchecked(id-first)>=span)continue;
+                        ulong candidate=BitConverter.ToUInt64(rows,c*16+8);ObjectReads.User(candidate,8,"native camera component candidate");
+                        Expect(reads.Value(candidate+0x30,"Camera.CandidateOwner")==obj,"native camera candidate owner");
+                        ulong vtable=reads.Pointer(candidate,"native camera vtable"),predicate=reads.Value(vtable+0xd0,"Camera.NativePredicateFunction");ObjectReads.User(predicate,4,"native camera predicate function");
+                        Expect(predicate>=bias+NativeTransformReference.CameraExecutableStart && predicate<bias+NativeTransformReference.CameraExecutableEnd,"camera predicate in reference executable range");
+                        sample.CameraCandidateObject=candidate;sample.CameraCandidateOwner=obj;sample.CameraPredicateFunction=predicate;sample.CameraPredicateRva=predicate-bias;
+                        sample.CameraCandidateStatus="TYPE_RANGE_CANDIDATE_ONLY";return;
+                    }
+                }
+                previous=node;node=BitConverter.ToUInt64(item,8);
+            }
+            sample.CameraCandidateStatus="NOT_READY_TAG_NODE_LIMIT";
+        }
         private static void ReadAimState(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length)
         {
             Expect(sample.IsLocal,"aim snapshot is local only");sample.AimRotationStatus="UNVERIFIED_AIM_GETTER_HOTFIX_ACTIVE";
@@ -72,6 +130,7 @@ namespace HeadBridge.Mapping
             sample.CameraMainICall=camera;sample.ComponentTransformICall=transform;
             sample.CameraBindingStatus=camera==0 || transform==0 ? "NOT_READY_UNINITIALIZED_ICALL" : "NONZERO_FUNCTION_POINTERS_ONLY";
             ReadCameraUnityCode(reads,sample,camera,transform);
+            ReadNativeCameraCandidate(reads,sample);
             sample.AimRotationStatus="ORIGINAL_LOCAL_GET_AIM_ROTATION_SAMPLED";
         }
         public PlayerStateResult SampleAimState(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)

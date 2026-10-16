@@ -48,11 +48,26 @@ namespace HeadBridge.Mapping {
             new GameLayoutCheck("ComponentTransform_code_128", 0x453d84UL, "68020034e00b40f9000300b4131840f9d30400b4880240f9e1830091e0031faae2031faa00013fd6ff1700f9681a40f9140540f9882240b91f090071e1040054"),
             new GameLayoutCheck("ComponentTransform_code_192", 0x453dc4UL, "931640f9d30500b529000014e00740f9400000b47e2e0b9428008052e00b00f9e863003940fdffb5880240f9e1e30091e20313aa00013fd6e01f40f9472d0b94"),
         };
+        internal static readonly GameLayoutCheck[] CameraSelectorAnchors = new GameLayoutCheck[] {
+            new GameLayoutCheck("main_selector_0", 0x608a98UL, "fe0f1df8f65701a9f44f02a9e287fc97a1008052b7a2f997600200b4160440f9f30300aadf0200ebe0010054147000b094020191c00a40f9e10314aaf688fc97"),
+            new GameLayoutCheck("main_selector_64", 0x608ad8UL, "c00000b4080040f9f50300aa086940f900013fd6a0000037d60640f9df0213eba1feff54f5031faae00315aaf44f42a9f65741a9fe0743f8c0035fd6"),
+            new GameLayoutCheck("tag_manager_global_0", 0x52aa2cUL, "887800f000b546f9c0035fd6"),
+            new GameLayoutCheck("tag_list_lookup_0", 0x471588UL, "ffc300d1fe4f02a9e11f00b9e8230091e1730091f30300aa0f000094690a40b96a0240f9e80740f92905098b4901098b296100911f0109eb60000054000940f9"),
+            new GameLayoutCheck("tag_list_lookup_64", 0x4715c8UL, "02000014e0031faafe4f42a9ffc30091c0035fd6fe0f1ef8f44f01a902500091f40300aaf30308aa13000094880a40b9890240f90805088b2801088b08610091"),
+            new GameLayoutCheck("tag_list_lookup_128", 0x471608UL, "1f0008eb680600f9e2000054090040b93f09003183000054006000911f0008eb63ffff54600200f9f44f41a9fe0742f8c0035fd6"),
+            new GameLayoutCheck("tag_hash_lookup_0", 0x47163cUL, "280040b9c9a28b52a9daaf728a4798520d31080ba901090b2aecb872294d494aab8399520c408c5229010a4a0b3fbd72ec99b5722915090b2a010b0b8b25090b"),
+            new GameLayoutCheck("tag_hash_lookup_64", 0x47167cUL, "add888524a010b4a0daebf72090840b94a0d0a0b2ee189524a010d0b4eabb6724b414a4a0a0040f96b010eca6d01098aac050d8b40010c8b0c0040b96b751e12"),
+            new GameLayoutCheck("tag_hash_lookup_128", 0x4716bcUL, "9f010b6b810000540e0840b91f010e6b800200549f050031e00100540c018052ad010c0bad01098aae050d8b40010e8b0e0040b9df010b6b810000540f0840b9"),
+            new GameLayoutCheck("tag_hash_lookup_192", 0x4716fcUL, "1f010f6be0000054df0500318c21001181feff542805098b4801088b00610091c0035fd6"),
+            new GameLayoutCheck("component_type_lookup_0", 0x52aeacUL, "0b2040f98b0100b4091840f9282846296bed7cd3292100912c815fb88c01084b9f010a6bc30000546b4100f12941009141ffff54e0031faac0035fd6200140f9"),
+            new GameLayoutCheck("component_type_lookup_64", 0x52aeecUL, "c0035fd6"),
+        };
         internal static readonly GameLayoutCheck[] Il2CppAnchors = new GameLayoutCheck[] {
             new GameLayoutCheck("get_position", 0x9ff5f40UL, "ffc300d1fe0b00f9f44f02a9347e0090880247f9f30300aaff0b00b9ff0300f9c80000b580cdfbf0000033910b7b0d94e80300aa800207f9e1030091e00313aa00013fd6e007402de20b40bdf44f42a9fe0b40f9ffc30091c0035fd6"),
             new GameLayoutCheck("get_position_injected", 0x9ff5f9cUL, "fe57bea9f44f01a9357e0090a20247f9f30301aaf40300aac20000b580cdfbf000003391f67a0d94e20300aaa00207f9e00314aae10313aaf44f41a9fe57c2a840001fd6"),
             new GameLayoutCheck("get_local_position_injected", 0x9ff6078UL, "fe57bea9f44f01a9157e00f0a20a47f9f30301aaf40300aac20000b5a0cbfbf000542391bf7a0d94e20300aaa00a07f9e00314aae10313aaf44f41a9fe57c2a840001fd6"),
         };
+        internal const ulong CameraTagManagerCell=0x143dd68UL, CameraTypeDescriptor=0x1409040UL;
         internal const ulong CameraMainTarget=0x41d8c4UL, ComponentTransformTarget=0x453d04UL;
         internal const ulong CameraExecutableStart=0x413a00UL, CameraExecutableEnd=0x13b5570UL;
     }
