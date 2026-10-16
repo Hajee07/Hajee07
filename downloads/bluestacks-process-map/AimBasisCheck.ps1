@@ -15,8 +15,8 @@ function Read-AimNumber {
     return $v
 }
 function ConvertFrom-AimBasisReport {
-    param([Parameter(Mandatory=$true)][string[]]$Lines)
-    $version=Match-AimReportLine $Lines 'ProcessMapVersion' '^ProcessMapVersion=(36|37) ReadOnly=1$'
+    param([Parameter(Mandatory=$true)][AllowEmptyString()][string[]]$Lines)
+    $version=Match-AimReportLine $Lines 'ProcessMapVersion' '^ProcessMapVersion=(36|37|38) ReadOnly=1$'
     $hostInfo=Match-AimReportLine $Lines 'Preflight' '^Preflight=PASS Machine=(\S+) HostPID=([1-9][0-9]*) VmmDigest=MATCH$'
     $deviceInfo=Match-AimReportLine $Lines 'SelectedDevice' '^SelectedDevice=(\S+) State=device$'
     $gameInfo=Match-AimReportLine $Lines 'GameIdentity' '^GameIdentity=PASS GuestPID=([1-9][0-9]*) Name=(?:com)?\.dts\.freefireth$'
@@ -30,7 +30,7 @@ function ConvertFrom-AimBasisReport {
     $q=Match-AimReportLine $Lines 'AimQuaternion' ('^AimQuaternion X='+$n+' Y='+$n+' Z='+$n+' W='+$n+' NormSquared='+$n+' NormalizedByProbe=False$')
     $b=Match-AimReportLine $Lines 'QuaternionPositiveZBasis' ('^QuaternionPositiveZBasis X='+$n+' Y='+$n+' Z='+$n+' InputBasis=0,0,1 Math=VERIFIED_UNITY_QUATERNION_VECTOR_MULTIPLY NormalizedByProbe=False CameraConvention=UNVERIFIED ShotDirection=UNVERIFIED$')
     $objects=Match-AimReportLine $Lines 'LocalPlayerObjects' '^LocalPlayerObjects=PASS CurrentGame=(0x[0-9a-fA-F]+) Match=(0x[0-9a-fA-F]+) Player=(0x[0-9a-fA-F]+) Class=(\S+) Observations=([1-9][0-9]*) OriginalPathHotfixSlots=INACTIVE$'
-    $member=Match-AimReportLine $Lines 'AimStateMembership' '^AimStateMembership RosterIndex=([0-9]+) Player=(0x[0-9a-fA-F]+) IsLocal=True Proof=SELECTED_ENTRY_REVALIDATED CountersChangedSinceRoster=False CountersChangedDuringCapture=False Observations=([1-9][0-9]*)$'
+    $member=Match-AimReportLine $Lines 'AimStateMembership' '^AimStateMembership RosterIndex=([0-9]+) Player=(0x[0-9a-fA-F]+) IsLocal=True Proof=SELECTED_ENTRY_REVALIDATED CountersChangedSinceRoster=(True|False) CountersChangedDuringCapture=(True|False) Observations=([1-9][0-9]*)$'
     [void](Match-AimReportLine $Lines 'AimStateSemantics' '^AimStateSemantics TargetDirection=NOT_REQUESTED CameraConvention=UNVERIFIED FiringReadiness=UNVERIFIED LineOfSight=UNVERIFIED GameMethodCalls=NONE AimWrites=NONE$')
     $total=Match-AimReportLine $Lines 'PhysicalReadCalls' '^PhysicalReadCalls=([0-9]+) TranslationCacheHits=[0-9]+$'
     foreach ($key in @('PluginUnload','HandlerCleanup')) { [void](Match-AimReportLine $Lines $key ('^'+$key+'=PASS$')) }
@@ -51,6 +51,7 @@ function ConvertFrom-AimBasisReport {
     [pscustomobject]@{ Version=[int]$version.Groups[1].Value; Machine=$hostInfo.Groups[1].Value; HostPid=$hostInfo.Groups[2].Value
         Device=$deviceInfo.Groups[1].Value; GuestPid=$gameInfo.Groups[1].Value; BuildId=$moduleInfo.Groups[2].Value; LoadBias=$bias.ToString('x'); Player=$player.ToString('x'); Match=$matchPointer.ToString('x'); CurrentGame=$currentGame.ToString('x')
         BasisX=$bx; BasisY=$by; BasisZ=$bz; Yaw=[Math]::Atan2($bx,$bz)*180/[Math]::PI; Elevation=[Math]::Atan2($by,$horizontal)*180/[Math]::PI
+        CountersChangedSinceRoster=($member.Groups[3].Value -ceq 'True'); CountersChangedDuringCapture=($member.Groups[4].Value -ceq 'True'); MembershipScope='SELECTED_LOCAL_PLAYER_ONLY'
         AdditionalReads=[long]$phase.Groups[1].Value; TotalReads=[long]$total.Groups[1].Value }
 }
 function Get-AimYawDelta {
@@ -76,6 +77,7 @@ function Compare-AimBasisSamples {
         elseif ([Math]::Abs($rightElevation) -gt 5 -or [Math]::Abs($upYaw) -gt 5) { $status='INCONCLUSIVE_CROSS_AXIS_MOVEMENT' }
     }
     [pscustomobject]@{ Status=$status; Evidence='MANUAL_CAMERA_TURN_CORRELATION_ONLY'; Actions=@('USER_REPORTED_BASELINE','USER_REPORTED_RIGHT_TURN','USER_REPORTED_UP_TURN_FROM_RIGHT_CAPTURE')
+        CapturesWithRosterCounterChanges=@($Samples | Where-Object { $_.CountersChangedSinceRoster -or $_.CountersChangedDuringCapture }).Count; MembershipScope='SELECTED_LOCAL_PLAYER_ONLY'
         RightYawDelta=$rightYaw; RightElevationDrift=$rightElevation; UpYawDrift=$upYaw; UpElevationDelta=$upElevation; Samples=$Samples
         CameraConvention='UNVERIFIED'; ShotDirection='UNVERIFIED'; LineOfSight='UNVERIFIED'; AimWrites='NONE'; AimIntegration='INCOMPLETE' }
 }

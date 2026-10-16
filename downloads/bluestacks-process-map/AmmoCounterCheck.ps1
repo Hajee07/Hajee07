@@ -14,7 +14,7 @@ function Match-AmmoReportLine {
 }
 function ConvertFrom-AmmoCounterReport {
     param([Parameter(Mandatory=$true)][string[]]$Lines)
-    $version = Match-AmmoReportLine $Lines 'ProcessMapVersion' '^ProcessMapVersion=(32|33|34|35|36|37) ReadOnly=1$'
+    $version = Match-AmmoReportLine $Lines 'ProcessMapVersion' '^ProcessMapVersion=(32|33|34|35|36|37|38) ReadOnly=1$'
     $hostInfo = Match-AmmoReportLine $Lines 'Preflight' '^Preflight=PASS Machine=(\S+) HostPID=([1-9][0-9]*) VmmDigest=MATCH$'
     $deviceInfo = Match-AmmoReportLine $Lines 'SelectedDevice' '^SelectedDevice=(\S+) State=device$'
     $gameInfo = Match-AmmoReportLine $Lines 'GameIdentity' '^GameIdentity=PASS GuestPID=([1-9][0-9]*) Name=(?:com)?\.dts\.freefireth$'

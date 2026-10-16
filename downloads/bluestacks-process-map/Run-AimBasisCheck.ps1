@@ -37,5 +37,6 @@ $resultFile=Join-Path $PSScriptRoot ('aim-basis-comparison-'+[guid]::NewGuid().T
 $result | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $resultFile -Encoding UTF8
 Write-Host "AimBasisComparison=$($result.Status) Evidence=$($result.Evidence)"
 Write-Host "CameraTurnDeltas RightYaw=$($result.RightYawDelta) RightElevationDrift=$($result.RightElevationDrift) UpYawDrift=$($result.UpYawDrift) UpElevation=$($result.UpElevationDelta)"
+Write-Host "RosterCounterAudit CapturesWithChanges=$($result.CapturesWithRosterCounterChanges) MembershipScope=$($result.MembershipScope) CompleteRosterStability=NOT_ASSERTED"
 Write-Host 'CameraConvention=UNVERIFIED ShotDirection=UNVERIFIED LineOfSight=UNVERIFIED AimWrites=NONE AimIntegration=INCOMPLETE'
 Write-Host "ComparisonResultFile=$resultFile"

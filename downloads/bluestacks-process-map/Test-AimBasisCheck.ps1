@@ -10,7 +10,7 @@ function New-AimFixture {
     $bx=2*($x*$z+$w*$y);$by=2*($y*$z-$w*$x);$bz=1-2*($x*$x+$y*$y)
     $culture=[Globalization.CultureInfo]::InvariantCulture
     @(
-        'ProcessMapVersion=37 ReadOnly=1',
+        'ProcessMapVersion=38 ReadOnly=1',
         'Preflight=PASS Machine=Pie64 HostPID=100 VmmDigest=MATCH',
         'SelectedDevice=127.0.0.1:5555 State=device',
         'GameIdentity=PASS GuestPID=200 Name=.dts.freefireth',
@@ -47,9 +47,21 @@ foreach ($key in @('Version','Machine','HostPid','Device','GuestPid','BuildId','
     Check-AimComparison ((Compare-AimBasisSamples @($baseline,$right,$changed)).Status -eq 'INCONCLUSIVE_CONTEXT_CHANGED') "changed $key prevents combining camera captures"
 }
 $fixture=New-AimFixture
-$old=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=37','ProcessMapVersion=36') })
+$old=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=36') })
 Check-AimComparison ((ConvertFrom-AimBasisReport $old).Version -eq 36) 'accepted V36 report remains supported'
-foreach ($pair in @(@('Sampled=1','Sampled=0'),@('CountersChangedDuringCapture=False','CountersChangedDuringCapture=True'),@('IsLocal=True','IsLocal=False'),@('AdditionalPhysicalReads=3407','AdditionalPhysicalReads=6001'),@('PhysicalReadCalls=25377','PhysicalReadCalls=30001'),@('PluginUnload=PASS','PluginUnload=FAIL'),@('SharedSession=RELEASED','SharedSession=LOCKED'),@('NormSquared=1 ','NormSquared=0.5 '),@('Basis X=0','Basis X=0.5'),@('W=1 ','W=NaN '),@('Player=0x700010000000','Player=0x0'),@('GameMethodCalls=NONE','GameMethodCalls=CALLED'))) {
+Check-AimComparison ((ConvertFrom-AimBasisReport (@('')+$fixture+@(''))).Version -eq 38) 'blank pasted-output lines do not invalidate accepted records'
+$version37=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=37') })
+Check-AimComparison ((ConvertFrom-AimBasisReport $version37).Version -eq 37) 'V37 comparison input remains supported'
+foreach ($flags in @(@('True','False'),@('False','True'),@('True','True'))) {
+    $changed=@($fixture | ForEach-Object { $_.Replace('CountersChangedSinceRoster=False','CountersChangedSinceRoster='+$flags[0]).Replace('CountersChangedDuringCapture=False','CountersChangedDuringCapture='+$flags[1]) })
+    $parsed=ConvertFrom-AimBasisReport $changed
+    Check-AimComparison ($parsed.CountersChangedSinceRoster -eq ($flags[0] -eq 'True') -and $parsed.CountersChangedDuringCapture -eq ($flags[1] -eq 'True') -and $parsed.MembershipScope -eq 'SELECTED_LOCAL_PLAYER_ONLY') "global roster counter flags are retained with verified local membership: $($flags -join ',')"
+}
+$counterSample=Read-AimFixture 30 20;$counterSample.CountersChangedDuringCapture=$true
+$counterResult=Compare-AimBasisSamples @($baseline,$right,$counterSample)
+Check-AimComparison ($counterResult.Status -eq 'CONSISTENT_WITH_REPORTED_CAMERA_TURNS' -and $counterResult.CapturesWithRosterCounterChanges -eq 1 -and $counterResult.MembershipScope -eq 'SELECTED_LOCAL_PLAYER_ONLY') 'local-only comparison audits global changes without claiming complete roster stability'
+Reject-AimReport @($fixture | ForEach-Object { $_.Replace('Proof=SELECTED_ENTRY_REVALIDATED','Proof=UNVERIFIED') }) 'unverified selected membership still fails despite valid roster flags'
+foreach ($pair in @(@('Sampled=1','Sampled=0'),@('CountersChangedDuringCapture=False','CountersChangedDuringCapture=INVALID'),@('IsLocal=True','IsLocal=False'),@('AdditionalPhysicalReads=3407','AdditionalPhysicalReads=6001'),@('PhysicalReadCalls=25377','PhysicalReadCalls=30001'),@('PluginUnload=PASS','PluginUnload=FAIL'),@('SharedSession=RELEASED','SharedSession=LOCKED'),@('NormSquared=1 ','NormSquared=0.5 '),@('Basis X=0','Basis X=0.5'),@('W=1 ','W=NaN '),@('Player=0x700010000000','Player=0x0'),@('GameMethodCalls=NONE','GameMethodCalls=CALLED'))) {
     Reject-AimReport @($fixture | ForEach-Object { $_.Replace($pair[0],$pair[1]) }) "reject invalid camera report: $($pair[0])"
 }
 Reject-AimReport @($fixture+$fixture[0]) 'duplicate version record is rejected'

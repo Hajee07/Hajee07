@@ -7,11 +7,13 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 37. Manual camera-turn comparison.**
+**Current version: 38. Selected-local camera comparison fix.**
 `Run-AimBasisCheck.ps1` guides baseline/right/up captures using -ProbeAimState.
 It compares the source-verified basis changes with user-reported camera actions,
-with strict same-context, snapshot and cleanup checks. 742 offline checks pass.
-V36 live basis passed; V37 live experiment pending. Matching turns establish
+with strict same-context, selected-local snapshot and cleanup checks. Global
+roster counter changes are audited rather than mistaken for local-player changes.
+750 offline checks pass.
+V36 live basis passed; V38 live experiment pending. Matching turns establish
 manual correlation only; camera/shot convention and aiming remain unverified.
 See [camera comparison evidence](AIM-BASIS-COMPARISON-EVIDENCE.md) and
 [aim-state evidence](AIM-STATE-EVIDENCE.md).
