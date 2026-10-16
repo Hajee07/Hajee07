@@ -18,14 +18,14 @@ namespace HeadBridge.Mapping
             foreach(GameLayoutCheck check in CombatStateReference.Anchors)
                 Expect(EqualBytes(Virtual(game.Root,module.LoadBias+check.Address,check.Expected(module.LoadBias).Length),check.Expected(module.LoadBias)),"combat code "+check.Name);
         }
-        private static void CombatSchema(ObjectReads reads,ModuleResult module,GameLayoutResult layout)
+        private static void CombatSchema(ObjectReads reads,ModuleResult module,GameLayoutResult layout,StateMethod[] methods=null,StateField[] fields=null)
         {
-            foreach(StateMethod method in CombatStateReference.Methods)
+            foreach(StateMethod method in methods??CombatStateReference.Methods)
             {
                 Expect(reads.Value(module.LoadBias+method.PointerRva)==module.LoadBias+method.Rva,"combat registered method");
                 Expect(EqualBytes(reads.Read(layout.RuntimeMetadataBase+method.MetadataOffset,40),Hex(method.RecordHex)),"combat method metadata");
             }
-            foreach(StateField field in CombatStateReference.Fields)
+            foreach(StateField field in fields??CombatStateReference.Fields)
             {
                 Expect(reads.Word(module.LoadBias+field.OffsetRva)==field.Offset &&
                     EqualBytes(reads.Read(layout.RuntimeMetadataBase+field.MetadataOffset,12),Hex(field.RecordHex)),"combat field registration "+field.Name);
@@ -33,25 +33,25 @@ namespace HeadBridge.Mapping
                 if(field.TypeIndex>=0)Expect(reads.Value(module.LoadBias+field.Descriptor)==layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset+(ulong)field.TypeIndex*88UL,"combat resolved field type "+field.Name);
             }
         }
-        private static ObjectClassProfile CombatProfile(int index)
-        { foreach(ObjectClassProfile p in CombatStateReference.Classes)if(p.Index==index)return p;return null; }
-        private static ObjectClassProfile CombatClass(ObjectReads reads,ulong klass,GameLayoutResult layout)
+        private static ObjectClassProfile CombatProfile(int index,ObjectClassProfile[] profiles=null)
+        { foreach(ObjectClassProfile p in profiles??CombatStateReference.Classes)if(p.Index==index)return p;return null; }
+        private static ObjectClassProfile CombatClass(ObjectReads reads,ulong klass,GameLayoutResult layout,ObjectClassProfile[] profiles=null)
         {
             ObjectReads.User(klass,8,"combat class");ulong row=reads.Value(klass+0x68),first=layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset;
             Expect(row>=first && (row-first)%88UL==0 && (row-first)/88UL<100000,"combat type row bound");
-            ObjectClassProfile p=CombatProfile((int)((row-first)/88UL));if(p==null)return null;
+            ObjectClassProfile p=CombatProfile((int)((row-first)/88UL),profiles);if(p==null)return null;
             Expect(EqualBytes(reads.Read(row,88),Hex(p.RecordHex)),"combat class record "+p.Name);
             Expect(reads.Value(klass+0x78)==klass && reads.Value(klass+0x20)==row && reads.Word(klass+0x28)==p.Bits,"combat class identity "+p.Name);
             Expect(reads.Value(klass+0x10)==layout.RuntimeMetadataBase+p.NameOffset && reads.Value(klass+0x18)==layout.RuntimeMetadataBase+p.NamespaceOffset &&
                 reads.Word(klass+0x11c)==p.Token && reads.Word(klass+0xf8)==p.InstanceSize,"combat class layout "+p.Name);
             return p;
         }
-        private static void CombatFields(ObjectReads reads,ulong klass,int index,ModuleResult module,GameLayoutResult layout)
+        private static void CombatFields(ObjectReads reads,ulong klass,int index,ModuleResult module,GameLayoutResult layout,StateField[] fields=null)
         {
             byte[] row=reads.Read(layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset+(ulong)index*88UL,88);
             int count=BitConverter.ToUInt16(reads.Read(klass+0x124,2),0);Expect(count==BitConverter.ToUInt16(row,68),"combat runtime field count");
             ulong table=reads.Pointer(klass+0x80,"combat field table");
-            foreach(StateField f in CombatStateReference.Fields)
+            foreach(StateField f in fields??CombatStateReference.Fields)
             {
                 if(f.Owner!=index)continue;Expect(f.Local<count,"combat runtime field index");byte[] info=reads.Read(table+(ulong)f.Local*32UL,32);
                 Expect(BitConverter.ToUInt64(info,0)==layout.RuntimeMetadataBase+f.NameOffset && BitConverter.ToUInt64(info,8)==module.LoadBias+f.Descriptor &&

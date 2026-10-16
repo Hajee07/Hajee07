@@ -1,0 +1,552 @@
+{
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "classes": [
+    {
+      "index": 31911,
+      "name": "COW.GamePlay.AttackableEntity",
+      "parent": 31912,
+      "name_offset": 7942031,
+      "namespace_offset": 7768922,
+      "record_hex": "fb9b5a00c6f757001f5c0000ffffffff0f6600001f5c0000ffffffff8000100034e203002f4b0300ffffffff32310000ffffffff0a1600009f270800696300001d0004000200000000004f0001000300000c0000a87c0002",
+      "bits": 1179648,
+      "instance_size": 136,
+      "static_size": 0,
+      "token": 33586344
+    },
+    {
+      "index": 31912,
+      "name": "COW.GamePlay.COWReplicationEntity",
+      "parent": 36302,
+      "name_offset": 7942048,
+      "namespace_offset": 7768922,
+      "record_hex": "0c9c5a00c6f757000f660000ffffffff1cc000000f660000ffffffff81001000ffffffff4c4b0300ffffffffffffffffffffffffffffffffee2708006c63000004000000000000000000280000000200000c0000a97c0002",
+      "bits": 1179648,
+      "instance_size": 128,
+      "static_size": 0,
+      "token": 33586345
+    },
+    {
+      "index": 36302,
+      "name": "GCommon.ReplicationEntity",
+      "parent": 36298,
+      "name_offset": 8666601,
+      "namespace_offset": 8633433,
+      "record_hex": "55aa6500c52865001cc00000ffffffffad8500001cc00000ffffffff81001000bf490400390e0400fffffffff73e0000ffffffffffffffff054f0a00e379000013000100030000000000280000000200000c0000cf8d0002",
+      "bits": 1179648,
+      "instance_size": 128,
+      "static_size": 0,
+      "token": 33590735
+    },
+    {
+      "index": 34539,
+      "name": "COW.GamePlay.PlayerAttributes",
+      "parent": 41057,
+      "name_offset": 8356354,
+      "namespace_offset": 7768922,
+      "record_hex": "6eee6000c6f7570049ba0000ffffffff7ead000049ba0000ffffffff0000100092220400a2c00300ffffffff7c38000046240000ffffffff299f0900ffffffff0d014b00b40000000900040000000000000c0000e3860002",
+      "bits": 1179648,
+      "instance_size": 1008,
+      "static_size": 0,
+      "token": 33588963
+    },
+    {
+      "index": 36356,
+      "name": "GCommon.BitArrayBoolean",
+      "parent": 36353,
+      "name_offset": 8678914,
+      "namespace_offset": 8633433,
+      "record_hex": "6eda6500c528650069620000ffffffff5f62000069620000ffffffff01001000ad4b040042100400ffffffffffffffff1e260000ffffffffd9500a00ffffffff09000000020000000100040000000000000c0000048e0002",
+      "bits": 1179648,
+      "instance_size": 32,
+      "static_size": 0,
+      "token": 33590788
+    },
+    {
+      "index": 36353,
+      "name": "GCommon.BitArray",
+      "parent": 37718,
+      "name_offset": 8678878,
+      "namespace_offset": 8633433,
+      "record_hex": "4ada6500c52865005f620000ffffffff9eb400005f620000ffffffff01001000a74b04001e100400ffffffffffffffffffffffffffffffffd1500a00ffffffff13000000030000000000040000000000000c0000028e0002",
+      "bits": 1179648,
+      "instance_size": 24,
+      "static_size": 0,
+      "token": 33590786
+    },
+    {
+      "index": 36648,
+      "name": "GCommon.IRepDataPool",
+      "parent": -1,
+      "name_offset": 8723067,
+      "namespace_offset": 8633433,
+      "record_hex": "e7866600c5286500a5990000ffffffffffffffffa5990000ffffffffa1000000ffffffff90180400ffffffffffffffffffffffffffffffffffffffffffffffff21000000000000000000000000000000000c0000298f0002",
+      "bits": 1179648,
+      "instance_size": 0,
+      "static_size": 0,
+      "token": 33591081
+    },
+    {
+      "index": 36647,
+      "name": "GCommon.ReplicationDataPool",
+      "parent": 37718,
+      "name_offset": 8722463,
+      "namespace_offset": 8633433,
+      "record_hex": "8b846600c528650017c00000ffffffff9eb4000017c00000ffffffff01001000dc51040061180400ffffffffffffffffffffffffffffffffab5a0a00ffffffff2f000000030000000000300000000000000c0000288f0002",
+      "bits": 1179648,
+      "instance_size": 40,
+      "static_size": 0,
+      "token": 33591080
+    },
+    {
+      "index": 36654,
+      "name": "GCommon.ReplicationDataPoolUnsafe",
+      "parent": 37718,
+      "name_offset": 8723183,
+      "namespace_offset": 8633433,
+      "record_hex": "5b876600c528650018c00000ffffffff9eb4000018c00000ffffffff01001000e4510400c2180400ffffffffffffffffffffffffffffffff8d5b0a00ffffffff300000000c0000000000300000000000000c00002f8f0002",
+      "bits": 1179648,
+      "instance_size": 112,
+      "static_size": 0,
+      "token": 33591087
+    },
+    {
+      "index": 36651,
+      "name": "GCommon.PRIDataPool",
+      "parent": 36647,
+      "name_offset": 8723106,
+      "namespace_offset": 8633433,
+      "record_hex": "0e876600c5286500cfb70000ffffffff17c00000cfb70000ffffffff01001000df510400bd180400ffffffffffffffffffffffff91190000db5a0a00c97a000003000000030000000000520002000200000c00002c8f0002",
+      "bits": 1179648,
+      "instance_size": 64,
+      "static_size": 0,
+      "token": 33591084
+    },
+    {
+      "index": 36655,
+      "name": "GCommon.PRIDataPoolUnsafe",
+      "parent": 36654,
+      "name_offset": 8723372,
+      "namespace_offset": 8633433,
+      "record_hex": "18886600c5286500d0b70000ffffffff18c00000d0b70000ffffffff01001000f0510400f2180400ffffffffffffffffffffffff95190000bd5b0a00cd7a000003000000030000000000520002000200000c0000308f0002",
+      "bits": 1179648,
+      "instance_size": 136,
+      "static_size": 0,
+      "token": 33591088
+    },
+    {
+      "index": 36644,
+      "name": "GCommon.ReplicationData",
+      "parent": 37718,
+      "name_offset": 8722315,
+      "namespace_offset": 8633433,
+      "record_hex": "f7836600c528650016c00000ffffffff9eb4000016c00000ffffffff01001000d05104005c180400ffffffffffffffffffffffffffffffff935a0a00ffffffff01000000020000000000040000000000000c0000258f0002",
+      "bits": 1179648,
+      "instance_size": 32,
+      "static_size": 0,
+      "token": 33591077
+    },
+    {
+      "index": 36653,
+      "name": "GCommon.ReplicationDataUnsafe",
+      "parent": 37718,
+      "name_offset": 8723161,
+      "namespace_offset": 8633433,
+      "record_hex": "45876600c528650019c00000ffffffff9eb4000019c00000ffffffff01001000e2510400c1180400ffffffffffffffffffffffffffffffff895b0a00ffffffff01000000020000000000040000000000000c00002e8f0002",
+      "bits": 1179648,
+      "instance_size": 32,
+      "static_size": 0,
+      "token": 33591086
+    }
+  ],
+  "fields": [
+    {
+      "owner": 12418,
+      "local": 43,
+      "name": "m_GameServerGameMode",
+      "offset": 276,
+      "offset_rva": 28297080,
+      "descriptor": 182050128,
+      "bits": 2148073489,
+      "type_index": -1,
+      "name_offset": 3927700,
+      "token": 67203435,
+      "metadata_offset": 43108216,
+      "record_hex": "005b1d00a01701006b710104"
+    },
+    {
+      "owner": 31824,
+      "local": 324,
+      "name": "IODLOCEJIOK",
+      "offset": 1896,
+      "offset_rva": 27159252,
+      "descriptor": 182458000,
+      "bits": 1179652,
+      "type_index": 34539,
+      "name_offset": 7877964,
+      "token": 67360606,
+      "metadata_offset": 44994268,
+      "record_hex": "b8a159004aba00005ed70304"
+    },
+    {
+      "owner": 36302,
+      "local": 1,
+      "name": "m_PRIDataPool",
+      "offset": 112,
+      "offset_rva": 27273684,
+      "descriptor": 182329312,
+      "bits": 1179652,
+      "type_index": 36649,
+      "name_offset": 8640131,
+      "token": 67389889,
+      "metadata_offset": 45345664,
+      "record_hex": "ef4265005e990000c1490404"
+    },
+    {
+      "owner": 34539,
+      "local": 0,
+      "name": "BDOEGBMMEOK",
+      "offset": 32,
+      "offset_rva": 27234004,
+      "descriptor": 182038544,
+      "bits": 1179649,
+      "type_index": 31824,
+      "name_offset": 7910904,
+      "token": 67379859,
+      "metadata_offset": 45225304,
+      "record_hex": "64225a0038ba000093220404"
+    },
+    {
+      "owner": 34539,
+      "local": 127,
+      "name": "KNODCJBPNAB",
+      "offset": 688,
+      "offset_rva": 27234512,
+      "descriptor": 182112320,
+      "bits": 1179652,
+      "type_index": 36356,
+      "name_offset": 8364899,
+      "token": 67379986,
+      "metadata_offset": 45226828,
+      "record_hex": "cf0f61006b62000012230404"
+    },
+    {
+      "owner": 36353,
+      "local": 2,
+      "name": "m_Value",
+      "offset": 16,
+      "offset_rva": 27275640,
+      "descriptor": 182050096,
+      "bits": 2148073476,
+      "type_index": -1,
+      "name_offset": 2119572,
+      "token": 67390378,
+      "metadata_offset": 45351532,
+      "record_hex": "00c401009e170100aa4b0404"
+    },
+    {
+      "owner": 36356,
+      "local": 1,
+      "name": "m_Mode",
+      "offset": 24,
+      "offset_rva": 27275672,
+      "descriptor": 182874416,
+      "bits": 2148597764,
+      "type_index": 36355,
+      "name_offset": 4735628,
+      "token": 67390383,
+      "metadata_offset": 45351592,
+      "record_hex": "f8ae2900ae220100af4b0404"
+    },
+    {
+      "owner": 36647,
+      "local": 0,
+      "name": "m_Datas",
+      "offset": 16,
+      "offset_rva": 27281988,
+      "descriptor": 173922432,
+      "bits": 1900548,
+      "type_index": -1,
+      "name_offset": 3142583,
+      "token": 67391965,
+      "metadata_offset": 45370576,
+      "record_hex": "236011001f530000dd510404"
+    },
+    {
+      "owner": 36647,
+      "local": 1,
+      "name": "m_MaxVarCount",
+      "offset": 24,
+      "offset_rva": 27281992,
+      "descriptor": 182031072,
+      "bits": 2148007940,
+      "type_index": -1,
+      "name_offset": 8723053,
+      "token": 67391966,
+      "metadata_offset": 45370588,
+      "record_hex": "d9866600ab9b0000de510404"
+    },
+    {
+      "owner": 36654,
+      "local": 0,
+      "name": "m_Datas",
+      "offset": 16,
+      "offset_rva": 27282020,
+      "descriptor": 173922464,
+      "bits": 1900548,
+      "type_index": -1,
+      "name_offset": 3142583,
+      "token": 67391973,
+      "metadata_offset": 45370672,
+      "record_hex": "2360110020530000e5510404"
+    },
+    {
+      "owner": 36654,
+      "local": 1,
+      "name": "m_MaxVarCount",
+      "offset": 24,
+      "offset_rva": 27282024,
+      "descriptor": 182031072,
+      "bits": 2148007940,
+      "type_index": -1,
+      "name_offset": 8723053,
+      "token": 67391974,
+      "metadata_offset": 45370684,
+      "record_hex": "d9866600ab9b0000e6510404"
+    },
+    {
+      "owner": 36644,
+      "local": 1,
+      "name": "Value",
+      "offset": 24,
+      "offset_rva": 27281944,
+      "descriptor": 182480688,
+      "bits": 2148597766,
+      "type_index": 36645,
+      "name_offset": 2119727,
+      "token": 67391954,
+      "metadata_offset": 45370444,
+      "record_hex": "9bc401001bc00000d2510404"
+    },
+    {
+      "owner": 36653,
+      "local": 1,
+      "name": "Value",
+      "offset": 24,
+      "offset_rva": 27282016,
+      "descriptor": 173908240,
+      "bits": 983046,
+      "type_index": -1,
+      "name_offset": 2119727,
+      "token": 67391972,
+      "metadata_offset": 45370660,
+      "record_hex": "9bc40100c84f0000e4510404"
+    }
+  ],
+  "methods": [
+    {
+      "index": 212886,
+      "name": "get_CurrentTrainingZoneType",
+      "rva": 116611556,
+      "pointer_rva": 179498072,
+      "metadata_offset": 27092028,
+      "record_hex": "463f5900507c0000a89b000000000008ffffffffffffffff58250000973f030686080000ffff0000"
+    },
+    {
+      "index": 210275,
+      "name": "get_IsInBattleZone",
+      "rva": 116611472,
+      "pointer_rva": 179477184,
+      "metadata_offset": 26987588,
+      "record_hex": "fa665800507c00000b63000000000008ffffffffffffffffd24400006435030686080000ffff0000"
+    },
+    {
+      "index": 210276,
+      "name": "get_IsInShootingRange",
+      "rva": 116611860,
+      "pointer_rva": 179477192,
+      "metadata_offset": 26987628,
+      "record_hex": "0d675800507c00000b63000000000008ffffffffffffffff0c3f00006535030686080000ffff0000"
+    },
+    {
+      "index": 35231,
+      "name": "IsOfflineTrainingMode",
+      "rva": 119367768,
+      "pointer_rva": 178076832,
+      "metadata_offset": 19985828,
+      "record_hex": "9e3d1d00823000000b63000000000008ffffffffffffffff57250000a089000696000000ffff0000"
+    },
+    {
+      "index": 34943,
+      "name": "get_GameServerGameMode",
+      "rva": 119272896,
+      "pointer_rva": 178074528,
+      "metadata_offset": 19974308,
+      "record_hex": "48231d00823000009b17010000000008ffffffffffffffff0a0100008088000696080000ffff0000"
+    },
+    {
+      "index": 246131,
+      "name": "IsInvincible",
+      "rva": 130216740,
+      "pointer_rva": 179764032,
+      "metadata_offset": 28421828,
+      "record_hex": "fde65e00eb8600000b63000000000008ffffffffffffffffc249000074c1030686000000ffff0000"
+    },
+    {
+      "index": 266309,
+      "name": "GetBooleanValue",
+      "rva": 136812240,
+      "pointer_rva": 179925456,
+      "metadata_offset": 29228948,
+      "record_hex": "8eda6500048e00000b63000000000008ffffffffffffffffffffffff4610040686000000ffff0000"
+    },
+    {
+      "index": 268413,
+      "name": "GetDataUInt8",
+      "rva": 137297032,
+      "pointer_rva": 179942288,
+      "metadata_offset": 29313108,
+      "record_hex": "60866600278f0000fe6300000000000838ad0200ffffffffffffffff7e180406e60100001d000100"
+    },
+    {
+      "index": 268509,
+      "name": "GetDataUInt8",
+      "rva": 137308084,
+      "pointer_rva": 179943056,
+      "metadata_offset": 29316948,
+      "record_hex": "608666002e8f0000fe63000000000008e7ad0200ffffffffffffffffde180406e60100001b000100"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "get_CurrentTrainingZoneType_212886_0",
+      "rva": 116611556,
+      "hex": "fe57bea9f44f01a99403029088ba7639f30300aa2801003740c001d0006040f9767cd094e0c701f0005441f9737cd0942800805288ba363900ab8452e1031faa"
+    },
+    {
+      "name": "get_CurrentTrainingZoneType_212886_64",
+      "rva": 116611620,
+      "hex": "fed363944001003600ab8452e1031faa27d46394c00600b4e10313aaf44f41a9e2031faafe57c2a8fbd5531448c001d0086140f9000140f908e040b948000035"
+    },
+    {
+      "name": "get_CurrentTrainingZoneType_212886_128",
+      "rva": 116611684,
+      "hex": "bc7cd094e0031faa7b830a94600000366000805223000014733a40f9d30200b4e8c701f0085541f9750240f9140140f9e00315aa3080d094a85e4279280100b4"
+    },
+    {
+      "name": "get_CurrentTrainingZoneType_212886_192",
+      "rva": 116611748,
+      "hex": "a95a40f9292100912a815ff85f0114eb60010054080500f12941009161ffff5462018052e00313aae10314aa5680d09407000014e0031f2a0a000014280140b9"
+    },
+    {
+      "name": "get_CurrentTrainingZoneType_212886_256",
+      "rva": 116611812,
+      "hex": "082d0011a8d2288b00e10491080840a9a1048052e00313aa00013fd6001c0012f44f41a9fe57c2a8c0035fd6da7cd094"
+    },
+    {
+      "name": "get_IsInBattleZone_210275_0",
+      "rva": 116611472,
+      "hex": "fe4fbfa9f30300aa409a8852e1031faa1fd4639420010036409a8852e1031faa48d46394600100b4e10313aae2031faafe4fc1a8f0d05314e00313aa06000094"
+    },
+    {
+      "name": "get_IsInBattleZone_210275_64",
+      "rva": 116611536,
+      "hex": "1f080071e0179f1afe4fc1a8c0035fd6267dd094"
+    },
+    {
+      "name": "get_IsInShootingRange_210276_0",
+      "rva": 116611860,
+      "hex": "fe4fbfa9f30300aa80e18752e1031faabed363942001003680e18752e1031faae7d36394600100b4e10313aae2031faafe4fc1a88fd05314e00313aaa5ffff97"
+    },
+    {
+      "name": "get_IsInShootingRange_210276_64",
+      "rva": 116611924,
+      "hex": "1f0c0071e0179f1afe4fc1a8c0035fd6c57cd094"
+    },
+    {
+      "name": "IsOfflineTrainingMode_35231_0",
+      "rva": 119367768,
+      "hex": "fe4fbfa993ee0190686e6139c800003740ab01b0006040f9dbf8c59428008052686e2139e0aa8452e1031faa6650599400010036e0aa8452e1031faa8f505994"
+    },
+    {
+      "name": "IsOfflineTrainingMode_35231_64",
+      "rva": 119367832,
+      "hex": "e00100b4e1031faafe4fc1a88f4b491448ab01b0086140f9000140f908e040b94800003526f9c59440a3ff971fb40471e0179f1afe4fc1a8c0035fd669f9c594"
+    },
+    {
+      "name": "get_GameServerGameMode_34943_0",
+      "rva": 119272896,
+      "hex": "fe4fbfa933ef01f068065d39c800003700ac0190006040f98155c6942800805268061d3940218052e1031faa0cad59940001003640218052e1031faa35ad5994"
+    },
+    {
+      "name": "get_GameServerGameMode_34943_64",
+      "rva": 119272960,
+      "hex": "e00100b4e1031faafe4fc1a873bf491413ac0190736240f9600240f908e040b968000035cc55c694600240f9085c40f9001541b9fe4fc1a8c0035fd60f56c694"
+    },
+    {
+      "name": "IsInvincible_246131_0",
+      "rva": 130216740,
+      "hex": "fe4fbfa9f30300aa40388952e1031faabaed2f942001003640388952e1031faae3ed2f94400100b4e10313aae2031faafe4fc1a88bea1f14605a41f9800000b4"
+    },
+    {
+      "name": "IsInvincible_246131_64",
+      "rva": 130216804,
+      "hex": "e1031faafe4fc1a8d9281914c2969c94"
+    },
+    {
+      "name": "GetBooleanValue_266309_0",
+      "rva": 136812240,
+      "hex": "081040b9091840b91f010071ea079f1a1f050031e8179f1a3f0500714001881ac0035fd6"
+    },
+    {
+      "name": "GetDataUInt8_268413_0",
+      "rva": 137297032,
+      "hex": "fe0f1ff8091880b9e803012a1f0109eb6a010054090840f9890100b42a1940b95f01016b49010054280d088b081140f9680000b40061403902000014e0031f2a"
+    },
+    {
+      "name": "GetDataUInt8_268413_64",
+      "rva": 137297096,
+      "hex": "fe0741f8c0035fd66a9481946b948194"
+    },
+    {
+      "name": "GetDataUInt8_268509_0",
+      "rva": 137308084,
+      "hex": "fe0f1ff8091880b9e803012a1f0109eb8a010054090840f9a90100b42a1940b95f01016b69010054280d088b081140f9880000b4080d40f90001403902000014"
+    },
+    {
+      "name": "GetDataUInt8_268509_64",
+      "rva": 137308148,
+      "hex": "e0031f2afe0741f8c0035fd69e8981949f898194"
+    }
+  ],
+  "pools": [
+    {
+      "index": 36651,
+      "base_index": 36647,
+      "data_index": 36644,
+      "interface_offset": 49,
+      "interface_metadata_offset": 51116572,
+      "interface_hex": "a599000031000000",
+      "slot": 60,
+      "metadata_offset": 50540600,
+      "encoded": 1611149563,
+      "rva": 137297032,
+      "element_descriptor": 182480608
+    },
+    {
+      "index": 36655,
+      "base_index": 36654,
+      "data_index": 36653,
+      "interface_offset": 49,
+      "interface_metadata_offset": 51116604,
+      "interface_hex": "a599000031000000",
+      "slot": 60,
+      "metadata_offset": 50541504,
+      "encoded": 1611149755,
+      "rva": 137308084,
+      "element_descriptor": 182480656
+    }
+  ],
+  "interface_cell": 180556352,
+  "scope": "One selected nonlocal player: original CurrentTrainingZoneType and IsInvincible predicate only. No complete attackability, invulnerability policy, LOS or aim assertion."
+}

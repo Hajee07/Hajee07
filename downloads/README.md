@@ -1,10 +1,14 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V23**. Optional `-ProbeCombatState` samples one verified
-nonlocal player's original watching, dead/revive, ghost and IsDieing predicates.
-385 offline checks pass; live V23 validation is pending. This does not establish
-combat eligibility, mode-zone rules, invulnerability or line of sight.
-See [combat-state evidence](bluestacks-process-map/COMBAT-STATE-EVIDENCE.md).
+Current process probe: **V24**. Optional `-ProbeZoneProtection` samples one
+verified nonlocal player's original training-zone and invincibility predicates.
+432 offline checks pass; live V24 validation is pending. This does not establish
+complete combat eligibility, damage immunity or line of sight.
+See [zone/protection evidence](bluestacks-process-map/ZONE-PROTECTION-EVIDENCE.md).
+
+V23's combat-state mode remains available. Two live reports accepted its original
+watching/dead/revive/ghost/IsDieing predicates for the selected player, within the
+read budget and with all cleanup passing.
 
 V22's `-ProbeTeamPolicy` remains available. The user's live run verified the
 original packed-ID-byte predicate in raw mode 23, SameTeam=False, within the

@@ -579,7 +579,7 @@ roster objects were verified. Local-head capture independently stopped with
 NOT_READY_MOTION after three TRS changes. No aim write occurred.
 
 
-## V23 combat-state probe (live validation pending)
+## V23 combat-state probe
 
 The optional -ProbeCombatState mode observes one verified nonlocal roster member,
 with optional -CombatRosterIndex for an explicit current-run member. It validates
@@ -590,6 +590,24 @@ metadata, hotfix gates and exact selected entry are rechecked. One member keeps
 the phase within the unchanged 6000-read allowance / global 30000-call limit.
 
 385 offline checks pass (68 new cases). Baseline synthetic phase calls=4805.
-Live Windows validation is pending. This does not establish hostility, complete
+Two live reports (host 11784 / guest 4901) accepted the same nonlocal player's
+original watching, dead/revive, ghost and IsDieing=False in raw mode 23. Each
+used 4736 additional reads. Totals were 23896 and 25519; all cleanup passed.
+The rosters verified all 13 and 16 candidates, and local heads sampled on
+attempts one and two respectively. This does not establish hostility, complete
 combat eligibility, mode-zone rules, invulnerability, LOS or aiming. Existing
 head, player-state and team-policy modes remain available and mutually exclusive.
+
+
+## V24 zone/protection probe (live validation pending)
+
+The optional -ProbeZoneProtection mode samples one nonlocal member's original
+CurrentTrainingZoneType, IsInBattleZone/IsInShootingRange and PlayerAttributes
+IsInvincible predicate. It validates exact managed/unsafe replication-pool
+interface dispatch, metadata and array/data types, attributes ownership,
+mask/mode and original gates, then rechecks selected membership and inputs.
+
+432 offline checks pass (47 new cases); baseline phase reads=5769 within the
+unchanged 6000-phase/30000-global limits. V23 live evidence is preserved above.
+Live V24 validation is pending. Complete damage immunity, combat eligibility,
+hostility, LOS and aim integration remain unverified; no game write occurs.

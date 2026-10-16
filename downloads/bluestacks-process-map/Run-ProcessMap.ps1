@@ -4,6 +4,7 @@ param(
     [Parameter(ParameterSetName='PlayerState')]
     [Parameter(ParameterSetName='TeamPolicy')]
     [Parameter(ParameterSetName='CombatState')]
+    [Parameter(ParameterSetName='ZoneProtection')]
     [string] $MachineName = 'Pie64',
     [ValidatePattern('^[A-Za-z0-9_.:-]+$')]
     [string] $Device = '127.0.0.1:5555',
@@ -15,7 +16,12 @@ param(
     [switch] $ProbeCombatState,
     [Parameter(ParameterSetName='CombatState')]
     [ValidateRange(-1, 15)]
-    [int] $CombatRosterIndex = -1
+    [int] $CombatRosterIndex = -1,
+    [Parameter(ParameterSetName='ZoneProtection')]
+    [switch] $ProbeZoneProtection,
+    [Parameter(ParameterSetName='ZoneProtection')]
+    [ValidateRange(-1, 15)]
+    [int] $ZoneRosterIndex = -1
 )
 Set-StrictMode -Version 2
 $ErrorActionPreference = 'Stop'
@@ -91,11 +97,13 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=23 ReadOnly=1'
+Record 'ProcessMapVersion=24 ReadOnly=1'
 Record "PlayerStateMode=$($ProbePlayerState.IsPresent)"
 Record "TeamPolicyMode=$($ProbeTeamPolicy.IsPresent)"
 Record "CombatStateMode=$($ProbeCombatState.IsPresent) RequestedRosterIndex=$CombatRosterIndex"
+Record "ZoneProtectionMode=$($ProbeZoneProtection.IsPresent) RequestedRosterIndex=$ZoneRosterIndex"
 try {
+    if ($PSBoundParameters.ContainsKey('ZoneRosterIndex') -and -not $ProbeZoneProtection.IsPresent) { throw 'Use -ProbeZoneProtection with -ZoneRosterIndex.' }
     if ($PSBoundParameters.ContainsKey('CombatRosterIndex') -and -not $ProbeCombatState.IsPresent) { throw 'Use -ProbeCombatState with -CombatRosterIndex.' }
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -123,6 +131,8 @@ try {
     $teamReferencePath = Join-Path $PSScriptRoot 'TeamPolicyReference.cs'
     $combatPath = Join-Path $PSScriptRoot 'CombatStateProbe.cs'
     $combatReferencePath = Join-Path $PSScriptRoot 'CombatStateReference.cs'
+    $zonePath = Join-Path $PSScriptRoot 'ZoneProtectionProbe.cs'
+    $zoneReferencePath = Join-Path $PSScriptRoot 'ZoneProtectionReference.cs'
     if ($manifest.plugin -cne 'VBoxDbgHeadAimBridge.dll' -or $manifest.sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.mapping_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.module_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
@@ -142,7 +152,9 @@ try {
         $manifest.team_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.team_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.combat_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
-        $manifest.combat_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
+        $manifest.combat_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.zone_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.zone_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
     if ((Get-FileHash -LiteralPath $pluginPath -Algorithm SHA256).Hash -ine $manifest.sha256 -or
         (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash -ine $manifest.mapping_source_sha256 -or
         (Get-FileHash -LiteralPath $modulePath -Algorithm SHA256).Hash -ine $manifest.module_source_sha256 -or
@@ -162,10 +174,12 @@ try {
         (Get-FileHash -LiteralPath $teamPath -Algorithm SHA256).Hash -ine $manifest.team_source_sha256 -or
         (Get-FileHash -LiteralPath $teamReferencePath -Algorithm SHA256).Hash -ine $manifest.team_reference_sha256 -or
         (Get-FileHash -LiteralPath $combatPath -Algorithm SHA256).Hash -ine $manifest.combat_source_sha256 -or
-        (Get-FileHash -LiteralPath $combatReferencePath -Algorithm SHA256).Hash -ine $manifest.combat_reference_sha256) {
+        (Get-FileHash -LiteralPath $combatReferencePath -Algorithm SHA256).Hash -ine $manifest.combat_reference_sha256 -or
+        (Get-FileHash -LiteralPath $zonePath -Algorithm SHA256).Hash -ine $manifest.zone_source_sha256 -or
+        (Get-FileHash -LiteralPath $zoneReferencePath -Algorithm SHA256).Hash -ine $manifest.zone_reference_sha256) {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
-    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath) -ErrorAction Stop
+    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath) -ErrorAction Stop
     $classId = (Get-Item -LiteralPath 'Registry::HKEY_CLASSES_ROOT\VirtualBox.VirtualBoxClient\CLSID').GetValue('')
     $server = [Environment]::ExpandEnvironmentVariables([string](Get-Item -LiteralPath "Registry::HKEY_CLASSES_ROOT\CLSID\$classId\InprocServer32").GetValue(''))
     if ([IO.Path]::GetFileName($server.Trim().Trim('"')) -ine 'BstkC.dll') { throw 'COM client is not the verified BlueStacks server.' }
@@ -304,7 +318,37 @@ try {
     $otherHeads = [HeadBridge.Mapping.OtherHeadResult]::new()
     $teamSummary = 'NOT_REQUESTED'
     $combatSummary = 'NOT_REQUESTED'
-    if ($ProbeCombatState) {
+    $zoneSummary = 'NOT_REQUESTED'
+    if ($ProbeZoneProtection) {
+        $stage = 'ZoneProtectionSamples'
+        $zoneStart = $reader.PhysicalCalls
+        $zone = $reader.SampleZoneProtection($kernel, $game, $module, $layout, $objects, $ZoneRosterIndex, $progress)
+        if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during zone/protection sampling.' }
+        $zoneSummary = $zone.StopReason
+        Record "ZoneProtectionSamples AdditionalPhysicalReads=$($reader.PhysicalCalls - $zoneStart) Attempted=$($zone.Samples.Length) Sampled=$($zone.Sampled) StopReason=$($zone.StopReason) Detail=$($zone.Detail)"
+        foreach ($sample in $zone.Samples) {
+            if ($sample.Status -ceq 'SAMPLED_READ_ONLY') {
+                $trainingZone = if ($null -eq $sample.TrainingZone) { 'UNKNOWN' } else { [string]$sample.TrainingZone }
+                $battleZone = if ($null -eq $sample.InBattleZone) { 'UNKNOWN' } else { [string]$sample.InBattleZone }
+                $shootingRange = if ($null -eq $sample.InShootingRange) { 'UNKNOWN' } else { [string]$sample.InShootingRange }
+                $invincible = if ($null -eq $sample.Invincible) { 'UNKNOWN' } else { [string]$sample.Invincible }
+                $mask = if ($null -eq $sample.InvincibilityMask) { 'UNKNOWN' } else { [string]$sample.InvincibilityMask }
+                $maskMode = if ($null -eq $sample.InvincibilityMode) { 'UNKNOWN' } else { [string]$sample.InvincibilityMode }
+                Record "ZoneProtection=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) GameModeRaw=$($sample.GameModeRaw) GameModeStatus=$($sample.GameModeStatus) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Observations=$($sample.Observations)"
+                Record "TrainingZone=$trainingZone Status=$($sample.ZoneStatus) InBattleZone=$battleZone InShootingRange=$shootingRange PoolClass=$($sample.PoolClass)"
+                Record "InvincibilityPredicate=$invincible Status=$($sample.ProtectionStatus) Mask=$mask MaskMode=$maskMode Predicate=PlayerAttributes.IsInvincible"
+            } else {
+                Record "ZoneProtection=$($sample.Status) RosterIndex=$($sample.RosterIndex) Class=$($sample.Class) Detail=$($sample.Detail)"
+                if ($sample.Status -ceq 'FAIL') { $failed = $true }
+            }
+        }
+        if ($zone.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
+        Record 'ZoneProtectionSemantics CombatEligibility=UNVERIFIED Hostility=UNVERIFIED CompleteDamageImmunity=UNVERIFIED LineOfSight=UNVERIFIED Writes=NONE'
+        Record 'OtherHeadSamples=NOT_REQUESTED_ZONE_MODE'
+        Record 'CombatStateSamples=NOT_REQUESTED_ZONE_MODE'
+        Record 'PlayerStateSamples=NOT_REQUESTED_ZONE_MODE'
+        Record 'TeamPolicy=NOT_REQUESTED_ZONE_MODE'
+    } elseif ($ProbeCombatState) {
         $stage = 'CombatStateSamples'
         $combatStart = $reader.PhysicalCalls
         $combat = $reader.SampleCombatState($kernel, $game, $module, $layout, $objects, $CombatRosterIndex, $progress)
@@ -392,7 +436,7 @@ try {
         }
         if ($otherHeads.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
     }
-    Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadPositionsSampled=$($otherHeads.Sampled) TeamPolicy=$teamSummary CombatState=$combatSummary TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
+    Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadPositionsSampled=$($otherHeads.Sampled) TeamPolicy=$teamSummary CombatState=$combatSummary ZoneProtection=$zoneSummary TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
 } catch { $failed = $true; Failure $stage $_.Exception }
 finally {
     if ($null -ne $reader) {

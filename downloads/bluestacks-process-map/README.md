@@ -7,13 +7,22 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 23. Optional read-only combat-state probe.** Run with
-`-ProbeCombatState` to sample one verified nonlocal player's original watching,
-dead/revive, ghost and IsDieing predicates. Optional `-CombatRosterIndex N` selects
-a nonlocal member from that run's capped roster. Mode, class/virtual dispatch,
-controller/state, original gates and selected membership are verified. Unsupported
-paths produce UNKNOWN. 385 offline checks pass; live V23 validation is pending.
-Combat eligibility, mode zones, invulnerability and LOS remain unverified.
+**Current version: 24. Optional read-only zone/protection probe.** Run with
+`-ProbeZoneProtection` to sample one verified nonlocal player's original training
+zone, battle-zone/shooting-range getters and PlayerAttributes.IsInvincible
+predicate. Optional `-ZoneRosterIndex N` selects a member of that run's capped
+roster. Managed/unsafe pool dispatch, array element types, attributes owner,
+mask/mode, original gates and selected membership are verified. Unsupported
+paths are UNKNOWN. 432 offline checks pass; live V24 validation is pending.
+Combat eligibility, complete damage immunity and LOS remain unverified.
+See [zone/protection evidence](ZONE-PROTECTION-EVIDENCE.md).
+
+**V23 combat-state mode remains available.** Use `-ProbeCombatState`, optionally
+with `-CombatRosterIndex N`. Two live reports accepted watching/dead/revive/ghost/
+IsDieing=False for the same nonlocal player in raw mode 23, using 4736 additional
+reads each and all cleanup passing. All 13 and 16 roster candidates respectively
+were verified; local-head sampling passed on attempts one and two. These
+snapshots do not establish complete combat eligibility or LOS.
 See [combat-state evidence](COMBAT-STATE-EVIDENCE.md).
 
 **V22 team-policy mode remains available.** Run `-ProbeTeamPolicy` for one

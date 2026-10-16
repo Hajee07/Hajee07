@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param([Parameter(Mandatory=$true)][string] $KernelElfPath)
 $ErrorActionPreference = 'Stop'
-$options = @{ Path = @('GuestProcessMap.cs', 'ModuleProbe.cs', 'ModuleReference.cs', 'GameLayoutProbe.cs', 'GameLayoutReference.cs', 'PlayerObjectProbe.cs', 'HeadCacheProbe.cs', 'NativeTransformProbe.cs', 'NativeTransformReference.cs', 'RosterProbe.cs', 'RosterReference.cs', 'OtherHeadProbe.cs', 'PlayerStateProbe.cs', 'PlayerStateReference.cs', 'PlayerStateTests.cs', 'TeamPolicyProbe.cs', 'TeamPolicyReference.cs', 'TeamPolicyTests.cs', 'CombatStateProbe.cs', 'CombatStateReference.cs', 'CombatStateTests.cs', 'ObjectReference.cs', 'PlayerObjectTests.cs', 'CoreTests.cs', 'ModuleTests.cs', 'GameLayoutTests.cs' | ForEach-Object { Join-Path $PSScriptRoot $_ }) }
+$options = @{ Path = @('GuestProcessMap.cs', 'ModuleProbe.cs', 'ModuleReference.cs', 'GameLayoutProbe.cs', 'GameLayoutReference.cs', 'PlayerObjectProbe.cs', 'HeadCacheProbe.cs', 'NativeTransformProbe.cs', 'NativeTransformReference.cs', 'RosterProbe.cs', 'RosterReference.cs', 'OtherHeadProbe.cs', 'PlayerStateProbe.cs', 'PlayerStateReference.cs', 'PlayerStateTests.cs', 'TeamPolicyProbe.cs', 'TeamPolicyReference.cs', 'TeamPolicyTests.cs', 'CombatStateProbe.cs', 'CombatStateReference.cs', 'CombatStateTests.cs', 'ZoneProtectionProbe.cs', 'ZoneProtectionReference.cs', 'ZoneProtectionTests.cs', 'ObjectReference.cs', 'PlayerObjectTests.cs', 'CoreTests.cs', 'ModuleTests.cs', 'GameLayoutTests.cs' | ForEach-Object { Join-Path $PSScriptRoot $_ }) }
 if ((Get-Command Add-Type).Parameters.ContainsKey('CompilerOptions')) { $options.CompilerOptions = '/langversion:5' }
 Add-Type @options
 [HeadBridge.Mapping.Tests.Checks]::Run($KernelElfPath)

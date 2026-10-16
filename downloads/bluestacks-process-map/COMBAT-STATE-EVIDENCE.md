@@ -12,7 +12,7 @@ V23 observes original watching, dead/revive, ghost and IsDieing predicates.
 It does not establish combat eligibility. Team policy, hostility, invulnerability,
 mode-specific zones, weapon restrictions and actual LOS are separate dependencies.
 No player is selected for aiming, and no game method or memory write is performed.
-V23 awaits a live Windows report.
+V23 has two accepted live Windows reports (below).
 
 ## Exact original branches
 
@@ -128,3 +128,20 @@ checks PowerShell parsing/parameter sets, source/plugin manifest hashes, ZIP
 integrity and extracted-package compilation/tests. Offline checks do not prove
 live gameplay behavior. Send the complete V23 output, particularly CombatState,
 WatchingPredicate, GhostPredicate, DyingPredicate and ResultFile contents.
+
+## Accepted V23 live reports
+
+Both user runs used host PID 11784 / guest PID 4901 and sampled the same first
+nonlocal PlayerNetwork in raw mode 23. Each accepted SELECTED_ENTRY_REVALIDATED,
+173 observations, and original watching=False, ghost=False (raw 0),
+BaseDead=False, PendingRevive=False, ReallyDead=False and IsDieing=False.
+The controller was NKJMAMAFCNB, direct movement selector=True, movement=0,
+state ID=0. Each combat phase used 4736 additional physical reads.
+
+The first roster verified all 13 candidates (local plus 12 others), total reads
+23896, and local head sampled on attempt one. The second verified all 16
+candidates (local plus 15 others), total reads 25519, and local head sampled on
+attempt two after discarding a changed TRS observation. Both had counters changed
+since roster capture but unchanged during the combat capture, and all plugin
+unload/handler cleanup/session release steps passed. These are two endpoint
+snapshots, not continuous tracking or transition/eligibility/LOS validation.
