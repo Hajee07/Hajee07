@@ -1,15 +1,14 @@
 # Standalone head-direction DLL core
 
-Current package: **V40**. `Run-CameraPitchCheck.ps1` captures baseline/up/restore/
-down to observe either vertical sign with strict snapshot and drift checks.
-806 offline checks pass; live V40 pending. V39 manual yaw correlation observed
-reported right-negative/left-positive changes. Source vectors remain unchanged;
-camera/shot convention and aiming remain unverified.
-See [pitch evidence](bluestacks-process-map/CAMERA-PITCH-COMPARISON-EVIDENCE.md).
+Current package: **V41**. `-ProbeAimState` adds source-verified native camera
+function-cache observations. No functions are invoked or camera objects/pose
+read. 819 offline checks pass; live V41 pending. V39/V40 manual yaw/pitch
+correlations passed; camera/shot convention and aiming remain unverified.
+See [camera-binding evidence](bluestacks-process-map/CAMERA-BINDING-EVIDENCE.md).
 
 V34 comparison matched two per-experiment HUD/counter patterns (2->1->2,
 7->6->7). Model names were not captured; evidence remains manual HUD correlation.
-The comparison workflow remains available in V40.
+The comparison workflow remains available in V41.
 
 V33 stable head/counter path passed live: 16 roster objects, counter 2 / field 105,
 all cleanup PASS. No job transition was observed; retries remain offline-tested.

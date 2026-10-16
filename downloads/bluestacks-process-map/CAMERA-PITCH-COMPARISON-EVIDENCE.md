@@ -60,3 +60,16 @@ Existing cancellation/checksum/child-failure checks remain passing. C# 5 suite,
 PowerShell parsing, ten core modes, all source/helper/plugin hashes, reference
 reproduction and extracted-package tests pass. Runtime C# and limits are unchanged.
 These checks do not replace live Windows/BlueStacks validation.
+
+## Accepted V40 manual up/down experiment
+
+Four uploaded reports and independent offline re-parsing returned
+REPORTED_OPPOSITE_PITCH_SIGNS_OBSERVED / REPORTED_UP_POSITIVE_DOWN_NEGATIVE.
+Reported up elevation delta=15.247161635147 degrees; restored baseline elevation
+error=0.055450336162313; reported down delta=-14.5543017554993. Horizontal yaw
+drifts were 0.949257619324555 (up), 0.00587713696103975 (restore),
+-0.965897584663395 (down). Same game/match/player context and selected-local
+identity passed; three captures had audited global roster counter changes.
+All four cleanup sequences passed. Physical reads: 25901, 24835, 25982, 23253;
+each aim phase=3407 reads. Manual vertical correlation only; no universal camera
+convention, actual camera pose, shot direction or aim integration is inferred.

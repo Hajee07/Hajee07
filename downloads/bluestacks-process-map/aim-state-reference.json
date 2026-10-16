@@ -15,6 +15,46 @@
     "metadata_offset": 31275268,
     "record_hex": "75afe70014a00000f119010000000008afed0300ffffffffffffffff9b0a000696080000ffff0200"
   },
+  "camera_methods": [
+    {
+      "index": 210071,
+      "name": "COW.GamePlay.Player.GetRuntimeMainCameraTransform",
+      "rva": 116585320,
+      "pointer_rva": 179475552,
+      "metadata_offset": 26979428,
+      "record_hex": "71575800507c00006acd000000000008ffffffffffffffffc01b02009834030686000000ffff0000"
+    },
+    {
+      "index": 315161,
+      "name": "UnityEngine.Camera.get_main",
+      "rva": 167379416,
+      "pointer_rva": 183874520,
+      "metadata_offset": 31183028,
+      "record_hex": "3b76ee007e9f00005970000000000008ffffffffffffffffffffffff9901000696080010ffff0000"
+    },
+    {
+      "index": 317874,
+      "name": "UnityEngine.Component.get_transform",
+      "rva": 167672488,
+      "pointer_rva": 183896224,
+      "metadata_offset": 31291548,
+      "record_hex": "83b523004da000006acd000000000008ffffffffffffffffffffffff320c000686080010ffff0000"
+    }
+  ],
+  "camera_bindings": [
+    {
+      "method": "get_main",
+      "cell_rva": 184251264,
+      "string_rva": 26635595,
+      "icall": "UnityEngine.Camera::get_main()"
+    },
+    {
+      "method": "get_transform",
+      "cell_rva": 184260200,
+      "string_rva": 26917100,
+      "icall": "UnityEngine.Component::get_transform()"
+    }
+  ],
   "fields": [
     {
       "owner": 31824,
@@ -132,6 +172,51 @@
       "name": "UnityCoreModuleTable",
       "rva": 175281280,
       "pointer": 183871256
+    },
+    {
+      "name": "GetRuntimeMainCameraTransform_0",
+      "rva": 116585320,
+      "hex": "fe0f1ef8f44f01a9b40302d0886a5c39f30300aa2801003780c00190006040f91596d09440c001d0003446f91296d09428008052886a1c39007883524000a072"
+    },
+    {
+      "name": "GetRuntimeMainCameraTransform_64",
+      "rva": 116585384,
+      "hex": "e1031faa9ced639460010036007883524000a072e1031faac4ed6394800600b4e10313aaf44f41a9e2031faafe0742f8bff55314e0031faa7ec3c19454c001d0"
+    },
+    {
+      "name": "GetRuntimeMainCameraTransform_128",
+      "rva": 116585448,
+      "hex": "943646f9f30300aa880240f909e140b969000035e00308aa5596d094e00313aae1031faae2031faa14f3c294a001003688c00190086140f9000140f908e040b9"
+    },
+    {
+      "name": "GetRuntimeMainCameraTransform_192",
+      "rva": 116585512,
+      "hex": "480000354a96d094e0031faac4830a94e00200b4e1031faa95750994f30300aa800240f908e040b9480000354096d094e00313aae1031faae2031faa64eec294"
+    },
+    {
+      "name": "GetRuntimeMainCameraTransform_256",
+      "rva": 116585576,
+      "hex": "e0000036530100b4e00313aaf44f41a9e1031faafe0742f88ae1c214f44f41a9e0031faafe0742f8c0035fd67996d094"
+    },
+    {
+      "name": "get_main_0",
+      "rva": 167379416,
+      "hex": "fe4fbfa9b38000f060c241f9a00000b520cefbd0002c35916ad20e9460c201f9fe4fc1a800001fd6"
+    },
+    {
+      "name": "get_main_icall_name",
+      "rva": 26635595,
+      "hex": "556e697479456e67696e652e43616d6572613a3a6765745f6d61696e282900"
+    },
+    {
+      "name": "get_transform_0",
+      "rva": 167672488,
+      "hex": "fe0f1ef8f44f01a9947e00d0813643f9f30300aac10000b520cefb9000b0239134b40d94e10300aa803603f9e00313aaf44f41a9fe0742f820001fd6"
+    },
+    {
+      "name": "get_transform_icall_name",
+      "rva": 26917100,
+      "hex": "556e697479456e67696e652e436f6d706f6e656e743a3a6765745f7472616e73666f726d282900"
     }
   ],
   "return_descriptor": 182039152,
@@ -139,5 +224,5 @@
   "quaternion_record_offset": 54782828,
   "quaternion_record_hex": "e95b03009b64ee002fbd0000ffffffffbb1901002fbd0000ffffffff090110005b1807000dd80400ffffffff2f560000ffffffff391e0000ec380b00888d00002f000300060000000000060002000200190c000016010002",
   "getter_offset": 1556,
-  "scope": "Original local GetAimRotation value only, not m_CurrentAimRotation, camera orientation, target direction or aim update."
+  "scope": "Original local GetAimRotation and native camera icall cache observations only; actual camera objects/pose, m_CurrentAimRotation, target direction and aim update remain unverified."
 }

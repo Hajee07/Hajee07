@@ -35,10 +35,41 @@ vector_slot=table+((vq[7]&0xffffff)-1)*8;assert e.pointer(vector_slot)==vector_r
 vector_method=dict(index=vector_index,rva=vector_rva,pointer_rva=vector_slot,metadata_offset=m.header[12]+vector_index*40,record_hex=struct.pack('<8i4H',*vq).hex())
 for off in range(0,0xa4,64):anchors.append(dict(name='QuaternionVectorMultiply_'+str(off),rva=vector_rva+off,hex=e.bytes(vector_rva+off,min(64,0xa4-off)).hex()))
 anchors.extend([dict(name='UnityCoreModuleName',rva=module,pointer=name),dict(name='UnityCoreModuleNameBytes',rva=name,hex=e.bytes(name,27).hex()),dict(name='UnityCoreModuleCount',rva=module+8,hex=struct.pack('<Q',4752).hex()),dict(name='UnityCoreModuleTable',rva=module+16,pointer=table)])
-report=dict(elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,method=method,vector_method=vector_method,fields=fields,anchors=anchors,return_descriptor=ret_desc,return_bits=ret_bits,quaternion_record_offset=record_offset,quaternion_record_hex=record,getter_offset=0x614,scope='Original local GetAimRotation value only, not m_CurrentAimRotation, camera orientation, target direction or aim update.')
+# Derive native icall wrapper cache/name addresses from the exact ARM64 instructions.
+def adrp(at):
+ word=struct.unpack('<I',e.bytes(at,4))[0];assert word&0x9f000000==0x90000000
+ imm=((word>>5)&0x7ffff)*4+((word>>29)&3);imm=imm-(1<<21) if imm&(1<<20) else imm
+ return (at&~4095)+imm*4096,word&31
+def cache(at):
+ base,reg=adrp(at);word=struct.unpack('<I',e.bytes(at+4,4))[0]
+ assert word&0xffc00000==0xf9400000 and (word>>5)&31==reg
+ return base+((word>>10)&4095)*8
+def string_address(at):
+ base,reg=adrp(at);word=struct.unpack('<I',e.bytes(at+4,4))[0]
+ assert word&0xffc00000==0x91000000 and (word>>5)&31==reg
+ return base+((word>>10)&4095)
+camera_methods=[];camera_bindings=[]
+for mi,owner,mn,rv,size,tab,image_name,cache_adrp,string_adrp,icall in [
+ (210071,'COW.GamePlay.Player','GetRuntimeMainCameraTransform',0x6f2f368,0x130,0xa98efa8,'Assembly-CSharp.dll',None,None,None),
+ (315161,'UnityEngine.Camera','get_main',0x9fa01d8,0x28,table,'UnityEngine.CoreModule.dll',0x9fa01dc,0x9fa01e8,'UnityEngine.Camera::get_main()'),
+ (317874,'UnityEngine.Component','get_transform',0x9fe7aa8,0x3c,table,'UnityEngine.CoreModule.dll',0x9fe7ab0,0x9fe7ac0,'UnityEngine.Component::get_transform()')]:
+ cq=m.methods[mi];assert m.type_name(cq[1])==owner and m.string(cq[0])==mn and cq[11]==0
+ assert any(im[2]<=cq[1]<im[2]+im[3] and m.string(im[0])==image_name for im in m.images)
+ cs=tab+((cq[7]&0xffffff)-1)*8;assert e.pointer(cs)==rv
+ camera_methods.append(dict(index=mi,name=owner+'.'+mn,rva=rv,pointer_rva=cs,metadata_offset=m.header[12]+mi*40,record_hex=struct.pack('<8i4H',*cq).hex()))
+ for off in range(0,size,64):anchors.append(dict(name=mn+'_'+str(off),rva=rv+off,hex=e.bytes(rv+off,min(64,size-off)).hex()))
+ if cache_adrp is not None:
+  cell=cache(cache_adrp);text=string_address(string_adrp);raw=icall.encode()+b'\0';assert e.bytes(text,len(raw))==raw
+  anchors.append(dict(name=mn+'_icall_name',rva=text,hex=raw.hex()))
+  camera_bindings.append(dict(method=mn,cell_rva=cell,string_rva=text,icall=icall))
+assert [b['cell_rva'] for b in camera_bindings]==[0xafb7380,0xafb9668]
+report=dict(elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,method=method,vector_method=vector_method,camera_methods=camera_methods,camera_bindings=camera_bindings,fields=fields,anchors=anchors,return_descriptor=ret_desc,return_bits=ret_bits,quaternion_record_offset=record_offset,quaternion_record_hex=record,getter_offset=0x614,scope='Original local GetAimRotation and native camera icall cache observations only; actual camera objects/pose, m_CurrentAimRotation, target direction and aim update remain unverified.')
 out=Path(a.output_directory);out.mkdir(parents=True,exist_ok=True);(out/'aim-state-reference.json').write_text(json.dumps(report,indent=2)+'\n')
 lines=['// Generated from exact SHA-256-verified ELF/metadata inputs.','namespace HeadBridge.Mapping {','    internal static class AimStateReference {','        internal const ulong ReturnDescriptor=0x%xUL; internal const uint ReturnBits=%dU;'%(ret_desc,ret_bits),'        internal const ulong QuaternionMetadata=%dUL; internal const string QuaternionRecord=%s;'%(record_offset,json.dumps(record)),'        internal static readonly StateMethod Method=new StateMethod(%dUL,0x%xUL,0x%xUL,%s);'%(method['metadata_offset'],slot,address,json.dumps(method['record_hex'])),'        internal static readonly StateField[] Fields = {']
 for f in fields:lines.append('            new StateField(%d,%d,%s,0x%xUL,0x%xUL,0x%xUL,%dU,%d,%dUL,%dU,%dUL,%s),'%(f['owner'],f['local'],json.dumps(f['name']),f['offset'],f['offset_rva'],f['descriptor'],f['bits'],f['type_index'],f['name_offset'],f['token'],f['metadata_offset'],json.dumps(f['record_hex'])))
 lines+=['        };','        internal static readonly StateMethod VectorMethod=new StateMethod(%dUL,0x%xUL,0x%xUL,%s);'%(vector_method['metadata_offset'],vector_slot,vector_rva,json.dumps(vector_method['record_hex'])),'        internal static readonly GameLayoutCheck[] Anchors = {']
+# Close the anchor array below, then emit the camera method registration list.
 for c in anchors:lines.append('            new GameLayoutCheck(%s,0x%xUL,%s),'%(json.dumps(c['name']),c['rva'],('0x%xUL'%c['pointer']) if 'pointer' in c else json.dumps(c['hex'])))
+lines+=['        };','        internal const ulong CameraMainCell=0xafb7380UL, ComponentTransformCell=0xafb9668UL;','        internal static readonly StateMethod[] CameraMethods={'];
+for cm in camera_methods:lines.append('            new StateMethod(%dUL,0x%xUL,0x%xUL,%s),'%(cm['metadata_offset'],cm['pointer_rva'],cm['rva'],json.dumps(cm['record_hex'])))
 lines+=['        };','    }','}',''];(out/'AimStateReference.cs').write_text('\n'.join(lines));print('AimStateReference=PASS OriginalGetter=0x6f249ac Field=0x614 Quaternion=40980 Components=4')

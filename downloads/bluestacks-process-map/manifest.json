@@ -18,7 +18,7 @@
   "roster_source_sha256": "39f56f1ba54b9285f85c7a37be6f2296a079deb99bea0f5c1461a3446d9c0f98",
   "roster_reference_sha256": "927e3ce5f5264c4b32d1cfdfd2071f8fb8f897ca368f8f67ad59d2fbf4cd4c5b",
   "other_head_source_sha256": "4858a35800cdd9cbaaeef1c5d34d2018f843657b5363e5a4fee7e6aaaa42feda",
-  "state_source_sha256": "ba56eff80feca18c8f8db8907d69c5f1b2105b838204cddb7999486a29bdd627",
+  "state_source_sha256": "27b9f3f1fa53dfc839ecce9709ddb929d63d2260aeaea1ef13bfe8010bb3c956",
   "state_reference_sha256": "f7396a43e145e0f2dfb0111c7e41183b8bf17f65213ed3e0c0c0635f59875f32",
   "team_source_sha256": "43e107122a8f46f1c32373ecbe06f90e556af42288468f7f3ac83e487b80d588",
   "team_reference_sha256": "b4c087b65ca01f87eae7a137f2e8064769bb690e7a462a4dfa834dbc8b1cbb81",
@@ -34,9 +34,9 @@
   "firing_reference_sha256": "6f8c6e95a50817b9e1bc1ac1cb3d35cf95cf4759af77751f442487375adc183c",
   "ammo_source_sha256": "9bb5f44f57d6499c2b0897ce9b732db464e0915ae23b9f1f30da568da7fe2a7d",
   "ammo_reference_sha256": "742089ac8b748c23f03b9981f98bc7b30a3b68a9afa0f3fab3f6d4f0b7972750",
-  "ammo_comparison_sha256": "28237f4804da340cd687318d8d751e85a91ee3817818d9f480a47400c28aba1f",
-  "runner_sha256": "7d99fbcbd754fc9daad169fe9e2666f7ca4eaaceafb950303dcccf82e342958e",
-  "aim_state_source_sha256": "b0408804f171c3a8a9cd69da7a5e2b6d4bd8d07cf537193ea4c0b8d4829b3d19",
-  "aim_state_reference_sha256": "6801e628d0bc50078d2dd598a28d9773d9f67736822d0223cb62c6e14a21a19f",
-  "aim_basis_comparison_sha256": "fd3a70eafb5cde466e9e14df700fc5dbca1adf36bcf79b9bf18ed31cc34e5a32"
+  "ammo_comparison_sha256": "8841440c7c74d7fd17209b146848f05aaab0166fa06f81f7384b5458a275300c",
+  "runner_sha256": "8f39b27df766276655aa4a976556d376cacc1b4d46f452a3f99cb43f6dbce2ea",
+  "aim_state_source_sha256": "f16ddaaf6b49fe92ec981100469c09e64ea2600fe9ad344ac25411131d23dc7f",
+  "aim_state_reference_sha256": "110cb982bdf5d9d1ad98fff07d85b42a1d71367af36dd05131bfcc698641e818",
+  "aim_basis_comparison_sha256": "c018efcc5cf0052ade37faf831d5074c33485c32132069ced50f9554d321ff29"
 }

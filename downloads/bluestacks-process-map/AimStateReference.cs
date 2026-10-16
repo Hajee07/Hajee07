@@ -22,6 +22,21 @@ namespace HeadBridge.Mapping {
             new GameLayoutCheck("UnityCoreModuleNameBytes",0x195af72UL,"556e697479456e67696e652e436f72654d6f64756c652e646c6c00"),
             new GameLayoutCheck("UnityCoreModuleCount",0xa729478UL,"9012000000000000"),
             new GameLayoutCheck("UnityCoreModuleTable",0xa729480UL,0xaf5a718UL),
+            new GameLayoutCheck("GetRuntimeMainCameraTransform_0",0x6f2f368UL,"fe0f1ef8f44f01a9b40302d0886a5c39f30300aa2801003780c00190006040f91596d09440c001d0003446f91296d09428008052886a1c39007883524000a072"),
+            new GameLayoutCheck("GetRuntimeMainCameraTransform_64",0x6f2f3a8UL,"e1031faa9ced639460010036007883524000a072e1031faac4ed6394800600b4e10313aaf44f41a9e2031faafe0742f8bff55314e0031faa7ec3c19454c001d0"),
+            new GameLayoutCheck("GetRuntimeMainCameraTransform_128",0x6f2f3e8UL,"943646f9f30300aa880240f909e140b969000035e00308aa5596d094e00313aae1031faae2031faa14f3c294a001003688c00190086140f9000140f908e040b9"),
+            new GameLayoutCheck("GetRuntimeMainCameraTransform_192",0x6f2f428UL,"480000354a96d094e0031faac4830a94e00200b4e1031faa95750994f30300aa800240f908e040b9480000354096d094e00313aae1031faae2031faa64eec294"),
+            new GameLayoutCheck("GetRuntimeMainCameraTransform_256",0x6f2f468UL,"e0000036530100b4e00313aaf44f41a9e1031faafe0742f88ae1c214f44f41a9e0031faafe0742f8c0035fd67996d094"),
+            new GameLayoutCheck("get_main_0",0x9fa01d8UL,"fe4fbfa9b38000f060c241f9a00000b520cefbd0002c35916ad20e9460c201f9fe4fc1a800001fd6"),
+            new GameLayoutCheck("get_main_icall_name",0x1966d4bUL,"556e697479456e67696e652e43616d6572613a3a6765745f6d61696e282900"),
+            new GameLayoutCheck("get_transform_0",0x9fe7aa8UL,"fe0f1ef8f44f01a9947e00d0813643f9f30300aac10000b520cefb9000b0239134b40d94e10300aa803603f9e00313aaf44f41a9fe0742f820001fd6"),
+            new GameLayoutCheck("get_transform_icall_name",0x19ab8ecUL,"556e697479456e67696e652e436f6d706f6e656e743a3a6765745f7472616e73666f726d282900"),
+        };
+        internal const ulong CameraMainCell=0xafb7380UL, ComponentTransformCell=0xafb9668UL;
+        internal static readonly StateMethod[] CameraMethods={
+            new StateMethod(26979428UL,0xab29460UL,0x6f2f368UL,"71575800507c00006acd000000000008ffffffffffffffffc01b02009834030686000000ffff0000"),
+            new StateMethod(31183028UL,0xaf5b3d8UL,0x9fa01d8UL,"3b76ee007e9f00005970000000000008ffffffffffffffffffffffff9901000696080010ffff0000"),
+            new StateMethod(31291548UL,0xaf608a0UL,0x9fe7aa8UL,"83b523004da000006acd000000000008ffffffffffffffffffffffff320c000686080010ffff0000"),
         };
     }
 }

@@ -7,14 +7,15 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 40. Manual up/down tilt-sign experiment.**
-`Run-CameraPitchCheck.ps1` guides baseline/up/restored-baseline/down captures,
-checks opposite vertical signs and rejects horizontal drift/unrestored landmarks.
-806 offline checks pass; live V40 pending. V39 manual yaw correlation observed
-reported right-negative/left-positive changes. Source vectors stay unchanged;
-camera/shot convention remains unverified. See [pitch evidence](CAMERA-PITCH-COMPARISON-EVIDENCE.md).
-The existing [yaw](CAMERA-YAW-COMPARISON-EVIDENCE.md) and [three-stage](AIM-BASIS-COMPARISON-EVIDENCE.md)
-comparisons retain their own criteria/results.
+**Current version: 41. Native camera-function cache observations.**
+`-ProbeAimState` retains the original local Quaternion/basis and checks camera
+getter/wrapper source, owning-module registration and metadata before reading two
+icall function-pointer caches. No function is executed; camera objects/pose are
+not read. 819 offline checks pass; live V41 pending. Prior V39 yaw and V40 pitch
+manual correlations passed. Camera/shot convention, actual pose and aim integration
+remain unverified. See [camera-binding evidence](CAMERA-BINDING-EVIDENCE.md).
+Manual [yaw](CAMERA-YAW-COMPARISON-EVIDENCE.md), [pitch](CAMERA-PITCH-COMPARISON-EVIDENCE.md)
+and [three-stage](AIM-BASIS-COMPARISON-EVIDENCE.md) workflows retain their criteria.
 
 **V34 manual comparison produced two matching experiments:** reported HUD and
 counter values 2->1->2 and 7->6->7, with stable per-experiment context and cleanup.

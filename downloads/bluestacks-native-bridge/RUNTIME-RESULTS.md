@@ -994,3 +994,25 @@ Run-CameraPitchCheck.ps1 adds baseline/up/restored-baseline/down captures with
 strict selected-local/context/source checks and either observed vertical sign.
 806 offline checks pass; live V40 pending. Source vectors and native readers are
 unchanged. Manual correlation only; no camera/shot convention or aim claim.
+
+## Accepted V40 manual up/down experiment
+
+Four uploaded reports and independent offline re-parsing returned
+REPORTED_OPPOSITE_PITCH_SIGNS_OBSERVED / REPORTED_UP_POSITIVE_DOWN_NEGATIVE.
+Reported up elevation delta=15.247161635147 degrees; restored baseline elevation
+error=0.055450336162313; reported down delta=-14.5543017554993. Horizontal yaw
+drifts were 0.949257619324555 (up), 0.00587713696103975 (restore),
+-0.965897584663395 (down). Same game/match/player context and selected-local
+identity passed; three captures had audited global roster counter changes.
+All four cleanup sequences passed. Physical reads: 25901, 24835, 25982, 23253;
+each aim phase=3407 reads. Manual vertical correlation only; no universal camera
+convention, actual camera pose, shot direction or aim integration is inferred.
+
+## V41 native camera function-cache observations
+
+-ProbeAimState additionally validates the original runtime camera getter and
+Unity Camera.main/Component.transform wrapper source, registration and metadata,
+then reads/rechecks their function-pointer caches without invoking functions or
+reading camera objects. 819 offline checks pass, fixture phase reads=3553.
+Live V41 pending. A nonzero cache is not camera pose or executable mapping proof.
+All original limits/local identity checks remain; camera/aim integration incomplete.

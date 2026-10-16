@@ -56,7 +56,7 @@ namespace HeadBridge.Mapping
         public bool? WeaponFiring,WeaponFiringCacheEnabled;
         public string WeaponAmmoStatus,WeaponAmmoFieldName,WeaponAmmoRegistration;
         public int? WeaponAmmoRaw,WeaponAmmoFieldIndex;
-        public string AimRotationStatus; public float? AimX,AimY,AimZ,AimW; public double? AimNormSquared; public float? BasisX,BasisY,BasisZ;
+        public string AimRotationStatus; public float? AimX,AimY,AimZ,AimW; public double? AimNormSquared; public float? BasisX,BasisY,BasisZ; public ulong? CameraMainICall,ComponentTransformICall; public string CameraBindingStatus;
     }
     public sealed class PlayerStateResult
     {

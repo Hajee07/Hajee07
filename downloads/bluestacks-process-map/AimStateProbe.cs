@@ -12,6 +12,7 @@ namespace HeadBridge.Mapping
         private static void AimStateSchema(ObjectReads reads,ModuleResult module,GameLayoutResult layout)
         {
             CombatSchema(reads,module,layout,new StateMethod[]{AimStateReference.Method,AimStateReference.VectorMethod},AimStateReference.Fields);
+            CombatSchema(reads,module,layout,AimStateReference.CameraMethods,new StateField[0]);
             Expect(EqualBytes(reads.Read(layout.RuntimeMetadataBase+AimStateReference.QuaternionMetadata,88),Hex(AimStateReference.QuaternionRecord)),"aim Quaternion metadata identity");
             Expect(reads.Word(module.LoadBias+AimStateReference.ReturnDescriptor+8)==AimStateReference.ReturnBits &&
                 reads.Value(module.LoadBias+AimStateReference.ReturnDescriptor)==layout.RuntimeMetadataBase+AimStateReference.QuaternionMetadata,"aim getter return Quaternion type");
@@ -48,6 +49,12 @@ namespace HeadBridge.Mapping
             sample.AimX=value[0];sample.AimY=value[1];sample.AimZ=value[2];sample.AimW=value[3];sample.AimNormSquared=norm;
             float[] basis=PositiveZBasis(value[0],value[1],value[2],value[3]);
             sample.BasisX=basis[0];sample.BasisY=basis[1];sample.BasisZ=basis[2];
+            ulong camera=reads.Value(module.LoadBias+AimStateReference.CameraMainCell,"Camera.MainICallCache");
+            ulong transform=reads.Value(module.LoadBias+AimStateReference.ComponentTransformCell,"Camera.ComponentTransformICallCache");
+            if(camera!=0)ObjectReads.User(camera,1,"camera main icall function pointer");
+            if(transform!=0)ObjectReads.User(transform,1,"component transform icall function pointer");
+            sample.CameraMainICall=camera;sample.ComponentTransformICall=transform;
+            sample.CameraBindingStatus=camera==0 || transform==0 ? "NOT_READY_UNINITIALIZED_ICALL" : "NONZERO_FUNCTION_POINTERS_ONLY";
             sample.AimRotationStatus="ORIGINAL_LOCAL_GET_AIM_ROTATION_SAMPLED";
         }
         public PlayerStateResult SampleAimState(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)
