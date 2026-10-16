@@ -1,11 +1,14 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V27**. `-ProbeMatchDamagePolicy` verifies the active
-match's original CanTakeDamage method and its argument-independent base result.
-Overrides/hotfixes remain UNKNOWN. 465 offline checks pass; live V27 validation
-is pending. A true method result does not establish complete combat eligibility,
-hostility, weapon context, damage immunity or LOS.
-See [match damage-policy evidence](bluestacks-process-map/MATCH-DAMAGE-EVIDENCE.md).
+Current process probe: **V28**. `-ProbeWeaponContext` samples the verified local
+player's original active/hand weapon selection and supported typed weapon-data
+reference. 496 offline checks pass; live V28 validation is pending. Ammo,
+ballistics, firing readiness, LOS and aiming remain unverified.
+See [weapon-context evidence](bluestacks-process-map/WEAPON-CONTEXT-EVIDENCE.md).
+
+V27's match-policy mode passed live: mode 23, original argument-independent true
+predicate, both selected entries revalidated, within budget and all cleanup PASS.
+That method result alone does not establish complete combat eligibility.
 
 V26's zone/protection mode passed live for one selected player: mode 23, zone 0,
 battle-zone/shooting-range false and invincibility predicate false. Its array

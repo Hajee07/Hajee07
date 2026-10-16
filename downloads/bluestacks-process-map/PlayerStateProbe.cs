@@ -44,6 +44,9 @@ namespace HeadBridge.Mapping
         public byte? TrainingZone;
         public bool? InBattleZone,InShootingRange,Invincible;
         public uint? InvincibilityMask,InvincibilityMode;
+        public string WeaponStatus,WeaponSelectionPath,WeaponClass,WeaponDataClass,WeaponDataRegistration;
+        public ulong? Weapon,WeaponData;
+        public bool? AlternateHand;
     }
     public sealed class PlayerStateResult
     {
@@ -106,7 +109,7 @@ namespace HeadBridge.Mapping
         private static bool StateBoolean(ObjectReads reads,ulong address,string label)
         { byte value=reads.Byte(address,label);Expect(value<=1,"canonical state Boolean "+label);return value!=0; }
         private PlayerStateObservation ReadPlayerState(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,
-            PlayerObjectResult core,MatchPlayerObservation member,int index,bool combat=false,bool zone=false)
+            PlayerObjectResult core,MatchPlayerObservation member,int index,bool combat=false,bool zone=false,bool weapon=false)
         {
             ObjectReads reads=new ObjectReads(this,game.Root);
             PlayerStateObservation sample=new PlayerStateObservation { RosterIndex=index,Player=member.Address,Class=member.Class,IsLocal=member.IsLocal };
@@ -146,7 +149,7 @@ namespace HeadBridge.Mapping
             bool reallyHotfix=HotfixEntry(reads,wrappers,length,0x4dd8),deadHotfix=HotfixEntry(reads,wrappers,length,0x447);
             sample.ReallyDeadStatus=reallyHotfix || deadHotfix ? "UNVERIFIED_HOTFIX_ACTIVE" : "ORIGINAL_BRANCH_SAMPLED";
             if(!reallyHotfix && !deadHotfix)sample.ReallyDead=sample.BaseDeadRaw.Value && !sample.PendingReviveRaw.Value;
-            if(!combat && !zone)
+            if(!combat && !zone && !weapon)
             {
             StateVisibility visibility=null;
             foreach(StateVisibility v in PlayerStateReference.Visibility)if(v.Index==profile.Index)visibility=v;
@@ -178,8 +181,9 @@ namespace HeadBridge.Mapping
             }
             else
             {
-                sample.ModelVisibilityStatus=zone?"NOT_REQUESTED_ZONE_MODE":"NOT_REQUESTED_COMBAT_MODE";
-                if(zone)ReadZoneProtection(reads,module,layout,core,sample,baseClass,facade,statics,wrappers,length);
+                sample.ModelVisibilityStatus=weapon?"NOT_REQUESTED_WEAPON_MODE":zone?"NOT_REQUESTED_ZONE_MODE":"NOT_REQUESTED_COMBAT_MODE";
+                if(weapon)ReadWeaponContext(reads,module,layout,sample,baseClass,wrappers,length);
+                else if(zone)ReadZoneProtection(reads,module,layout,core,sample,baseClass,facade,statics,wrappers,length);
                 else ReadCombatState(reads,module,layout,core,sample,profile,playerClass,baseClass,facade,statics,wrappers,length);
             }
             byte[] after=OtherCounterAudit(game,core,member,"STATE_AFTER");
@@ -193,14 +197,18 @@ namespace HeadBridge.Mapping
         {
             return SamplePlayerStatesCore(kernel,game,module,layout,core,progress,false,-1);
         }
-        private PlayerStateResult SamplePlayerStatesCore(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress,bool combat,int rosterIndex,bool zone=false)
+        private PlayerStateResult SamplePlayerStatesCore(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress,bool combat,int rosterIndex,bool zone=false,bool weapon=false)
         {
             PlayerStateResult result=new PlayerStateResult { StopReason="PREREQUISITES_UNVERIFIED" };
             if(core==null || module==null || layout==null || module.BuildId!=ApkModule.BuildId || module.ReferenceFileSha256!=ApkModule.FileSha256 ||
                 layout.MetadataSha256!=GameLayoutReference.MetadataSha256 || core.RosterStatus!="TYPED_COLLECTION_VERIFIED" || core.RosterCounterSnapshot==null || core.RosterCounterSnapshot.Length!=16)return result;
             int allowance=Math.Min(6000,30000-PhysicalCalls);if(allowance<=1500){result.StopReason="READ_BUDGET_RESERVE";return result;}
             List<int> selected=new List<int>();
-            if(combat || zone)
+            if(weapon)
+            {
+                for(int i=0;i<core.MatchPlayers.Length;i++)if(core.MatchPlayers[i].IsLocal){selected.Add(i);break;}
+            }
+            else if(combat || zone)
             {
                 if(rosterIndex>=0)
                 {
@@ -223,15 +231,15 @@ namespace HeadBridge.Mapping
                 {
                     using(PhysicalCallScope(allowance-1500))
                     {
-                        if(zone)ZoneCode(kernel,game,module);else if(combat)CombatCode(kernel,game,module);else StateCode(kernel,game,module);
+                        if(weapon)WeaponCode(kernel,game,module);else if(zone)ZoneCode(kernel,game,module);else if(combat)CombatCode(kernel,game,module);else StateCode(kernel,game,module);
                         OtherHeadSchema(schema,game,module,layout,core);StateSchema(schema,module,layout);
-                        if(zone)ZoneSchema(schema,module,layout);else if(combat)CombatSchema(schema,module,layout);
+                        if(weapon)WeaponSchema(schema,module,layout);else if(zone)ZoneSchema(schema,module,layout);else if(combat)CombatSchema(schema,module,layout);
                         foreach(int index in selected)
                         {
                             MatchPlayerObservation member=core.MatchPlayers[index];
-                            if(progress!=null)progress((zone?"ZoneProtectionCandidate Index=":combat?"CombatStateCandidate Index=":"PlayerStateCandidate Index=")+index+" Class="+member.Class+" IsLocal="+member.IsLocal);
+                            if(progress!=null)progress((weapon?"WeaponContextCandidate Index=":zone?"ZoneProtectionCandidate Index=":combat?"CombatStateCandidate Index=":"PlayerStateCandidate Index=")+index+" Class="+member.Class+" IsLocal="+member.IsLocal);
                             PlayerStateObservation sample;
-                            try { sample=ReadPlayerState(kernel,game,module,layout,core,member,index,combat,zone); }
+                            try { sample=ReadPlayerState(kernel,game,module,layout,core,member,index,combat,zone,weapon); }
                             catch(Exception error)
                             {
                                 string status=error is PhysicalScopeLimitException ? "READ_LIMIT_REACHED" :
@@ -244,7 +252,7 @@ namespace HeadBridge.Mapping
                     }
                 }
                 catch(Exception error){result.StopReason=error is PhysicalScopeLimitException?"READ_LIMIT_REACHED":"FAIL";result.Detail=error.Message;return result;}
-                try { schema.Recheck();if(zone)ZoneCode(kernel,game,module);else if(combat)CombatCode(kernel,game,module);else StateCode(kernel,game,module); }
+                try { schema.Recheck();if(weapon)WeaponCode(kernel,game,module);else if(zone)ZoneCode(kernel,game,module);else if(combat)CombatCode(kernel,game,module);else StateCode(kernel,game,module); }
                 catch(Exception error){result.StopReason="FINAL_CONTEXT_FAILED";result.Detail=error.Message;return result;}
                 result.Samples=samples.ToArray();foreach(PlayerStateObservation sample in result.Samples)if(sample.Status=="SAMPLED_READ_ONLY")result.Sampled++;
                 return result;

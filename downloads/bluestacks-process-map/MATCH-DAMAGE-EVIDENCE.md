@@ -85,3 +85,16 @@ Send the complete report, especially MatchDamagePolicy, MatchDamageObservation,
 MatchDamagePredicate and ResultFile. Even an accepted true result leaves actual
 weapon/damage processing, full combat eligibility, hostility, complete immunity,
 LOS and continuous aim integration unverified.
+
+## Accepted V27 live report
+
+The user's report (host 11784 / guest 7882) passed module identity and both
+80-check layout comparisons. All 13 active roster objects were verified; the
+local head was sampled on attempt two. In raw mode 23 the selected original
+CurrentMatchGame slot-91 method returned ORIGINAL_ARGUMENT_INDEPENDENT_TRUE.
+Both selected roster entries revalidated. Counters changed since the earlier
+roster snapshot but stayed unchanged during this capture. There were 154
+observations, 3513 additional reads and 24286 total reads. Plugin unload,
+handler cleanup and shared-session release all passed. No game method was called.
+This is one match-policy predicate, not damage-processing or eligibility proof.
+Separate reports are not combined into a simultaneous state observation.

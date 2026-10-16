@@ -7,14 +7,19 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 27. Optional read-only match damage-policy probe.** Run with
-`-ProbeMatchDamagePolicy` to verify the active CurrentMatchGame virtual slot 91
-and reproduce its supported original argument-independent predicate. The base
-method returns true only on its inactive-hotfix branch; a custom override,
-active hotfix or unsupported game context yields UNKNOWN. This is one method
-predicate, not complete combat eligibility or proof of a damage-processing call
-site. 465 offline checks pass; live V27 validation is pending.
-See [match damage-policy evidence](MATCH-DAMAGE-EVIDENCE.md).
+**Current version: 28. Optional read-only local weapon-context probe.** Run with
+`-ProbeWeaponContext` to reproduce original active/hand weapon selection for one
+verified local roster member and inspect a supported typed weapon-data reference.
+Hotfixes, overrides and unready storage have explicit unknown statuses. 496
+offline checks pass; live V28 validation is pending. Ammo, ballistics, firing
+readiness, LOS and aim integration remain unverified.
+See [weapon-context evidence](WEAPON-CONTEXT-EVIDENCE.md).
+
+**V27 match damage-policy mode passed live.** `-ProbeMatchDamagePolicy`
+accepted the original argument-independent true predicate in mode 23, with both
+selected members revalidated, 3513 additional reads and all cleanup passing.
+This establishes one match-policy method result, not damage processing or
+complete combat eligibility. See [policy evidence](MATCH-DAMAGE-EVIDENCE.md).
 
 **V26 zone/protection mode passed live.** `-ProbeZoneProtection` accepted one
 managed-pool sample in mode 23: zone 0, battle-zone/shooting-range false and

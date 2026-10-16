@@ -671,3 +671,23 @@ The custom MDHAFBELMFD override remains UNKNOWN; no game method is called.
 limits, plugin and optional modes remain available. Live V27 validation is
 pending. This method observation is not proof of a damage call site, complete
 combat eligibility, hostility, weapon context, complete immunity, LOS or aiming.
+
+## Accepted V27 live report
+
+The user's report (host 11784 / guest 7882) passed module identity and both
+80-check layout comparisons. All 13 active roster objects were verified; the
+local head was sampled on attempt two. In raw mode 23 the selected original
+CurrentMatchGame slot-91 method returned ORIGINAL_ARGUMENT_INDEPENDENT_TRUE.
+Both selected roster entries revalidated. Counters changed since the earlier
+roster snapshot but stayed unchanged during this capture. There were 154
+observations, 3513 additional reads and 24286 total reads. Plugin unload,
+handler cleanup and shared-session release all passed. No game method was called.
+This is one match-policy predicate, not damage-processing or eligibility proof.
+Separate reports are not combined into a simultaneous state observation.
+
+## V28 local weapon-context probe
+
+Optional -ProbeWeaponContext reproduces original active/hand selection and a
+supported typed weapon-data reference for one verified local member. 496 offline
+checks pass; baseline additional reads=4035. Existing plugin and limits remain
+unchanged. Live validation pending; see ../bluestacks-process-map/WEAPON-CONTEXT-EVIDENCE.md.

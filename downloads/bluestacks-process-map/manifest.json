@@ -18,7 +18,7 @@
   "roster_source_sha256": "39f56f1ba54b9285f85c7a37be6f2296a079deb99bea0f5c1461a3446d9c0f98",
   "roster_reference_sha256": "927e3ce5f5264c4b32d1cfdfd2071f8fb8f897ca368f8f67ad59d2fbf4cd4c5b",
   "other_head_source_sha256": "5d07d8b3b291e40e04946d1cca3b2a1c9cf405e8a4fad3376032a8695668316f",
-  "state_source_sha256": "7b99dfb9fc47adccd237269040b5e4915147e800137cb199b9b0afc6c8cc605b",
+  "state_source_sha256": "111534157e779f2e57596ab8377003218f8d7975b437e86cb268caec46baee82",
   "state_reference_sha256": "f7396a43e145e0f2dfb0111c7e41183b8bf17f65213ed3e0c0c0635f59875f32",
   "team_source_sha256": "43e107122a8f46f1c32373ecbe06f90e556af42288468f7f3ac83e487b80d588",
   "team_reference_sha256": "b4c087b65ca01f87eae7a137f2e8064769bb690e7a462a4dfa834dbc8b1cbb81",
@@ -27,5 +27,7 @@
   "zone_source_sha256": "009b2230a2bc78dcf606f34e03547754b8e6a1a3114d148347d8ae4b1f847adf",
   "zone_reference_sha256": "44d2b83342721207b8d9df36331561e498a096b22d19fee193f6eb4d7ee73d12",
   "damage_source_sha256": "44761c5c703d1557450804323f734faec284af9185e00a55a740255709fdfb82",
-  "damage_reference_sha256": "e89e616707ae0e1dcdb4ab39b7ea8b2fea3828921d1e6fda92514df1f7e7850f"
+  "damage_reference_sha256": "e89e616707ae0e1dcdb4ab39b7ea8b2fea3828921d1e6fda92514df1f7e7850f",
+  "weapon_source_sha256": "6fefbe0c40d8dca2c9d856122f8de90710002fc605b374f5f68b388be5802b24",
+  "weapon_reference_sha256": "67fdec2efa003f508941d1cd9d0584db55fd7cf051de36b81852abab2c8acf84"
 }
