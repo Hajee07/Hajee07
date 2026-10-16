@@ -34,9 +34,9 @@
   "firing_reference_sha256": "6f8c6e95a50817b9e1bc1ac1cb3d35cf95cf4759af77751f442487375adc183c",
   "ammo_source_sha256": "9bb5f44f57d6499c2b0897ce9b732db464e0915ae23b9f1f30da568da7fe2a7d",
   "ammo_reference_sha256": "742089ac8b748c23f03b9981f98bc7b30a3b68a9afa0f3fab3f6d4f0b7972750",
-  "ammo_comparison_sha256": "577c9a45bfecb6982365ef13ab17ff8e8e9f459d70194970315cb8f0b1278f0f",
-  "runner_sha256": "df94c9d073501041159f6d8ac578f1d79d2374784097ca87133d0236218cbfa5",
+  "ammo_comparison_sha256": "28237f4804da340cd687318d8d751e85a91ee3817818d9f480a47400c28aba1f",
+  "runner_sha256": "7d99fbcbd754fc9daad169fe9e2666f7ca4eaaceafb950303dcccf82e342958e",
   "aim_state_source_sha256": "b0408804f171c3a8a9cd69da7a5e2b6d4bd8d07cf537193ea4c0b8d4829b3d19",
   "aim_state_reference_sha256": "6801e628d0bc50078d2dd598a28d9773d9f67736822d0223cb62c6e14a21a19f",
-  "aim_basis_comparison_sha256": "4fc93490f91b982adcba0e996686c4fe926ebb86df74ed36a49a61ae335a67dd"
+  "aim_basis_comparison_sha256": "fd3a70eafb5cde466e9e14df700fc5dbca1adf36bcf79b9bf18ed31cc34e5a32"
 }

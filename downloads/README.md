@@ -1,15 +1,15 @@
 # Standalone head-direction DLL core
 
-Current package: **V39**. `Run-CameraYawCheck.ps1` captures baseline/right/restore/
-left to observe either yaw-sign pattern without flipping source vectors. 778
-offline checks pass; live V39 pending. V38's completed three-stage experiment
-remains inconclusive for its positive-right hypothesis. Manual correlation only;
+Current package: **V40**. `Run-CameraPitchCheck.ps1` captures baseline/up/restore/
+down to observe either vertical sign with strict snapshot and drift checks.
+806 offline checks pass; live V40 pending. V39 manual yaw correlation observed
+reported right-negative/left-positive changes. Source vectors remain unchanged;
 camera/shot convention and aiming remain unverified.
-See [yaw-sign evidence](bluestacks-process-map/CAMERA-YAW-COMPARISON-EVIDENCE.md).
+See [pitch evidence](bluestacks-process-map/CAMERA-PITCH-COMPARISON-EVIDENCE.md).
 
 V34 comparison matched two per-experiment HUD/counter patterns (2->1->2,
 7->6->7). Model names were not captured; evidence remains manual HUD correlation.
-The comparison workflow remains available in V39.
+The comparison workflow remains available in V40.
 
 V33 stable head/counter path passed live: 16 roster objects, counter 2 / field 105,
 all cleanup PASS. No job transition was observed; retries remain offline-tested.

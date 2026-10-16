@@ -16,7 +16,7 @@ function Read-AimNumber {
 }
 function ConvertFrom-AimBasisReport {
     param([Parameter(Mandatory=$true)][AllowEmptyString()][string[]]$Lines)
-    $version=Match-AimReportLine $Lines 'ProcessMapVersion' '^ProcessMapVersion=(36|37|38|39) ReadOnly=1$'
+    $version=Match-AimReportLine $Lines 'ProcessMapVersion' '^ProcessMapVersion=(36|37|38|39|40) ReadOnly=1$'
     $hostInfo=Match-AimReportLine $Lines 'Preflight' '^Preflight=PASS Machine=(\S+) HostPID=([1-9][0-9]*) VmmDigest=MATCH$'
     $deviceInfo=Match-AimReportLine $Lines 'SelectedDevice' '^SelectedDevice=(\S+) State=device$'
     $gameInfo=Match-AimReportLine $Lines 'GameIdentity' '^GameIdentity=PASS GuestPID=([1-9][0-9]*) Name=(?:com)?\.dts\.freefireth$'
@@ -107,6 +107,37 @@ function Compare-CameraYawSamples {
         Actions=@('USER_REPORTED_LANDMARK_BASELINE','USER_REPORTED_RIGHT_TURN','USER_REPORTED_RESTORED_LANDMARK_BASELINE','USER_REPORTED_LEFT_TURN')
         RightYawDelta=$right; RestoredBaselineYawError=$restore; LeftYawDelta=$left
         RightElevationDrift=$rightDrift; RestoredBaselineElevationError=$restoreDrift; LeftElevationDrift=$leftDrift
+        CapturesWithRosterCounterChanges=@($Samples | Where-Object { $_.CountersChangedSinceRoster -or $_.CountersChangedDuringCapture }).Count
+        MembershipScope='SELECTED_LOCAL_PLAYER_ONLY'; Samples=$Samples; VectorFlipped=$false
+        CameraConvention='UNVERIFIED'; ShotDirection='UNVERIFIED'; LineOfSight='UNVERIFIED'; AimWrites='NONE'; AimIntegration='INCOMPLETE' }
+}
+
+function Compare-CameraPitchSamples {
+    param([Parameter(Mandatory=$true)][object[]]$Samples)
+    if ($Samples.Count -ne 4) { throw 'Four ordered captures are required: baseline, up, restored baseline, down.' }
+    $status='REPORTED_OPPOSITE_PITCH_SIGNS_OBSERVED';$sign='UNVERIFIED'
+    foreach ($key in @('Version','Machine','HostPid','Device','GuestPid','BuildId','LoadBias','Player','Match','CurrentGame')) {
+        foreach ($i in 1..3) { if ([string]$Samples[0].$key -cne [string]$Samples[$i].$key) { $status='INCONCLUSIVE_CONTEXT_CHANGED' } }
+    }
+    $up=$Samples[1].Elevation-$Samples[0].Elevation
+    $restore=$Samples[2].Elevation-$Samples[0].Elevation
+    $down=$Samples[3].Elevation-$Samples[2].Elevation
+    $upDrift=Get-AimYawDelta $Samples[0].Yaw $Samples[1].Yaw
+    $restoreDrift=Get-AimYawDelta $Samples[0].Yaw $Samples[2].Yaw
+    $downDrift=Get-AimYawDelta $Samples[2].Yaw $Samples[3].Yaw
+    if ($status -eq 'REPORTED_OPPOSITE_PITCH_SIGNS_OBSERVED') {
+        if (@($Samples | Where-Object { [Math]::Abs($_.Elevation) -gt 70 }).Count) { $status='INCONCLUSIVE_NEAR_VERTICAL' }
+        elseif ([Math]::Abs($restore) -gt 5 -or [Math]::Abs($restoreDrift) -gt 5) { $status='INCONCLUSIVE_BASELINE_NOT_RESTORED' }
+        elseif ([Math]::Abs($up) -lt 3 -or [Math]::Abs($up) -gt 60 -or [Math]::Abs($down) -lt 3 -or [Math]::Abs($down) -gt 60) { $status='INCONCLUSIVE_TURN_SIZE' }
+        elseif ([Math]::Abs($upDrift) -gt 5 -or [Math]::Abs($downDrift) -gt 5) { $status='INCONCLUSIVE_HORIZONTAL_DRIFT' }
+        elseif ($up*$down -ge 0) { $status='INCONCLUSIVE_TURN_SIGNS_NOT_OPPOSITE' }
+        elseif ($up -lt 0) { $sign='REPORTED_UP_NEGATIVE_DOWN_POSITIVE' }
+        else { $sign='REPORTED_UP_POSITIVE_DOWN_NEGATIVE' }
+    }
+    [pscustomobject]@{ Status=$status; ObservedPitchSign=$sign; Evidence='MANUAL_CAMERA_TURN_CORRELATION_ONLY'
+        Actions=@('USER_REPORTED_LANDMARK_BASELINE','USER_REPORTED_UP_TILT','USER_REPORTED_RESTORED_LANDMARK_BASELINE','USER_REPORTED_DOWN_TILT')
+        UpElevationDelta=$up; RestoredBaselineElevationError=$restore; DownElevationDelta=$down
+        UpYawDrift=$upDrift; RestoredBaselineYawError=$restoreDrift; DownYawDrift=$downDrift
         CapturesWithRosterCounterChanges=@($Samples | Where-Object { $_.CountersChangedSinceRoster -or $_.CountersChangedDuringCapture }).Count
         MembershipScope='SELECTED_LOCAL_PLAYER_ONLY'; Samples=$Samples; VectorFlipped=$false
         CameraConvention='UNVERIFIED'; ShotDirection='UNVERIFIED'; LineOfSight='UNVERIFIED'; AimWrites='NONE'; AimIntegration='INCOMPLETE' }

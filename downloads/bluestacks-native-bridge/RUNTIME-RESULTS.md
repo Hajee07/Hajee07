@@ -973,3 +973,24 @@ captures. It reports either observed sign only after opposite deltas, baseline
 restoration and strict shared checks. Source vectors remain unchanged. 778
 offline checks pass; live V39 experiment pending. Manual correlation only;
 camera/shot convention remains UNVERIFIED. V38's inconclusive result is preserved.
+
+## Accepted V39 manual right/left experiment
+
+Four uploaded captures and independent offline re-parsing returned
+REPORTED_OPPOSITE_YAW_SIGNS_OBSERVED / REPORTED_RIGHT_NEGATIVE_LEFT_POSITIVE.
+Reported right yaw=-20.1956481093192 degrees, restored baseline yaw error=
+-0.601086747849294, reported left yaw=20.1052290525995. Elevation drifts were
+0.670792333131481 (right), 0.670795384020101 (restore), -0.00000386042886457716
+(left). Same game/match/player and all source/local identity checks passed.
+Two captures had audited global counter changes; all four cleanup sequences
+passed. Physical reads were 25365, 22998, 25598, 22863; each aim phase used 3407.
+This establishes the reported session's manual yaw correlation only. It does
+not assert camera/shot convention, universal sign or aiming behavior. The earlier
+V38 positive-right hypothesis remains inconclusive, not rewritten as a pass.
+
+## V40 manual countertilt experiment
+
+Run-CameraPitchCheck.ps1 adds baseline/up/restored-baseline/down captures with
+strict selected-local/context/source checks and either observed vertical sign.
+806 offline checks pass; live V40 pending. Source vectors and native readers are
+unchanged. Manual correlation only; no camera/shot convention or aim claim.

@@ -7,14 +7,14 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 39. Manual right/left yaw-sign experiment.**
-`Run-CameraYawCheck.ps1` guides baseline/right/restored-baseline/left captures.
-Both observed sign patterns are supported; source vectors are not flipped.
-778 offline checks pass; live V39 experiment pending. The full V38 experiment
-completed but was inconclusive for its positive-right hypothesis. V39 requires
-a counterturn and baseline restoration; camera/shot convention remains unverified.
-See [yaw-sign evidence](CAMERA-YAW-COMPARISON-EVIDENCE.md). The prior three-stage
-[comparison](AIM-BASIS-COMPARISON-EVIDENCE.md) retains its own criteria/results.
+**Current version: 40. Manual up/down tilt-sign experiment.**
+`Run-CameraPitchCheck.ps1` guides baseline/up/restored-baseline/down captures,
+checks opposite vertical signs and rejects horizontal drift/unrestored landmarks.
+806 offline checks pass; live V40 pending. V39 manual yaw correlation observed
+reported right-negative/left-positive changes. Source vectors stay unchanged;
+camera/shot convention remains unverified. See [pitch evidence](CAMERA-PITCH-COMPARISON-EVIDENCE.md).
+The existing [yaw](CAMERA-YAW-COMPARISON-EVIDENCE.md) and [three-stage](AIM-BASIS-COMPARISON-EVIDENCE.md)
+comparisons retain their own criteria/results.
 
 **V34 manual comparison produced two matching experiments:** reported HUD and
 counter values 2->1->2 and 7->6->7, with stable per-experiment context and cleanup.

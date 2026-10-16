@@ -50,6 +50,8 @@ $fixture=New-AimFixture
 $old=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=36') })
 Check-AimComparison ((ConvertFrom-AimBasisReport $old).Version -eq 36) 'accepted V36 report remains supported'
 Check-AimComparison ((ConvertFrom-AimBasisReport (@('')+$fixture+@(''))).Version -eq 38) 'blank pasted-output lines do not invalidate accepted records'
+$version40=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=40') })
+Check-AimComparison ((ConvertFrom-AimBasisReport $version40).Version -eq 40) 'V40 comparison input remains supported'
 $version39=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=39') })
 Check-AimComparison ((ConvertFrom-AimBasisReport $version39).Version -eq 39) 'V39 comparison input remains supported'
 $version37=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=37') })
@@ -101,19 +103,45 @@ $ya=Compare-CameraYawSamples @($baseline,$right,$baseline,$yc)
 Check-AimComparison ($ya.Status -eq 'REPORTED_OPPOSITE_YAW_SIGNS_OBSERVED' -and $ya.CapturesWithRosterCounterChanges -eq 1 -and $ya.MembershipScope -eq 'SELECTED_LOCAL_PLAYER_ONLY') 'four-stage experiment audits global roster changes with selected local proof'
 $thrown=$false;try { $null=Compare-CameraYawSamples @($baseline,$right,$baseline) } catch { $thrown=$true };Check-AimComparison $thrown 'three captures cannot complete four-stage sign experiment'
 
+$pn=Compare-CameraPitchSamples @((Read-AimFixture),(Read-AimFixture 0 20),(Read-AimFixture),(Read-AimFixture 0 -20))
+Check-AimComparison ($pn.Status -eq 'REPORTED_OPPOSITE_PITCH_SIGNS_OBSERVED' -and $pn.ObservedPitchSign -eq 'REPORTED_UP_POSITIVE_DOWN_NEGATIVE' -and -not $pn.VectorFlipped -and $pn.CameraConvention -eq 'UNVERIFIED' -and $pn.ShotDirection -eq 'UNVERIFIED') 'reported up-positive/down-negative correlation preserves source vectors and unverified camera convention'
+$pp=Compare-CameraPitchSamples @((Read-AimFixture),(Read-AimFixture 0 -20),(Read-AimFixture),(Read-AimFixture 0 20))
+Check-AimComparison ($pp.Status -eq 'REPORTED_OPPOSITE_PITCH_SIGNS_OBSERVED' -and $pp.ObservedPitchSign -eq 'REPORTED_UP_NEGATIVE_DOWN_POSITIVE') 'opposite vertical sign pattern is equally supported'
+$pw=Compare-CameraPitchSamples @((Read-AimFixture 179),(Read-AimFixture -179 20),(Read-AimFixture 179),(Read-AimFixture 177 -20))
+Check-AimComparison ($pw.Status -eq 'REPORTED_OPPOSITE_PITCH_SIGNS_OBSERVED' -and [Math]::Abs($pw.UpYawDrift-2) -lt 0.00001) 'pitch experiment measures yaw drift correctly across 180-degree boundary'
+foreach ($key in @('Version','Machine','HostPid','Device','GuestPid','BuildId','LoadBias','Player','Match','CurrentGame')) {
+    $changed=Read-AimFixture 0 -20;$changed.$key='changed'
+    $pr=Compare-CameraPitchSamples @($baseline,(Read-AimFixture 0 20),$baseline,$changed)
+    Check-AimComparison ($pr.Status -eq 'INCONCLUSIVE_CONTEXT_CHANGED' -and $pr.ObservedPitchSign -eq 'UNVERIFIED') "pitch sign inference refuses changed $key"
+}
+foreach ($case in @(@(0,-20),@(65,-20),@(20,0),@(20,-65))) {
+    Check-AimComparison ((Compare-CameraPitchSamples @($baseline,(Read-AimFixture 0 $case[0]),$baseline,(Read-AimFixture 0 $case[1]))).Status -eq 'INCONCLUSIVE_TURN_SIZE') "pitch sign refuses small/large tilt pair $($case -join ',')"
+}
+Check-AimComparison ((Compare-CameraPitchSamples @($baseline,(Read-AimFixture 0 20),$baseline,(Read-AimFixture 0 25))).Status -eq 'INCONCLUSIVE_TURN_SIGNS_NOT_OPPOSITE') 'same-sign up/down reports remain inconclusive'
+Check-AimComparison ((Compare-CameraPitchSamples @($baseline,(Read-AimFixture 0 75),$baseline,(Read-AimFixture 0 -20))).Status -eq 'INCONCLUSIVE_NEAR_VERTICAL') 'near-vertical tilt cannot establish pitch sign'
+Check-AimComparison ((Compare-CameraPitchSamples @($baseline,(Read-AimFixture 0 20),(Read-AimFixture 10),(Read-AimFixture 10 -20))).Status -eq 'INCONCLUSIVE_BASELINE_NOT_RESTORED') 'pitch experiment requires landmark horizontal restoration'
+Check-AimComparison ((Compare-CameraPitchSamples @($baseline,(Read-AimFixture 0 20),(Read-AimFixture 0 10),(Read-AimFixture 0 -20))).Status -eq 'INCONCLUSIVE_BASELINE_NOT_RESTORED') 'pitch experiment requires landmark height restoration'
+Check-AimComparison ((Compare-CameraPitchSamples @($baseline,(Read-AimFixture 10 20),$baseline,(Read-AimFixture 0 -20))).Status -eq 'INCONCLUSIVE_HORIZONTAL_DRIFT') 'up tilt horizontal drift prevents pitch sign inference'
+Check-AimComparison ((Compare-CameraPitchSamples @($baseline,(Read-AimFixture 0 20),$baseline,(Read-AimFixture 10 -20))).Status -eq 'INCONCLUSIVE_HORIZONTAL_DRIFT') 'down tilt horizontal drift prevents pitch sign inference'
+$pc=Read-AimFixture 0 -20;$pc.CountersChangedDuringCapture=$true
+$pa=Compare-CameraPitchSamples @($baseline,(Read-AimFixture 0 20),$baseline,$pc)
+Check-AimComparison ($pa.Status -eq 'REPORTED_OPPOSITE_PITCH_SIGNS_OBSERVED' -and $pa.CapturesWithRosterCounterChanges -eq 1 -and $pa.MembershipScope -eq 'SELECTED_LOCAL_PLAYER_ONLY') 'pitch experiment audits global changes with local membership proof'
+$thrown=$false;try { $null=Compare-CameraPitchSamples @($baseline,$baseline,$baseline) } catch { $thrown=$true };Check-AimComparison $thrown 'three captures cannot complete pitch countertilt experiment'
+
 # Exercise the interactive wrapper using fake child-process output, never a VM.
 $global:aimHarnessRoot=Join-Path ([IO.Path]::GetTempPath()) ('aim-wrapper-test-'+[guid]::NewGuid().ToString('N'))
 [void](New-Item -ItemType Directory -Path $global:aimHarnessRoot)
 try {
-    foreach ($name in @('Run-AimBasisCheck.ps1','Run-CameraYawCheck.ps1','AimBasisCheck.ps1','Run-ProcessMap.ps1')) { Copy-Item -LiteralPath (Join-Path $PSScriptRoot $name) -Destination $global:aimHarnessRoot }
+    foreach ($name in @('Run-AimBasisCheck.ps1','Run-CameraYawCheck.ps1','Run-CameraPitchCheck.ps1','AimBasisCheck.ps1','Run-ProcessMap.ps1')) { Copy-Item -LiteralPath (Join-Path $PSScriptRoot $name) -Destination $global:aimHarnessRoot }
     @{ aim_basis_comparison_sha256=(Get-FileHash (Join-Path $global:aimHarnessRoot 'AimBasisCheck.ps1')).Hash; runner_sha256=(Get-FileHash (Join-Path $global:aimHarnessRoot 'Run-ProcessMap.ps1')).Hash } | ConvertTo-Json | Set-Content (Join-Path $global:aimHarnessRoot 'manifest.json')
-    $global:aimHarnessCount=0;$global:aimHarnessCancel=$false;$global:aimHarnessFail=$false;$global:aimHarnessYaw=$false;$global:aimHarnessPrompts=@()
+    $global:aimHarnessCount=0;$global:aimHarnessCancel=$false;$global:aimHarnessFail=$false;$global:aimHarnessYaw=$false;$global:aimHarnessPitch=$false;$global:aimHarnessPrompts=@()
     function Read-Host { param([string]$Prompt) $global:aimHarnessPrompts+= $Prompt;if ($global:aimHarnessCancel) { return 'CANCEL' };return 'READY' }
     function powershell.exe {
         if ($args -notcontains '-ProbeAimState') { throw 'Expected aim state child mode.' }
         $global:aimHarnessCount++
         $yaw=0;$elevation=0;if ($global:aimHarnessCount -ge 2) { $yaw=30 };if ($global:aimHarnessCount -ge 3) { $elevation=20 }
         if ($global:aimHarnessYaw) { $elevation=0;$yaw=0;if ($global:aimHarnessCount -eq 2) { $yaw=-30 };if ($global:aimHarnessCount -eq 4) { $yaw=25 } }
+        if ($global:aimHarnessPitch) { $yaw=0;$elevation=0;if ($global:aimHarnessCount -eq 2) { $elevation=20 };if ($global:aimHarnessCount -eq 4) { $elevation=-20 } }
         $lines=New-AimFixture $yaw $elevation
         $path=Join-Path $global:aimHarnessRoot ('process-map-result-'+[guid]::NewGuid().ToString('N')+'.txt')
         $lines | Set-Content -LiteralPath $path
@@ -137,9 +165,14 @@ try {
     $yawResults=@(Get-ChildItem -LiteralPath $global:aimHarnessRoot -Filter 'camera-yaw-comparison-*.json')
     $yawSaved=Get-Content -LiteralPath $yawResults[0].FullName -Raw | ConvertFrom-Json
     Check-AimComparison ($global:aimHarnessCount -eq 4 -and $yawSaved.SourceReports.Count -eq 4 -and $yawSaved.ObservedYawSign -eq 'REPORTED_RIGHT_NEGATIVE_LEFT_POSITIVE' -and $global:aimHarnessPrompts[0] -match '^BASELINE:' -and $global:aimHarnessPrompts[1] -match '^RIGHT:' -and $global:aimHarnessPrompts[2] -match '^RESTORE:' -and $global:aimHarnessPrompts[3] -match '^LEFT:') 'four-stage wrapper prompts baseline/right/restore/left and saves all reports plus observed sign'
+    $global:aimHarnessYaw=$false;$global:aimHarnessPitch=$true;$global:aimHarnessCount=0;$global:aimHarnessPrompts=@()
+    $null=& (Join-Path $global:aimHarnessRoot 'Run-CameraPitchCheck.ps1') 6>&1
+    $pitchResults=@(Get-ChildItem -LiteralPath $global:aimHarnessRoot -Filter 'camera-pitch-comparison-*.json')
+    $pitchSaved=Get-Content -LiteralPath $pitchResults[0].FullName -Raw | ConvertFrom-Json
+    Check-AimComparison ($global:aimHarnessCount -eq 4 -and $pitchSaved.SourceReports.Count -eq 4 -and $pitchSaved.ObservedPitchSign -eq 'REPORTED_UP_POSITIVE_DOWN_NEGATIVE' -and $global:aimHarnessPrompts[0] -match '^BASELINE:' -and $global:aimHarnessPrompts[1] -match '^UP:' -and $global:aimHarnessPrompts[2] -match '^RESTORE:' -and $global:aimHarnessPrompts[3] -match '^DOWN:') 'pitch wrapper prompts baseline/up/restore/down and saves all reports plus observed vertical sign'
 } finally {
     Remove-Item -LiteralPath $global:aimHarnessRoot -Recurse -Force
     Remove-Item Function:Read-Host,Function:powershell.exe -ErrorAction SilentlyContinue
-    Remove-Variable -Scope Global -Name aimHarnessRoot,aimHarnessCount,aimHarnessCancel,aimHarnessFail,aimHarnessYaw,aimHarnessPrompts -ErrorAction SilentlyContinue
+    Remove-Variable -Scope Global -Name aimHarnessRoot,aimHarnessCount,aimHarnessCancel,aimHarnessFail,aimHarnessYaw,aimHarnessPitch,aimHarnessPrompts -ErrorAction SilentlyContinue
 }
 Write-Host "AIM_COMPARISON_WITH_RUNNER_TOTAL=$script:aimChecks"
