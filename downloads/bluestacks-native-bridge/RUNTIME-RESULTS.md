@@ -478,3 +478,32 @@ snapshots remain checked. Selected-member changes still discard the pose. This
 is an observation without a lock or lifetime guarantee, not a stable full
 collection snapshot. Native code and comparison rules are unchanged. All 248
 offline checks pass. Live V20 nonlocal sampling and aim integration are pending.
+
+## V20 first accepted live nonlocal head sample
+
+Guest PID 4930 / host PID 14916 passed kernel/process, exact ARM64 module and
+both 80-check runtime metadata rounds. Local native pose attempt one was
+rejected for TRS motion; attempt two sampled X=61.3443565 Y=12.7355156
+Z=18.2596149 (capacity=236, parent count=9, observations=105).
+
+The observed dictionary had 17 used/active unique non-null candidate pointers,
+zero removed slots and 16 validated objects under the cap: one local plus 15
+others, including a Watching object. CompleteObjectValidation=False correctly
+reported the one remaining unverified candidate. Collection observations=130.
+
+Roster index 1, PlayerNetwork 0x7dccf362a000, resolved its own model-cache head
+and passed native sampling and all membership/phase-final checks on attempt one:
+X=47.085 Y=9.881877 Z=60.5796623, parents=9, per-object observations=315,
+provider=0x7dccf3639d50, managed Transform=0x7dccf3626ce0. Membership proof was
+SELECTED_ENTRY_REVALIDATED. Both counter-change flags were false; those endpoint
+observations do not establish uninterrupted lifetime or absence of ABA changes.
+
+The second member reached the sampling read ceiling during managed resolution,
+with no native attempt or XYZ. Optional-phase reads=5691, stop=READ_LIMIT_REACHED,
+accepted samples=1; the first result was retained only after reserved final
+checks passed. Total reads=26352, cache hits=3978. Plugin unload, handler cleanup
+and shared-session release all passed. This confirms one read-only nonlocal
+head observation, not enemy/alive/line-of-sight classification or aim control.
+
+No runtime package changed after this report. Static state-method/field research
+is recorded separately in PLAYER-STATE-RESEARCH.md and is not a live state probe.

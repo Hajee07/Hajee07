@@ -2,9 +2,9 @@
 
 The sections below preserve the earlier V17-V19 design and results. The current
 V20 selected-entry contract and validation are specified in the final section.
-V19 verified a live local position and 12 collection objects, but rejected its
-nonlocal result on a global free-list change. No live nonlocal XYZ is yet
-accepted. Team/alive/visibility classification and aim writes remain absent.
+V20 has now accepted one live nonlocal XYZ with selected-entry revalidation
+and all final checks passing; the second member stopped at its configured read
+cap. See the latest result section below. Team/alive/visibility classification and aim writes remain absent.
 
 ## Reuse and membership
 
@@ -227,3 +227,22 @@ dictionary, changed capacity/schema and native identity failures reject it.
 Existing two-head, model-cache, motion and shared-budget cases still pass. Live
 V20 nonlocal validation remains pending; no enemy/visibility or aim-write path
 has been introduced.
+
+## User V20 live verification
+
+The user's V20 guest PID 4930 report passed the exact build and layout, then
+sampled the local head on attempt two and roster index 1 on its first native
+attempt. The nonlocal sample was X=47.085 Y=9.881877 Z=60.5796623 with
+SELECTED_ENTRY_REVALIDATED, own model-cache provider/Transform and 315 per-object
+observations. Both counter-change flags were false. Schema/code/process final
+checks and cleanup passed. This proves one bounded live observation under the
+stated reread/lifetime limits.
+
+There were 17 unique candidate pointers; the 16-object cap validated local plus
+15 others. The remaining candidate was unverified, and completeness was false.
+The second other-head row hit the sampling read ceiling before a native attempt
+and had no XYZ. The phase used 5691 physical calls including reserved final
+checks; global calls=26352. It retained the first sample after those checks.
+No limits or assertions were changed following the report. No new run is needed
+to establish this particular observed success. Other classes/heads, continuous
+tracking, state semantics and aim integration remain unverified or incomplete.

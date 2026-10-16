@@ -1,0 +1,219 @@
+{
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "scope": "Static exact-build evidence only; no live state values, enemy policy or line-of-sight claim.",
+  "methods": [
+    {
+      "index": 35039,
+      "owner": "COW.GameFacade",
+      "name": "IsLocalTeammate",
+      "parameter_count": 1,
+      "virtual_slot": 65535,
+      "rva": "0x71c6018",
+      "pointer_slot_rva": "0xa9d36a0",
+      "return_type": "kind2"
+    },
+    {
+      "index": 35095,
+      "owner": "COW.GameFacade",
+      "name": "IsSameTeam",
+      "parameter_count": 2,
+      "virtual_slot": 65535,
+      "rva": "0x71c6130",
+      "pointer_slot_rva": "0xa9d3860",
+      "return_type": "kind2"
+    },
+    {
+      "index": 35096,
+      "owner": "COW.GameFacade",
+      "name": "IsSameTeam",
+      "parameter_count": 2,
+      "virtual_slot": 65535,
+      "rva": "0x71c86fc",
+      "pointer_slot_rva": "0xa9d3868",
+      "return_type": "kind2"
+    },
+    {
+      "index": 210083,
+      "owner": "COW.GamePlay.Player",
+      "name": "get_TeamIndex",
+      "parameter_count": 0,
+      "virtual_slot": 65535,
+      "rva": "0x6f2ff24",
+      "pointer_slot_rva": "0xab294c0",
+      "return_type": "kind8"
+    },
+    {
+      "index": 210084,
+      "owner": "COW.GamePlay.Player",
+      "name": "set_TeamIndex",
+      "parameter_count": 1,
+      "virtual_slot": 65535,
+      "rva": "0x6f2ff2c",
+      "pointer_slot_rva": "0xab294c8",
+      "return_type": "kind1"
+    },
+    {
+      "index": 210297,
+      "owner": "COW.GamePlay.Player",
+      "name": "get_IsReallyDead",
+      "parameter_count": 0,
+      "virtual_slot": 65535,
+      "rva": "0x6f36230",
+      "pointer_slot_rva": "0xab29b70",
+      "return_type": "kind2"
+    },
+    {
+      "index": 210298,
+      "owner": "COW.GamePlay.Player",
+      "name": "get_IsPendingRevive",
+      "parameter_count": 0,
+      "virtual_slot": 65535,
+      "rva": "0x6f36298",
+      "pointer_slot_rva": "0xab29b78",
+      "return_type": "kind2"
+    },
+    {
+      "index": 210384,
+      "owner": "COW.GamePlay.Player",
+      "name": "IsVisible",
+      "parameter_count": 0,
+      "virtual_slot": 70,
+      "rva": "0x6f38834",
+      "pointer_slot_rva": "0xab29e28",
+      "return_type": "kind2"
+    },
+    {
+      "index": 215855,
+      "owner": "COW.GamePlay.AttackableEntity",
+      "name": "get_IsDead",
+      "parameter_count": 0,
+      "virtual_slot": 45,
+      "rva": "0x717533c",
+      "pointer_slot_rva": "0xab34920",
+      "return_type": "kind2"
+    },
+    {
+      "index": 266312,
+      "owner": "GCommon.BitArrayBoolean",
+      "name": "op_Implicit",
+      "parameter_count": 1,
+      "virtual_slot": 65535,
+      "rva": "0x8279898",
+      "pointer_slot_rva": "0xab971e8",
+      "return_type": "kind2"
+    }
+  ],
+  "fields": [
+    {
+      "owner": "COW.GamePlay.Player",
+      "local_index": 182,
+      "name": "<DJJMAHEIDID>k__BackingField",
+      "offset": "0x430",
+      "offset_slot_rva": "0x19e689c",
+      "metadata_index": 251599,
+      "type": [
+        "kind8",
+        "0xad992c0",
+        "0x80080001"
+      ]
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "local_index": 432,
+      "name": "<INNGIOBPAJM>k__BackingField",
+      "offset": "0xa6c",
+      "offset_slot_rva": "0x19e6c84",
+      "metadata_index": 251849,
+      "type": [
+        "kind2",
+        "0xad964e0",
+        "0x80020001"
+      ]
+    },
+    {
+      "owner": "COW.GamePlay.Player",
+      "local_index": 509,
+      "name": "NBIIBJBALJD",
+      "offset": "0xad0",
+      "offset_slot_rva": "0x19e6db8",
+      "metadata_index": 251926,
+      "type": [
+        "GCommon.BitArrayBoolean",
+        "0xadad040",
+        "0x120004"
+      ]
+    },
+    {
+      "owner": "COW.GamePlay.AttackableEntity",
+      "local_index": 0,
+      "name": "CGJLEBOGBNP",
+      "offset": "0x7c",
+      "offset_slot_rva": "0x19e8ba4",
+      "metadata_index": 254516,
+      "type": [
+        "kind2",
+        "0xad964e0",
+        "0x80020001"
+      ]
+    },
+    {
+      "owner": "GCommon.BitArrayBoolean",
+      "local_index": 0,
+      "name": "m_InitialValue",
+      "offset": "0x14",
+      "offset_slot_rva": "0x1a03194",
+      "metadata_index": 281517,
+      "type": [
+        "kind2",
+        "0xad964e0",
+        "0x80020001"
+      ]
+    },
+    {
+      "owner": "GCommon.BitArrayBoolean",
+      "local_index": 1,
+      "name": "m_Mode",
+      "offset": "0x18",
+      "offset_slot_rva": "0x1a03198",
+      "metadata_index": 281518,
+      "type": [
+        "EBitArrayBooleanMode",
+        "0xae67130",
+        "0x80110004"
+      ]
+    }
+  ],
+  "visibility_vtable": [
+    {
+      "owner": "COW.GamePlay.Player",
+      "slot": 70,
+      "metadata_offset": "0x2fa2864",
+      "encoded": "0x60066ba1",
+      "method_index": 210384,
+      "method_name": "IsVisible",
+      "method_owner": "COW.GamePlay.Player",
+      "rva": "0x6f38834"
+    },
+    {
+      "owner": "COW.GamePlay.PlayerNetwork",
+      "slot": 70,
+      "metadata_offset": "0x2fab1ac",
+      "encoded": "0x60066ba1",
+      "method_index": 210384,
+      "method_name": "IsVisible",
+      "method_owner": "COW.GamePlay.Player",
+      "rva": "0x6f38834"
+    },
+    {
+      "owner": "COW.GamePlay.Player_Watching",
+      "slot": 70,
+      "metadata_offset": "0x301070c",
+      "encoded": "0x60078a93",
+      "method_index": 247113,
+      "method_name": "IsVisible",
+      "method_owner": "COW.GamePlay.Player_Watching",
+      "rva": "0x7c6a7c4"
+    }
+  ]
+}

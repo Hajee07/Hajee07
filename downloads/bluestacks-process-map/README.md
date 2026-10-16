@@ -7,12 +7,16 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 20.** The user's V19 run passed exact module/layout, local
-managed head, local native position on attempt two, and 12 observed dictionary
-objects (one local plus 11 others). The optional head result was discarded when
-the global free-list field changed during capture. That header change does not
-establish which entry changed. All cleanup stages passed; no live nonlocal XYZ
-has yet been accepted.
+**Current version: 20. Live nonlocal sampling has now passed.** The user's
+latest V20 run sampled the local head on attempt two and one nonlocal
+PlayerNetwork head on attempt one, with SELECTED_ENTRY_REVALIDATED and all
+phase-final checks/cleanup passing. The nonlocal XYZ was
+47.085, 9.881877, 60.5796623. This is one read-only observation.
+
+The dictionary had 17 unique candidate pointers; the configured cap verified
+16 (local plus 15 others), so CompleteObjectValidation=False was expected.
+The second head attempt stopped at the read ceiling; it produced no XYZ.
+Optional-phase calls=5691; total=26352. No limit was exceeded or increased.
 
 V20 distinguishes selected-entry verification from a whole-collection snapshot.
 It audits bounded counters before and after capture, using two identical quick
@@ -30,7 +34,9 @@ VM pause or lifetime guarantee is provided. Native comparisons, motion retries,
 phase-wide exact schema/code checks and read limits remain unchanged. At most
 two nonlocal members are attempted, with a 6000-call outer ceiling and 1000
 reserved for final checks, within the same 30000-call/120-second global bounds.
-248 offline checks pass; live V20 validation is pending.
+248 offline checks pass. The reported live success covers one nonlocal sample,
+not all candidates or continuous tracking. See [the state research](PLAYER-STATE-RESEARCH.md)
+for the next mapping work and its unresolved semantics.
 
 Team/alive/visibility semantics and aim writes remain unimplemented. No target
 classification is inferred from these samples.
