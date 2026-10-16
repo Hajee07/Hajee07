@@ -649,3 +649,25 @@ constructor changes before/during capture. Baseline optional reads=5833, within
 all existing limits. Extracted-package verification and reference reproduction
 pass. Live V26 validation is pending; zone/protection, complete combat eligibility,
 LOS and aiming are not claimed from the rejected V25 report.
+
+
+## Accepted V26 zone/protection report and V27 policy probe
+
+The user's accepted V26 run (host 11784 / guest 7882) verified all 15 roster
+members and sampled the local head on attempt two. It accepted one mode-23
+managed PRIDataPool sample: TrainingZone=0, InBattleZone=False,
+InShootingRange=False, IsInvincible=False (mask 0, mode 1), with selected entry
+revalidated and 240 observations. Counters changed during capture but selected
+endpoint checks passed. Phase calls=5759, total=26518, all cleanup PASS. This
+establishes the corrected array representation for one accepted snapshot.
+
+V27 adds optional -ProbeMatchDamagePolicy. The original base MatchGame
+CanTakeDamage implementation returns true without reading its three arguments
+when gate 0x853d is inactive. The probe verifies actual slot-91 dispatch, metadata,
+code, original gates, game/match/local context and both selected roster entries.
+The custom MDHAFBELMFD override remains UNKNOWN; no game method is called.
+
+465 offline checks pass (24 new cases); baseline phase calls=3402. Existing
+limits, plugin and optional modes remain available. Live V27 validation is
+pending. This method observation is not proof of a damage call site, complete
+combat eligibility, hostility, weapon context, complete immunity, LOS or aiming.

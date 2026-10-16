@@ -1,0 +1,595 @@
+{
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "fields": [
+    {
+      "owner": 12418,
+      "local": 0,
+      "name": "CurrentGame",
+      "offset": 0,
+      "offset_rva": 28296908,
+      "descriptor": 182107040,
+      "bits": 1179670,
+      "type_index": 36266,
+      "name_offset": 3926872,
+      "token": 67203392,
+      "metadata_offset": 43107700,
+      "record_hex": "c4571d000361000040710104"
+    },
+    {
+      "owner": 12418,
+      "local": 1,
+      "name": "CurrentMatchGame",
+      "offset": 8,
+      "offset_rva": 28296912,
+      "descriptor": 182399344,
+      "bits": 1179670,
+      "type_index": 12425,
+      "name_offset": 3926884,
+      "token": 67203393,
+      "metadata_offset": 43107712,
+      "record_hex": "d0571d0056ab000041710104"
+    },
+    {
+      "owner": 12418,
+      "local": 43,
+      "name": "m_GameServerGameMode",
+      "offset": 276,
+      "offset_rva": 28297080,
+      "descriptor": 182050128,
+      "bits": 2148073489,
+      "type_index": -1,
+      "name_offset": 3927700,
+      "token": 67203435,
+      "metadata_offset": 43108216,
+      "record_hex": "005b1d00a01701006b710104"
+    },
+    {
+      "owner": 12425,
+      "local": 0,
+      "name": "m_Match",
+      "offset": 144,
+      "offset_rva": 28297712,
+      "descriptor": 182348816,
+      "bits": 1179652,
+      "type_index": 32133,
+      "name_offset": 3937096,
+      "token": 67203602,
+      "metadata_offset": 43110220,
+      "record_hex": "b47f1d00989e000012720104"
+    },
+    {
+      "owner": 32133,
+      "local": 30,
+      "name": "MHJCLOPOBAA",
+      "offset": 216,
+      "offset_rva": 27173164,
+      "descriptor": 182038576,
+      "bits": 1179652,
+      "type_index": 31824,
+      "name_offset": 7962236,
+      "token": 67364656,
+      "metadata_offset": 45042868,
+      "record_hex": "e8ea5a003aba000030e70304"
+    }
+  ],
+  "methods": [
+    {
+      "index": 35677,
+      "name": "CanTakeDamage",
+      "rva": 120749648,
+      "pointer_rva": 178080400,
+      "metadata_offset": 20003668,
+      "record_hex": "95761d00893000000b63000000000008d5520000ffffffff3d8500005e8b0006c60100005b000300"
+    },
+    {
+      "index": 242331,
+      "name": "CanTakeDamage",
+      "rva": 129044268,
+      "pointer_rva": 179733632,
+      "metadata_offset": 28269828,
+      "record_hex": "95761d007a8500000b63000000000008a0500200ffffffff715402009cb20306c60000005b000300"
+    },
+    {
+      "index": 34943,
+      "name": "get_GameServerGameMode",
+      "rva": 119272896,
+      "pointer_rva": 178074528,
+      "metadata_offset": 19974308,
+      "record_hex": "48231d00823000009b17010000000008ffffffffffffffff0a0100008088000696080000ffff0000"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "CanTakeDamage_35677_0",
+      "rva": 120749648,
+      "hex": "fe0f1df8f65701a9f44f02a9f50301aaf60300aaa0a79052e1031faaf30303aaf40302aaea0a5494c0010036a0a79052e1031faa130b5494e00100b4e10316aa"
+    },
+    {
+      "name": "CanTakeDamage_35677_64",
+      "rva": 120749712,
+      "hex": "e20315aae30314aae40313aaf44f42a9f65741a9e5031faafe0743f864a34714f44f42a9f65741a920008052fe0743f8c0035fd6edb3c094"
+    },
+    {
+      "name": "get_GameServerGameMode_34943_0",
+      "rva": 119272896,
+      "hex": "fe4fbfa933ef01f068065d39c800003700ac0190006040f98155c6942800805268061d3940218052e1031faa0cad59940001003640218052e1031faa35ad5994"
+    },
+    {
+      "name": "get_GameServerGameMode_34943_64",
+      "rva": 119272960,
+      "hex": "e00100b4e1031faafe4fc1a873bf491413ac0190736240f9600240f908e040b968000035cc55c694600240f9085c40f9001541b9fe4fc1a8c0035fd60f56c694"
+    }
+  ],
+  "virtual": [
+    {
+      "index": 12425,
+      "slot": 91,
+      "metadata_offset": 48275648,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 12644,
+      "slot": 91,
+      "metadata_offset": 48288608,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 30530,
+      "slot": 91,
+      "metadata_offset": 49899268,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 32220,
+      "slot": 91,
+      "metadata_offset": 49976752,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 32251,
+      "slot": 91,
+      "metadata_offset": 49978964,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34072,
+      "slot": 91,
+      "metadata_offset": 50293600,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34074,
+      "slot": 91,
+      "metadata_offset": 50294272,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34076,
+      "slot": 91,
+      "metadata_offset": 50294852,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34077,
+      "slot": 91,
+      "metadata_offset": 50295460,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34078,
+      "slot": 91,
+      "metadata_offset": 50296040,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34080,
+      "slot": 91,
+      "metadata_offset": 50296720,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34081,
+      "slot": 91,
+      "metadata_offset": 50297320,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34082,
+      "slot": 91,
+      "metadata_offset": 50297912,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34087,
+      "slot": 91,
+      "metadata_offset": 50298560,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34088,
+      "slot": 91,
+      "metadata_offset": 50299276,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34089,
+      "slot": 91,
+      "metadata_offset": 50299856,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34090,
+      "slot": 91,
+      "metadata_offset": 50300436,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34091,
+      "slot": 91,
+      "metadata_offset": 50301016,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34092,
+      "slot": 91,
+      "metadata_offset": 50301596,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34095,
+      "slot": 91,
+      "metadata_offset": 50302260,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34096,
+      "slot": 91,
+      "metadata_offset": 50302868,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34099,
+      "slot": 91,
+      "metadata_offset": 50303468,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34100,
+      "slot": 91,
+      "metadata_offset": 50304072,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34107,
+      "slot": 91,
+      "metadata_offset": 50304720,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34109,
+      "slot": 91,
+      "metadata_offset": 50305428,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34112,
+      "slot": 91,
+      "metadata_offset": 50306044,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34145,
+      "slot": 91,
+      "metadata_offset": 50307272,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34146,
+      "slot": 91,
+      "metadata_offset": 50307908,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34147,
+      "slot": 91,
+      "metadata_offset": 50308556,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34149,
+      "slot": 91,
+      "metadata_offset": 50309160,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34150,
+      "slot": 91,
+      "metadata_offset": 50309744,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34162,
+      "slot": 91,
+      "metadata_offset": 50310328,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34164,
+      "slot": 91,
+      "metadata_offset": 50311372,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34166,
+      "slot": 91,
+      "metadata_offset": 50312052,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34167,
+      "slot": 91,
+      "metadata_offset": 50312700,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34170,
+      "slot": 91,
+      "metadata_offset": 50313296,
+      "encoded": 1611097399,
+      "rva": 129044268
+    },
+    {
+      "index": 34171,
+      "slot": 91,
+      "metadata_offset": 50313900,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34172,
+      "slot": 91,
+      "metadata_offset": 50314492,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34173,
+      "slot": 91,
+      "metadata_offset": 50315080,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34174,
+      "slot": 91,
+      "metadata_offset": 50315668,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34176,
+      "slot": 91,
+      "metadata_offset": 50316248,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34177,
+      "slot": 91,
+      "metadata_offset": 50316832,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34178,
+      "slot": 91,
+      "metadata_offset": 50317420,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34180,
+      "slot": 91,
+      "metadata_offset": 50318112,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34181,
+      "slot": 91,
+      "metadata_offset": 50318704,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34183,
+      "slot": 91,
+      "metadata_offset": 50319344,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34188,
+      "slot": 91,
+      "metadata_offset": 50319936,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34189,
+      "slot": 91,
+      "metadata_offset": 50320580,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34190,
+      "slot": 91,
+      "metadata_offset": 50321160,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34191,
+      "slot": 91,
+      "metadata_offset": 50321808,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34192,
+      "slot": 91,
+      "metadata_offset": 50322388,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34195,
+      "slot": 91,
+      "metadata_offset": 50322976,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34206,
+      "slot": 91,
+      "metadata_offset": 50323680,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34207,
+      "slot": 91,
+      "metadata_offset": 50324268,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34208,
+      "slot": 91,
+      "metadata_offset": 50325108,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34209,
+      "slot": 91,
+      "metadata_offset": 50325696,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 34963,
+      "slot": 91,
+      "metadata_offset": 50447092,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 35149,
+      "slot": 91,
+      "metadata_offset": 50458280,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 35177,
+      "slot": 91,
+      "metadata_offset": 50458848,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 35180,
+      "slot": 91,
+      "metadata_offset": 50460496,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 35181,
+      "slot": 91,
+      "metadata_offset": 50461016,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 35184,
+      "slot": 91,
+      "metadata_offset": 50461464,
+      "encoded": 1610684091,
+      "rva": 120749648
+    },
+    {
+      "index": 35185,
+      "slot": 91,
+      "metadata_offset": 50461972,
+      "encoded": 1610684091,
+      "rva": 120749648
+    }
+  ],
+  "parameters": [
+    {
+      "name": "attacker",
+      "record": [
+        1930845,
+        134238934,
+        47671
+      ]
+    },
+    {
+      "name": "victim",
+      "record": [
+        1930854,
+        134238935,
+        45852
+      ]
+    },
+    {
+      "name": "weaponData",
+      "record": [
+        1930877,
+        134238936,
+        39169
+      ]
+    }
+  ],
+  "gate": 34109,
+  "scope": "Original CurrentMatchGame.CanTakeDamage base implementation only when CurrentGame equals CurrentMatchGame. Argument-independent true is one policy, not full combat eligibility. Overrides and hotfixes unknown."
+}

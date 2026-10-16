@@ -187,3 +187,20 @@ global 30000-call/120-second bounds and the 1500-call final reserve remain.
 Reference outputs reproduce byte-for-byte, and the extracted package is parsed,
 compiled/tested and hash-checked. Live V26 zone/protection validation is pending;
 no combat eligibility, damage-immunity or LOS result is claimed.
+
+## Accepted live V26 report
+
+The user report (host PID 11784 / guest PID 7882) passed exact module/layout and
+all 15 roster candidates (local plus 14 others). Local head sampled on attempt
+two after a discarded TRS change. The zone/protection phase accepted one
+PlayerNetwork at roster index 1 in raw mode 23, with managed PRIDataPool.
+TrainingZone=0, InBattleZone=False, InShootingRange=False and original
+PlayerAttributes.IsInvincible=False (mask 0, mode 1). Both original getter/
+predicate statuses and SELECTED_ENTRY_REVALIDATED passed with 240 observations.
+
+Counters changed since roster capture and during the optional capture, but the
+selected entry/input endpoint comparisons passed. The phase used 5759 additional
+reads and 26518 total, with plugin unload, handler cleanup and session release
+all PASS. This validates V26's corrected runtime array representation in one
+accepted managed-pool snapshot. It does not establish complete combat eligibility,
+damage immunity, LOS or continuous tracking; no aim write occurred.

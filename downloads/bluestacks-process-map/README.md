@@ -7,19 +7,22 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 26. Correct runtime array type-data validation.** Run with
-`-ProbeZoneProtection`. The inspected IL2CPP array constructor stores the element
-class's embedded byval argument in runtime SZARRAY type data. V26 requires that
-exact pointer, replacing V24/V25's incorrect ELF-descriptor expectation. The
-constructor code and element metadata identity are independently verified;
-expected/actual diagnostics remain. 441 offline checks pass; live V26 validation
-is pending. See [zone/protection evidence](ZONE-PROTECTION-EVIDENCE.md).
+**Current version: 27. Optional read-only match damage-policy probe.** Run with
+`-ProbeMatchDamagePolicy` to verify the active CurrentMatchGame virtual slot 91
+and reproduce its supported original argument-independent predicate. The base
+method returns true only on its inactive-hotfix branch; a custom override,
+active hotfix or unsupported game context yields UNKNOWN. This is one method
+predicate, not complete combat eligibility or proof of a damage-processing call
+site. 465 offline checks pass; live V27 validation is pending.
+See [match damage-policy evidence](MATCH-DAMAGE-EVIDENCE.md).
 
-Optional `-ZoneRosterIndex N` still selects a nonlocal member from that run's
-capped roster. V25 identified only TypeDataMatch=False, with the observed pointer
-equal to elementClass+0x20 and every other array component matching. It accepted
-no zone/protection sample. Complete combat eligibility, damage immunity and LOS
-remain unverified. All existing optional modes and limits remain available.
+**V26 zone/protection mode passed live.** `-ProbeZoneProtection` accepted one
+managed-pool sample in mode 23: zone 0, battle-zone/shooting-range false and
+invincibility predicate false (mask 0, mode 1). Selected membership revalidated;
+phase reads=5759, total=26518, cleanup all PASS. All 15 roster candidates were
+verified. This validates the runtime array fix for that snapshot; complete
+combat eligibility, damage immunity and LOS remain unverified.
+See [zone/protection evidence](ZONE-PROTECTION-EVIDENCE.md).
 
 **V23 combat-state mode remains available.** Use `-ProbeCombatState`, optionally
 with `-CombatRosterIndex N`. Two live reports accepted watching/dead/revive/ghost/

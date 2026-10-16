@@ -5,6 +5,7 @@ param(
     [Parameter(ParameterSetName='TeamPolicy')]
     [Parameter(ParameterSetName='CombatState')]
     [Parameter(ParameterSetName='ZoneProtection')]
+    [Parameter(ParameterSetName='MatchDamagePolicy')]
     [string] $MachineName = 'Pie64',
     [ValidatePattern('^[A-Za-z0-9_.:-]+$')]
     [string] $Device = '127.0.0.1:5555',
@@ -21,7 +22,9 @@ param(
     [switch] $ProbeZoneProtection,
     [Parameter(ParameterSetName='ZoneProtection')]
     [ValidateRange(-1, 15)]
-    [int] $ZoneRosterIndex = -1
+    [int] $ZoneRosterIndex = -1,
+    [Parameter(ParameterSetName='MatchDamagePolicy')]
+    [switch] $ProbeMatchDamagePolicy
 )
 Set-StrictMode -Version 2
 $ErrorActionPreference = 'Stop'
@@ -97,11 +100,12 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=26 ReadOnly=1'
+Record 'ProcessMapVersion=27 ReadOnly=1'
 Record "PlayerStateMode=$($ProbePlayerState.IsPresent)"
 Record "TeamPolicyMode=$($ProbeTeamPolicy.IsPresent)"
 Record "CombatStateMode=$($ProbeCombatState.IsPresent) RequestedRosterIndex=$CombatRosterIndex"
 Record "ZoneProtectionMode=$($ProbeZoneProtection.IsPresent) RequestedRosterIndex=$ZoneRosterIndex"
+Record "MatchDamagePolicyMode=$($ProbeMatchDamagePolicy.IsPresent)"
 try {
     if ($PSBoundParameters.ContainsKey('ZoneRosterIndex') -and -not $ProbeZoneProtection.IsPresent) { throw 'Use -ProbeZoneProtection with -ZoneRosterIndex.' }
     if ($PSBoundParameters.ContainsKey('CombatRosterIndex') -and -not $ProbeCombatState.IsPresent) { throw 'Use -ProbeCombatState with -CombatRosterIndex.' }
@@ -133,6 +137,8 @@ try {
     $combatReferencePath = Join-Path $PSScriptRoot 'CombatStateReference.cs'
     $zonePath = Join-Path $PSScriptRoot 'ZoneProtectionProbe.cs'
     $zoneReferencePath = Join-Path $PSScriptRoot 'ZoneProtectionReference.cs'
+    $damagePath = Join-Path $PSScriptRoot 'MatchDamageProbe.cs'
+    $damageReferencePath = Join-Path $PSScriptRoot 'MatchDamageReference.cs'
     if ($manifest.plugin -cne 'VBoxDbgHeadAimBridge.dll' -or $manifest.sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.mapping_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.module_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
@@ -154,7 +160,9 @@ try {
         $manifest.combat_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.combat_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.zone_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
-        $manifest.zone_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
+        $manifest.zone_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.damage_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.damage_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
     if ((Get-FileHash -LiteralPath $pluginPath -Algorithm SHA256).Hash -ine $manifest.sha256 -or
         (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash -ine $manifest.mapping_source_sha256 -or
         (Get-FileHash -LiteralPath $modulePath -Algorithm SHA256).Hash -ine $manifest.module_source_sha256 -or
@@ -176,10 +184,12 @@ try {
         (Get-FileHash -LiteralPath $combatPath -Algorithm SHA256).Hash -ine $manifest.combat_source_sha256 -or
         (Get-FileHash -LiteralPath $combatReferencePath -Algorithm SHA256).Hash -ine $manifest.combat_reference_sha256 -or
         (Get-FileHash -LiteralPath $zonePath -Algorithm SHA256).Hash -ine $manifest.zone_source_sha256 -or
-        (Get-FileHash -LiteralPath $zoneReferencePath -Algorithm SHA256).Hash -ine $manifest.zone_reference_sha256) {
+        (Get-FileHash -LiteralPath $zoneReferencePath -Algorithm SHA256).Hash -ine $manifest.zone_reference_sha256 -or
+        (Get-FileHash -LiteralPath $damagePath -Algorithm SHA256).Hash -ine $manifest.damage_source_sha256 -or
+        (Get-FileHash -LiteralPath $damageReferencePath -Algorithm SHA256).Hash -ine $manifest.damage_reference_sha256) {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
-    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath) -ErrorAction Stop
+    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath, $damagePath, $damageReferencePath) -ErrorAction Stop
     $classId = (Get-Item -LiteralPath 'Registry::HKEY_CLASSES_ROOT\VirtualBox.VirtualBoxClient\CLSID').GetValue('')
     $server = [Environment]::ExpandEnvironmentVariables([string](Get-Item -LiteralPath "Registry::HKEY_CLASSES_ROOT\CLSID\$classId\InprocServer32").GetValue(''))
     if ([IO.Path]::GetFileName($server.Trim().Trim('"')) -ine 'BstkC.dll') { throw 'COM client is not the verified BlueStacks server.' }
@@ -319,7 +329,27 @@ try {
     $teamSummary = 'NOT_REQUESTED'
     $combatSummary = 'NOT_REQUESTED'
     $zoneSummary = 'NOT_REQUESTED'
-    if ($ProbeZoneProtection) {
+    $damageSummary = 'NOT_REQUESTED'
+    if ($ProbeMatchDamagePolicy) {
+        $stage = 'MatchDamagePolicy'
+        $damageStart = $reader.PhysicalCalls
+        $damage = $reader.SampleMatchDamagePolicy($kernel, $game, $module, $layout, $objects, $progress)
+        if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during match-damage policy sampling.' }
+        $damageSummary = $damage.Status
+        Record "MatchDamagePolicy=$($damage.Status) ContextVerified=$($damage.ContextVerified) AdditionalPhysicalReads=$($reader.PhysicalCalls - $damageStart) Detail=$($damage.Detail)"
+        if ($damage.ContextVerified) {
+            $predicate = if ($null -eq $damage.Predicate) { 'UNKNOWN' } else { [string]$damage.Predicate }
+            Record "MatchDamageObservation GameModeRaw=$($damage.GameModeRaw) GameModeStatus=$($damage.GameModeStatus) GameClass=$($damage.GameClass) CurrentMatchGame=0x$($damage.CurrentMatchGame.ToString('x')) MethodRVA=0x$($damage.MethodRva.ToString('x')) LocalPlayer=0x$($damage.LocalPlayer.ToString('x')) OtherPlayer=0x$($damage.OtherPlayer.ToString('x')) OtherRosterIndex=$($damage.OtherRosterIndex) MembershipProof=$($damage.MembershipProof) CountersChangedSinceRoster=$($damage.CountersChangedSinceRoster) CountersChangedDuringCapture=$($damage.CountersChangedDuringCapture) Observations=$($damage.Observations)"
+            Record "MatchDamagePredicate=$predicate ArgumentIndependent=$($damage.ArgumentIndependent) Predicate=CurrentMatchGame.CanTakeDamage Scope=MATCH_POLICY_ONLY GameMethodCalls=NONE"
+        }
+        if ($damage.Status -ceq 'FAIL') { $failed = $true }
+        Record 'MatchDamageSemantics CombatEligibility=UNVERIFIED Hostility=UNVERIFIED WeaponContext=UNVERIFIED CompleteDamageImmunity=UNVERIFIED LineOfSight=UNVERIFIED Writes=NONE'
+        Record 'OtherHeadSamples=NOT_REQUESTED_DAMAGE_POLICY_MODE'
+        Record 'CombatStateSamples=NOT_REQUESTED_DAMAGE_POLICY_MODE'
+        Record 'ZoneProtectionSamples=NOT_REQUESTED_DAMAGE_POLICY_MODE'
+        Record 'PlayerStateSamples=NOT_REQUESTED_DAMAGE_POLICY_MODE'
+        Record 'TeamPolicy=NOT_REQUESTED_DAMAGE_POLICY_MODE'
+    } elseif ($ProbeZoneProtection) {
         $stage = 'ZoneProtectionSamples'
         $zoneStart = $reader.PhysicalCalls
         $zone = $reader.SampleZoneProtection($kernel, $game, $module, $layout, $objects, $ZoneRosterIndex, $progress)
@@ -436,7 +466,7 @@ try {
         }
         if ($otherHeads.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
     }
-    Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadPositionsSampled=$($otherHeads.Sampled) TeamPolicy=$teamSummary CombatState=$combatSummary ZoneProtection=$zoneSummary TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
+    Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadPositionsSampled=$($otherHeads.Sampled) TeamPolicy=$teamSummary CombatState=$combatSummary ZoneProtection=$zoneSummary MatchDamagePolicy=$damageSummary TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
 } catch { $failed = $true; Failure $stage $_.Exception }
 finally {
     if ($null -ne $reader) {

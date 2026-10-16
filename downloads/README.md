@@ -1,12 +1,15 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V26**. `-ProbeZoneProtection` corrects the runtime
-array type-data expectation using the inspected IL2CPP constructor: element
-class + 0x20, with independent class identity and live code checks. It retains
-failure diagnostics and all remaining checks. 441 offline checks pass; live V26
-zone/protection validation is pending. Combat eligibility, complete damage
-immunity and LOS remain unverified.
-See [zone/protection evidence](bluestacks-process-map/ZONE-PROTECTION-EVIDENCE.md).
+Current process probe: **V27**. `-ProbeMatchDamagePolicy` verifies the active
+match's original CanTakeDamage method and its argument-independent base result.
+Overrides/hotfixes remain UNKNOWN. 465 offline checks pass; live V27 validation
+is pending. A true method result does not establish complete combat eligibility,
+hostility, weapon context, damage immunity or LOS.
+See [match damage-policy evidence](bluestacks-process-map/MATCH-DAMAGE-EVIDENCE.md).
+
+V26's zone/protection mode passed live for one selected player: mode 23, zone 0,
+battle-zone/shooting-range false and invincibility predicate false. Its array
+fix, selected membership, budget and cleanup all passed for that snapshot.
 
 V23's combat-state mode remains available. Two live reports accepted its original
 watching/dead/revive/ghost/IsDieing predicates for the selected player, within the
