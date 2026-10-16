@@ -3,8 +3,44 @@
 Use `Run-ProcessMap.ps1 -ProbePlayerState` after spawning in Training Ground.
 This selects state sampling instead of the optional nonlocal-head phase.
 Kernel, process, module, metadata, local head and roster checks still run first.
-Default invocation retains V20's other-head behavior. V21 has no live Windows
-state result yet; its new state cases are synthetic offline checks.
+Default invocation retains V20's other-head behavior. The user's first V21
+Windows state run accepted local and nonlocal samples; details follow below.
+
+## First live V21 result
+
+Host PID 14916 / guest PID 5609 passed kernel, process, module and both complete
+80-check layout comparisons. The local head sampled on attempt two after a
+discarded TRS-motion observation. The dictionary contained 16 used slots,
+one removed slot and 15 active non-null unique candidates. All 15 were verified
+(local plus 14 others), with CompleteObjectValidation=True for that roster.
+
+The state phase attempted two members and accepted both after final checks:
+
+| Observed field | Local PlayerNetwork | Other PlayerNetwork |
+| --- | --- | --- |
+| TeamIndexRaw | 0 | 0 |
+| BaseDeadRaw | False | False |
+| PendingReviveRaw | False | False |
+| ReallyDead, original branch | False | False |
+| ModelVisible, original branch | True | False |
+| VisibilityMask | 4294967295 | 4294966779 |
+| VisibilityMode | 0 | 0 |
+| CountersChangedSinceRoster | True | True |
+| CountersChangedDuringCapture | False | True |
+
+Each row reported SELECTED_ENTRY_REVALIDATED and 128 observations. A global
+counter change during the second capture did not invalidate its unchanged
+selected-entry/object/state bytes; it is not evidence of a stable full roster.
+Phase stop was SELECTED_OBJECTS_EXHAUSTED, with 4711 additional physical reads
+and 24097 total. Plugin unload, handler cleanup and shared-session release passed.
+Other-head sampling was intentionally not requested in state mode.
+
+This report validates one run of two state snapshots. It does not establish
+state transitions, teammate/enemy policy, knockout, complete combat eligibility,
+LOS or tracking. Equal raw team indices are not interpreted as teammates; the
+false nonlocal model flag is not interpreted as occlusion. No aim write occurred.
+The existing V21 runtime ZIP and its published checksum remain unchanged; this
+live-result update is repository documentation only.
 
 ## Output contract
 

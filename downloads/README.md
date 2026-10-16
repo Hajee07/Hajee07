@@ -3,8 +3,10 @@
 Current process probe: **V21**. Optional `-ProbePlayerState` samples raw team
 index, dead/revive flags and supported original model visibility from at most
 two verified roster objects, with unknown statuses for active hotfixes or
-unsupported visibility paths. 277 offline checks pass; live V21 state validation
-is pending. The earlier V20 local and one nonlocal head sample passed live.
+unsupported visibility paths. 277 offline checks passed before release. The
+user's V21 run accepted local and nonlocal state samples within the read budget,
+with all cleanup passing. The earlier V20 local and one nonlocal head sample
+also passed live. The runtime ZIP is unchanged after this live report.
 Continuous tracking, complete enemy/team/alive/line-of-sight semantics and aim
 control remain incomplete.
 See [the probe instructions](bluestacks-process-map/README.md) and

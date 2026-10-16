@@ -13,8 +13,12 @@ original model-visibility behavior from at most two verified roster members.
 It replaces the optional other-head phase for that run and preserves the same
 global limits. Hotfixes, unsupported visibility overrides and null storage yield
 explicit unknown statuses. This does not classify enemies, establish full alive
-eligibility, or test line of sight. V21 state sampling awaits live Windows
-validation; 277 offline checks pass. See [state evidence](PLAYER-STATE-EVIDENCE.md).
+eligibility, or test line of sight. The user's V21 Windows run accepted two
+state samples (local plus one nonlocal), using 4711 additional reads and 24097
+total reads, with all cleanup passing. Both raw team indices were 0; local
+model visibility was true and nonlocal model visibility false. This does not
+establish team policy or LOS. 277 offline checks passed before release.
+See [state evidence](PLAYER-STATE-EVIDENCE.md). The runtime ZIP is unchanged.
 
 **V20 live nonlocal sampling passed.** The user's
 latest V20 run sampled the local head on attempt two and one nonlocal

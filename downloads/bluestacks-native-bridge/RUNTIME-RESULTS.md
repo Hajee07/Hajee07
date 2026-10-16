@@ -525,3 +525,29 @@ state checks; there is no live V21 state report yet. Team/enemy policy, complete
 alive eligibility, knockout and line of sight remain unverified. No aim writes
 or game-function calls were added. See PLAYER-STATE-EVIDENCE.md in the mapper
 package for the exact output and endpoint-observation contract.
+
+## V21 first accepted live player-state samples
+
+Host PID 14916 / guest PID 5609 passed exact kernel/process/module and both
+80-check layout rounds. Local head attempt one was discarded for TRS motion;
+attempt two sampled successfully. The roster verified all 15 unique active
+objects (local plus 14 others) from 16 used slots and one removed slot.
+
+The optional state phase accepted two PlayerNetwork rows, each with 128
+observations and SELECTED_ENTRY_REVALIDATED. Both TeamIndexRaw values were 0,
+and both BaseDeadRaw, PendingReviveRaw and original-branch ReallyDead values
+were false. The local original-branch ModelVisible was true (mask 4294967295,
+mode 0); the nonlocal value was false (mask 4294966779, mode 0).
+
+CountersChangedSinceRoster was true for both members. During capture it was
+false for local and true for nonlocal; selected-entry/object/state comparisons
+and phase-final checks nevertheless passed. This remains endpoint evidence.
+Stop=SELECTED_OBJECTS_EXHAUSTED, attempted=2, accepted=2, additional reads=4711,
+total reads=24097. Plugin unload, handler cleanup and shared-session release
+all passed. State mode correctly skipped optional other-head sampling.
+
+Equal team indices do not establish teammate policy, and model visibility does
+not establish line of sight. Combat eligibility, knockout, state transitions,
+continuous tracking and aim integration remain unverified. No runtime source,
+manifest or ZIP was changed for this documentation-only update. The previously
+passed 277 offline checks were not rerun.
