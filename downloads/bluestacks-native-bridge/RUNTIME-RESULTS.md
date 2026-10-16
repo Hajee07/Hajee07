@@ -737,3 +737,26 @@ predicate through exact state-machine/current-state fields. 526 offline checks
 pass; baseline additional reads=4988, A0 fixture=5477. Live validation pending.
 This predicate does not establish Player.IsReloading, firing readiness or ammo.
 Plugin and global limits unchanged; no game calls or writes.
+
+## Accepted V30 live reload-predicate report
+
+The user's report (host 11784 / guest 7882) passed module identity and both
+80-check layout comparisons. Local head sampling passed on attempt one. The
+first roster capture was discarded for a changed observation; the second
+verified all 15 active objects (local plus 14 others). The A0 hand path accepted
+HBIBDMMOOOK, typed IOKEALMHBKN data and original UInt32 data ID 41.
+SelectedWeaponReloading=False accepted with StateRaw=2 and the original
+selected-weapon predicate status. Selected membership revalidated; counters
+were unchanged since roster and during capture. The phase recorded 226
+observations, 5583 additional reads and 25735 total reads. All three cleanup
+checks passed; no method invocation or writes occurred.
+Reloading=False does not establish full readiness, firing state or ammo. The
+head/roster/weapon phases remain sequential observations, not an atomic snapshot.
+
+## V31 separate selected-weapon firing predicate
+
+-ProbeWeaponFiring replaces other optional phases and verifies original slot 218
+through the actual GameVar cache/state-ID branch. 583 offline checks pass; live
+validation pending. Fixture additional reads=4803 (direct), 5292 (A0).
+V30's mode/read costs remain available. All global limits/plugin unchanged.
+No Player.IsFiring, readiness, ammo, LOS or aiming claim; no calls or writes.

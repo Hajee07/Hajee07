@@ -1,7 +1,7 @@
 # V30 selected-weapon reload predicate
 
 V28 weapon selection/reference and V29 original data GetId passed live (reports
-below). V30 reload-predicate live validation is pending. Run
+below). V30 reload-predicate validation also passed live (report below). Run
 `Run-ProcessMap.ps1 -ProbeWeaponContext` with Free Fire and an equipped weapon.
 The phase selects only a verified local roster member; it never substitutes a
 nonlocal player. Existing optional modes remain mutually exclusive.
@@ -122,3 +122,18 @@ shared-session release all passed. No game method or write occurred.
 This proves the raw data-ID path for that snapshot, not a weapon-name mapping,
 ammo, reloading, firing readiness, LOS or aim integration. Head/roster/weapon
 phases are sequential observations, not one atomic simultaneous snapshot.
+
+## Accepted V30 live reload-predicate report
+
+The user's report (host 11784 / guest 7882) passed module identity and both
+80-check layout comparisons. Local head sampling passed on attempt one. The
+first roster capture was discarded for a changed observation; the second
+verified all 15 active objects (local plus 14 others). The A0 hand path accepted
+HBIBDMMOOOK, typed IOKEALMHBKN data and original UInt32 data ID 41.
+SelectedWeaponReloading=False accepted with StateRaw=2 and the original
+selected-weapon predicate status. Selected membership revalidated; counters
+were unchanged since roster and during capture. The phase recorded 226
+observations, 5583 additional reads and 25735 total reads. All three cleanup
+checks passed; no method invocation or writes occurred.
+Reloading=False does not establish full readiness, firing state or ammo. The
+head/roster/weapon phases remain sequential observations, not an atomic snapshot.

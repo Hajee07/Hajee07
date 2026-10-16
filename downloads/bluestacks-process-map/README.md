@@ -7,13 +7,18 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 30. Read-only selected-weapon reload predicate.**
-`-ProbeWeaponContext` retains weapon selection/data ID and adds the supported
-original slot-216 predicate (state ID equals 8) for the selected weapon. 526
-offline checks pass; live reload validation is pending. Unknown overrides,
-hotfixes and unready state storage have explicit statuses. This does not claim
-Player.IsReloading or full firing readiness.
-See [weapon evidence](WEAPON-CONTEXT-EVIDENCE.md).
+**Current version: 31. Separate read-only weapon firing-predicate mode.**
+Run `-ProbeWeaponFiring` to verify the selected weapon's original slot-218
+predicate through the supported cache or state-ID branch. 583 offline checks
+pass; live V31 validation is pending. This replaces other optional phases for
+that run. It does not establish Player.IsFiring, ammo, full firing readiness,
+LOS or aim integration. See [firing evidence](WEAPON-FIRING-EVIDENCE.md).
+
+**V30 weapon-context mode passed live.** `-ProbeWeaponContext` retains selection,
+UInt32 data ID and the selected-weapon reload predicate. Latest accepted run:
+ID 41, Reloading=False, StateRaw=2; all 15 roster objects verified on retry two,
+local head sampled on attempt one, phase reads=5583, total=25735, all cleanup PASS.
+This does not prove readiness. See [weapon evidence](WEAPON-CONTEXT-EVIDENCE.md).
 
 **V29 data-ID mode passed live.** UInt32 ID 41 accepted through the A0 hand path;
 all 15 roster objects verified, local head sampled on attempt one, selected

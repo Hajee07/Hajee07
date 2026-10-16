@@ -28,10 +28,10 @@ namespace HeadBridge.Mapping
         }
         private static ObjectClassProfile WeaponClass(ObjectReads reads,ulong klass,GameLayoutResult layout)
         { return CombatClass(reads,klass,layout,WeaponContextReference.Classes); }
-        private static bool WeaponFields(ObjectReads reads,ulong klass,int index,ModuleResult module,GameLayoutResult layout)
+        private static bool WeaponFields(ObjectReads reads,ulong klass,int index,ModuleResult module,GameLayoutResult layout,StateField[] fields=null)
         {
             ulong table=reads.Value(klass+0x80,"Weapon.FieldTable");if(table==0)return false;
-            CombatFields(reads,klass,index,module,layout,WeaponContextReference.Fields);return true;
+            CombatFields(reads,klass,index,module,layout,fields??WeaponContextReference.Fields);return true;
         }
         private static ulong WeaponAncestor(ObjectReads reads,ulong klass,ObjectClassProfile p,int target,GameLayoutResult layout)
         {
@@ -46,11 +46,12 @@ namespace HeadBridge.Mapping
         }
         private static void WeaponNone(PlayerStateObservation sample,string path)
         { sample.Weapon=0;sample.WeaponData=0;sample.WeaponSelectionPath=path;sample.WeaponStatus="ORIGINAL_NO_ACTIVE_WEAPON"; }
-        private static void ReadWeaponContext(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length)
+        private static void ReadWeaponContext(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length,bool firing=false)
         {
-            Expect(sample.IsLocal,"weapon context selects local player only");sample.WeaponStatus="UNVERIFIED_HOTFIX_ACTIVE";sample.WeaponIdStatus="NOT_REQUESTED_UNVERIFIED_DATA";sample.WeaponReloadStatus="NOT_REQUESTED_UNVERIFIED_WEAPON";
+            Expect(sample.IsLocal,"weapon context selects local player only");sample.WeaponStatus="UNVERIFIED_HOTFIX_ACTIVE";sample.WeaponIdStatus="NOT_REQUESTED_UNVERIFIED_DATA";sample.WeaponReloadStatus="NOT_REQUESTED_UNVERIFIED_WEAPON";sample.WeaponFiringStatus="NOT_REQUESTED_UNVERIFIED_WEAPON";
+            StateField[] selectedFields=firing?WeaponFiringReference.Fields:null;
             if(!CombatGate(reads,wrappers,length,0x347,0x345))return;
-            sample.WeaponStatus="NOT_READY_PLAYER_FIELD_TABLE";if(!WeaponFields(reads,playerBase,31824,module,layout))return;
+            sample.WeaponStatus="NOT_READY_PLAYER_FIELD_TABLE";if(!WeaponFields(reads,playerBase,31824,module,layout,selectedFields))return;
             ulong candidate=reads.Value(sample.Player+0x608,"Weapon.ActiveField");bool handCast=false;int declared=32623;
             sample.WeaponSelectionPath="ACTIVE_PLAYER_FIELD";
             if(candidate==0)
@@ -61,7 +62,7 @@ namespace HeadBridge.Mapping
                 ObjectReads.User(controller,8,"weapon controller");ulong controllerClass=reads.Pointer(controller,"weapon controller class");ObjectClassProfile cp=WeaponClass(reads,controllerClass,layout);
                 sample.WeaponStatus="UNSUPPORTED_HAND_CONTROLLER_CLASS";if(cp==null || cp.Index!=32430)return;
                 sample.WeaponStatus="UNVERIFIED_HOTFIX_ACTIVE";if(!CombatGate(reads,wrappers,length,0x286,0x285))return;
-                sample.WeaponStatus="NOT_READY_CONTROLLER_FIELD_TABLE";if(!WeaponFields(reads,controllerClass,32430,module,layout))return;
+                sample.WeaponStatus="NOT_READY_CONTROLLER_FIELD_TABLE";if(!WeaponFields(reads,controllerClass,32430,module,layout,selectedFields))return;
                 bool alternate=StateBoolean(reads,controller+0x148,"Weapon.AlternateHand");sample.AlternateHand=alternate;
                 candidate=reads.Value(controller+(alternate?0xa8UL:0xa0UL),"Weapon.SelectedHandItem");declared=alternate?32613:32463;handCast=true;
                 sample.WeaponSelectionPath=alternate?"ON_HAND_CONTROLLER_A8":"ON_HAND_CONTROLLER_A0";
@@ -77,7 +78,9 @@ namespace HeadBridge.Mapping
                 if((item.Family&2)==0){WeaponNone(sample,"ON_HAND_NON_WEAPON_CAST");return;}
             }
             Expect((item.Family&2)!=0,"selected weapon family");ulong weaponBase=WeaponAncestor(reads,itemClass,item,32785,layout);
-            sample.Weapon=candidate;sample.WeaponClass=item.Name;ReadSelectedWeaponReload(reads,module,layout,sample,itemClass,item,weaponBase,wrappers,length);sample.WeaponStatus="UNSUPPORTED_WEAPON_DATA_OVERRIDE";
+            sample.Weapon=candidate;sample.WeaponClass=item.Name;
+            if(firing){sample.WeaponStatus="ORIGINAL_SELECTED_WEAPON_VERIFIED";ReadSelectedWeaponFiring(reads,module,layout,sample,itemClass,item,weaponBase,wrappers,length);return;}
+            ReadSelectedWeaponReload(reads,module,layout,sample,itemClass,item,weaponBase,wrappers,length);sample.WeaponStatus="UNSUPPORTED_WEAPON_DATA_OVERRIDE";
             TeamVirtual dispatch=null;foreach(TeamVirtual v in WeaponContextReference.Virtuals)if(v.Index==item.Index)dispatch=v;
             Expect(dispatch!=null,"weapon data dispatch profile");int slots=BitConverter.ToUInt16(reads.Read(itemClass+0x12a,2),0);
             Expect(slots>45 && slots==BitConverter.ToUInt16(Hex(item.RecordHex),74) && reads.Word(layout.RuntimeMetadataBase+dispatch.MetadataOffset)==dispatch.Encoded &&

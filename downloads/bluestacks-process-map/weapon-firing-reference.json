@@ -1,0 +1,1085 @@
+{
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "fields": [
+    {
+      "owner": 31824,
+      "local": 278,
+      "name": "GGBNFECEPJG",
+      "offset": 1544,
+      "registration_value": 1544,
+      "offset_rva": 27159068,
+      "descriptor": 182280768,
+      "bits": 1179652,
+      "type_index": 32623,
+      "name_offset": 7877335,
+      "token": 67360560,
+      "metadata_offset": 44993716,
+      "record_hex": "439f5900028d000030d70304"
+    },
+    {
+      "owner": 31824,
+      "local": 319,
+      "name": "BKEPAKCAGNJ",
+      "offset": 1856,
+      "registration_value": 1856,
+      "offset_rva": 27159232,
+      "descriptor": 182285344,
+      "bits": 1179652,
+      "type_index": 32430,
+      "name_offset": 7877904,
+      "token": 67360601,
+      "metadata_offset": 44994208,
+      "record_hex": "7ca15900278e000059d70304"
+    },
+    {
+      "owner": 32430,
+      "local": 37,
+      "name": "LMFNCLKHIIO",
+      "offset": 160,
+      "registration_value": 160,
+      "offset_rva": 27181016,
+      "descriptor": 182020432,
+      "bits": 1179649,
+      "type_index": 32463,
+      "name_offset": 8038602,
+      "token": 67366669,
+      "metadata_offset": 45067024,
+      "record_hex": "36155c00a06400000def0304"
+    },
+    {
+      "owner": 32430,
+      "local": 38,
+      "name": "PDIMNGEMALB",
+      "offset": 168,
+      "registration_value": 168,
+      "offset_rva": 27181020,
+      "descriptor": 182280912,
+      "bits": 1179649,
+      "type_index": 32613,
+      "name_offset": 8038614,
+      "token": 67366670,
+      "metadata_offset": 45067036,
+      "record_hex": "42155c000b8d00000eef0304"
+    },
+    {
+      "owner": 32430,
+      "local": 70,
+      "name": "OMHEPNBNEKL",
+      "offset": 328,
+      "registration_value": 328,
+      "offset_rva": 27181148,
+      "descriptor": 182019296,
+      "bits": 2147614721,
+      "type_index": -1,
+      "name_offset": 8039015,
+      "token": 67366702,
+      "metadata_offset": 45067420,
+      "record_hex": "d3165c000c6300002eef0304"
+    },
+    {
+      "owner": 32785,
+      "local": 17,
+      "name": "MCKDHCLGKLC",
+      "offset": 144,
+      "registration_value": 2172748161,
+      "offset_rva": 27188556,
+      "descriptor": 182426576,
+      "bits": 1179652,
+      "type_index": 32884,
+      "name_offset": 8086708,
+      "token": 67368404,
+      "metadata_offset": 45087844,
+      "record_hex": "20d15c0043b20000d4f50304"
+    },
+    {
+      "owner": 32884,
+      "local": 1,
+      "name": "NEDIHEOKFLG",
+      "offset": 24,
+      "registration_value": 2172748161,
+      "offset_rva": 27191212,
+      "descriptor": 182236240,
+      "bits": 1179652,
+      "type_index": 32859,
+      "name_offset": 8015603,
+      "token": 67369271,
+      "metadata_offset": 45098248,
+      "record_hex": "5fbb5b00ce81000037f90304"
+    },
+    {
+      "owner": 32859,
+      "local": 0,
+      "name": "<CPEPAPMDFCA>k__BackingField",
+      "offset": 16,
+      "registration_value": 2172748161,
+      "offset_rva": 27190920,
+      "descriptor": 182353152,
+      "bits": 2148597761,
+      "type_index": 32858,
+      "name_offset": 8101985,
+      "token": 67369198,
+      "metadata_offset": 45097372,
+      "record_hex": "cd0c5d00b39f0000eef80304"
+    },
+    {
+      "owner": 32884,
+      "local": 2,
+      "name": "<MPDHPFHPENF>k__BackingField",
+      "offset": 32,
+      "registration_value": 2172748161,
+      "offset_rva": 27191216,
+      "descriptor": 182019296,
+      "bits": 2147614721,
+      "type_index": -1,
+      "name_offset": 8103126,
+      "token": 67369272,
+      "metadata_offset": 45098260,
+      "record_hex": "42115d000c63000038f90304"
+    },
+    {
+      "owner": 11718,
+      "local": 2021,
+      "name": "EnableIsFiringCache",
+      "offset": 6429,
+      "registration_value": 6429,
+      "offset_rva": 28214996,
+      "descriptor": 182019408,
+      "bits": 2147614742,
+      "type_index": -1,
+      "name_offset": 3399561,
+      "token": 67182928,
+      "metadata_offset": 42862132,
+      "record_hex": "f54b15001363000050210104"
+    }
+  ],
+  "methods": [
+    {
+      "index": 210492,
+      "name": "GetActiveWeapon",
+      "rva": 116490100,
+      "pointer_rva": 179478920,
+      "metadata_offset": 26996268,
+      "record_hex": "01785800507c00009b91000000000008ffffffffffffffff470300003d36030686000000ffff0000"
+    },
+    {
+      "index": 210483,
+      "name": "GetWeaponOnHand",
+      "rva": 116490896,
+      "pointer_rva": 179478848,
+      "metadata_offset": 26995908,
+      "record_hex": "07775800507c00009b91000000000008ffffffffffffffff460300003436030686000000ffff0000"
+    },
+    {
+      "index": 221309,
+      "name": "DEIPJDIGKIP",
+      "rva": 121213320,
+      "pointer_rva": 179565456,
+      "metadata_offset": 27428948,
+      "record_hex": "f6235a00cf7e00000b6300000000000879140200ffffffff450300007e60030696080000ffff0100"
+    },
+    {
+      "index": 220608,
+      "name": "PDAGHPAOBLP",
+      "rva": 120895700,
+      "pointer_rva": 179559848,
+      "metadata_offset": 27400908,
+      "record_hex": "c6fd5b00ae7e00009f64000000000008ffffffffffffffff86020000c15d030686080000ffff0000"
+    },
+    {
+      "index": 220657,
+      "name": "CKIKAFHOBDC",
+      "rva": 120895792,
+      "pointer_rva": 179560240,
+      "metadata_offset": 27402868,
+      "record_hex": "26015c00ae7e00000b63000000000008ffffffffffffffff85020000f25d030686080000ffff0000"
+    },
+    {
+      "index": 225210,
+      "name": "NGGBEDBDEPA",
+      "rva": 122165892,
+      "pointer_rva": 179596664,
+      "metadata_offset": 27584988,
+      "record_hex": "bd585c00118000000b63000000000008ffffffffffffffffc1040000bb6f0306c6010000da000000"
+    },
+    {
+      "index": 226517,
+      "name": "MPJPIANCJAP",
+      "rva": 122564636,
+      "pointer_rva": 179607120,
+      "metadata_offset": 27637268,
+      "record_hex": "2a115d0074800000b29f000000000008ffffffffffffffffb5040000d674030686000000ffff0000"
+    },
+    {
+      "index": 226238,
+      "name": "GMAKPBMBIDP",
+      "rva": 122520684,
+      "pointer_rva": 179604888,
+      "metadata_offset": 27626108,
+      "record_hex": "910c5d005b800000b29f000000000008ffffffffffffffffffffffffbf73030686080000ffff0000"
+    },
+    {
+      "index": 211035,
+      "name": "IsFiring",
+      "rva": 116526716,
+      "pointer_rva": 179483264,
+      "metadata_offset": 27017988,
+      "record_hex": "aaa45800507c00000b63000000000008fffffffffffffffffb2200005c38030686000000ffff0000"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "GetActiveWeapon_210492_0",
+      "rva": 116490100,
+      "hex": "fe4fbfa9f30300aae0688052e1031faaa64a649420010036e0688052e1031faacf4a6494e00100b4e10313aae2031faafe4fc1a8dd9b5414600643f9e1031faa"
+    },
+    {
+      "name": "GetActiveWeapon_210492_64",
+      "rva": 116490164,
+      "hex": "7504129480000036600643f9fe4fc1a8c0035fd6e00313aafe4fc1a8b0000014a9f3d094"
+    },
+    {
+      "name": "GetWeaponOnHand_210483_0",
+      "rva": 116490896,
+      "hex": "fe0f1ef8f44f01a9740402b088125e39f30300aac8000037c0c101d0000044f94bf2d0942800805288121e39c0688052e1031faad649649440010036c0688052"
+    },
+    {
+      "name": "GetWeaponOnHand_210483_64",
+      "rva": 116490960,
+      "hex": "e1031faaff496494a00300b4e10313aaf44f41a9e2031faafe0742f80c9b541460a243f9600200b4e1031faa76cd1094000200b4c8c101d0080144f9090040f9"
+    },
+    {
+      "name": "GetWeaponOnHand_210483_128",
+      "rva": 116491024,
+      "hex": "080140f92bc144390ac144397f010a6b62000054e0031faa06000014296540f9290d0a8b29815ff83f0108eb00009f9af44f41a9fe0742f8c0035fd6cbf2d094"
+    },
+    {
+      "name": "DEIPJDIGKIP_221309_0",
+      "rva": 121213320,
+      "hex": "fe4fbfa9f30300aaa0688052e1031faa2146529420010036a0688052e1031faa4a465294200100b4e10313aae2031faafe4fc1a8f24242147f0200f1e0079f1a"
+    },
+    {
+      "name": "DEIPJDIGKIP_221309_64",
+      "rva": 121213384,
+      "hex": "fe4fc1a8c0035fd62aefbe94"
+    },
+    {
+      "name": "PDAGHPAOBLP_220608_0",
+      "rva": 120895700,
+      "hex": "fe4fbfa9f30300aac0508052e1031faa4e7c539420010036c0508052e1031faa777c5394a00100b4e10313aae2031faafe4fc1a82cb24314e00313aa08000094"
+    },
+    {
+      "name": "PDAGHPAOBLP_220608_64",
+      "rva": 120895764,
+      "hex": "60000036605640f902000014605240f9fe4fc1a8c0035fd65325c094"
+    },
+    {
+      "name": "CKIKAFHOBDC_220657_0",
+      "rva": 120895792,
+      "hex": "fe4fbfa9f30300aaa0508052e1031faa377c539420010036a0508052e1031faa607c5394000100b4e10313aae2031faafe4fc1a80879431460224539fe4fc1a8"
+    },
+    {
+      "name": "CKIKAFHOBDC_220657_64",
+      "rva": 120895856,
+      "hex": "c0035fd64125c094"
+    },
+    {
+      "name": "NGGBEDBDEPA_225210_0",
+      "rva": 122165892,
+      "hex": "fe0f1ef8f44f01a934d901d088da6539f30300aac8000037e09501d000d442f94e4cbb942800805288da253920988052e1031faad9a34e944001003620988052"
+    },
+    {
+      "name": "NGGBEDBDEPA_225210_64",
+      "rva": 122165956,
+      "hex": "e1031faa02a44e94400500b4e10313aaf44f41a9e2031faafe0742f8a9a03e14604a40f9000400b4f49501d094d642f9880240f909e140b9a9000035e00308aa"
+    },
+    {
+      "name": "NGGBEDBDEPA_225210_128",
+      "rva": 122166020,
+      "hex": "944cbb94604a40f9400300b4880240f9a9238352085d40f908696938a8000034088040391f010071e0079f1a0e000014e1031faa39850194080c00511f350071"
+    },
+    {
+      "name": "NGGBEDBDEPA_225210_192",
+      "rva": 122166084,
+      "hex": "82000054e9f383522825c81aa800003708781f121f410071e0179f1a0200001420008052f44f41a9fe0742f8c0035fd6c14cbb94"
+    },
+    {
+      "name": "MPJPIANCJAP_226517_0",
+      "rva": 122564636,
+      "hex": "fe4fbfa9f30300aaa0968052e1031faa7c1e4d9420010036a0968052e1031faaa51e4d94400100b4e10313aae2031faafe4fc1a88c863d14680e40f9880000b4"
+    },
+    {
+      "name": "MPJPIANCJAP_226517_64",
+      "rva": 122564700,
+      "hex": "001140b9fe4fc1a8c0035fd684c7b994"
+    },
+    {
+      "name": "GMAKPBMBIDP_226238_0",
+      "rva": 122520684,
+      "hex": "001040b9c0035fd6"
+    },
+    {
+      "name": "IsFiring_211035_0",
+      "rva": 116526716,
+      "hex": "fe4fbfa9f30300aa605f8452e1031faae426649420010036605f8452e1031faa0d276494e00200b4e10313aae2031faafe4fc1a8b5235414e00313aaf6dcff97"
+    },
+    {
+      "name": "IsFiring_211035_64",
+      "rva": 116526780,
+      "hex": "e1031faaf30300aab1e0119440010036930100b4600240f921d3d094680240f9e00313aa026d47f9017147f9fe4fc1a840001fd6e0031f2afe4fc1a8c0035fd6"
+    },
+    {
+      "name": "IsFiring_211035_128",
+      "rva": 116526844,
+      "hex": "dfcfd094"
+    }
+  ],
+  "virtual": [
+    {
+      "index": 32499,
+      "slot": 218,
+      "metadata_offset": 49995704,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32500,
+      "slot": 218,
+      "metadata_offset": 49996848,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32501,
+      "slot": 218,
+      "metadata_offset": 49997992,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32502,
+      "slot": 218,
+      "metadata_offset": 49999136,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32503,
+      "slot": 218,
+      "metadata_offset": 50000280,
+      "encoded": 1611059199,
+      "rva": 121655072
+    },
+    {
+      "index": 32504,
+      "slot": 218,
+      "metadata_offset": 50001424,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32505,
+      "slot": 218,
+      "metadata_offset": 50002580,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32593,
+      "slot": 218,
+      "metadata_offset": 50008420,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32596,
+      "slot": 218,
+      "metadata_offset": 50009636,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32597,
+      "slot": 218,
+      "metadata_offset": 50010764,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32599,
+      "slot": 218,
+      "metadata_offset": 50011920,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32600,
+      "slot": 218,
+      "metadata_offset": 50013032,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32601,
+      "slot": 218,
+      "metadata_offset": 50014144,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32602,
+      "slot": 218,
+      "metadata_offset": 50015248,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32603,
+      "slot": 218,
+      "metadata_offset": 50016404,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32604,
+      "slot": 218,
+      "metadata_offset": 50017560,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32605,
+      "slot": 218,
+      "metadata_offset": 50018660,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32613,
+      "slot": 218,
+      "metadata_offset": 50020248,
+      "encoded": 1611057961,
+      "rva": 121544456
+    },
+    {
+      "index": 32614,
+      "slot": 218,
+      "metadata_offset": 50021348,
+      "encoded": 1611057961,
+      "rva": 121544456
+    },
+    {
+      "index": 32615,
+      "slot": 218,
+      "metadata_offset": 50022448,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32616,
+      "slot": 218,
+      "metadata_offset": 50023584,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32623,
+      "slot": 218,
+      "metadata_offset": 50024964,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32624,
+      "slot": 218,
+      "metadata_offset": 50026076,
+      "encoded": 1611058351,
+      "rva": 121570272
+    },
+    {
+      "index": 32625,
+      "slot": 218,
+      "metadata_offset": 50027188,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32626,
+      "slot": 218,
+      "metadata_offset": 50028288,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32634,
+      "slot": 218,
+      "metadata_offset": 50029804,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32635,
+      "slot": 218,
+      "metadata_offset": 50031044,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32641,
+      "slot": 218,
+      "metadata_offset": 50032428,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32642,
+      "slot": 218,
+      "metadata_offset": 50033572,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32643,
+      "slot": 218,
+      "metadata_offset": 50034728,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32646,
+      "slot": 218,
+      "metadata_offset": 50035976,
+      "encoded": 1611059199,
+      "rva": 121655072
+    },
+    {
+      "index": 32653,
+      "slot": 218,
+      "metadata_offset": 50037496,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32658,
+      "slot": 218,
+      "metadata_offset": 50038888,
+      "encoded": 1611059445,
+      "rva": 121672056
+    },
+    {
+      "index": 32659,
+      "slot": 218,
+      "metadata_offset": 50040020,
+      "encoded": 1611059445,
+      "rva": 121672056
+    },
+    {
+      "index": 32660,
+      "slot": 218,
+      "metadata_offset": 50041152,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32664,
+      "slot": 218,
+      "metadata_offset": 50042364,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32668,
+      "slot": 218,
+      "metadata_offset": 50043536,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32669,
+      "slot": 218,
+      "metadata_offset": 50044664,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32670,
+      "slot": 218,
+      "metadata_offset": 50045792,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32671,
+      "slot": 218,
+      "metadata_offset": 50046948,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32672,
+      "slot": 218,
+      "metadata_offset": 50048080,
+      "encoded": 1611059843,
+      "rva": 121701568
+    },
+    {
+      "index": 32677,
+      "slot": 218,
+      "metadata_offset": 50049448,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32678,
+      "slot": 218,
+      "metadata_offset": 50050604,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32681,
+      "slot": 218,
+      "metadata_offset": 50051852,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32682,
+      "slot": 218,
+      "metadata_offset": 50052960,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32683,
+      "slot": 218,
+      "metadata_offset": 50054096,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32684,
+      "slot": 218,
+      "metadata_offset": 50055196,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32685,
+      "slot": 218,
+      "metadata_offset": 50056332,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32686,
+      "slot": 218,
+      "metadata_offset": 50057476,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32687,
+      "slot": 218,
+      "metadata_offset": 50058584,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32689,
+      "slot": 218,
+      "metadata_offset": 50059720,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32690,
+      "slot": 218,
+      "metadata_offset": 50060848,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32700,
+      "slot": 218,
+      "metadata_offset": 50062352,
+      "encoded": 1611060451,
+      "rva": 121749172
+    },
+    {
+      "index": 32706,
+      "slot": 218,
+      "metadata_offset": 50063780,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32707,
+      "slot": 218,
+      "metadata_offset": 50064960,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32708,
+      "slot": 218,
+      "metadata_offset": 50066140,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32709,
+      "slot": 218,
+      "metadata_offset": 50067276,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32710,
+      "slot": 218,
+      "metadata_offset": 50068376,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32711,
+      "slot": 218,
+      "metadata_offset": 50069512,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32712,
+      "slot": 218,
+      "metadata_offset": 50070652,
+      "encoded": 1611060831,
+      "rva": 121778732
+    },
+    {
+      "index": 32714,
+      "slot": 218,
+      "metadata_offset": 50071824,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32715,
+      "slot": 218,
+      "metadata_offset": 50072940,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32720,
+      "slot": 218,
+      "metadata_offset": 50074292,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32721,
+      "slot": 218,
+      "metadata_offset": 50075396,
+      "encoded": 1611061093,
+      "rva": 121798860
+    },
+    {
+      "index": 32727,
+      "slot": 218,
+      "metadata_offset": 50076664,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32728,
+      "slot": 218,
+      "metadata_offset": 50077996,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32733,
+      "slot": 218,
+      "metadata_offset": 50079368,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32734,
+      "slot": 218,
+      "metadata_offset": 50080524,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32735,
+      "slot": 218,
+      "metadata_offset": 50081680,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32736,
+      "slot": 218,
+      "metadata_offset": 50082836,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32737,
+      "slot": 218,
+      "metadata_offset": 50083992,
+      "encoded": 1611061495,
+      "rva": 121925400
+    },
+    {
+      "index": 32738,
+      "slot": 218,
+      "metadata_offset": 50085136,
+      "encoded": 1611061563,
+      "rva": 121930256
+    },
+    {
+      "index": 32740,
+      "slot": 218,
+      "metadata_offset": 50086296,
+      "encoded": 1611061563,
+      "rva": 121930256
+    },
+    {
+      "index": 32741,
+      "slot": 218,
+      "metadata_offset": 50087440,
+      "encoded": 1611061495,
+      "rva": 121925400
+    },
+    {
+      "index": 32742,
+      "slot": 218,
+      "metadata_offset": 50088584,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32745,
+      "slot": 218,
+      "metadata_offset": 50089712,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32750,
+      "slot": 218,
+      "metadata_offset": 50091028,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32753,
+      "slot": 218,
+      "metadata_offset": 50092224,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32754,
+      "slot": 218,
+      "metadata_offset": 50093324,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32755,
+      "slot": 218,
+      "metadata_offset": 50094460,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32756,
+      "slot": 218,
+      "metadata_offset": 50095608,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32757,
+      "slot": 218,
+      "metadata_offset": 50096756,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32758,
+      "slot": 218,
+      "metadata_offset": 50097864,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32785,
+      "slot": 218,
+      "metadata_offset": 50099008,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32787,
+      "slot": 218,
+      "metadata_offset": 50102212,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32790,
+      "slot": 218,
+      "metadata_offset": 50103404,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32791,
+      "slot": 218,
+      "metadata_offset": 50104504,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32827,
+      "slot": 218,
+      "metadata_offset": 50108196,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32828,
+      "slot": 218,
+      "metadata_offset": 50109340,
+      "encoded": 1611059199,
+      "rva": 121655072
+    },
+    {
+      "index": 32833,
+      "slot": 218,
+      "metadata_offset": 50110700,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32834,
+      "slot": 218,
+      "metadata_offset": 50111800,
+      "encoded": 1611063731,
+      "rva": 122297456
+    },
+    {
+      "index": 32838,
+      "slot": 218,
+      "metadata_offset": 50113012,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32839,
+      "slot": 218,
+      "metadata_offset": 50114112,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32840,
+      "slot": 218,
+      "metadata_offset": 50115256,
+      "encoded": 1611059199,
+      "rva": 121655072
+    },
+    {
+      "index": 32841,
+      "slot": 218,
+      "metadata_offset": 50116400,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32842,
+      "slot": 218,
+      "metadata_offset": 50117544,
+      "encoded": 1611059199,
+      "rva": 121655072
+    },
+    {
+      "index": 32843,
+      "slot": 218,
+      "metadata_offset": 50118688,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32844,
+      "slot": 218,
+      "metadata_offset": 50119832,
+      "encoded": 1611059199,
+      "rva": 121655072
+    },
+    {
+      "index": 32845,
+      "slot": 218,
+      "metadata_offset": 50120976,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32846,
+      "slot": 218,
+      "metadata_offset": 50122120,
+      "encoded": 1611059199,
+      "rva": 121655072
+    },
+    {
+      "index": 32885,
+      "slot": 218,
+      "metadata_offset": 50125756,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32886,
+      "slot": 218,
+      "metadata_offset": 50126900,
+      "encoded": 1611059199,
+      "rva": 121655072
+    },
+    {
+      "index": 32887,
+      "slot": 218,
+      "metadata_offset": 50128044,
+      "encoded": 1611058887,
+      "rva": 121626840
+    },
+    {
+      "index": 32888,
+      "slot": 218,
+      "metadata_offset": 50129188,
+      "encoded": 1611059199,
+      "rva": 121655072
+    },
+    {
+      "index": 32889,
+      "slot": 218,
+      "metadata_offset": 50130332,
+      "encoded": 1611063157,
+      "rva": 122165892
+    },
+    {
+      "index": 32890,
+      "slot": 218,
+      "metadata_offset": 50131432,
+      "encoded": 1611063731,
+      "rva": 122297456
+    }
+  ],
+  "feature_cell": 180549144,
+  "feature_index": 11718,
+  "cache_offset": 6429,
+  "scope": "Original selected weapon slot-218 predicate. No Player.IsFiring, ammo, firing readiness, LOS or aim assertion."
+}

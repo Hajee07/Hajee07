@@ -1,10 +1,14 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V30**. `-ProbeWeaponContext` adds the supported selected
-weapon's original reload predicate (state ID equals 8) to selection and data ID.
-526 offline checks pass; live reload validation is pending. This is not a full
-firing-readiness or Player.IsReloading result.
-See [weapon evidence](bluestacks-process-map/WEAPON-CONTEXT-EVIDENCE.md).
+Current process probe: **V31**. Separate `-ProbeWeaponFiring` mode verifies the
+selected weapon's original firing predicate through its cache/state-ID branch.
+583 offline checks pass; live V31 validation pending. Ammo, full firing readiness,
+LOS and aim integration remain unverified.
+See [firing evidence](bluestacks-process-map/WEAPON-FIRING-EVIDENCE.md).
+
+V30's `-ProbeWeaponContext` passed live: ID 41, selected Reloading=False,
+StateRaw=2, selected membership and all cleanup PASS. Existing mode remains
+available with unchanged read cost; it is not combined with the firing phase.
 
 V29 passed live: raw UInt32 data ID 41, A0 hand path, selected membership and all
 cleanup PASS. Ammo, ballistics, LOS and aim integration remain unverified.
