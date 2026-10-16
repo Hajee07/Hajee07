@@ -103,7 +103,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=29 ReadOnly=1'
+Record 'ProcessMapVersion=30 ReadOnly=1'
 Record "PlayerStateMode=$($ProbePlayerState.IsPresent)"
 Record "TeamPolicyMode=$($ProbeTeamPolicy.IsPresent)"
 Record "CombatStateMode=$($ProbeCombatState.IsPresent) RequestedRosterIndex=$CombatRosterIndex"
@@ -358,6 +358,9 @@ try {
                 Record "WeaponDataReference=$dataPointer Class=$($sample.WeaponDataClass) Registration=$($sample.WeaponDataRegistration) GameMethodCalls=NONE"
                 $weaponId = if ($null -eq $sample.WeaponIdRaw) { 'UNKNOWN' } else { [string]$sample.WeaponIdRaw }
                 Record "WeaponDataId=$weaponId Status=$($sample.WeaponIdStatus) DataType=UInt32 NameMapping=UNVERIFIED GameMethodCalls=NONE"
+                $reloading = if ($null -eq $sample.WeaponReloading) { 'UNKNOWN' } else { [string]$sample.WeaponReloading }
+                $weaponState = if ($null -eq $sample.WeaponStateRaw) { 'UNKNOWN' } else { [string]$sample.WeaponStateRaw }
+                Record "SelectedWeaponReloading=$reloading Status=$($sample.WeaponReloadStatus) StateRaw=$weaponState Scope=SELECTED_WEAPON_PREDICATE PlayerIsReloading=UNVERIFIED FiringReadiness=UNVERIFIED"
             } else {
                 Record "WeaponContext=$($sample.Status) RosterIndex=$($sample.RosterIndex) Class=$($sample.Class) Detail=$($sample.Detail)"
                 if ($sample.Status -ceq 'FAIL') { $failed = $true }

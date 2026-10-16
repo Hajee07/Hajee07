@@ -20,7 +20,7 @@ namespace HeadBridge.Mapping
             foreach(StateField field in WeaponContextReference.Fields)
             {
                 uint offset=reads.Word(module.LoadBias+field.OffsetRva);
-                bool offsetMatches=offset==field.Offset || field.Owner==32785 && field.Local==18 && offset==WeaponContextReference.OpaqueDataRegistration;
+                bool offsetMatches=offset==field.Offset || ((field.Owner==32785 && (field.Local==17 || field.Local==18)) || (field.Owner==32884 && field.Local==1) || (field.Owner==32859 && field.Local==0)) && offset==WeaponContextReference.OpaqueDataRegistration;
                 Expect(offsetMatches && EqualBytes(reads.Read(layout.RuntimeMetadataBase+field.MetadataOffset,12),Hex(field.RecordHex)),"weapon field registration "+field.Name);
                 Expect(reads.Word(module.LoadBias+field.Descriptor+8)==field.Bits,"weapon field type flags "+field.Name);
                 if(field.TypeIndex>=0)Expect(reads.Value(module.LoadBias+field.Descriptor)==layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset+(ulong)field.TypeIndex*88UL,"weapon resolved field type "+field.Name);
@@ -48,7 +48,7 @@ namespace HeadBridge.Mapping
         { sample.Weapon=0;sample.WeaponData=0;sample.WeaponSelectionPath=path;sample.WeaponStatus="ORIGINAL_NO_ACTIVE_WEAPON"; }
         private static void ReadWeaponContext(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length)
         {
-            Expect(sample.IsLocal,"weapon context selects local player only");sample.WeaponStatus="UNVERIFIED_HOTFIX_ACTIVE";sample.WeaponIdStatus="NOT_REQUESTED_UNVERIFIED_DATA";
+            Expect(sample.IsLocal,"weapon context selects local player only");sample.WeaponStatus="UNVERIFIED_HOTFIX_ACTIVE";sample.WeaponIdStatus="NOT_REQUESTED_UNVERIFIED_DATA";sample.WeaponReloadStatus="NOT_REQUESTED_UNVERIFIED_WEAPON";
             if(!CombatGate(reads,wrappers,length,0x347,0x345))return;
             sample.WeaponStatus="NOT_READY_PLAYER_FIELD_TABLE";if(!WeaponFields(reads,playerBase,31824,module,layout))return;
             ulong candidate=reads.Value(sample.Player+0x608,"Weapon.ActiveField");bool handCast=false;int declared=32623;
@@ -77,7 +77,7 @@ namespace HeadBridge.Mapping
                 if((item.Family&2)==0){WeaponNone(sample,"ON_HAND_NON_WEAPON_CAST");return;}
             }
             Expect((item.Family&2)!=0,"selected weapon family");ulong weaponBase=WeaponAncestor(reads,itemClass,item,32785,layout);
-            sample.Weapon=candidate;sample.WeaponClass=item.Name;sample.WeaponStatus="UNSUPPORTED_WEAPON_DATA_OVERRIDE";
+            sample.Weapon=candidate;sample.WeaponClass=item.Name;ReadSelectedWeaponReload(reads,module,layout,sample,itemClass,item,weaponBase,wrappers,length);sample.WeaponStatus="UNSUPPORTED_WEAPON_DATA_OVERRIDE";
             TeamVirtual dispatch=null;foreach(TeamVirtual v in WeaponContextReference.Virtuals)if(v.Index==item.Index)dispatch=v;
             Expect(dispatch!=null,"weapon data dispatch profile");int slots=BitConverter.ToUInt16(reads.Read(itemClass+0x12a,2),0);
             Expect(slots>45 && slots==BitConverter.ToUInt16(Hex(item.RecordHex),74) && reads.Word(layout.RuntimeMetadataBase+dispatch.MetadataOffset)==dispatch.Encoded &&
@@ -100,6 +100,32 @@ namespace HeadBridge.Mapping
                 reads.Value(dataClass+0x138UL+(ulong)id.Slot*16UL)==module.LoadBias+id.Rva,"weapon ID virtual dispatch");
             sample.WeaponIdStatus="NOT_READY_DATA_FIELD_TABLE";if(!WeaponFields(reads,dataClass,31595,module,layout))return;
             sample.WeaponIdRaw=reads.Word(data+0x68,"Weapon.DataId");sample.WeaponIdStatus="ORIGINAL_GET_ID_UINT32_SAMPLED";
+        }
+        private static void ReadSelectedWeaponReload(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,
+            ulong itemClass,ObjectClassProfile item,ulong weaponBase,ulong wrappers,ulong length)
+        {
+            sample.WeaponReloadStatus="UNSUPPORTED_SELECTED_WEAPON_RELOAD_OVERRIDE";TeamVirtual target=null;
+            foreach(TeamVirtual v in WeaponContextReference.ReloadVirtuals)if(v.Index==item.Index)target=v;
+            Expect(target!=null,"selected weapon reload dispatch profile");int slots=BitConverter.ToUInt16(reads.Read(itemClass+0x12a,2),0);
+            Expect(slots>216 && slots==BitConverter.ToUInt16(Hex(item.RecordHex),74) &&
+                reads.Word(layout.RuntimeMetadataBase+target.MetadataOffset)==target.Encoded &&
+                reads.Value(itemClass+0x138UL+216UL*16UL)==module.LoadBias+target.Rva,"selected weapon reload virtual dispatch");
+            if(target.Rva!=0x74819c4)return;
+            sample.WeaponReloadStatus="UNVERIFIED_RELOAD_HOTFIX_ACTIVE";if(!CombatGate(reads,wrappers,length,0x4c7))return;
+            sample.WeaponReloadStatus="NOT_READY_RELOAD_WEAPON_FIELD_TABLE";if(!WeaponFields(reads,weaponBase,32785,module,layout))return;
+            ulong machine=reads.Value(sample.Weapon.Value+0x90,"Weapon.StateMachine");
+            if(machine==0){sample.WeaponReloading=false;sample.WeaponReloadStatus="ORIGINAL_NULL_MACHINE_FALSE";return;}
+            ObjectReads.User(machine,8,"weapon state machine");ulong machineClass=reads.Pointer(machine,"weapon state machine class");ObjectClassProfile mp=WeaponClass(reads,machineClass,layout);
+            sample.WeaponReloadStatus="UNSUPPORTED_RELOAD_MACHINE_CLASS";if(mp==null || mp.Index!=32884)return;
+            sample.WeaponReloadStatus="UNVERIFIED_STATE_GETTER_HOTFIX_ACTIVE";if(!CombatGate(reads,wrappers,length,0x4b5))return;
+            sample.WeaponReloadStatus="NOT_READY_RELOAD_MACHINE_FIELD_TABLE";if(!WeaponFields(reads,machineClass,32884,module,layout))return;
+            ulong state=reads.Value(machine+0x18,"Weapon.CurrentState");sample.WeaponReloadStatus="NOT_READY_CURRENT_STATE_NULL";if(state==0)return;
+            ObjectReads.User(state,8,"weapon current state");ulong stateClass=reads.Pointer(state,"weapon current state class");ObjectClassProfile sp=WeaponClass(reads,stateClass,layout);
+            sample.WeaponReloadStatus="UNSUPPORTED_RELOAD_STATE_CLASS";if(sp==null || (sp.Family&32)==0)return;
+            ulong stateBase=WeaponAncestor(reads,stateClass,sp,32859,layout);
+            sample.WeaponReloadStatus="NOT_READY_RELOAD_STATE_FIELD_TABLE";if(!WeaponFields(reads,stateBase,32859,module,layout))return;
+            sample.WeaponStateRaw=unchecked((int)reads.Word(state+0x10,"Weapon.StateId"));
+            sample.WeaponReloading=sample.WeaponStateRaw.Value==8;sample.WeaponReloadStatus="ORIGINAL_SELECTED_WEAPON_RELOAD_PREDICATE_SAMPLED";
         }
         public PlayerStateResult SampleWeaponContext(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)
         { return SamplePlayerStatesCore(kernel,game,module,layout,core,progress,false,-1,false,true); }

@@ -714,3 +714,26 @@ this run. V28 did not read a weapon-data ID, ammo, ballistics or firing readines
 GetId, including actual slot-14 dispatch, hotfix 0x21a65 and runtime +0x68 field.
 509 offline checks pass. Live V29 ID validation pending. Plugin/global limits
 unchanged; no method invocation or writes. No weapon-name/readiness inference.
+
+## Accepted V29 live data-ID report
+
+The user's report (host 11784 / guest 7882) passed module identity and both
+80-check layout comparisons. All 15 active roster objects (local plus 14 others)
+were verified. The local head sampled on attempt one. The weapon phase accepted
+ON_HAND_CONTROLLER_A0 with HBIBDMMOOOK and typed IOKEALMHBKN data, resolved
+registration, and WeaponDataId=41, ORIGINAL_GET_ID_UINT32_SAMPLED.
+The selected local member revalidated; roster counters changed since the earlier
+capture but not during the weapon capture. There were 172 observations,
+4622 additional reads and 24342 total reads. Plugin unload, handler cleanup and
+shared-session release all passed. No game method or write occurred.
+This proves the raw data-ID path for that snapshot, not a weapon-name mapping,
+ammo, reloading, firing readiness, LOS or aim integration. Head/roster/weapon
+phases are sequential observations, not one atomic simultaneous snapshot.
+
+## V30 selected-weapon reload predicate
+
+-ProbeWeaponContext now verifies the selected weapon's original slot-216 reload
+predicate through exact state-machine/current-state fields. 526 offline checks
+pass; baseline additional reads=4988, A0 fixture=5477. Live validation pending.
+This predicate does not establish Player.IsReloading, firing readiness or ammo.
+Plugin and global limits unchanged; no game calls or writes.

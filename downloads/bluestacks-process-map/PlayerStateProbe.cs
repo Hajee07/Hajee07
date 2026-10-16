@@ -49,6 +49,9 @@ namespace HeadBridge.Mapping
         public bool? AlternateHand;
         public uint? WeaponIdRaw;
         public string WeaponIdStatus;
+        public string WeaponReloadStatus;
+        public bool? WeaponReloading;
+        public int? WeaponStateRaw;
     }
     public sealed class PlayerStateResult
     {

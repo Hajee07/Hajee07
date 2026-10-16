@@ -7,7 +7,7 @@ namespace HeadBridge.Mapping.Tests
     {
         private sealed partial class Fixture
         {
-            internal const ulong WeaponObject=0x61000000,WeaponController=0x61001000,WeaponDataObject=0x61002000;
+            internal const ulong WeaponObject=0x61000000,WeaponController=0x61001000,WeaponDataObject=0x61002000,WeaponMachine=0x61003000,WeaponCurrentState=0x61004000;
             internal void SetupWeapon()
             {
                 SetupCombat();
@@ -35,20 +35,23 @@ namespace HeadBridge.Mapping.Tests
                 List<StateField> fields=new List<StateField>();fields.AddRange(PlayerStateReference.Fields);fields.AddRange(CombatStateReference.Fields);fields.AddRange(TeamPolicyReference.Fields);fields.AddRange(WeaponContextReference.Fields);
                 foreach(StateField f in fields)
                 {
-                    U32(Module.LoadBias+f.OffsetRva,f.Owner==32785?WeaponContextReference.OpaqueDataRegistration:(uint)f.Offset);Put(Layout.RuntimeMetadataBase+f.MetadataOffset,Reader.Hex(f.RecordHex));U32(Module.LoadBias+f.Descriptor+8,f.Bits);
+                    U32(Module.LoadBias+f.OffsetRva,(f.Owner==32785 || f.Owner==32884 || f.Owner==32859)?WeaponContextReference.OpaqueDataRegistration:(uint)f.Offset);Put(Layout.RuntimeMetadataBase+f.MetadataOffset,Reader.Hex(f.RecordHex));U32(Module.LoadBias+f.Descriptor+8,f.Bits);
                     if(f.TypeIndex>=0)U64(Module.LoadBias+f.Descriptor,Layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset+(ulong)f.TypeIndex*88UL);
                     ulong table=0x110000000UL+(ulong)f.Owner*0x10000UL,at=table+(ulong)f.Local*32UL;
                     U64(Class(f.Owner)+0x80,table);U64(at,Layout.RuntimeMetadataBase+f.NameOffset);U64(at+8,Module.LoadBias+f.Descriptor);U64(at+16,Class(f.Owner));U32(at+24,(uint)f.Offset);U32(at+28,f.Token);
                 }
                 foreach(TeamVirtual v in WeaponContextReference.Virtuals)
                 { U32(Layout.RuntimeMetadataBase+v.MetadataOffset,v.Encoded);U64(Class(v.Index)+0x138UL+45UL*16UL,Module.LoadBias+v.Rva); }
+                foreach(TeamVirtual v in WeaponContextReference.ReloadVirtuals)
+                { U32(Layout.RuntimeMetadataBase+v.MetadataOffset,v.Encoded);U64(Class(v.Index)+0x138UL+216UL*16UL,Module.LoadBias+v.Rva); }
                 TeamVirtual idProfile=WeaponContextReference.IdVirtual;U32(Layout.RuntimeMetadataBase+idProfile.MetadataOffset,idProfile.Encoded);
                 U64(Class(31595)+0x138UL+(ulong)idProfile.Slot*16UL,Module.LoadBias+idProfile.Rva);
                 U64(Module.LoadBias+WeaponContextReference.WeaponTypeCell,Class(32785));
-                foreach(int id in new int[]{0x347,0x345,0x346,0x286,0x285,0x267b,0x21a65})U64(Array+0x20UL+(ulong)id*8UL,0);
+                foreach(int id in new int[]{0x347,0x345,0x346,0x286,0x285,0x267b,0x21a65,0x4c7,0x4b5})U64(Array+0x20UL+(ulong)id*8UL,0);
                 U64(Player+0x608,WeaponObject);U64(Player+0x740,WeaponController);U64(WeaponController,Class(32430));
                 U64(WeaponController+0xa0,WeaponObject);U64(WeaponController+0xa8,WeaponObject);Put(WeaponController+0x148,new byte[]{0});
                 U64(WeaponObject,Class(32623));U64(WeaponObject+0x98,WeaponDataObject);U64(WeaponDataObject,Class(31595));U32(WeaponDataObject+0x68,1234);
+                U64(WeaponObject+0x90,WeaponMachine);U64(WeaponMachine,Class(32884));U64(WeaponMachine+0x18,WeaponCurrentState);U64(WeaponCurrentState,Class(32859));U32(WeaponCurrentState+0x10,8);
             }
             internal PlayerStateResult Weapon(PlayerObjectResult core)
             { return Reader.SampleWeaponContext(Kernel,Game,Module,Layout,core,Progress.Add); }
@@ -66,14 +69,14 @@ namespace HeadBridge.Mapping.Tests
                 result.Samples[0].Weapon==Fixture.WeaponObject && result.Samples[0].WeaponData==Fixture.WeaponDataObject && result.Samples[0].WeaponDataRegistration=="OPAQUE_FILE_VALUE_RUNTIME_FIELD_VERIFIED" && result.Samples[0].MembershipProof=="SELECTED_ENTRY_REVALIDATED",
                 "local active weapon and typed data reference are independently verified: "+result.StopReason+" "+result.Detail+(result.Samples.Length>0?" "+result.Samples[0].Detail:""));
             Check(f.Reader.PhysicalCalls-start<=6000,"weapon phase respects the independent 6000-call allowance");Console.WriteLine("WEAPON_FIXTURE_ADDITIONAL_READ_CALLS="+(f.Reader.PhysicalCalls-start));
-            Fixture resolved=WeaponFixture();StateField dataField=null;foreach(StateField field in WeaponContextReference.Fields)if(field.Owner==32785)dataField=field;
+            Fixture resolved=WeaponFixture();StateField dataField=null;foreach(StateField field in WeaponContextReference.Fields)if(field.Owner==32785 && field.Local==18)dataField=field;
             resolved.U32(resolved.Module.LoadBias+dataField.OffsetRva,0x98);PlayerStateObservation rs=WeaponSample(resolved);
             Check(rs.WeaponData.HasValue && rs.WeaponDataRegistration=="RESOLVED_OFFSET","resolved registration still requires the exact getter/runtime field offset");
             Fixture hand=WeaponFixture();hand.U64(Fixture.Player+0x608,0);PlayerObjectResult handCore=hand.Run();int handStart=hand.Reader.PhysicalCalls;PlayerStateResult handResult=hand.Weapon(handCore);PlayerStateObservation hs=handResult.Samples[0];
             Check(handResult.Sampled==1 && hand.Reader.PhysicalCalls-handStart<=6000,"live-observed A0 path retains phase and final-check budget");Console.WriteLine("WEAPON_HAND_FIXTURE_ADDITIONAL_READ_CALLS="+(hand.Reader.PhysicalCalls-handStart));
             Check(hs.WeaponStatus=="ORIGINAL_WEAPON_DATA_REFERENCE_SAMPLED" && hs.WeaponSelectionPath=="ON_HAND_CONTROLLER_A0" && hs.AlternateHand==false,"null active field follows verified on-hand controller and native cast");
             Fixture alternate=WeaponFixture();alternate.U64(Fixture.Player+0x608,0);alternate.Put(Fixture.WeaponController+0x148,new byte[]{1});alternate.U64(Fixture.WeaponObject,Fixture.Class(32613));PlayerStateObservation alt=WeaponSample(alternate);
-            Check(alt.Weapon==Fixture.WeaponObject && alt.WeaponSelectionPath=="ON_HAND_CONTROLLER_A8" && alt.WeaponStatus=="UNSUPPORTED_WEAPON_DATA_OVERRIDE" && !alt.WeaponData.HasValue,"alternate hand preserves the actual unsupported data getter override");
+            Check(alt.Weapon==Fixture.WeaponObject && alt.WeaponSelectionPath=="ON_HAND_CONTROLLER_A8" && alt.WeaponStatus=="UNSUPPORTED_WEAPON_DATA_OVERRIDE" && alt.WeaponReloadStatus=="UNSUPPORTED_SELECTED_WEAPON_RELOAD_OVERRIDE" && !alt.WeaponData.HasValue,"alternate hand preserves the actual unsupported data getter override");
             Fixture none=WeaponFixture();none.U64(Fixture.Player+0x608,0);none.U64(Fixture.Player+0x740,0);PlayerStateObservation ns=WeaponSample(none);
             Check(ns.Weapon==0 && ns.WeaponData==0 && ns.WeaponStatus=="ORIGINAL_NO_ACTIVE_WEAPON","null controller yields original no-weapon result");
             Fixture empty=WeaponFixture();empty.U64(Fixture.Player+0x608,0);empty.U64(Fixture.WeaponController+0xa0,0);Check(WeaponSample(empty).Weapon==0,"empty selected hand yields original no-weapon result");
@@ -148,6 +151,43 @@ namespace HeadBridge.Mapping.Tests
             Fixture idFinal=WeaponFixture();PlayerObjectResult ifc=idFinal.Run();ulong ifa=idFinal.Physical(Fixture.WeaponDataObject+0x68);
             idFinal.Memory.AfterRead=delegate(ulong p,int n){if(p==ifa && n==4)idFinal.Put(idFinal.Module.LoadBias+0x6ee2668,new byte[]{0});};PlayerStateResult ifr=idFinal.Weapon(ifc);
             Check(ifr.Sampled==0 && ifr.Samples.Length==0 && ifr.StopReason=="FINAL_CONTEXT_FAILED","changed final GetId code clears every weapon/ID observation");
+            Check(result.Samples[0].WeaponReloading==true && result.Samples[0].WeaponStateRaw==8 && result.Samples[0].WeaponReloadStatus=="ORIGINAL_SELECTED_WEAPON_RELOAD_PREDICATE_SAMPLED","selected weapon original reload predicate compares state ID eight");
+            Fixture reloadOther=WeaponFixture();reloadOther.U32(Fixture.WeaponCurrentState+0x10,7);PlayerStateObservation ro=WeaponSample(reloadOther);
+            Check(ro.WeaponReloading==false && ro.WeaponStateRaw==7,"other state is not labelled reloading or ready to fire");
+            Fixture reloadSigned=WeaponFixture();reloadSigned.U32(Fixture.WeaponCurrentState+0x10,uint.MaxValue);PlayerStateObservation rsigned=WeaponSample(reloadSigned);
+            Check(rsigned.WeaponReloading==false && rsigned.WeaponStateRaw==-1,"raw state preserves the signed Int32 enum representation");
+            Fixture reloadNull=WeaponFixture();reloadNull.U64(Fixture.WeaponObject+0x90,0);PlayerStateObservation rn=WeaponSample(reloadNull);
+            Check(rn.WeaponReloading==false && !rn.WeaponStateRaw.HasValue && rn.WeaponReloadStatus=="ORIGINAL_NULL_MACHINE_FALSE","original null-machine branch yields false with no fabricated state ID");
+            foreach(int reloadGate in new int[]{0x4c7,0x4b5})
+            {
+                Fixture g=WeaponFixture();g.U64(Fixture.Array+0x20UL+(ulong)reloadGate*8UL,Fixture.Player);PlayerStateObservation gs=WeaponSample(g);
+                Check(!gs.WeaponReloading.HasValue && gs.WeaponIdRaw==1234,"reload hotfix does not fabricate state or suppress independent ID: "+reloadGate);
+            }
+            Fixture currentNull=WeaponFixture();currentNull.U64(Fixture.WeaponMachine+0x18,0);PlayerStateObservation cn=WeaponSample(currentNull);
+            Check(!cn.WeaponReloading.HasValue && cn.WeaponReloadStatus=="NOT_READY_CURRENT_STATE_NULL","null current state is unknown rather than original false");
+            Fixture machineWrong=WeaponFixture();machineWrong.U64(Fixture.WeaponMachine,Fixture.Class(32463));PlayerStateObservation mw=WeaponSample(machineWrong);
+            Check(!mw.WeaponReloading.HasValue && mw.WeaponReloadStatus=="UNSUPPORTED_RELOAD_MACHINE_CLASS","wrong machine class is not dereferenced as state storage");
+            Fixture stateWrong=WeaponFixture();stateWrong.U64(Fixture.WeaponCurrentState,Fixture.Class(32463));PlayerStateObservation sw=WeaponSample(stateWrong);
+            Check(!sw.WeaponReloading.HasValue && sw.WeaponReloadStatus=="UNSUPPORTED_RELOAD_STATE_CLASS","unrelated state class cannot supply a reload enum");
+            Fixture stateLazy=WeaponFixture();stateLazy.U64(Fixture.Class(32859)+0x80,0);PlayerStateObservation sl=WeaponSample(stateLazy);
+            Check(!sl.WeaponReloading.HasValue && sl.WeaponIdRaw==1234 && sl.WeaponReloadStatus=="NOT_READY_RELOAD_STATE_FIELD_TABLE","lazy state FieldInfo stays unknown while independent weapon data remains verified");
+            Fixture stateOffset=WeaponFixture();stateOffset.U32(0x110000000UL+32859UL*0x10000UL+24,0x14);PlayerStateResult sor=stateOffset.Weapon(stateOffset.Run());
+            Check(sor.Sampled==0 && !sor.Samples[0].WeaponReloading.HasValue,"opaque state registration cannot bypass the live exact field offset");
+            Fixture reloadDispatch=WeaponFixture();reloadDispatch.U64(Fixture.Class(32623)+0x138UL+216UL*16UL,reloadDispatch.Module.LoadBias+0x73e9d80);PlayerStateResult rdr=reloadDispatch.Weapon(reloadDispatch.Run());
+            Check(rdr.Sampled==0 && rdr.Samples[0].Detail.Contains("reload virtual dispatch"),"reload dispatch must match the actual class's registered virtual");
+            Fixture stateChange=WeaponFixture();PlayerObjectResult scc=stateChange.Run();ulong sca=stateChange.Physical(Fixture.WeaponCurrentState+0x10);bool scFlip=false;
+            stateChange.Memory.AfterRead=delegate(ulong p,int n){if(!scFlip && p==sca && n==4){scFlip=true;stateChange.U32(Fixture.WeaponCurrentState+0x10,7);}};PlayerStateResult scr=stateChange.Weapon(scc);
+            Check(scr.Sampled==0 && !scr.Samples[0].WeaponReloading.HasValue && !scr.Samples[0].WeaponIdRaw.HasValue,"state changes discard the complete tentative weapon snapshot");
+            Fixture derivedState=WeaponFixture();derivedState.U64(Fixture.WeaponCurrentState,Fixture.Class(32607));PlayerStateObservation ds=WeaponSample(derivedState);
+            Check(ds.WeaponReloading==true && ds.WeaponStateRaw==8,"derived state requires verified metadata and native parent ancestry");
+            Fixture parentState=WeaponFixture();parentState.U64(Fixture.WeaponCurrentState,Fixture.Class(32607));parentState.U64(Fixture.Class(32607)+0x58,Fixture.Class(32463));PlayerStateResult psr=parentState.Weapon(parentState.Run());
+            Check(psr.Sampled==0 && !psr.Samples[0].WeaponReloading.HasValue,"mismatched native state parent invalidates the snapshot");
+            Fixture reloadGateChange=WeaponFixture();PlayerObjectResult rgc=reloadGateChange.Run();ulong rga=reloadGateChange.Physical(Fixture.WeaponCurrentState+0x10);
+            reloadGateChange.Memory.AfterRead=delegate(ulong p,int n){if(p==rga && n==4)reloadGateChange.U64(Fixture.Array+0x20+0x4c7UL*8UL,Fixture.Player);};PlayerStateResult rgr=reloadGateChange.Weapon(rgc);
+            Check(rgr.Sampled==0 && !rgr.Samples[0].WeaponReloading.HasValue,"reload hotfix changes during capture discard tentative values");
+            Fixture reloadFinal=WeaponFixture();PlayerObjectResult rfc=reloadFinal.Run();ulong rfa=reloadFinal.Physical(Fixture.WeaponCurrentState+0x10);
+            reloadFinal.Memory.AfterRead=delegate(ulong p,int n){if(p==rfa && n==4)reloadFinal.Put(reloadFinal.Module.LoadBias+0x74819fc,new byte[]{0});};PlayerStateResult rfr=reloadFinal.Weapon(rfc);
+            Check(rfr.Sampled==0 && rfr.Samples.Length==0 && rfr.StopReason=="FINAL_CONTEXT_FAILED","final reload getter change clears every tentative value");
             Check(f.Weapon(new PlayerObjectResult()).StopReason=="PREREQUISITES_UNVERIFIED","weapon observation requires exact build and roster prerequisites");
         }
     }

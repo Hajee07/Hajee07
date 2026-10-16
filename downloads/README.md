@@ -1,10 +1,13 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V29**. `-ProbeWeaponContext` adds the supported data
-record's original UInt32 GetId to verified local weapon selection/reference.
-509 offline checks pass; live ID validation is pending. Weapon names, ammo,
-ballistics, firing readiness, LOS and aiming remain unverified.
+Current process probe: **V30**. `-ProbeWeaponContext` adds the supported selected
+weapon's original reload predicate (state ID equals 8) to selection and data ID.
+526 offline checks pass; live reload validation is pending. This is not a full
+firing-readiness or Player.IsReloading result.
 See [weapon evidence](bluestacks-process-map/WEAPON-CONTEXT-EVIDENCE.md).
+
+V29 passed live: raw UInt32 data ID 41, A0 hand path, selected membership and all
+cleanup PASS. Ammo, ballistics, LOS and aim integration remain unverified.
 
 V28 weapon selection/reference passed live through the A0 hand path, within
 budget and with all cleanup passing. Local-head samples were discarded for

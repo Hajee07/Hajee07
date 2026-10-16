@@ -1,87 +1,96 @@
-# V29 local weapon-data ID evidence
+# V30 selected-weapon reload predicate
 
-V28 weapon selection/reference passed live. V29 ID live validation is pending. Run `Run-ProcessMap.ps1 -ProbeWeaponContext`
-with Free Fire running. This mode selects only a verified local roster member
-and replaces the other optional phases. No nonlocal member is substituted.
+V28 weapon selection/reference and V29 original data GetId passed live (reports
+below). V30 reload-predicate live validation is pending. Run
+`Run-ProcessMap.ps1 -ProbeWeaponContext` with Free Fire and an equipped weapon.
+The phase selects only a verified local roster member; it never substitutes a
+nonlocal player. Existing optional modes remain mutually exclusive.
 
-## Exact original paths
+## Selection and data-ID proof retained
 
-The reference builder verifies the established ELF and metadata SHA256 values.
-It records seven fields, seven complete method bodies and registrations, 134 exact
-class profiles and 106 slot-45 dispatch profiles plus one exact data slot-14 profile. All supported instance sizes
-are conventional exact registrations, not opaque values.
+The builder verifies the established ELF/metadata SHA256 values. It records ten
+fields, eleven complete method bodies/registrations, 209 exact class profiles,
+106 data slot-45 profiles, one exact data slot-14 profile and 106 reload slot-216
+profiles. Supported instance sizes are conventional exact registrations.
 
-* Player.GetActiveWeapon, RVA 0x6f17f74, gate 0x347: test Player+0x608 using
-  CDMMCIIFHGM.DEIPJDIGKIP (0x7399188, gate 0x345). This is a managed pointer
-  nonnull comparison, not proof of a live native Unity object.
-* If null, GetWeaponOnHand (0x6f18290, gate 0x346) reads Player+0x740.
-  The supported controller is GMOCOOEIFMK (32430). PDAGHPAOBLP (0x734b8d4,
-  gate 0x286) uses CKIKAFHOBDC (0x734b930, gate 0x285): bool +0x148 selects
-  +0xa8 or +0xa0. The original native hierarchy cast to HBIBDMMOOOK is checked.
-* HBIBDMMOOOK.PLLDNGKJKKF (0x7452a90, gate 0x267b, slot 45) returns +0x98.
-  Its exact load instruction at 0x7452ac8 and complete method establish this
-  offset. The declared data class is IOKEALMHBKN (31595).
+Player.GetActiveWeapon (0x6f17f74, gate 0x347) first tests Player+0x608 with
+DEIPJDIGKIP (0x7399188, gate 0x345), a managed pointer comparison. Its fallback
+GetWeaponOnHand (0x6f18290, gate 0x346) uses Player+0x740. The supported controller
+GMOCOOEIFMK uses PDAGHPAOBLP (0x734b8d4, gate 0x286) and CKIKAFHOBDC
+(0x734b930, gate 0x285): bool +0x148 selects +0xa8 or +0xa0. The original native
+cast to HBIBDMMOOOK must agree with metadata ancestry. Direct active storage
+must match GEBIDMLCOJO ancestry; alternate hand storage GEJIJAMODGH ancestry.
 
-The source field registration for PIILKNEHNLB is opaque 0x81818181. Only this
-specific field permits that exact source value or resolved 0x98; both require
-verified getter code and matching live FieldInfo offset 0x98. No opaque-field
-value decoding or general instance-size relaxation is introduced. Null runtime
-field tables remain NOT_READY and are never initialized by the probe.
+HBIBDMMOOOK.PLLDNGKJKKF (0x7452a90, gate 0x267b, slot 45) returns data +0x98.
+Its instruction at 0x7452ac8 and full method establish the offset; the declared
+data class is IOKEALMHBKN (31595). Unsupported dispatch overrides remain UNKNOWN.
+The exact data GetId (method 209340, 0x6ee2628, length 0x50, slot 14, gate
+0x21a65) reads UInt32 +0x68, JAOECECKADN local field 20. Actual dispatch, code,
+registration, type flags and runtime FieldInfo must agree. GetUIntKey/GetIntKey
+are separate methods and are not substituted. Zero and UInt32.MaxValue are
+preserved without a guessed range or weapon-name mapping. The raw data record
+ID does not establish a separate network weapon identifier.
 
-The direct active field must match declared GEBIDMLCOJO ancestry; alternate
-hand storage must match GEJIJAMODGH ancestry. Two recorded virtual overrides
-remain unsupported, including GEJIJAMODGH's 0x73ea538 dispatch. A verified
-weapon pointer can therefore coexist with UNKNOWN weapon data.
+## Reload predicate added in V30
 
-## Capture contract
+Player.IsReloading (method 210849, 0x6f20e00) selects GetWeaponOnHand and invokes
+slot 216. The base HBIBDMMOOOK method NNHIONEDFJP (225208, 0x74819c4, length
+0x5c, gate 0x4c7) reads the weapon's OABOHNENNOA state machine at +0x90.
+A null machine returns false. A nonnull machine calls MPJPIANCJAP (226517,
+0x74e301c, length 0x50, gate 0x4b5): current state +0x18 must be nonnull, then
+its state ID at +0x10 is loaded. NNHIONEDFJP compares that ID to 8.
+The state getter GMAKPBMBIDP (226238, 0x74d846c, length 8) independently reads
++0x10. The enum KBEFFMEJNBE has Int32 underlying storage.
 
-The probe verifies code, registration, metadata, runtime fields, class ancestry,
-actual virtual dispatch, inactive gates and selected roster membership. Captured
-reads and endpoint checks must remain consistent. Initial and final code/schema
-checks share existing state-reader machinery. Null controller/selected hand or
-an original failed weapon cast produces ORIGINAL_NO_ACTIVE_WEAPON; null data,
-unknown classes and active hotfixes have explicit distinct statuses.
+V30 reports only this original predicate for the independently selected active
+weapon. It does not claim Player.IsReloading: GetActiveWeapon can return a
+different item from GetWeaponOnHand. Scope is explicitly SELECTED_WEAPON_PREDICATE.
+The actual slot-216 dispatch and registered metadata must match the selected
+class. Only the base 0x74819c4 implementation is reproduced; custom overrides
+(including GEJIJAMODGH's 0x73e9d80) remain unsupported. No virtual method is called.
+The machine must be exact class 32884. Current states require supported 32859
+ancestry, class identity/size and matching native parents. There are 74 supported
+state classes plus one machine class. A null current state remains NOT_READY,
+because the original state getter would fail; it is not interpreted as false.
 
-The phase retains the 6000-read bound, 1500 final-check reserve and global
-30000-read/120-second limits. No game method, VM pause, initialization or memory
-write occurs. Pointers are observations for the current process only.
+Four specific opaque field registrations permit only their exact source value
+0x81818181 or the proven resolved offset, with matching runtime FieldInfo:
 
-509 offline checks pass, including 44 weapon cases. The baseline synthetic
-weapon fixture uses 4227 additional physical reads. Tests cover direct/fallback
-selection, inactive-path short circuiting, all relevant hotfix gates, native
-cast disagreement, virtual overrides, null storage, registration/runtime-field
-disagreement, class identity, changes during capture, membership, final code
-checks and read limits. Extracted-package checks also compile all earlier modes.
+| Owner / local field | Resolved offset | Native proof |
+| --- | --- | --- |
+| HBIBDMMOOOK / 18 PIILKNEHNLB | 0x98 | data getter 0x7452ac8 |
+| HBIBDMMOOOK / 17 MCKDHCLGKLC | 0x90 | reload method 0x74819fc |
+| OABOHNENNOA / 1 NEDIHEOKFLG | 0x18 | state getter 0x74e3054 |
+| EPLELGNGHIM / 0 backing field | 0x10 | 0x74e305c and 0x74d846c |
 
-Inspect WeaponContext, WeaponSelection, WeaponDataReference, WeaponDataId and ResultFile.
-ObservationStatus=SAMPLED_READ_ONLY alone does not imply a successful typed-data
-result: inspect WeaponContext's specific status. Weapon IDs, ammo, ballistics,
-firing readiness, damage processing, combat eligibility, LOS and aiming remain
-unverified. No accuracy percentage follows from this snapshot.
+No opaque value decoding or instance-size relaxation is introduced. Lazy field
+tables remain NOT_READY and are never initialized. Reload and ID gates/statuses
+are independent: an unknown reload result need not suppress a verified ID.
+A hard inconsistency or a change during capture discards the tentative row.
 
-## Original data GetId path added in V29
+## Bounds and validation
 
-IOKEALMHBKN.GetId is method 209340 at RVA 0x6ee2628, length 0x50, virtual
-slot 14. Its inactive-hotfix branch (gate 0x21a65) loads UInt32 +0x68 at
-0x6ee2668. The registered field is JAOECECKADN, local index 20, offset 0x68,
-with a UInt32 descriptor. Metadata, method pointer, full code, field registration,
-runtime FieldInfo and actual slot-14 dispatch must agree. GetUIntKey/GetIntKey
-are separate methods and are not substituted. Only the exact supported data
-class is accepted; this build has no derived supported data class.
+Code, metadata, registration, runtime fields, class ancestry, selected roster
+membership and recorded reads are checked before acceptance. Initial and final
+checks retain the phase's 6000-read limit, 1500 final-check reserve and global
+30000-read/120-second limits. No VM pause, initialization, game-method invocation
+or memory write occurs. Pointers apply only to the current process observation.
 
-The raw value is logged as WeaponDataId with status ORIGINAL_GET_ID_UINT32_SAMPLED.
-Zero and UInt32.MaxValue are preserved without a guessed range or weapon-name
-mapping. This establishes the data record's original GetId value, not a claim
-about a separate network weapon identifier or combat readiness. An active GetId
-hotfix leaves the verified reference but reports UNKNOWN ID. A null runtime data
-field table remains NOT_READY_DATA_FIELD_TABLE. Changes during capture discard
-tentative values. No getter is invoked.
+526 offline checks pass (17 new reload cases; all previous modes included).
+The synthetic baseline uses 4988 additional physical reads; the live-observed
+A0 route fixture uses 5477, including final checks. New cases cover state 8,
+other/signed states, null machine versus null state, both hotfix gates, wrong
+classes, lazy FieldInfo, exact offsets, actual virtual dispatch, derived/native
+ancestry, changing state/gates and final code. Earlier tests retain selection,
+ID, membership and global/phase budget coverage. References reproduce byte-for-byte.
+Extracted-package checks verify C# 5 compilation/tests, PowerShell syntax and
+seven exclusive modes, package integrity and all source/plugin digests.
 
-Thirteen additional checks cover original ID sampling, zero/full-width values,
-hotfixes, lazy metadata, runtime/source offsets, field type, actual dispatch,
-changing ID/gates, final getter code and the live-observed A0 path's budget.
-The baseline direct-field fixture uses 4227 additional reads and the A0 fixture
-4716, including final checks. All global and per-phase limits remain unchanged.
+Inspect WeaponContext, WeaponDataId, SelectedWeaponReloading and ResultFile.
+SAMPLED_READ_ONLY alone does not imply every optional semantic is known: inspect
+its specific status. Reloading=False is not a firing-readiness result. Ammo,
+ballistics, firing state, readiness, damage processing, complete combat eligibility,
+LOS and aiming remain unverified. No accuracy percentage follows from this probe.
 
 ## Accepted V28 live weapon-context report
 
@@ -98,3 +107,18 @@ all passed. No game method was called or memory written.
 All three local-head samples were discarded for TRS motion (NOT_READY_MOTION).
 The accepted weapon reference does not imply an accepted head coordinate in
 this run. V28 did not read a weapon-data ID, ammo, ballistics or firing readiness.
+
+## Accepted V29 live data-ID report
+
+The user's report (host 11784 / guest 7882) passed module identity and both
+80-check layout comparisons. All 15 active roster objects (local plus 14 others)
+were verified. The local head sampled on attempt one. The weapon phase accepted
+ON_HAND_CONTROLLER_A0 with HBIBDMMOOOK and typed IOKEALMHBKN data, resolved
+registration, and WeaponDataId=41, ORIGINAL_GET_ID_UINT32_SAMPLED.
+The selected local member revalidated; roster counters changed since the earlier
+capture but not during the weapon capture. There were 172 observations,
+4622 additional reads and 24342 total reads. Plugin unload, handler cleanup and
+shared-session release all passed. No game method or write occurred.
+This proves the raw data-ID path for that snapshot, not a weapon-name mapping,
+ammo, reloading, firing readiness, LOS or aim integration. Head/roster/weapon
+phases are sequential observations, not one atomic simultaneous snapshot.
