@@ -1,5 +1,9 @@
 # Static player-state research after V20
 
+This historical V20 research now underpins the optional V21 read-only probe;
+see [PLAYER-STATE-EVIDENCE.md](PLAYER-STATE-EVIDENCE.md) for implementation and
+validation status. The remainder records the original research scope.
+
 This is exact-build static evidence from the same SHA-256-verified IL2CPP ELF
 and decoded metadata used by the probes. It is not compiled into the runtime
 package, does not read live state values, and does not establish enemy, alive

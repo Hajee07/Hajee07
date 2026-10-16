@@ -7,7 +7,16 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 20. Live nonlocal sampling has now passed.** The user's
+**Current version: 21. New optional read-only player-state probe.** Run with
+`-ProbePlayerState` to sample raw team index, dead/revive fields and supported
+original model-visibility behavior from at most two verified roster members.
+It replaces the optional other-head phase for that run and preserves the same
+global limits. Hotfixes, unsupported visibility overrides and null storage yield
+explicit unknown statuses. This does not classify enemies, establish full alive
+eligibility, or test line of sight. V21 state sampling awaits live Windows
+validation; 277 offline checks pass. See [state evidence](PLAYER-STATE-EVIDENCE.md).
+
+**V20 live nonlocal sampling passed.** The user's
 latest V20 run sampled the local head on attempt two and one nonlocal
 PlayerNetwork head on attempt one, with SELECTED_ENTRY_REVALIDATED and all
 phase-final checks/cleanup passing. The nonlocal XYZ was
@@ -34,12 +43,12 @@ VM pause or lifetime guarantee is provided. Native comparisons, motion retries,
 phase-wide exact schema/code checks and read limits remain unchanged. At most
 two nonlocal members are attempted, with a 6000-call outer ceiling and 1000
 reserved for final checks, within the same 30000-call/120-second global bounds.
-248 offline checks pass. The reported live success covers one nonlocal sample,
+The reported V20 live success covers one nonlocal sample,
 not all candidates or continuous tracking. See [the state research](PLAYER-STATE-RESEARCH.md)
-for the next mapping work and its unresolved semantics.
+for the original static evidence and its unresolved semantics.
 
-Team/alive/visibility semantics and aim writes remain unimplemented. No target
-classification is inferred from these samples.
+Complete team/alive/line-of-sight semantics and aim writes remain unimplemented.
+No target classification is inferred from these samples.
 
 Extract the complete ZIP into a new folder. Start the Pie64 instance, enter
 Free Fire Training Ground, wait until the character has spawned, and leave it
@@ -49,12 +58,18 @@ standing while the probe runs. Run in 64-bit Administrator Windows PowerShell:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Run-ProcessMap.ps1
 ```
 
+For the new V21 state probe, use:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Run-ProcessMap.ps1 -ProbePlayerState
+```
+
 The selected ADB serial defaults to `127.0.0.1:5555`; `-Device` can select the
 endpoint displayed by BlueStacks. An explicit disconnected localhost endpoint
 is reconnected once and verified. Other devices are not selected automatically.
 The runner discovers the current host/game PIDs; old PIDs are not constants.
 
-The package checks DLL and all thirteen runtime C# source digests, plus the exact
+The package checks DLL and all fifteen runtime C# source digests, plus the exact
 loaded VMM fingerprint. It
 loads the same native DLL used in the successful probe, uses its read-only info
 handler, and unloads and releases its shared session in `finally`. The DLL bytes

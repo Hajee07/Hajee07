@@ -507,3 +507,21 @@ head observation, not enemy/alive/line-of-sight classification or aim control.
 
 No runtime package changed after this report. Static state-method/field research
 is recorded separately in PLAYER-STATE-RESEARCH.md and is not a live state probe.
+
+## V21 optional player-state probe (live validation pending)
+
+The next package adds `-ProbePlayerState`, replacing optional nonlocal-head
+sampling for that run. It attempts at most two verified roster members, local
+first, reporting signed raw TeamIndex, canonical base-dead/pending-revive flags,
+and supported original-branch really-dead/model-visible results. Active hotfixes,
+null visibility storage and overridden visibility implementations are explicitly
+unknown. Runtime field tables, base classes, code/registration and virtual slots
+are validated alongside selected-entry and state snapshot rechecks.
+
+The optional phase is capped at 6000 additional reads with 1500 reserved for
+final checks, within the unchanged global 30000-read/120-second limits. Default
+other-head sampling remains unchanged. 277 offline checks pass, including 29 new
+state checks; there is no live V21 state report yet. Team/enemy policy, complete
+alive eligibility, knockout and line of sight remain unverified. No aim writes
+or game-function calls were added. See PLAYER-STATE-EVIDENCE.md in the mapper
+package for the exact output and endpoint-observation contract.

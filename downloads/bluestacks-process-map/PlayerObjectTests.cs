@@ -4,12 +4,12 @@ using System.Text;
 
 namespace HeadBridge.Mapping.Tests
 {
-    public static class PlayerObjectTests
+    public static partial class PlayerObjectTests
     {
         private static int count;
         private static void Check(bool condition, string label)
         { if (!condition) throw new Exception("FAIL: " + label); count++; Console.WriteLine("PASS: " + label); }
-        private sealed class Fixture
+        private sealed partial class Fixture
         {
             internal readonly Memory Memory = new Memory();
             internal readonly KernelContext Kernel = new KernelContext(0x1000, 0, 0);
@@ -652,7 +652,8 @@ namespace HeadBridge.Mapping.Tests
             Console.WriteLine("OTHER_HEAD_FIXTURE_ADDITIONAL_READ_CALLS="+(other.Reader.PhysicalCalls-beforeOther)+" OBSERVATIONS="+one.Samples[0].Observations);
             Console.WriteLine("ROSTER_FIXTURE_READ_CALLS="+roster.Reader.PhysicalCalls+" OBSERVATIONS="+players.RosterObservations);
             Console.WriteLine("NATIVE_HEAD_FIXTURE_READ_CALLS=" + native.Reader.PhysicalCalls + " OBSERVATIONS=" + world.HeadWorldObservations);
-            Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects, native head sample and match dictionary)");
+            RunStateTests();
+            Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects, native head sample, match dictionary and state)");
         }
     }
 }

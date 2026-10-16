@@ -1,13 +1,14 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V20**. The user has now passed one live nonlocal
-head sample with selected-entry revalidation, alongside the local sample.
-The second head stopped at the configured read cap; all cleanup checks passed.
-Of 17 dictionary candidates, 16 were validated under the object cap. 248 offline
-checks pass. This establishes one bounded read-only observation, with continuous
-tracking, enemy/team/alive/line-of-sight semantics and aim control incomplete.
+Current process probe: **V21**. Optional `-ProbePlayerState` samples raw team
+index, dead/revive flags and supported original model visibility from at most
+two verified roster objects, with unknown statuses for active hotfixes or
+unsupported visibility paths. 277 offline checks pass; live V21 state validation
+is pending. The earlier V20 local and one nonlocal head sample passed live.
+Continuous tracking, complete enemy/team/alive/line-of-sight semantics and aim
+control remain incomplete.
 See [the probe instructions](bluestacks-process-map/README.md) and
-[the next-state research](bluestacks-process-map/PLAYER-STATE-RESEARCH.md).
+[state evidence](bluestacks-process-map/PLAYER-STATE-EVIDENCE.md).
 
 Download `head-aim-dll-x64.zip` and extract it on Windows. The archive contains C++ source, a Windows x64 DLL, and an own-process DLL smoke loader.
 

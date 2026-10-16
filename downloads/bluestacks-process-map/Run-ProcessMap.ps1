@@ -2,7 +2,8 @@
 param(
     [string] $MachineName = 'Pie64',
     [ValidatePattern('^[A-Za-z0-9_.:-]+$')]
-    [string] $Device = '127.0.0.1:5555'
+    [string] $Device = '127.0.0.1:5555',
+    [switch] $ProbePlayerState
 )
 Set-StrictMode -Version 2
 $ErrorActionPreference = 'Stop'
@@ -78,7 +79,8 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=20 ReadOnly=1'
+Record 'ProcessMapVersion=21 ReadOnly=1'
+Record "PlayerStateMode=$($ProbePlayerState.IsPresent)"
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -100,6 +102,8 @@ try {
     $rosterPath = Join-Path $PSScriptRoot 'RosterProbe.cs'
     $rosterReferencePath = Join-Path $PSScriptRoot 'RosterReference.cs'
     $otherHeadPath = Join-Path $PSScriptRoot 'OtherHeadProbe.cs'
+    $statePath = Join-Path $PSScriptRoot 'PlayerStateProbe.cs'
+    $stateReferencePath = Join-Path $PSScriptRoot 'PlayerStateReference.cs'
     if ($manifest.plugin -cne 'VBoxDbgHeadAimBridge.dll' -or $manifest.sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.mapping_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.module_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
@@ -113,7 +117,9 @@ try {
         $manifest.native_transform_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.roster_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.roster_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
-        $manifest.other_head_source_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
+        $manifest.other_head_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.state_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.state_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
     if ((Get-FileHash -LiteralPath $pluginPath -Algorithm SHA256).Hash -ine $manifest.sha256 -or
         (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash -ine $manifest.mapping_source_sha256 -or
         (Get-FileHash -LiteralPath $modulePath -Algorithm SHA256).Hash -ine $manifest.module_source_sha256 -or
@@ -127,10 +133,12 @@ try {
         (Get-FileHash -LiteralPath $nativeTransformReferencePath -Algorithm SHA256).Hash -ine $manifest.native_transform_reference_sha256 -or
         (Get-FileHash -LiteralPath $rosterPath -Algorithm SHA256).Hash -ine $manifest.roster_source_sha256 -or
         (Get-FileHash -LiteralPath $rosterReferencePath -Algorithm SHA256).Hash -ine $manifest.roster_reference_sha256 -or
-        (Get-FileHash -LiteralPath $otherHeadPath -Algorithm SHA256).Hash -ine $manifest.other_head_source_sha256) {
+        (Get-FileHash -LiteralPath $otherHeadPath -Algorithm SHA256).Hash -ine $manifest.other_head_source_sha256 -or
+        (Get-FileHash -LiteralPath $statePath -Algorithm SHA256).Hash -ine $manifest.state_source_sha256 -or
+        (Get-FileHash -LiteralPath $stateReferencePath -Algorithm SHA256).Hash -ine $manifest.state_reference_sha256) {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
-    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath) -ErrorAction Stop
+    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath) -ErrorAction Stop
     $classId = (Get-Item -LiteralPath 'Registry::HKEY_CLASSES_ROOT\VirtualBox.VirtualBoxClient\CLSID').GetValue('')
     $server = [Environment]::ExpandEnvironmentVariables([string](Get-Item -LiteralPath "Registry::HKEY_CLASSES_ROOT\CLSID\$classId\InprocServer32").GetValue(''))
     if ([IO.Path]::GetFileName($server.Trim().Trim('"')) -ine 'BstkC.dll') { throw 'COM client is not the verified BlueStacks server.' }
@@ -266,21 +274,45 @@ try {
     }
     if ($objects.RosterStatus -ceq 'FAIL') { $failed = $true }
     if ($objects.RosterError) { Record "MatchPlayerDictionaryError=$($objects.RosterError)" }
-    $stage = 'OtherHeadSamples'
-    $otherHeadStart = $reader.PhysicalCalls
-    $otherHeads = $reader.SampleOtherPlayerHeads($kernel, $game, $module, $layout, $objects, $progress)
-    if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during other-head sampling.' }
-    Record "OtherHeadSamples AdditionalPhysicalReads=$($reader.PhysicalCalls - $otherHeadStart) Eligible=$($otherHeads.Eligible) Attempted=$($otherHeads.Samples.Length) Sampled=$($otherHeads.Sampled) StopReason=$($otherHeads.StopReason) Detail=$($otherHeads.Detail)"
-    $culture = [Globalization.CultureInfo]::InvariantCulture
-    foreach ($sample in $otherHeads.Samples) {
-        if ($sample.Status -ceq 'SAMPLED_READ_ONLY') {
-            Record "OtherHeadWorldPosition=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Source=$($sample.Source) X=$($sample.X.ToString('R', $culture)) Y=$($sample.Y.ToString('R', $culture)) Z=$($sample.Z.ToString('R', $culture)) Attempts=$($sample.Attempts) ParentCount=$($sample.ParentCount) Observations=$($sample.Observations) Provider=0x$($sample.Provider.ToString('x')) Transform=0x$($sample.Transform.ToString('x'))"
-        } else {
-            Record "OtherHeadWorldPosition=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Attempts=$($sample.Attempts) Detail=$($sample.Detail)"
-            if ($sample.Status -ceq 'FAIL') { $failed = $true }
+    $otherHeads = [HeadBridge.Mapping.OtherHeadResult]::new()
+    if ($ProbePlayerState) {
+        $stage = 'PlayerStateSamples'
+        $stateStart = $reader.PhysicalCalls
+        $states = $reader.SamplePlayerStates($kernel, $game, $module, $layout, $objects, $progress)
+        if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during state sampling.' }
+        Record "PlayerStateSamples AdditionalPhysicalReads=$($reader.PhysicalCalls - $stateStart) Attempted=$($states.Samples.Length) Sampled=$($states.Sampled) StopReason=$($states.StopReason) Detail=$($states.Detail)"
+        foreach ($sample in $states.Samples) {
+            if ($sample.Status -ceq 'SAMPLED_READ_ONLY') {
+                $reallyDead = if ($null -eq $sample.ReallyDead) { 'UNKNOWN' } else { [string]$sample.ReallyDead }
+                $modelVisible = if ($null -eq $sample.ModelVisible) { 'UNKNOWN' } else { [string]$sample.ModelVisible }
+                $visibilityMask = if ($null -eq $sample.VisibilityMask) { 'UNKNOWN' } else { [string]$sample.VisibilityMask }
+                $visibilityMode = if ($null -eq $sample.VisibilityMode) { 'UNKNOWN' } else { [string]$sample.VisibilityMode }
+                Record "PlayerState=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) IsLocal=$($sample.IsLocal) TeamIndexRaw=$($sample.TeamIndex) BaseDeadRaw=$($sample.BaseDeadRaw) PendingReviveRaw=$($sample.PendingReviveRaw) ReallyDeadStatus=$($sample.ReallyDeadStatus) ReallyDead=$reallyDead ModelVisibilityStatus=$($sample.ModelVisibilityStatus) ModelVisible=$modelVisible VisibilityMask=$visibilityMask VisibilityMode=$visibilityMode MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Observations=$($sample.Observations)"
+            } else {
+                Record "PlayerState=$($sample.Status) RosterIndex=$($sample.RosterIndex) Class=$($sample.Class) Detail=$($sample.Detail)"
+                if ($sample.Status -ceq 'FAIL') { $failed = $true }
+            }
         }
+        if ($states.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
+        Record 'StateSemantics TeamPolicy=UNVERIFIED CombatEligibility=UNVERIFIED Knockout=UNVERIFIED LineOfSight=UNVERIFIED Writes=NONE'
+        Record 'OtherHeadSamples=NOT_REQUESTED_STATE_MODE'
+    } else {
+        $stage = 'OtherHeadSamples'
+        $otherHeadStart = $reader.PhysicalCalls
+        $otherHeads = $reader.SampleOtherPlayerHeads($kernel, $game, $module, $layout, $objects, $progress)
+        if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during other-head sampling.' }
+        Record "OtherHeadSamples AdditionalPhysicalReads=$($reader.PhysicalCalls - $otherHeadStart) Eligible=$($otherHeads.Eligible) Attempted=$($otherHeads.Samples.Length) Sampled=$($otherHeads.Sampled) StopReason=$($otherHeads.StopReason) Detail=$($otherHeads.Detail)"
+        $culture = [Globalization.CultureInfo]::InvariantCulture
+        foreach ($sample in $otherHeads.Samples) {
+            if ($sample.Status -ceq 'SAMPLED_READ_ONLY') {
+                Record "OtherHeadWorldPosition=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Source=$($sample.Source) X=$($sample.X.ToString('R', $culture)) Y=$($sample.Y.ToString('R', $culture)) Z=$($sample.Z.ToString('R', $culture)) Attempts=$($sample.Attempts) ParentCount=$($sample.ParentCount) Observations=$($sample.Observations) Provider=0x$($sample.Provider.ToString('x')) Transform=0x$($sample.Transform.ToString('x'))"
+            } else {
+                Record "OtherHeadWorldPosition=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Attempts=$($sample.Attempts) Detail=$($sample.Detail)"
+                if ($sample.Status -ceq 'FAIL') { $failed = $true }
+            }
+        }
+        if ($otherHeads.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
     }
-    if ($otherHeads.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
     Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadPositionsSampled=$($otherHeads.Sampled) TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
 } catch { $failed = $true; Failure $stage $_.Exception }
 finally {
