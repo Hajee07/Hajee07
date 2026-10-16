@@ -7,7 +7,15 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 21. New optional read-only player-state probe.** Run with
+**Current version: 22. Optional read-only team-policy probe.** Run with
+`-ProbeTeamPolicy` to identify the active original SameTeam route for one
+verified local/nonlocal pair. Supported packed-ID-byte and null dynamic-dictionary
+paths can yield a predicate value. Faction mode, populated dynamic dictionaries,
+custom virtual implementations and active hotfixes remain explicitly unknown.
+No enemy/hostility decision is inferred. 317 offline checks pass; live V22
+policy validation is pending. See [team-policy evidence](TEAM-POLICY-EVIDENCE.md).
+
+**V21 player-state mode remains available.** Run with
 `-ProbePlayerState` to sample raw team index, dead/revive fields and supported
 original model-visibility behavior from at most two verified roster members.
 It replaces the optional other-head phase for that run and preserves the same
@@ -18,7 +26,8 @@ state samples (local plus one nonlocal), using 4711 additional reads and 24097
 total reads, with all cleanup passing. Both raw team indices were 0; local
 model visibility was true and nonlocal model visibility false. This does not
 establish team policy or LOS. 277 offline checks passed before release.
-See [state evidence](PLAYER-STATE-EVIDENCE.md). The runtime ZIP is unchanged.
+See [state evidence](PLAYER-STATE-EVIDENCE.md). That live report did not change
+the V21 runtime ZIP.
 
 **V20 live nonlocal sampling passed.** The user's
 latest V20 run sampled the local head on attempt two and one nonlocal
@@ -68,12 +77,21 @@ For the new V21 state probe, use:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Run-ProcessMap.ps1 -ProbePlayerState
 ```
 
+For the new V22 team-policy probe, use this separate mode:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Run-ProcessMap.ps1 -ProbeTeamPolicy
+```
+
+Use one optional mode per run. `SameTeam=False` does not establish hostility or
+combat eligibility. Unknown route results identify the remaining dependency.
+
 The selected ADB serial defaults to `127.0.0.1:5555`; `-Device` can select the
 endpoint displayed by BlueStacks. An explicit disconnected localhost endpoint
 is reconnected once and verified. Other devices are not selected automatically.
 The runner discovers the current host/game PIDs; old PIDs are not constants.
 
-The package checks DLL and all fifteen runtime C# source digests, plus the exact
+The package checks DLL and all seventeen runtime C# source digests, plus the exact
 loaded VMM fingerprint. It
 loads the same native DLL used in the successful probe, uses its read-only info
 handler, and unloads and releases its shared session in `finally`. The DLL bytes

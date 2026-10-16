@@ -1,0 +1,1399 @@
+{
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "classes": [
+    {
+      "index": 11715,
+      "name": "COW.GameModeSetting",
+      "parent": 37718,
+      "name_offset": 3171649,
+      "namespace_offset": 3051144,
+      "record_hex": "add11100f4fa0f003f8f0000ffffffff9eb400003f8f0000ffffffff00001000941501002e810000ffffffffffffffffffffffffd504000058a301001a24000003000000cf0300000000050001000100080c0000c42d0002",
+      "bits": 1179648,
+      "instance_size": 3760,
+      "static_size": 48,
+      "token": 33566148
+    },
+    {
+      "index": 34565,
+      "name": "COW.GamePlay.BEADLMGGGGL",
+      "parent": 37744,
+      "name_offset": 2571510,
+      "namespace_offset": 7768922,
+      "record_hex": "62a90800c6f757006e5e0000ffffffffbb1901006e5e0000ffffffff09011000fd2304009ac20300ffffffffffffffffffffffffb31700003db609001374000013000000070000000000050001000100190c000006870002",
+      "bits": 2148597760,
+      "instance_size": 40,
+      "static_size": 32,
+      "token": 33588998
+    },
+    {
+      "index": 11718,
+      "name": "COW.GameVarDef",
+      "parent": 37718,
+      "name_offset": 3345585,
+      "namespace_offset": 3051144,
+      "record_hex": "1d791400f4fa0f00728f0000ffffffff9eb40000728f0000ffffffff010010006a190100a4810000ffffffffffffffffffffffffffffffff75a30100ffffffff07000000151600000000040000000000080c0000c72d0002",
+      "bits": 1179648,
+      "instance_size": 16,
+      "static_size": 18080,
+      "token": 33566151
+    },
+    {
+      "index": 41079,
+      "name": "UnityEngine.Object",
+      "parent": 37718,
+      "name_offset": 2123429,
+      "namespace_offset": 17627183,
+      "record_hex": "11d301009b64ee00b0b40000ffffffff9eb40000b0b40000ffffffff0900100016190700abda0400ffffffff77560000ffffffffffffffff523b0b00ffffffff5d000200060000000000040000000000180c000079010002",
+      "bits": 1179648,
+      "instance_size": 24,
+      "static_size": 4,
+      "token": 33554809
+    }
+  ],
+  "fields": [
+    {
+      "owner": 12418,
+      "local": 1,
+      "name": "CurrentMatchGame",
+      "offset": 8,
+      "offset_rva": 28296912,
+      "descriptor": 182399344,
+      "bits": 1179670,
+      "type_index": 12425,
+      "name_offset": 3926884,
+      "token": 67203393,
+      "metadata_offset": 43107712,
+      "record_hex": "d0571d0056ab000041710104"
+    },
+    {
+      "owner": 12418,
+      "local": 43,
+      "name": "m_GameServerGameMode",
+      "offset": 276,
+      "offset_rva": 28297080,
+      "descriptor": 182050128,
+      "bits": 2148073489,
+      "type_index": -1,
+      "name_offset": 3927700,
+      "token": 67203435,
+      "metadata_offset": 43108216,
+      "record_hex": "005b1d00a01701006b710104"
+    },
+    {
+      "owner": 12425,
+      "local": 1,
+      "name": "m_GameModeSetting",
+      "offset": 152,
+      "offset_rva": 28297716,
+      "descriptor": 182289728,
+      "bits": 1179652,
+      "type_index": 11715,
+      "name_offset": 3937104,
+      "token": 67203603,
+      "metadata_offset": 43110232,
+      "record_hex": "bc7f1d00418f000013720104"
+    },
+    {
+      "owner": 11715,
+      "local": 694,
+      "name": "EnableDynamicTeamID",
+      "offset": 2645,
+      "offset_rva": 28205760,
+      "descriptor": 182019456,
+      "bits": 2147614758,
+      "type_index": -1,
+      "name_offset": 3335181,
+      "token": 67180619,
+      "metadata_offset": 42834424,
+      "record_hex": "79501400166300004b180104"
+    },
+    {
+      "owner": 31824,
+      "local": 179,
+      "name": "MHGFKKALMDK",
+      "offset": 1032,
+      "offset_rva": 27158672,
+      "descriptor": 182017696,
+      "bits": 2148597764,
+      "type_index": 34565,
+      "name_offset": 7875727,
+      "token": 67360461,
+      "metadata_offset": 44992528,
+      "record_hex": "fb985900705e0000cdd60304"
+    },
+    {
+      "owner": 34565,
+      "local": 2,
+      "name": "JLIDCJLKLBD",
+      "offset": 24,
+      "offset_rva": 27235024,
+      "descriptor": 182019984,
+      "bits": 2147811361,
+      "type_index": -1,
+      "name_offset": 7993709,
+      "token": 67380224,
+      "metadata_offset": 45229684,
+      "record_hex": "d9655b000564000000240404"
+    },
+    {
+      "owner": 34107,
+      "local": 40,
+      "name": "GCCOFKGEICG",
+      "offset": 816,
+      "offset_rva": 27225832,
+      "descriptor": 173975344,
+      "bits": 1376257,
+      "type_index": -1,
+      "name_offset": 8284803,
+      "token": 67377901,
+      "metadata_offset": 45201808,
+      "record_hex": "efd65f006c0f0000ed1a0404"
+    }
+  ],
+  "methods": [
+    {
+      "index": 35095,
+      "name": "IsSameTeam",
+      "rva": 119300400,
+      "pointer_rva": 178075744,
+      "metadata_offset": 19980388,
+      "record_hex": "5f321d00823000000b63000000000008df510000fffffffff50400001889000696000000ffff0200"
+    },
+    {
+      "index": 35276,
+      "name": "IsTeammateOfSameFaction",
+      "rva": 119335148,
+      "pointer_rva": 178077192,
+      "metadata_offset": 19987628,
+      "record_hex": "5e401d00823000000b63000000000008ffffffffffffffff49010000cd89000696000000ffff0000"
+    },
+    {
+      "index": 35274,
+      "name": "IsUGCInfectionMode",
+      "rva": 119373408,
+      "pointer_rva": 178077176,
+      "metadata_offset": 19987548,
+      "record_hex": "36401d00823000000b63000000000008ffffffffffffffff48010000cb89000696000000ffff0000"
+    },
+    {
+      "index": 34943,
+      "name": "get_GameServerGameMode",
+      "rva": 119272896,
+      "pointer_rva": 178074528,
+      "metadata_offset": 19974308,
+      "record_hex": "48231d00823000009b17010000000008ffffffffffffffff0a0100008088000696080000ffff0000"
+    },
+    {
+      "index": 35687,
+      "name": "IsSameTeam",
+      "rva": 120752196,
+      "pointer_rva": 178080480,
+      "metadata_offset": 20004068,
+      "record_hex": "5f321d00893000000b63000000000008db520000fffffffff4040000688b0006c60100005c000200"
+    },
+    {
+      "index": 35025,
+      "name": "CurrentGameModeSetting",
+      "rva": 119270920,
+      "pointer_rva": 178075184,
+      "metadata_offset": 19977588,
+      "record_hex": "942a1d00823000003f8f000000000008ffffffffffffffff5c010000d288000696000000ffff0000"
+    },
+    {
+      "index": 35617,
+      "name": "GetGameModeSetting",
+      "rva": 120730724,
+      "pointer_rva": 178079920,
+      "metadata_offset": 20001268,
+      "record_hex": "4f711d00893000003f8f000000000008ffffffffffffffff5b010000228b0006c60100004b000000"
+    },
+    {
+      "index": 210078,
+      "name": "get_PlayerID",
+      "rva": 116398900,
+      "pointer_rva": 179475608,
+      "metadata_offset": 26979708,
+      "record_hex": "84392700507c00006e5e000000000008ffffffffffffffff380100009f340306e609000064000000"
+    },
+    {
+      "index": 246436,
+      "name": "DPLMDPBINFL",
+      "rva": 130248484,
+      "pointer_rva": 179766472,
+      "metadata_offset": 28434028,
+      "record_hex": "3129610005870000fe63000000000008ffffffffffffffff5e010000a5c2030686000000ffff0000"
+    },
+    {
+      "index": 239900,
+      "name": "OOKJOAIFNAP",
+      "rva": 127569040,
+      "pointer_rva": 179714184,
+      "metadata_offset": 28172588,
+      "record_hex": "d3cd5f003b850000fe63000000000008c2480200ffffffff5d0100001da9030686000000ffff0100"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "IsSameTeam_35095_0",
+      "rva": 119300400,
+      "hex": "ffc301d1fe2300f9f65705a9f44f06a915ef0190a85e5f39f30301aaf40300aa88010037c0ab01b000d043f9a03ac694c0ab01b0006040f99d3ac69480ab01f0"
+    },
+    {
+      "name": "IsSameTeam_35095_64",
+      "rva": 119300464,
+      "hex": "003446f99a3ac69428008052a85e1f39a09e8052e1031faaff7f02a9ff1b00f92392599440010036a09e8052e1031faa4c925994800d00b4e10314aae20313aa"
+    },
+    {
+      "name": "IsSameTeam_35095_128",
+      "rva": 119300528,
+      "hex": "e3031faa708c499461000014d6ab01b0d66240f9c00240f908e040b948000035e13ac694c6210094c80240f9f503002a09e140b9c900003415010036e00314aa"
+    },
+    {
+      "name": "IsSameTeam_35095_192",
+      "rva": 119300592,
+      "hex": "e10313aa7a21009451000014e00308aad53ac69455ff0737c00240f9085c40f9150540f9550200b408e040b9c8000035cd3ac694c80240f9085d40f9150540f9"
+    },
+    {
+      "name": "IsSameTeam_35095_256",
+      "rva": 119300656,
+      "hex": "350900b4a00240f9483ec694a80240f9e00315aae10314aae20313aa097d43f9038143f920013fd63900001495ab01f0b53646f9a00240f908e040b948000035"
+    },
+    {
+      "name": "IsSameTeam_35095_320",
+      "rva": 119300720,
+      "hex": "b93ac694e00314aae1031faae2031faadd92b894a0050036a00240f908e040b948000035b03ac694e00313aae1031faae2031faad492b89480040036540500b4"
+    },
+    {
+      "name": "IsSameTeam_35095_384",
+      "rva": 119300784,
+      "hex": "e8230091e00314aae1031faa1eeef497c9ab01b0e083c03ce80f40f929d143f9e00b803de81b00f9200140f908e040b9480000359c3ac694e0830091e1031faa"
+    },
+    {
+      "name": "IsSameTeam_35095_448",
+      "rva": 119300848,
+      "hex": "0dc32994130300b4f403002ae8230091e00313aae1031faa0beef497e083c03ce80f40f9e0830091e1031faae00b803de81b00f900c32994881e00121f01206b"
+    },
+    {
+      "name": "IsSameTeam_35095_512",
+      "rva": 119300912,
+      "hex": "e0179f1a02000014e0031f2af44f46a9f65745a9fe2340f900000012ffc30191c0035fd6c93ac694"
+    },
+    {
+      "name": "IsTeammateOfSameFaction_35276_0",
+      "rva": 119335148,
+      "hex": "fe4fbfa9d3ee019068166239c800003780ab01b0006040f9b618c694280080526816223920298052e1031faa417059940001003620298052e1031faa6a705994"
+    },
+    {
+      "name": "IsTeammateOfSameFaction_35276_64",
+      "rva": 119335212,
+      "hex": "800100b4e1031faafe4fc1a86a6b491488ab01b0086140f9000140f908e040b9480000350119c694fe4fc1a8422500144719c694"
+    },
+    {
+      "name": "IsUGCInfectionMode_35274_0",
+      "rva": 119373408,
+      "hex": "fe4fbfa973ee01f0680e6239c800003740ab0190006040f959f3c59428008052680e223900298052e1031faae44a59940001003600298052e1031faa0d4b5994"
+    },
+    {
+      "name": "IsUGCInfectionMode_35274_64",
+      "rva": 119373472,
+      "hex": "e00100b4e1031faafe4fc1a80d46491448ab0190086140f9000140f908e040b948000035a4f3c594be9dff971fe80071e0179f1afe4fc1a8c0035fd6e7f3c594"
+    },
+    {
+      "name": "get_GameServerGameMode_34943_0",
+      "rva": 119272896,
+      "hex": "fe4fbfa933ef01f068065d39c800003700ac0190006040f98155c6942800805268061d3940218052e1031faa0cad59940001003640218052e1031faa35ad5994"
+    },
+    {
+      "name": "get_GameServerGameMode_34943_64",
+      "rva": 119272960,
+      "hex": "e00100b4e1031faafe4fc1a873bf491413ac0190736240f9600240f908e040b968000035cc55c694600240f9085c40f9001541b9fe4fc1a8c0035fd60f56c694"
+    },
+    {
+      "name": "IsSameTeam_35687_0",
+      "rva": 120752196,
+      "hex": "ffc301d1fe2300f9f65705a9f44f06a9f6e301f0c8b64539f30302aaf40301aaf50300aa28010037a0a001f000d043f9dab0c09480a001b0003446f9d7b0c094"
+    },
+    {
+      "name": "IsSameTeam_35687_64",
+      "rva": 120752260,
+      "hex": "28008052c8b60539809e8052e1031faaff7f02a9ff1b00f96008549460010036809e8052e1031faa89085494a00800b4e10315aae20314aae30313aae4031faa"
+    },
+    {
+      "name": "IsSameTeam_35687_128",
+      "rva": 120752324,
+      "hex": "d27244943900001495a001b0b53646f9a00240f908e040b9480000351db1c094e00314aae1031faae2031faa4109b394a0050036a00240f908e040b948000035"
+    },
+    {
+      "name": "IsSameTeam_35687_192",
+      "rva": 120752388,
+      "hex": "14b1c094e00313aae1031faae2031faa3809b39480040036540500b4e8230091e00314aae1031faa8264ef97a9a001f0e083c03ce80f40f929d143f9e00b803d"
+    },
+    {
+      "name": "IsSameTeam_35687_256",
+      "rva": 120752452,
+      "hex": "e81b00f9200140f908e040b94800003500b1c094e0830091e1031faa71392494130300b4f403002ae8230091e00313aae1031faa6f64ef97e083c03ce80f40f9"
+    },
+    {
+      "name": "IsSameTeam_35687_320",
+      "rva": 120752516,
+      "hex": "e0830091e1031faae00b803de81b00f964392494881e00121f01206be0179f1a02000014e0031f2af44f46a9f65745a9fe2340f900000012ffc30191c0035fd6"
+    },
+    {
+      "name": "IsSameTeam_35687_384",
+      "rva": 120752580,
+      "hex": "2db1c094"
+    },
+    {
+      "name": "CurrentGameModeSetting_35025_0",
+      "rva": 119270920,
+      "hex": "fe0f1ef8f44f01a953ef019068465e398801003700ac01b0006040f96e57c69400ac01b000d442f96b57c694a0ad01f000e044f96857c6942800805268461e39"
+    },
+    {
+      "name": "CurrentGameModeSetting_35025_64",
+      "rva": 119270984,
+      "hex": "802b8052e1031faaf3ae599420010036802b8052e1031faa1caf5994000a00b4f44f41a9e1031faafe0742f877cc491413ac01b073d642f9680240f909e140b9"
+    },
+    {
+      "name": "CurrentGameModeSetting_35025_128",
+      "rva": 119271048,
+      "hex": "89000035e00308aab157c694680240f914ac01b0946240f9085d40f969418852800240f9136969380ae040b96a000035a757c694800240f9085c40f973020034"
+    },
+    {
+      "name": "CurrentGameModeSetting_35025_192",
+      "rva": 119271112,
+      "hex": "130540f9130400b408e040b9c80000359f57c694880240f9085d40f9130540f9f30500b4600240f91a5bc694680240f9e00313aaf44f41a902f542f901f942f9"
+    },
+    {
+      "name": "CurrentGameModeSetting_35025_256",
+      "rva": 119271176,
+      "hex": "fe0742f840001fd6080140f9c80100b4b3ad01f073e244f9090140f9680240f92bc144390ac144397f010a6bc3000054296540f9290d0a8b29815ff83f0108eb"
+    },
+    {
+      "name": "CurrentGameModeSetting_35025_320",
+      "rva": 119271240,
+      "hex": "a0000054f44f41a9e0031faafe0742f8c0035fd609e040b9890000357c57c694800240f9680240f9095c40f9330140f9730100b4600240f909c144390ac04439"
+    },
+    {
+      "name": "CurrentGameModeSetting_35025_384",
+      "rva": 119271304,
+      "hex": "5f01096bc30000540a6440f9490d098b29815ff83f0108eb80faff54b557c694"
+    },
+    {
+      "name": "GetGameModeSetting_35617_0",
+      "rva": 120730724,
+      "hex": "fe57bea9f44f01a934e4019088f24439f30300aa28010037e0a00190006040f9d6c5c09440a501f000bc41f9d3c5c0942800805288f20439602b8052e1031faa"
+    },
+    {
+      "name": "GetGameModeSetting_35617_64",
+      "rva": 120730788,
+      "hex": "5e1d549440010036602b8052e1031faa871d5494e00400b4e10313aaf44f41a9e2031faafe57c2a8aa3a4414608e49f8a00300b548a501f008bd41f9000140f9"
+    },
+    {
+      "name": "GetGameModeSetting_35617_128",
+      "rva": 120730852,
+      "hex": "11769c94e8a00190086140f9f40300aa080140f909e140b969000035e00308aa14c6c094e0031faa0d70fa97f503002ae0031faa2a70fa97d40100b4e203002a"
+    },
+    {
+      "name": "GetGameModeSetting_35617_192",
+      "rva": 120730916,
+      "hex": "e00314aae103152ae3031faa3c56ec97e10300aa600200f9e00313aa90c5c094600240f9f44f41a9fe57c2a8c0035fd649c6c094fe4fbfa9f30300aac0838a52"
+    },
+    {
+      "name": "GetGameModeSetting_35617_256",
+      "rva": 120730980,
+      "hex": "e1031faa2d1d549420010036c0838a52e1031faa"
+    },
+    {
+      "name": "get_PlayerID_210078_0",
+      "rva": 116398900,
+      "hex": "ff0301d1fe1300f9f44f03a9f40300aa00278052e1031faaf30308aab3a36494a001003600278052e1031faadca36494400200b4e8230091e10314aae2031faa"
+    },
+    {
+      "name": "get_PlayerID_210078_64",
+      "rva": 116398964,
+      "hex": "67bb5494e80f40f9e083c03c680a00f90500001488221091090940f90001c03d690a00f96002803df44f43a9fe1340f9ff030191c0035fd6b34cd194"
+    },
+    {
+      "name": "DPLMDPBINFL_246436_0",
+      "rva": 130248484,
+      "hex": "ff0301d1fe1300f9f44f03a9b49b019088be6d39f30300aa28010037405801b0006040f925779c94405801b000a847f922779c942800805288be2d39c02b8052"
+    },
+    {
+      "name": "DPLMDPBINFL_246436_64",
+      "rva": 130248548,
+      "hex": "e1031faaadce2f9460010036c02b8052e1031faad6ce2f94800600b4e10313aaf44f43a9fe1340f9e2031faaff030191a6ec1f14545801b0946240f9800240f9"
+    },
+    {
+      "name": "DPLMDPBINFL_246436_128",
+      "rva": 130248612,
+      "hex": "08e040b9480000356a779c94e0031faa951fd697000300b408546939c8020034800240f908e040b96800003561779c94800240f9085c40f9000140f9c00100b4"
+    },
+    {
+      "name": "DPLMDPBINFL_246436_192",
+      "rva": 130248676,
+      "hex": "485801b008a947f9090040f9080140f92bc144390ac144397f010a6bc3000054296540f9290d0a8b29815ff83f0108ebc000005460224039f44f43a9fe1340f9"
+    },
+    {
+      "name": "DPLMDPBINFL_246436_256",
+      "rva": 130248740,
+      "hex": "ff030191c0035fd6680a40f96002c03de1030091e2031faae80b00f9e003803d13c7f597f5ffff178b779c94"
+    },
+    {
+      "name": "OOKJOAIFNAP_239900_0",
+      "rva": 127569040,
+      "hex": "ff0302d1fe5706a9f44f07a915b001b0a87e6c39f40301aaf30300aac800003720750190000c46f9c9afa69428008052a87e2c39a02b8052e1031faafff30039"
+    },
+    {
+      "name": "OOKJOAIFNAP_239900_64",
+      "rva": 127569104,
+      "hex": "53073a9460020036a02b8052e1031faa7c073a94880a40f98002c03de82b00f9e013803d200400b4e013c03de82b40f9e2830091e10313aae3031faae00b803d"
+    },
+    {
+      "name": "OOKJOAIFNAP_239900_128",
+      "rva": 127569168,
+      "hex": "e81b00f902252a94e803002a12000014e81f8052e8f30039609a41f9c00100b429750190880a40f98002c03d290d46f9e1030191e2f30091e80b00f9230140f9"
+    },
+    {
+      "name": "OOKJOAIFNAP_239900_192",
+      "rva": 127569232,
+      "hex": "e003803de013803de82b00f92fc75994e8f34039f44f47a9fe5746a9e003082aff030291c0035fd640b0a694"
+    },
+    {
+      "name": "object_not_equal_0",
+      "rva": 167685620,
+      "hex": "fe0f1df8f65701a9f44f02a9757e00f0763a00f0a8626639d63646f9f30301aaf40300aac8000037603a00f0003446f96ea70d9428008052a8622639c00240f9"
+    },
+    {
+      "name": "object_not_equal_64",
+      "rva": 167685684,
+      "hex": "08e040b948000035c6a70d94e00314aae10313aa53100094f44f42a9f65741a9e803202a00010012fe0743f8c0035fd6"
+    },
+    {
+      "name": "object_compare_0",
+      "rva": 167702420,
+      "hex": "fe57bea9f44f01a9557e00f0a86e6439f30301aaf40300aac8000037403a00f0003446f909970d9428008052a86e2439880213aa680000b52800805217000014"
+    },
+    {
+      "name": "object_compare_64",
+      "rva": 167702484,
+      "hex": "b30000b4940100b49f0213ebe8179f1a12000014483a00f0083546f9000140f908e040b94800003556970d94e00314aa08000014483a00d0083546f9000140f9"
+    },
+    {
+      "name": "object_compare_128",
+      "rva": 167702548,
+      "hex": "08e040b9480000354e970d94e00313aa1f00009408000052f44f41a900010012fe57c2a8c0035fd6"
+    },
+    {
+      "name": "native_alive_0",
+      "rva": 167702688,
+      "hex": "fe0f1ff8c00000b4000840f9e1031faae2031faafe0741f83978f9176f970d94"
+    },
+    {
+      "name": "intptr_not_equal_0",
+      "rva": 165990812,
+      "hex": "1f0001ebe0079f1ac0035fd6"
+    }
+  ],
+  "virtual": [
+    {
+      "index": 12425,
+      "slot": 75,
+      "metadata_offset": 48275584,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 12425,
+      "slot": 92,
+      "metadata_offset": 48275652,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 12644,
+      "slot": 75,
+      "metadata_offset": 48288544,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 12644,
+      "slot": 92,
+      "metadata_offset": 48288612,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 30530,
+      "slot": 75,
+      "metadata_offset": 49899204,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 30530,
+      "slot": 92,
+      "metadata_offset": 49899272,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 32220,
+      "slot": 75,
+      "metadata_offset": 49976688,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 32220,
+      "slot": 92,
+      "metadata_offset": 49976756,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 32251,
+      "slot": 75,
+      "metadata_offset": 49978900,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 32251,
+      "slot": 92,
+      "metadata_offset": 49978968,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34072,
+      "slot": 75,
+      "metadata_offset": 50293536,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34072,
+      "slot": 92,
+      "metadata_offset": 50293604,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34074,
+      "slot": 75,
+      "metadata_offset": 50294208,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34074,
+      "slot": 92,
+      "metadata_offset": 50294276,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34076,
+      "slot": 75,
+      "metadata_offset": 50294788,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34076,
+      "slot": 92,
+      "metadata_offset": 50294856,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34077,
+      "slot": 75,
+      "metadata_offset": 50295396,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34077,
+      "slot": 92,
+      "metadata_offset": 50295464,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34078,
+      "slot": 75,
+      "metadata_offset": 50295976,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34078,
+      "slot": 92,
+      "metadata_offset": 50296044,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34080,
+      "slot": 75,
+      "metadata_offset": 50296656,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34080,
+      "slot": 92,
+      "metadata_offset": 50296724,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34081,
+      "slot": 75,
+      "metadata_offset": 50297256,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34081,
+      "slot": 92,
+      "metadata_offset": 50297324,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34082,
+      "slot": 75,
+      "metadata_offset": 50297848,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34082,
+      "slot": 92,
+      "metadata_offset": 50297916,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34087,
+      "slot": 75,
+      "metadata_offset": 50298496,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34087,
+      "slot": 92,
+      "metadata_offset": 50298564,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34088,
+      "slot": 75,
+      "metadata_offset": 50299212,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34088,
+      "slot": 92,
+      "metadata_offset": 50299280,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34089,
+      "slot": 75,
+      "metadata_offset": 50299792,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34089,
+      "slot": 92,
+      "metadata_offset": 50299860,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34090,
+      "slot": 75,
+      "metadata_offset": 50300372,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34090,
+      "slot": 92,
+      "metadata_offset": 50300440,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34091,
+      "slot": 75,
+      "metadata_offset": 50300952,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34091,
+      "slot": 92,
+      "metadata_offset": 50301020,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34092,
+      "slot": 75,
+      "metadata_offset": 50301532,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34092,
+      "slot": 92,
+      "metadata_offset": 50301600,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34095,
+      "slot": 75,
+      "metadata_offset": 50302196,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34095,
+      "slot": 92,
+      "metadata_offset": 50302264,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34096,
+      "slot": 75,
+      "metadata_offset": 50302804,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34096,
+      "slot": 92,
+      "metadata_offset": 50302872,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34099,
+      "slot": 75,
+      "metadata_offset": 50303404,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34099,
+      "slot": 92,
+      "metadata_offset": 50303472,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34100,
+      "slot": 75,
+      "metadata_offset": 50304008,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34100,
+      "slot": 92,
+      "metadata_offset": 50304076,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34107,
+      "slot": 75,
+      "metadata_offset": 50304656,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34107,
+      "slot": 92,
+      "metadata_offset": 50304724,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34109,
+      "slot": 75,
+      "metadata_offset": 50305364,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34109,
+      "slot": 92,
+      "metadata_offset": 50305432,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34112,
+      "slot": 75,
+      "metadata_offset": 50305980,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34112,
+      "slot": 92,
+      "metadata_offset": 50306048,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34145,
+      "slot": 75,
+      "metadata_offset": 50307208,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34145,
+      "slot": 92,
+      "metadata_offset": 50307276,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34146,
+      "slot": 75,
+      "metadata_offset": 50307844,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34146,
+      "slot": 92,
+      "metadata_offset": 50307912,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34147,
+      "slot": 75,
+      "metadata_offset": 50308492,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34147,
+      "slot": 92,
+      "metadata_offset": 50308560,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34149,
+      "slot": 75,
+      "metadata_offset": 50309096,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34149,
+      "slot": 92,
+      "metadata_offset": 50309164,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34150,
+      "slot": 75,
+      "metadata_offset": 50309680,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34150,
+      "slot": 92,
+      "metadata_offset": 50309748,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34162,
+      "slot": 75,
+      "metadata_offset": 50310264,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34162,
+      "slot": 92,
+      "metadata_offset": 50310332,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34164,
+      "slot": 75,
+      "metadata_offset": 50311308,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34164,
+      "slot": 92,
+      "metadata_offset": 50311376,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34166,
+      "slot": 75,
+      "metadata_offset": 50311988,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34166,
+      "slot": 92,
+      "metadata_offset": 50312056,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34167,
+      "slot": 75,
+      "metadata_offset": 50312636,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34167,
+      "slot": 92,
+      "metadata_offset": 50312704,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34170,
+      "slot": 75,
+      "metadata_offset": 50313232,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34170,
+      "slot": 92,
+      "metadata_offset": 50313300,
+      "encoded": 1611097391,
+      "rva": 129043124
+    },
+    {
+      "index": 34171,
+      "slot": 75,
+      "metadata_offset": 50313836,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34171,
+      "slot": 92,
+      "metadata_offset": 50313904,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34172,
+      "slot": 75,
+      "metadata_offset": 50314428,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34172,
+      "slot": 92,
+      "metadata_offset": 50314496,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34173,
+      "slot": 75,
+      "metadata_offset": 50315016,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34173,
+      "slot": 92,
+      "metadata_offset": 50315084,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34174,
+      "slot": 75,
+      "metadata_offset": 50315604,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34174,
+      "slot": 92,
+      "metadata_offset": 50315672,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34176,
+      "slot": 75,
+      "metadata_offset": 50316184,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34176,
+      "slot": 92,
+      "metadata_offset": 50316252,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34177,
+      "slot": 75,
+      "metadata_offset": 50316768,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34177,
+      "slot": 92,
+      "metadata_offset": 50316836,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34178,
+      "slot": 75,
+      "metadata_offset": 50317356,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34178,
+      "slot": 92,
+      "metadata_offset": 50317424,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34180,
+      "slot": 75,
+      "metadata_offset": 50318048,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34180,
+      "slot": 92,
+      "metadata_offset": 50318116,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34181,
+      "slot": 75,
+      "metadata_offset": 50318640,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34181,
+      "slot": 92,
+      "metadata_offset": 50318708,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34183,
+      "slot": 75,
+      "metadata_offset": 50319280,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34183,
+      "slot": 92,
+      "metadata_offset": 50319348,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34188,
+      "slot": 75,
+      "metadata_offset": 50319872,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34188,
+      "slot": 92,
+      "metadata_offset": 50319940,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34189,
+      "slot": 75,
+      "metadata_offset": 50320516,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34189,
+      "slot": 92,
+      "metadata_offset": 50320584,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34190,
+      "slot": 75,
+      "metadata_offset": 50321096,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34190,
+      "slot": 92,
+      "metadata_offset": 50321164,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34191,
+      "slot": 75,
+      "metadata_offset": 50321744,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34191,
+      "slot": 92,
+      "metadata_offset": 50321812,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34192,
+      "slot": 75,
+      "metadata_offset": 50322324,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34192,
+      "slot": 92,
+      "metadata_offset": 50322392,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34195,
+      "slot": 75,
+      "metadata_offset": 50322912,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34195,
+      "slot": 92,
+      "metadata_offset": 50322980,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34206,
+      "slot": 75,
+      "metadata_offset": 50323616,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34206,
+      "slot": 92,
+      "metadata_offset": 50323684,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34207,
+      "slot": 75,
+      "metadata_offset": 50324204,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34207,
+      "slot": 92,
+      "metadata_offset": 50324272,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34208,
+      "slot": 75,
+      "metadata_offset": 50325044,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34208,
+      "slot": 92,
+      "metadata_offset": 50325112,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34209,
+      "slot": 75,
+      "metadata_offset": 50325632,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34209,
+      "slot": 92,
+      "metadata_offset": 50325700,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 34963,
+      "slot": 75,
+      "metadata_offset": 50447028,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 34963,
+      "slot": 92,
+      "metadata_offset": 50447096,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 35149,
+      "slot": 75,
+      "metadata_offset": 50458216,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 35149,
+      "slot": 92,
+      "metadata_offset": 50458284,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 35177,
+      "slot": 75,
+      "metadata_offset": 50458784,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 35177,
+      "slot": 92,
+      "metadata_offset": 50458852,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 35180,
+      "slot": 75,
+      "metadata_offset": 50460432,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 35180,
+      "slot": 92,
+      "metadata_offset": 50460500,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 35181,
+      "slot": 75,
+      "metadata_offset": 50460952,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 35181,
+      "slot": 92,
+      "metadata_offset": 50461020,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 35184,
+      "slot": 75,
+      "metadata_offset": 50461400,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 35184,
+      "slot": 92,
+      "metadata_offset": 50461468,
+      "encoded": 1610684111,
+      "rva": 120752196
+    },
+    {
+      "index": 35185,
+      "slot": 75,
+      "metadata_offset": 50461908,
+      "encoded": 1610683971,
+      "rva": 120730724
+    },
+    {
+      "index": 35185,
+      "slot": 92,
+      "metadata_offset": 50461976,
+      "encoded": 1610684111,
+      "rva": 120752196
+    }
+  ],
+  "key_cell": 180517800,
+  "dynamic_class_cell": 180561960,
+  "roots": [
+    {
+      "name": "GameVar",
+      "got": 175371688,
+      "cell": 180549144,
+      "index": 11718
+    },
+    {
+      "name": "UnityObject",
+      "got": 175348840,
+      "cell": 180573896,
+      "index": 41079
+    }
+  ],
+  "scope": "Original GameFacade.IsSameTeam(local,other) for validated non-faction base MatchGame routes; dynamic non-null dictionary/custom virtual/hotfix routes remain unknown. No hostility or aim claim."
+}

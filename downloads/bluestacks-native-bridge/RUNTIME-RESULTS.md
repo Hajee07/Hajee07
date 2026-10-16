@@ -551,3 +551,24 @@ not establish line of sight. Combat eligibility, knockout, state transitions,
 continuous tracking and aim integration remain unverified. No runtime source,
 manifest or ZIP was changed for this documentation-only update. The previously
 passed 277 offline checks were not rerun.
+
+## V22 team-policy probe (live validation pending)
+
+The new `-ProbeTeamPolicy` mode validates the original GameFacade.IsSameTeam
+route for one verified local/nonlocal pair. Static evidence shows a mode-58
+faction branch and a CurrentMatchGame virtual policy branch. The supported base
+MatchGame branch compares policy bytes obtained from player IDs, with an optional
+dynamic-team dictionary redirection. Raw TeamIndex equality is not used.
+
+V22 verifies original gates, settings selection/cache, both virtual targets,
+runtime class and native hierarchy casts, registration/field tables and both
+selected entries. It supports the original packed-byte route and the original
+null dynamic-dictionary default. Non-null dynamic dictionaries, faction mode,
+custom overrides, distinct CurrentGame/CurrentMatchGame objects and active
+hotfixes return explicit unknown statuses. No hostility or attackability claim
+is made from SameTeam=false. No game methods, initialization or writes occur.
+
+317 offline checks pass (40 new policy cases). The optional phase retains the
+6000-read ceiling with 1500 reserved for final checks within the existing global
+30000-call/120-second bounds. Default head and V21 state modes remain available;
+optional modes are mutually exclusive. A live V22 Windows report is still needed.

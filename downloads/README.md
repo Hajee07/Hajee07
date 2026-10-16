@@ -1,12 +1,18 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V21**. Optional `-ProbePlayerState` samples raw team
+Current process probe: **V22**. Optional `-ProbeTeamPolicy` validates the original
+SameTeam route for one local/nonlocal pair. Supported original paths can report
+the predicate; faction, non-null dynamic dictionary, custom override and hotfix
+paths report unknown. 317 offline checks pass; live V22 validation is pending.
+See [team-policy evidence](bluestacks-process-map/TEAM-POLICY-EVIDENCE.md).
+
+V21's optional `-ProbePlayerState` samples raw team
 index, dead/revive flags and supported original model visibility from at most
 two verified roster objects, with unknown statuses for active hotfixes or
 unsupported visibility paths. 277 offline checks passed before release. The
 user's V21 run accepted local and nonlocal state samples within the read budget,
 with all cleanup passing. The earlier V20 local and one nonlocal head sample
-also passed live. The runtime ZIP is unchanged after this live report.
+also passed live. That live report did not change the V21 runtime ZIP.
 Continuous tracking, complete enemy/team/alive/line-of-sight semantics and aim
 control remain incomplete.
 See [the probe instructions](bluestacks-process-map/README.md) and
