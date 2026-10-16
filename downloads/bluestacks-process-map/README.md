@@ -7,13 +7,18 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 28. Optional read-only local weapon-context probe.** Run with
-`-ProbeWeaponContext` to reproduce original active/hand weapon selection for one
-verified local roster member and inspect a supported typed weapon-data reference.
-Hotfixes, overrides and unready storage have explicit unknown statuses. 496
-offline checks pass; live V28 validation is pending. Ammo, ballistics, firing
-readiness, LOS and aim integration remain unverified.
-See [weapon-context evidence](WEAPON-CONTEXT-EVIDENCE.md).
+**Current version: 29. Optional read-only local weapon-data ID probe.** Run with
+`-ProbeWeaponContext` to reproduce active/hand selection, verify a typed data
+reference and sample its original UInt32 GetId value. 509 offline checks pass;
+live V29 ID validation is pending. Hotfixes and unready metadata yield explicit
+UNKNOWN statuses. Weapon names, ammo, ballistics, firing readiness, LOS and aim
+integration remain unverified. See [weapon evidence](WEAPON-CONTEXT-EVIDENCE.md).
+
+**V28 weapon-context mode passed live.** A0 hand selection, HBIBDMMOOOK weapon
+and IOKEALMHBKN typed data reference accepted with selected membership revalidated,
+4430 additional reads, 26286 total and all cleanup passing. The three local-head
+attempts were discarded for TRS motion; no accepted head coordinate or ID was
+claimed in that run.
 
 **V27 match damage-policy mode passed live.** `-ProbeMatchDamagePolicy`
 accepted the original argument-independent true predicate in mode 23, with both

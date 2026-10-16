@@ -47,6 +47,8 @@ namespace HeadBridge.Mapping
         public string WeaponStatus,WeaponSelectionPath,WeaponClass,WeaponDataClass,WeaponDataRegistration;
         public ulong? Weapon,WeaponData;
         public bool? AlternateHand;
+        public uint? WeaponIdRaw;
+        public string WeaponIdStatus;
     }
     public sealed class PlayerStateResult
     {

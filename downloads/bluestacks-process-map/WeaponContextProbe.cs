@@ -48,7 +48,7 @@ namespace HeadBridge.Mapping
         { sample.Weapon=0;sample.WeaponData=0;sample.WeaponSelectionPath=path;sample.WeaponStatus="ORIGINAL_NO_ACTIVE_WEAPON"; }
         private static void ReadWeaponContext(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length)
         {
-            Expect(sample.IsLocal,"weapon context selects local player only");sample.WeaponStatus="UNVERIFIED_HOTFIX_ACTIVE";
+            Expect(sample.IsLocal,"weapon context selects local player only");sample.WeaponStatus="UNVERIFIED_HOTFIX_ACTIVE";sample.WeaponIdStatus="NOT_REQUESTED_UNVERIFIED_DATA";
             if(!CombatGate(reads,wrappers,length,0x347,0x345))return;
             sample.WeaponStatus="NOT_READY_PLAYER_FIELD_TABLE";if(!WeaponFields(reads,playerBase,31824,module,layout))return;
             ulong candidate=reads.Value(sample.Player+0x608,"Weapon.ActiveField");bool handCast=false;int declared=32623;
@@ -93,6 +93,13 @@ namespace HeadBridge.Mapping
             ObjectReads.User(data,8,"weapon data object");ulong dataClass=reads.Pointer(data,"weapon data class");ObjectClassProfile dp=WeaponClass(reads,dataClass,layout);
             sample.WeaponStatus="UNSUPPORTED_WEAPON_DATA_CLASS";if(dp==null || (dp.Family&4)==0){sample.WeaponData=null;return;}
             WeaponAncestor(reads,dataClass,dp,31595,layout);sample.WeaponDataClass=dp.Name;sample.WeaponStatus="ORIGINAL_WEAPON_DATA_REFERENCE_SAMPLED";
+            sample.WeaponIdStatus="UNVERIFIED_HOTFIX_ACTIVE";if(!CombatGate(reads,wrappers,length,0x21a65))return;
+            TeamVirtual id=WeaponContextReference.IdVirtual;int dataSlots=BitConverter.ToUInt16(reads.Read(dataClass+0x12a,2),0);
+            Expect(dp.Index==id.Index && dataSlots>id.Slot && dataSlots==BitConverter.ToUInt16(Hex(dp.RecordHex),74) &&
+                reads.Word(layout.RuntimeMetadataBase+id.MetadataOffset)==id.Encoded &&
+                reads.Value(dataClass+0x138UL+(ulong)id.Slot*16UL)==module.LoadBias+id.Rva,"weapon ID virtual dispatch");
+            sample.WeaponIdStatus="NOT_READY_DATA_FIELD_TABLE";if(!WeaponFields(reads,dataClass,31595,module,layout))return;
+            sample.WeaponIdRaw=reads.Word(data+0x68,"Weapon.DataId");sample.WeaponIdStatus="ORIGINAL_GET_ID_UINT32_SAMPLED";
         }
         public PlayerStateResult SampleWeaponContext(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)
         { return SamplePlayerStatesCore(kernel,game,module,layout,core,progress,false,-1,false,true); }

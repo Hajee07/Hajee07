@@ -42,11 +42,13 @@ namespace HeadBridge.Mapping.Tests
                 }
                 foreach(TeamVirtual v in WeaponContextReference.Virtuals)
                 { U32(Layout.RuntimeMetadataBase+v.MetadataOffset,v.Encoded);U64(Class(v.Index)+0x138UL+45UL*16UL,Module.LoadBias+v.Rva); }
+                TeamVirtual idProfile=WeaponContextReference.IdVirtual;U32(Layout.RuntimeMetadataBase+idProfile.MetadataOffset,idProfile.Encoded);
+                U64(Class(31595)+0x138UL+(ulong)idProfile.Slot*16UL,Module.LoadBias+idProfile.Rva);
                 U64(Module.LoadBias+WeaponContextReference.WeaponTypeCell,Class(32785));
-                foreach(int id in new int[]{0x347,0x345,0x346,0x286,0x285,0x267b})U64(Array+0x20UL+(ulong)id*8UL,0);
+                foreach(int id in new int[]{0x347,0x345,0x346,0x286,0x285,0x267b,0x21a65})U64(Array+0x20UL+(ulong)id*8UL,0);
                 U64(Player+0x608,WeaponObject);U64(Player+0x740,WeaponController);U64(WeaponController,Class(32430));
                 U64(WeaponController+0xa0,WeaponObject);U64(WeaponController+0xa8,WeaponObject);Put(WeaponController+0x148,new byte[]{0});
-                U64(WeaponObject,Class(32623));U64(WeaponObject+0x98,WeaponDataObject);U64(WeaponDataObject,Class(31595));
+                U64(WeaponObject,Class(32623));U64(WeaponObject+0x98,WeaponDataObject);U64(WeaponDataObject,Class(31595));U32(WeaponDataObject+0x68,1234);
             }
             internal PlayerStateResult Weapon(PlayerObjectResult core)
             { return Reader.SampleWeaponContext(Kernel,Game,Module,Layout,core,Progress.Add); }
@@ -67,7 +69,8 @@ namespace HeadBridge.Mapping.Tests
             Fixture resolved=WeaponFixture();StateField dataField=null;foreach(StateField field in WeaponContextReference.Fields)if(field.Owner==32785)dataField=field;
             resolved.U32(resolved.Module.LoadBias+dataField.OffsetRva,0x98);PlayerStateObservation rs=WeaponSample(resolved);
             Check(rs.WeaponData.HasValue && rs.WeaponDataRegistration=="RESOLVED_OFFSET","resolved registration still requires the exact getter/runtime field offset");
-            Fixture hand=WeaponFixture();hand.U64(Fixture.Player+0x608,0);PlayerStateObservation hs=WeaponSample(hand);
+            Fixture hand=WeaponFixture();hand.U64(Fixture.Player+0x608,0);PlayerObjectResult handCore=hand.Run();int handStart=hand.Reader.PhysicalCalls;PlayerStateResult handResult=hand.Weapon(handCore);PlayerStateObservation hs=handResult.Samples[0];
+            Check(handResult.Sampled==1 && hand.Reader.PhysicalCalls-handStart<=6000,"live-observed A0 path retains phase and final-check budget");Console.WriteLine("WEAPON_HAND_FIXTURE_ADDITIONAL_READ_CALLS="+(hand.Reader.PhysicalCalls-handStart));
             Check(hs.WeaponStatus=="ORIGINAL_WEAPON_DATA_REFERENCE_SAMPLED" && hs.WeaponSelectionPath=="ON_HAND_CONTROLLER_A0" && hs.AlternateHand==false,"null active field follows verified on-hand controller and native cast");
             Fixture alternate=WeaponFixture();alternate.U64(Fixture.Player+0x608,0);alternate.Put(Fixture.WeaponController+0x148,new byte[]{1});alternate.U64(Fixture.WeaponObject,Fixture.Class(32613));PlayerStateObservation alt=WeaponSample(alternate);
             Check(alt.Weapon==Fixture.WeaponObject && alt.WeaponSelectionPath=="ON_HAND_CONTROLLER_A8" && alt.WeaponStatus=="UNSUPPORTED_WEAPON_DATA_OVERRIDE" && !alt.WeaponData.HasValue,"alternate hand preserves the actual unsupported data getter override");
@@ -118,6 +121,33 @@ namespace HeadBridge.Mapping.Tests
             Check(reserve.Weapon(reserveCore).StopReason=="READ_BUDGET_RESERVE","weapon phase preserves its final reserve");
             Fixture cap=WeaponFixture();PlayerObjectResult capCore=cap.Run();while(cap.Reader.PhysicalCalls<27000)cap.Reader.Physical(0,1);PlayerStateResult capped=cap.Weapon(capCore);
             Check(capped.Sampled==0 && cap.Reader.PhysicalCalls<=30000,"weapon phase never resets or exceeds the global read ceiling");
+            Check(result.Samples[0].WeaponIdRaw==1234 && result.Samples[0].WeaponIdStatus=="ORIGINAL_GET_ID_UINT32_SAMPLED","exact data GetId returns the verified UInt32 field");
+            Fixture idZero=WeaponFixture();idZero.U32(Fixture.WeaponDataObject+0x68,0);
+            Check(WeaponSample(idZero).WeaponIdRaw==0,"zero ID is preserved without assigning a weapon name");
+            Fixture idMax=WeaponFixture();idMax.U32(Fixture.WeaponDataObject+0x68,uint.MaxValue);
+            Check(WeaponSample(idMax).WeaponIdRaw==uint.MaxValue,"UInt32 ID preserves all bits without signed conversion or a guessed range");
+            Fixture idHot=WeaponFixture();idHot.U64(Fixture.Array+0x20+0x21a65UL*8UL,Fixture.Player);PlayerStateObservation ih=WeaponSample(idHot);
+            Check(ih.WeaponData==Fixture.WeaponDataObject && !ih.WeaponIdRaw.HasValue && ih.WeaponIdStatus=="UNVERIFIED_HOTFIX_ACTIVE","GetId hotfix leaves the verified data reference but suppresses the ID");
+            Fixture idLazy=WeaponFixture();idLazy.U64(Fixture.Class(31595)+0x80,0);PlayerStateObservation il=WeaponSample(idLazy);
+            Check(il.WeaponData==Fixture.WeaponDataObject && !il.WeaponIdRaw.HasValue && il.WeaponIdStatus=="NOT_READY_DATA_FIELD_TABLE","uninitialized data FieldInfo remains unknown without initialization");
+            Fixture idOffset=WeaponFixture();PlayerObjectResult io=idOffset.Run();idOffset.U32(0x110000000UL+31595UL*0x10000UL+20UL*32UL+24,0x64);PlayerStateResult ior=idOffset.Weapon(io);
+            Check(ior.Sampled==0 && !ior.Samples[0].WeaponIdRaw.HasValue && ior.Samples[0].Detail.Contains("combat runtime field"),"ID runtime offset mismatch discards the tentative row");
+            Fixture idDispatch=WeaponFixture();idDispatch.U64(Fixture.Class(31595)+0x138UL+14UL*16UL,idDispatch.Module.LoadBias+0x6ee2678);PlayerStateResult idr=idDispatch.Weapon(idDispatch.Run());
+            Check(idr.Sampled==0 && idr.Samples[0].Detail.Contains("weapon ID virtual dispatch"),"GetUIntKey is not substituted for actual GetId dispatch");
+            StateField idField=null;foreach(StateField field in WeaponContextReference.Fields)if(field.Owner==31595)idField=field;
+            Fixture idRegistration=WeaponFixture();PlayerObjectResult irc=idRegistration.Run();idRegistration.U32(idRegistration.Module.LoadBias+idField.OffsetRva,0x64);PlayerStateResult ir=idRegistration.Weapon(irc);
+            Check(ir.Sampled==0 && ir.Samples.Length==0 && ir.Detail.Contains("weapon field registration"),"ID source offset registration must match the exact getter");
+            Fixture idType=WeaponFixture();PlayerObjectResult itc=idType.Run();idType.U32(idType.Module.LoadBias+idField.Descriptor+8,idField.Bits^0x10000U);PlayerStateResult itr=idType.Weapon(itc);
+            Check(itr.Sampled==0 && itr.Samples.Length==0 && itr.Detail.Contains("weapon field type flags"),"ID field descriptor must remain UInt32");
+            Fixture idChange=WeaponFixture();PlayerObjectResult idc=idChange.Run();ulong ida=idChange.Physical(Fixture.WeaponDataObject+0x68);bool idFlip=false;
+            idChange.Memory.AfterRead=delegate(ulong p,int n){if(!idFlip && p==ida && n==4){idFlip=true;idChange.U32(Fixture.WeaponDataObject+0x68,1235);}};PlayerStateResult icr=idChange.Weapon(idc);
+            Check(icr.Sampled==0 && !icr.Samples[0].WeaponIdRaw.HasValue,"ID changes during capture discard the tentative ID");
+            Fixture idGateChange=WeaponFixture();PlayerObjectResult igc=idGateChange.Run();ulong iga=idGateChange.Physical(Fixture.WeaponDataObject+0x68);
+            idGateChange.Memory.AfterRead=delegate(ulong p,int n){if(p==iga && n==4)idGateChange.U64(Fixture.Array+0x20+0x21a65UL*8UL,Fixture.Player);};PlayerStateResult igr=idGateChange.Weapon(igc);
+            Check(igr.Sampled==0 && !igr.Samples[0].WeaponIdRaw.HasValue,"GetId gate activation during capture invalidates the snapshot");
+            Fixture idFinal=WeaponFixture();PlayerObjectResult ifc=idFinal.Run();ulong ifa=idFinal.Physical(Fixture.WeaponDataObject+0x68);
+            idFinal.Memory.AfterRead=delegate(ulong p,int n){if(p==ifa && n==4)idFinal.Put(idFinal.Module.LoadBias+0x6ee2668,new byte[]{0});};PlayerStateResult ifr=idFinal.Weapon(ifc);
+            Check(ifr.Sampled==0 && ifr.Samples.Length==0 && ifr.StopReason=="FINAL_CONTEXT_FAILED","changed final GetId code clears every weapon/ID observation");
             Check(f.Weapon(new PlayerObjectResult()).StopReason=="PREREQUISITES_UNVERIFIED","weapon observation requires exact build and roster prerequisites");
         }
     }

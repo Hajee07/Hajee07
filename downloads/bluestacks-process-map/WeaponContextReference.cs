@@ -3,6 +3,7 @@ namespace HeadBridge.Mapping {
     internal static class WeaponContextReference {
         internal const ulong WeaponTypeCell = 0xac2fbc0UL;
         internal const uint OpaqueDataRegistration = 0x81818181U;
+        internal static readonly TeamVirtual IdVirtual = new TeamVirtual(31595,14,49947256UL,0x60066379U,0x6ee2628UL);
         internal static readonly ObjectClassProfile[] Classes = {
             new ObjectClassProfile(31595,"COW.GamePlay.IOKEALMHBKN",4,36376,7778153UL,7768922UL,"d51b5800c6f7570001990000ffffffffcd6f000001990000ffffffff0000100087d40300bb310300ffffffff9d2d0000ffffffffb315000099170800346200001f0005004500000000000f0001000100000c00006c7b0002",1179648U,1144U,0U,33586028U,0,1144U,true),
             new ObjectClassProfile(32377,"COW.GamePlay.LPLOIFMCHFC",1,32463,2327261UL,7768922UL,"49ef0400c6f7570046a40000ffffffff9f64000046a40000ffffffff00001000b6ed0300395c0300ffffffffa0320000ffffffff78160000973e0800d86400002b000100040000000000250001000100000c00007a7e0002",1179648U,136U,0U,33586810U,0,104U,true),
@@ -146,6 +147,7 @@ namespace HeadBridge.Mapping {
             new StateField(32430,38,"PDIMNGEMALB",0xa8UL,0x19ebfdcUL,0xadd62d0UL,1179649U,32613,8038614UL,67366670U,45067036UL,"42155c000b8d00000eef0304"),
             new StateField(32430,70,"OMHEPNBNEKL",0x148UL,0x19ec05cUL,0xad964e0UL,2147614721U,-1,8039015UL,67366702U,45067420UL,"d3165c000c6300002eef0304"),
             new StateField(32785,18,"PIILKNEHNLB",0x98UL,0x19edd50UL,0xade1aa0UL,1179652U,31595,8086720UL,67368405U,45087856UL,"2cd15c0003990000d5f50304"),
+            new StateField(31595,20,"JAOECECKADN",0x68UL,0x19e5540UL,0xad9dd40UL,2148073478U,-1,2319980UL,67359900U,44985796UL,"d8d204009f1701009cd40304"),
         };
         internal static readonly StateMethod[] Methods = {
             new StateMethod(26996268UL,0xab2a188UL,0x6f17f74UL,"01785800507c00009b91000000000008ffffffffffffffff470300003d36030686000000ffff0000"),
@@ -154,6 +156,7 @@ namespace HeadBridge.Mapping {
             new StateMethod(27400908UL,0xab3dda8UL,0x734b8d4UL,"c6fd5b00ae7e00009f64000000000008ffffffffffffffff86020000c15d030686080000ffff0000"),
             new StateMethod(27402868UL,0xab3df30UL,0x734b930UL,"26015c00ae7e00000b63000000000008ffffffffffffffff85020000f25d030686080000ffff0000"),
             new StateMethod(27564988UL,0xab45dd8UL,0x7452a90UL,"8c825c00118000000199000000000008ffffffffffffffff7b260000c76d0306c60100002d000000"),
+            new StateMethod(26950188UL,0xab27d88UL,0x6ee2628UL,"2e0300006b7b00009b17010000000008ffffffffffffffff651a0200bd310306e60100000e000000"),
         };
         internal static readonly GameLayoutCheck[] Anchors = {
             new GameLayoutCheck("weapon_cast_type_got",0xa752800UL,0xac2fbc0UL),
@@ -170,6 +173,8 @@ namespace HeadBridge.Mapping {
             new GameLayoutCheck("CKIKAFHOBDC_220657_64",0x734b970UL,"c0035fd64125c094"),
             new GameLayoutCheck("PLLDNGKJKKF_224710_0",0x7452a90UL,"fe4fbfa9f30300aa60cf8452e1031faadf5f4f942001003660cf8452e1031faa08604f94000100b4e10313aae2031faafe4fc1a8f50e4214604e40f9fe4fc1a8"),
             new GameLayoutCheck("PLLDNGKJKKF_224710_64",0x7452ad0UL,"c0035fd6e908bc94"),
+            new GameLayoutCheck("GetId_209340_0",0x6ee2628UL,"fe4fbfa9f30300aaa04c83524000a072e1031faaf820659440010036a04c83524000a072e1031faa20216594000100b4e10313aae2031faafe4fc1a884335514"),
+            new GameLayoutCheck("GetId_209340_64",0x6ee2668UL,"606a40b9fe4fc1a8c0035fd601cad194"),
         };
         internal static readonly TeamVirtual[] Virtuals = {
             new TeamVirtual(32499,45,49995012UL,0x6006db8dU,0x7452a90UL),

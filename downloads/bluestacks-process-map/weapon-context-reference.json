@@ -2103,6 +2103,21 @@
       "token": 67368405,
       "metadata_offset": 45087856,
       "record_hex": "2cd15c0003990000d5f50304"
+    },
+    {
+      "owner": 31595,
+      "local": 20,
+      "name": "JAOECECKADN",
+      "offset": 104,
+      "registration_value": 104,
+      "offset_rva": 27153728,
+      "descriptor": 182050112,
+      "bits": 2148073478,
+      "type_index": -1,
+      "name_offset": 2319980,
+      "token": 67359900,
+      "metadata_offset": 44985796,
+      "record_hex": "d8d204009f1701009cd40304"
     }
   ],
   "methods": [
@@ -2153,6 +2168,14 @@
       "pointer_rva": 179592664,
       "metadata_offset": 27564988,
       "record_hex": "8c825c00118000000199000000000008ffffffffffffffff7b260000c76d0306c60100002d000000"
+    },
+    {
+      "index": 209340,
+      "name": "GetId",
+      "rva": 116270632,
+      "pointer_rva": 179469704,
+      "metadata_offset": 26950188,
+      "record_hex": "2e0300006b7b00009b17010000000008ffffffffffffffff651a0200bd310306e60100000e000000"
     }
   ],
   "anchors": [
@@ -2220,6 +2243,16 @@
       "name": "PLLDNGKJKKF_224710_64",
       "rva": 121973456,
       "hex": "c0035fd6e908bc94"
+    },
+    {
+      "name": "GetId_209340_0",
+      "rva": 116270632,
+      "hex": "fe4fbfa9f30300aaa04c83524000a072e1031faaf820659440010036a04c83524000a072e1031faa20216594000100b4e10313aae2031faafe4fc1a884335514"
+    },
+    {
+      "name": "GetId_209340_64",
+      "rva": 116270696,
+      "hex": "606a40b9fe4fc1a8c0035fd601cad194"
     }
   ],
   "virtual": [
@@ -2966,8 +2999,15 @@
       "rva": 121973392
     }
   ],
+  "id_virtual": {
+    "index": 31595,
+    "slot": 14,
+    "metadata_offset": 49947256,
+    "encoded": 1611031417,
+    "rva": 116270632
+  },
   "weapon_type_cell": 180550592,
   "weapon_data_offset": 152,
   "opaque_data_registration": 2172748161,
-  "scope": "Original local GetActiveWeapon selection and supported typed weapon-data reference. No ammo, ballistics, firing readiness, damage processing, LOS or aim assertion."
+  "scope": "Original local GetActiveWeapon selection, typed weapon-data reference and UInt32 GetId. No weapon-name mapping, ammo, ballistics, firing readiness, damage processing, LOS or aim assertion."
 }

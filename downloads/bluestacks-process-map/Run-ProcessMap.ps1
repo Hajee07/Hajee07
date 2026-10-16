@@ -103,7 +103,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=28 ReadOnly=1'
+Record 'ProcessMapVersion=29 ReadOnly=1'
 Record "PlayerStateMode=$($ProbePlayerState.IsPresent)"
 Record "TeamPolicyMode=$($ProbeTeamPolicy.IsPresent)"
 Record "CombatStateMode=$($ProbeCombatState.IsPresent) RequestedRosterIndex=$CombatRosterIndex"
@@ -356,6 +356,8 @@ try {
                 Record "WeaponContext=$($sample.WeaponStatus) ObservationStatus=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) IsLocal=$($sample.IsLocal) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Observations=$($sample.Observations)"
                 Record "WeaponSelection Path=$($sample.WeaponSelectionPath) Weapon=$weaponPointer Class=$($sample.WeaponClass) AlternateHand=$alternate"
                 Record "WeaponDataReference=$dataPointer Class=$($sample.WeaponDataClass) Registration=$($sample.WeaponDataRegistration) GameMethodCalls=NONE"
+                $weaponId = if ($null -eq $sample.WeaponIdRaw) { 'UNKNOWN' } else { [string]$sample.WeaponIdRaw }
+                Record "WeaponDataId=$weaponId Status=$($sample.WeaponIdStatus) DataType=UInt32 NameMapping=UNVERIFIED GameMethodCalls=NONE"
             } else {
                 Record "WeaponContext=$($sample.Status) RosterIndex=$($sample.RosterIndex) Class=$($sample.Class) Detail=$($sample.Detail)"
                 if ($sample.Status -ceq 'FAIL') { $failed = $true }

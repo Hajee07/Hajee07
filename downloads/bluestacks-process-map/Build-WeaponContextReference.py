@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate exact-build active-weapon selection and typed weapon-data references."""
+"""Generate exact-build active-weapon selection and typed weapon-data references and original UInt32 GetId."""
 import argparse, importlib.util, json, struct
 from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('elf');p.add_argument('metadata');p.add_argument('output_directory');a=p.parse_args()
@@ -25,12 +25,12 @@ for index,t in enumerate(m.types):
 load=struct.unpack('<I',e.bytes(0x7452ac8,4))[0];assert load&0xffc003ff==0xf9400260
 resolved=((load>>10)&4095)*8;assert resolved==0x98
 fields=[]
-for owner,local,name,offset in [(31824,278,'GGBNFECEPJG',0x608),(31824,319,'BKEPAKCAGNJ',0x740),(32430,37,'LMFNCLKHIIO',0xa0),(32430,38,'PDIMNGEMALB',0xa8),(32430,70,'OMHEPNBNEKL',0x148),(32785,18,'PIILKNEHNLB',resolved)]:
+for owner,local,name,offset in [(31824,278,'GGBNFECEPJG',0x608),(31824,319,'BKEPAKCAGNJ',0x740),(32430,37,'LMFNCLKHIIO',0xa0),(32430,38,'PDIMNGEMALB',0xa8),(32430,70,'OMHEPNBNEKL',0x148),(32785,18,'PIILKNEHNLB',resolved),(31595,20,'JAOECECKADN',0x68)]:
  f=m.fields[m.types[owner][8]+local];slot=e.pointer(0xa8cfec0+owner*8)+local*4;desc,data,bits=ti(f[1]);raw=struct.unpack('<I',e.bytes(slot,4))[0]
  assert m.string(f[0])==name and raw==(0x81818181 if owner==32785 else offset)
  fields.append(dict(owner=owner,local=local,name=name,offset=offset,registration_value=raw,offset_rva=slot,descriptor=desc,bits=bits,type_index=data if bits>>16&255 in (17,18) else -1,name_offset=m.header[6]+f[0],token=f[2],metadata_offset=m.header[24]+(m.types[owner][8]+local)*12,record_hex=struct.pack('<iiI',*f).hex()))
 methods=[];anchors=[]
-for index,name,address,length in [(210492,'GetActiveWeapon',0x6f17f74,0x64),(210483,'GetWeaponOnHand',0x6f18290,0xc0),(221309,'DEIPJDIGKIP',0x7399188,0x4c),(220608,'PDAGHPAOBLP',0x734b8d4,0x5c),(220657,'CKIKAFHOBDC',0x734b930,0x48),(224710,'PLLDNGKJKKF',0x7452a90,0x48)]:
+for index,name,address,length in [(210492,'GetActiveWeapon',0x6f17f74,0x64),(210483,'GetWeaponOnHand',0x6f18290,0xc0),(221309,'DEIPJDIGKIP',0x7399188,0x4c),(220608,'PDAGHPAOBLP',0x734b8d4,0x5c),(220657,'CKIKAFHOBDC',0x734b930,0x48),(224710,'PLLDNGKJKKF',0x7452a90,0x48),(209340,'GetId',0x6ee2628,0x50)]:
  q=m.methods[index];slot=0xa98efa8+((q[7]&0xffffff)-1)*8;assert m.string(q[0])==name and e.pointer(slot)==address
  methods.append(dict(index=index,name=name,rva=address,pointer_rva=slot,metadata_offset=m.header[12]+index*40,record_hex=struct.pack('<8i4H',*q).hex()))
  for off in range(0,length,64):anchors.append(dict(name=name+'_'+str(index)+'_'+str(off),rva=address+off,hex=e.bytes(address+off,min(64,length-off)).hex()))
@@ -40,10 +40,17 @@ for c in classes:
  if not c['family']&2:continue
  t=m.types[c['index']];assert t[21]>45;pos=m.header[36]+(t[14]+45)*4;enc=struct.unpack_from('<I',m.data,pos)[0];assert enc>>29==3
  q=m.methods[(enc>>1)&0xfffffff];virtual.append(dict(index=c['index'],slot=45,metadata_offset=pos,encoded=enc,rva=e.pointer(0xa98efa8+((q[7]&0xffffff)-1)*8)))
-report=dict(elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,classes=classes,fields=fields,methods=methods,anchors=anchors,virtual=virtual,weapon_type_cell=cell,weapon_data_offset=resolved,opaque_data_registration=0x81818181,
- scope='Original local GetActiveWeapon selection and supported typed weapon-data reference. No ammo, ballistics, firing readiness, damage processing, LOS or aim assertion.')
+# GetId is a UInt32 virtual on the exact supported data class; no derived data class is accepted.
+id_method=m.methods[209340];assert id_method[1]==31595 and id_method[10]==14 and ti(id_method[2])[2]>>16&255==9
+id_field=fields[-1];assert id_field['owner']==31595 and id_field['bits']>>16&255==9
+assert struct.unpack('<I',e.bytes(0x6ee2668,4))[0]==0xb9406a60
+id_type=m.types[31595];id_pos=m.header[36]+(id_type[14]+14)*4;id_encoded=struct.unpack_from('<I',m.data,id_pos)[0]
+assert id_encoded>>29==3 and (id_encoded>>1)&0xfffffff==209340
+id_virtual=dict(index=31595,slot=14,metadata_offset=id_pos,encoded=id_encoded,rva=0x6ee2628)
+report=dict(elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,classes=classes,fields=fields,methods=methods,anchors=anchors,virtual=virtual,id_virtual=id_virtual,weapon_type_cell=cell,weapon_data_offset=resolved,opaque_data_registration=0x81818181,
+ scope='Original local GetActiveWeapon selection, typed weapon-data reference and UInt32 GetId. No weapon-name mapping, ammo, ballistics, firing readiness, damage processing, LOS or aim assertion.')
 out=Path(a.output_directory);out.mkdir(parents=True,exist_ok=True);(out/'weapon-context-reference.json').write_text(json.dumps(report,indent=2)+'\n')
-lines=['// Generated from exact SHA-256-verified ELF/metadata inputs.','namespace HeadBridge.Mapping {','    internal static class WeaponContextReference {','        internal const ulong WeaponTypeCell = 0x%xUL;'%cell,'        internal const uint OpaqueDataRegistration = 0x81818181U;','        internal static readonly ObjectClassProfile[] Classes = {']
+lines=['// Generated from exact SHA-256-verified ELF/metadata inputs.','namespace HeadBridge.Mapping {','    internal static class WeaponContextReference {','        internal const ulong WeaponTypeCell = 0x%xUL;'%cell,'        internal const uint OpaqueDataRegistration = 0x81818181U;','        internal static readonly TeamVirtual IdVirtual = new TeamVirtual(31595,14,%dUL,0x%xU,0x6ee2628UL);'%(id_pos,id_encoded),'        internal static readonly ObjectClassProfile[] Classes = {']
 for c in classes:lines.append('            new ObjectClassProfile(%d,%s,%d,%d,%dUL,%dUL,%s,%dU,%dU,%dU,%dU,0,%dU,%s),'%(c['index'],json.dumps(c['name']),c['family'],c['parent'],c['name_offset'],c['namespace_offset'],json.dumps(c['record_hex']),c['bits'],c['instance_size'],c['static_size'],c['token'],c['minimum'],str(c['exact']).lower()))
 lines+=['        };','        internal static readonly StateField[] Fields = {']
 for f in fields:lines.append('            new StateField(%d,%d,%s,0x%xUL,0x%xUL,0x%xUL,%dU,%d,%dUL,%dU,%dUL,%s),'%(f['owner'],f['local'],json.dumps(f['name']),f['offset'],f['offset_rva'],f['descriptor'],f['bits'],f['type_index'],f['name_offset'],f['token'],f['metadata_offset'],json.dumps(f['record_hex'])))

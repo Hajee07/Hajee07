@@ -1,10 +1,14 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V28**. `-ProbeWeaponContext` samples the verified local
-player's original active/hand weapon selection and supported typed weapon-data
-reference. 496 offline checks pass; live V28 validation is pending. Ammo,
+Current process probe: **V29**. `-ProbeWeaponContext` adds the supported data
+record's original UInt32 GetId to verified local weapon selection/reference.
+509 offline checks pass; live ID validation is pending. Weapon names, ammo,
 ballistics, firing readiness, LOS and aiming remain unverified.
-See [weapon-context evidence](bluestacks-process-map/WEAPON-CONTEXT-EVIDENCE.md).
+See [weapon evidence](bluestacks-process-map/WEAPON-CONTEXT-EVIDENCE.md).
+
+V28 weapon selection/reference passed live through the A0 hand path, within
+budget and with all cleanup passing. Local-head samples were discarded for
+motion; no head coordinate or ID was accepted in that run.
 
 V27's match-policy mode passed live: mode 23, original argument-independent true
 predicate, both selected entries revalidated, within budget and all cleanup PASS.

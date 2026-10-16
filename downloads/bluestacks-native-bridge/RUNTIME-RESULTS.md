@@ -691,3 +691,26 @@ Optional -ProbeWeaponContext reproduces original active/hand selection and a
 supported typed weapon-data reference for one verified local member. 496 offline
 checks pass; baseline additional reads=4035. Existing plugin and limits remain
 unchanged. Live validation pending; see ../bluestacks-process-map/WEAPON-CONTEXT-EVIDENCE.md.
+
+## Accepted V28 live weapon-context report
+
+The user's report (host 11784 / guest 7882) passed module identity and both
+80-check layout comparisons. All 13 active roster objects (local plus 12 other
+players) were verified. WeaponContext accepted ORIGINAL_WEAPON_DATA_REFERENCE_SAMPLED
+through ON_HAND_CONTROLLER_A0, class COW.GamePlay.HBIBDMMOOOK, AlternateHand=False.
+The data class was COW.GamePlay.IOKEALMHBKN with RESOLVED_OFFSET registration.
+Selected local membership revalidated. Counters changed since roster capture,
+but not during this weapon capture; 164 observations were recorded.
+Phase reads=4430, total=26286; plugin unload, handler cleanup and session release
+all passed. No game method was called or memory written.
+
+All three local-head samples were discarded for TRS motion (NOT_READY_MOTION).
+The accepted weapon reference does not imply an accepted head coordinate in
+this run. V28 did not read a weapon-data ID, ammo, ballistics or firing readiness.
+
+## V29 local weapon-data ID probe
+
+-ProbeWeaponContext now checks the supported data record's original UInt32
+GetId, including actual slot-14 dispatch, hotfix 0x21a65 and runtime +0x68 field.
+509 offline checks pass. Live V29 ID validation pending. Plugin/global limits
+unchanged; no method invocation or writes. No weapon-name/readiness inference.
