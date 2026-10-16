@@ -18,7 +18,7 @@
   "roster_source_sha256": "39f56f1ba54b9285f85c7a37be6f2296a079deb99bea0f5c1461a3446d9c0f98",
   "roster_reference_sha256": "927e3ce5f5264c4b32d1cfdfd2071f8fb8f897ca368f8f67ad59d2fbf4cd4c5b",
   "other_head_source_sha256": "4858a35800cdd9cbaaeef1c5d34d2018f843657b5363e5a4fee7e6aaaa42feda",
-  "state_source_sha256": "aa26b8689214309a6f2435682a2c92ce7da64b6d854ba0e83cfcc221379b7680",
+  "state_source_sha256": "97b4cde59724a1c48f564b2301c640fd9b48216406ef63ee9441b90afebeff50",
   "state_reference_sha256": "f7396a43e145e0f2dfb0111c7e41183b8bf17f65213ed3e0c0c0635f59875f32",
   "team_source_sha256": "43e107122a8f46f1c32373ecbe06f90e556af42288468f7f3ac83e487b80d588",
   "team_reference_sha256": "b4c087b65ca01f87eae7a137f2e8064769bb690e7a462a4dfa834dbc8b1cbb81",
@@ -34,6 +34,8 @@
   "firing_reference_sha256": "6f8c6e95a50817b9e1bc1ac1cb3d35cf95cf4759af77751f442487375adc183c",
   "ammo_source_sha256": "9bb5f44f57d6499c2b0897ce9b732db464e0915ae23b9f1f30da568da7fe2a7d",
   "ammo_reference_sha256": "742089ac8b748c23f03b9981f98bc7b30a3b68a9afa0f3fab3f6d4f0b7972750",
-  "ammo_comparison_sha256": "34144f8403d10a2931e33601f289f523d310d4df24cdbbf2da9027bab0811092",
-  "runner_sha256": "e6410e7ed32ede934029f4e6a2d531d252f63ba757016621d109e4f02a11a114"
+  "ammo_comparison_sha256": "1cd8584eb77b9dc17111bf94704dbedcd08a6b19834f05bf1d71202bb84f680b",
+  "runner_sha256": "9cc03f56ffb00074f5fb8ecb7f4beba8be00a3254e5fef7e029710fa660a97d8",
+  "aim_state_source_sha256": "caaab379e01385086a134f7f87dafa44dfa40b87170f43e6075126c8c7fcfe28",
+  "aim_state_reference_sha256": "9c8aea824bb0b44ff5132c233720297e85419221bb5efff2febaf0e2dc6a1226"
 }

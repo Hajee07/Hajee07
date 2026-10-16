@@ -62,3 +62,17 @@ positive correlation, HUD mismatch, changed context, shot/reload mismatches and
 invalid/incomplete HUD input. All unknown semantic statuses remain in a matching
 result. Release checks parse all PowerShell files and exercise the full suite
 from the extracted package. Live interactive execution remains pending.
+
+## Accepted V34 manual HUD correlations
+
+Two subsequent complete experiments returned
+CONSISTENT_WITH_REPORTED_MAGAZINE_COUNTER / MANUAL_HUD_CORRELATION_ONLY.
+The first matched reported HUD and raw values 2 -> 1 -> 2; the second matched
+7 -> 6 -> 7. Both had ShotDelta=1 and ReloadDelta=1. Each experiment preserved
+its own player/weapon/process/field context; field 105 NJEENAEMFAO and resolved
+registration were verified, with all cleanup passing for all captures.
+The weapon addresses differed across experiments. Model names were not recorded,
+so these reports do not prove that two different weapon models were tested.
+These are user-reported HUD/action correlations, not automatic observation of
+shots or proof of universal magazine/reserve, readiness, LOS or aiming.
+Earlier HUD-mismatch experiments remain inconclusive; they are not overwritten.

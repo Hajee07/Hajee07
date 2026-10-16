@@ -661,6 +661,7 @@ namespace HeadBridge.Mapping.Tests
             RunWeaponFiringTests();
             RunWeaponAmmoTests();
             RunNativeJobRetryTests();
+            RunAimStateTests();
             Console.WriteLine("OBJECT_TOTAL=" + count + " (synthetic exact-build objects, native head sample, match dictionary and state)");
         }
     }

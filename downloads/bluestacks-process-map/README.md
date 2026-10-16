@@ -7,13 +7,19 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 34. Manual HUD/counter correlation workflow.**
-Run `Run-AmmoCounterCheck.ps1` for baseline, one manually fired shot and manual
-reload captures. It compares accepted raw counters with three reported HUD
-values and rejects changed contexts. 659 offline checks pass; live interactive
-validation pending. A matching pattern is empirical correlation only, not full
-readiness or universal magazine semantics.
-See [comparison instructions](AMMO-COMPARISON-EVIDENCE.md).
+**Current version: 35. Read-only original local aim-rotation snapshot.**
+Run `-ProbeAimState` to verify Player.GetAimRotation's original Quaternion value
+at +0x614, including runtime field identity and finite/unit checks. This is a
+separate optional mode; it does not read or substitute m_CurrentAimRotation.
+684 offline checks pass; live V35 validation pending. Camera convention, target
+direction, LOS and aim integration remain unverified.
+See [aim-state evidence](AIM-STATE-EVIDENCE.md).
+
+**V34 manual comparison produced two matching experiments:** reported HUD and
+counter values 2->1->2 and 7->6->7, with stable per-experiment context and cleanup.
+Weapon model names were not captured. This remains empirical HUD correlation,
+not universal magazine/readiness evidence. `Run-AmmoCounterCheck.ps1` remains
+available. See [comparison evidence](AMMO-COMPARISON-EVIDENCE.md).
 
 **V33 stable path passed live:** head sampled on attempt one, all 16 roster
 objects verified, raw counter 2 / field 105 accepted, phase reads=4284, total=24208,

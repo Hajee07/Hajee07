@@ -1,10 +1,14 @@
 # Standalone head-direction DLL core
 
-Current package: **V34**. `Run-AmmoCounterCheck.ps1` collects three manually
-staged HUD/counter observations (baseline, one shot, reload), checks context and
-reports empirical correlation or INCONCLUSIVE. 659 offline checks pass; live
-interactive validation pending. No gameplay controls are automated.
-See [comparison instructions](bluestacks-process-map/AMMO-COMPARISON-EVIDENCE.md).
+Current package: **V35**. `-ProbeAimState` reads the original local GetAimRotation
+Quaternion with exact getter, field/type and finite/unit checks. 684 offline
+checks pass; live V35 validation pending. Camera convention, target direction,
+LOS and aiming remain unverified.
+See [aim-state evidence](bluestacks-process-map/AIM-STATE-EVIDENCE.md).
+
+V34 comparison matched two per-experiment HUD/counter patterns (2->1->2,
+7->6->7). Model names were not captured; evidence remains manual HUD correlation.
+The comparison workflow remains available in V35.
 
 V33 stable head/counter path passed live: 16 roster objects, counter 2 / field 105,
 all cleanup PASS. No job transition was observed; retries remain offline-tested.

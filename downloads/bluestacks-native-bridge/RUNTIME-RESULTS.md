@@ -829,3 +829,24 @@ baseline/one-shot/reload actions and compares them to reported HUD values.
 Context changes or unmatched deltas are inconclusive. 659 offline checks pass;
 interactive Windows validation pending. No automatic controls, game calls or
 writes; matching output remains manual HUD correlation, not readiness/aim proof.
+
+## Accepted V34 manual HUD correlations
+
+Two subsequent complete experiments returned
+CONSISTENT_WITH_REPORTED_MAGAZINE_COUNTER / MANUAL_HUD_CORRELATION_ONLY.
+The first matched reported HUD and raw values 2 -> 1 -> 2; the second matched
+7 -> 6 -> 7. Both had ShotDelta=1 and ReloadDelta=1. Each experiment preserved
+its own player/weapon/process/field context; field 105 NJEENAEMFAO and resolved
+registration were verified, with all cleanup passing for all captures.
+The weapon addresses differed across experiments. Model names were not recorded,
+so these reports do not prove that two different weapon models were tested.
+These are user-reported HUD/action correlations, not automatic observation of
+shots or proof of universal magazine/reserve, readiness, LOS or aiming.
+Earlier HUD-mismatch experiments remain inconclusive; they are not overwritten.
+
+## V35 original local aim-rotation probe
+
+-ProbeAimState verifies the original GetAimRotation +0x614 Quaternion without
+substituting m_CurrentAimRotation, writing aim or invoking game methods. 684
+offline checks pass; fixture reads=3237. Live validation pending. All existing
+limits/plugin/modes remain available. No camera/target/LOS/readiness claim.
