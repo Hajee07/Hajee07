@@ -7,12 +7,18 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 33. Bounded retry for native hierarchy-job changes.**
-Rerun `-ProbeWeaponAmmo`. A job-only transition discards the native attempt and
-can take a fresh attempt within the existing shared three-attempt/read/time
-bounds. All non-job identity checks still run and take hard-failure precedence.
-635 offline checks pass; live V33 validation pending.
-See [job retry evidence](HEAD-JOB-RETRY-EVIDENCE.md).
+**Current version: 34. Manual HUD/counter correlation workflow.**
+Run `Run-AmmoCounterCheck.ps1` for baseline, one manually fired shot and manual
+reload captures. It compares accepted raw counters with three reported HUD
+values and rejects changed contexts. 659 offline checks pass; live interactive
+validation pending. A matching pattern is empirical correlation only, not full
+readiness or universal magazine semantics.
+See [comparison instructions](AMMO-COMPARISON-EVIDENCE.md).
+
+**V33 stable path passed live:** head sampled on attempt one, all 16 roster
+objects verified, raw counter 2 / field 105 accepted, phase reads=4284, total=24208,
+all cleanup PASS. No job transition occurred, so the job retry branch remains
+offline-validated only. See [retry evidence](HEAD-JOB-RETRY-EVIDENCE.md).
 
 **V32 mixed live result:** the counter phase accepted value 2, runtime field 105
 NJEENAEMFAO, selected membership and all cleanup PASS (phase 4284, total 26986).

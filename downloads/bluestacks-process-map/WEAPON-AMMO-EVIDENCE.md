@@ -89,3 +89,15 @@ HeadWorldStatus=FAIL and no head coordinate was accepted. This report is not an
 overall PASS. V33 changes the bounded retry/status handling for job-only changes;
 it does not retroactively accept the rejected pose. Counter 2 remains a generic
 original weapon counter, not a proven magazine/reserve or readiness value.
+
+## Accepted V33 stable-path live report
+
+Host 11784 / guest 9214 passed module identity and both 80-check layout passes.
+Local head sampling passed on attempt one. All 16 active roster objects were
+verified on attempt one. The A0 counter phase accepted raw Int32 value 2 and
+runtime field 105 NJEENAEMFAO, RESOLVED_OFFSET. Selected membership and counters
+were stable. Phase observations=154, additional reads=4284, total=24208. All
+cleanup passed, no game-method calls or writes occurred.
+There was no job transition in this run, so the new retry branch remains
+validated offline only. This confirms the stable head/counter path, not an
+atomic cross-phase state or magazine/reserve/readiness/aim integration.

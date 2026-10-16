@@ -809,3 +809,23 @@ been checked. A job-only transition discards the attempt; three shared attempts
 and all call/time ceilings remain unchanged. Persistent changes are NOT_READY;
 hard identity and transport errors still fail immediately. No coordinates from
 discarded attempts are accepted. 635 offline checks pass; live validation pending.
+
+## Accepted V33 stable-path live report
+
+Host 11784 / guest 9214 passed module identity and both 80-check layout passes.
+Local head sampling passed on attempt one. All 16 active roster objects were
+verified on attempt one. The A0 counter phase accepted raw Int32 value 2 and
+runtime field 105 NJEENAEMFAO, RESOLVED_OFFSET. Selected membership and counters
+were stable. Phase observations=154, additional reads=4284, total=24208. All
+cleanup passed, no game-method calls or writes occurred.
+There was no job transition in this run, so the new retry branch remains
+validated offline only. This confirms the stable head/counter path, not an
+atomic cross-phase state or magazine/reserve/readiness/aim integration.
+
+## V34 manual comparison wrapper
+
+The new wrapper collects three read-only ammo reports after manually staged
+baseline/one-shot/reload actions and compares them to reported HUD values.
+Context changes or unmatched deltas are inconclusive. 659 offline checks pass;
+interactive Windows validation pending. No automatic controls, game calls or
+writes; matching output remains manual HUD correlation, not readiness/aim proof.

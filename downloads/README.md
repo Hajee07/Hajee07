@@ -1,9 +1,13 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V33**. Native job-only transitions discard the attempt
-and use the existing bounded fresh-attempt path; other identity failures remain
-hard failures. 635 offline checks pass; live V33 validation pending.
-Rerun `-ProbeWeaponAmmo`. See [retry evidence](bluestacks-process-map/HEAD-JOB-RETRY-EVIDENCE.md).
+Current package: **V34**. `Run-AmmoCounterCheck.ps1` collects three manually
+staged HUD/counter observations (baseline, one shot, reload), checks context and
+reports empirical correlation or INCONCLUSIVE. 659 offline checks pass; live
+interactive validation pending. No gameplay controls are automated.
+See [comparison instructions](bluestacks-process-map/AMMO-COMPARISON-EVIDENCE.md).
+
+V33 stable head/counter path passed live: 16 roster objects, counter 2 / field 105,
+all cleanup PASS. No job transition was observed; retries remain offline-tested.
 
 V32 accepted counter 2 / runtime field 105 with stable membership and cleanup,
 but rejected the head sample after a changed job handle. It was a mixed result,

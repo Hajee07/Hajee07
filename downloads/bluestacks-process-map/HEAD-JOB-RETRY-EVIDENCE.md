@@ -59,3 +59,15 @@ counter phases are sequential observations, not an atomic game snapshot.
 Inspect NativeHeadSampleJobChange, LocalHeadWorldPosition, SelectedWeaponAmmoCounter,
 WeaponAmmoField, cleanup statuses and ResultFile. The earlier counter success
 does not establish magazine/reserve, full readiness, LOS or aiming.
+
+## Accepted V33 stable-path live report
+
+Host 11784 / guest 9214 passed module identity and both 80-check layout passes.
+Local head sampling passed on attempt one. All 16 active roster objects were
+verified on attempt one. The A0 counter phase accepted raw Int32 value 2 and
+runtime field 105 NJEENAEMFAO, RESOLVED_OFFSET. Selected membership and counters
+were stable. Phase observations=154, additional reads=4284, total=24208. All
+cleanup passed, no game-method calls or writes occurred.
+There was no job transition in this run, so the new retry branch remains
+validated offline only. This confirms the stable head/counter path, not an
+atomic cross-phase state or magazine/reserve/readiness/aim integration.

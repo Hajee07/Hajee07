@@ -8,3 +8,5 @@ Add-Type @options
 [HeadBridge.Mapping.Tests.ModuleChecks]::Run()
 [HeadBridge.Mapping.Tests.GameLayoutTests]::Run()
 [HeadBridge.Mapping.Tests.PlayerObjectTests]::Run()
+
+& (Join-Path $PSScriptRoot 'Test-AmmoCounterCheck.ps1')
