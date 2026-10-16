@@ -16,7 +16,7 @@ function Read-AimNumber {
 }
 function ConvertFrom-AimBasisReport {
     param([Parameter(Mandatory=$true)][AllowEmptyString()][string[]]$Lines)
-    $version=Match-AimReportLine $Lines 'ProcessMapVersion' '^ProcessMapVersion=(36|37|38) ReadOnly=1$'
+    $version=Match-AimReportLine $Lines 'ProcessMapVersion' '^ProcessMapVersion=(36|37|38|39) ReadOnly=1$'
     $hostInfo=Match-AimReportLine $Lines 'Preflight' '^Preflight=PASS Machine=(\S+) HostPID=([1-9][0-9]*) VmmDigest=MATCH$'
     $deviceInfo=Match-AimReportLine $Lines 'SelectedDevice' '^SelectedDevice=(\S+) State=device$'
     $gameInfo=Match-AimReportLine $Lines 'GameIdentity' '^GameIdentity=PASS GuestPID=([1-9][0-9]*) Name=(?:com)?\.dts\.freefireth$'
@@ -79,5 +79,35 @@ function Compare-AimBasisSamples {
     [pscustomobject]@{ Status=$status; Evidence='MANUAL_CAMERA_TURN_CORRELATION_ONLY'; Actions=@('USER_REPORTED_BASELINE','USER_REPORTED_RIGHT_TURN','USER_REPORTED_UP_TURN_FROM_RIGHT_CAPTURE')
         CapturesWithRosterCounterChanges=@($Samples | Where-Object { $_.CountersChangedSinceRoster -or $_.CountersChangedDuringCapture }).Count; MembershipScope='SELECTED_LOCAL_PLAYER_ONLY'
         RightYawDelta=$rightYaw; RightElevationDrift=$rightElevation; UpYawDrift=$upYaw; UpElevationDelta=$upElevation; Samples=$Samples
+        CameraConvention='UNVERIFIED'; ShotDirection='UNVERIFIED'; LineOfSight='UNVERIFIED'; AimWrites='NONE'; AimIntegration='INCOMPLETE' }
+}
+function Compare-CameraYawSamples {
+    param([Parameter(Mandatory=$true)][object[]]$Samples)
+    if ($Samples.Count -ne 4) { throw 'Four ordered captures are required: baseline, right, restored baseline, left.' }
+    $status='REPORTED_OPPOSITE_YAW_SIGNS_OBSERVED';$sign='UNVERIFIED'
+    foreach ($key in @('Version','Machine','HostPid','Device','GuestPid','BuildId','LoadBias','Player','Match','CurrentGame')) {
+        foreach ($i in 1..3) { if ([string]$Samples[0].$key -cne [string]$Samples[$i].$key) { $status='INCONCLUSIVE_CONTEXT_CHANGED' } }
+    }
+    $right=Get-AimYawDelta $Samples[0].Yaw $Samples[1].Yaw
+    $restore=Get-AimYawDelta $Samples[0].Yaw $Samples[2].Yaw
+    $left=Get-AimYawDelta $Samples[2].Yaw $Samples[3].Yaw
+    $rightDrift=$Samples[1].Elevation-$Samples[0].Elevation
+    $restoreDrift=$Samples[2].Elevation-$Samples[0].Elevation
+    $leftDrift=$Samples[3].Elevation-$Samples[2].Elevation
+    if ($status -eq 'REPORTED_OPPOSITE_YAW_SIGNS_OBSERVED') {
+        if (@($Samples | Where-Object { [Math]::Abs($_.Elevation) -gt 70 }).Count) { $status='INCONCLUSIVE_NEAR_VERTICAL' }
+        elseif ([Math]::Abs($restore) -gt 5 -or [Math]::Abs($restoreDrift) -gt 5) { $status='INCONCLUSIVE_BASELINE_NOT_RESTORED' }
+        elseif ([Math]::Abs($right) -lt 3 -or [Math]::Abs($right) -gt 90 -or [Math]::Abs($left) -lt 3 -or [Math]::Abs($left) -gt 90) { $status='INCONCLUSIVE_TURN_SIZE' }
+        elseif ([Math]::Abs($rightDrift) -gt 5 -or [Math]::Abs($leftDrift) -gt 5) { $status='INCONCLUSIVE_VERTICAL_DRIFT' }
+        elseif ($right*$left -ge 0) { $status='INCONCLUSIVE_TURN_SIGNS_NOT_OPPOSITE' }
+        elseif ($right -lt 0) { $sign='REPORTED_RIGHT_NEGATIVE_LEFT_POSITIVE' }
+        else { $sign='REPORTED_RIGHT_POSITIVE_LEFT_NEGATIVE' }
+    }
+    [pscustomobject]@{ Status=$status; ObservedYawSign=$sign; Evidence='MANUAL_CAMERA_TURN_CORRELATION_ONLY'
+        Actions=@('USER_REPORTED_LANDMARK_BASELINE','USER_REPORTED_RIGHT_TURN','USER_REPORTED_RESTORED_LANDMARK_BASELINE','USER_REPORTED_LEFT_TURN')
+        RightYawDelta=$right; RestoredBaselineYawError=$restore; LeftYawDelta=$left
+        RightElevationDrift=$rightDrift; RestoredBaselineElevationError=$restoreDrift; LeftElevationDrift=$leftDrift
+        CapturesWithRosterCounterChanges=@($Samples | Where-Object { $_.CountersChangedSinceRoster -or $_.CountersChangedDuringCapture }).Count
+        MembershipScope='SELECTED_LOCAL_PLAYER_ONLY'; Samples=$Samples; VectorFlipped=$false
         CameraConvention='UNVERIFIED'; ShotDirection='UNVERIFIED'; LineOfSight='UNVERIFIED'; AimWrites='NONE'; AimIntegration='INCOMPLETE' }
 }

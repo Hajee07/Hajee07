@@ -7,16 +7,14 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 38. Selected-local camera comparison fix.**
-`Run-AimBasisCheck.ps1` guides baseline/right/up captures using -ProbeAimState.
-It compares the source-verified basis changes with user-reported camera actions,
-with strict same-context, selected-local snapshot and cleanup checks. Global
-roster counter changes are audited rather than mistaken for local-player changes.
-750 offline checks pass.
-V36 live basis passed; V38 live experiment pending. Matching turns establish
-manual correlation only; camera/shot convention and aiming remain unverified.
-See [camera comparison evidence](AIM-BASIS-COMPARISON-EVIDENCE.md) and
-[aim-state evidence](AIM-STATE-EVIDENCE.md).
+**Current version: 39. Manual right/left yaw-sign experiment.**
+`Run-CameraYawCheck.ps1` guides baseline/right/restored-baseline/left captures.
+Both observed sign patterns are supported; source vectors are not flipped.
+778 offline checks pass; live V39 experiment pending. The full V38 experiment
+completed but was inconclusive for its positive-right hypothesis. V39 requires
+a counterturn and baseline restoration; camera/shot convention remains unverified.
+See [yaw-sign evidence](CAMERA-YAW-COMPARISON-EVIDENCE.md). The prior three-stage
+[comparison](AIM-BASIS-COMPARISON-EVIDENCE.md) retains its own criteria/results.
 
 **V34 manual comparison produced two matching experiments:** reported HUD and
 counter values 2->1->2 and 7->6->7, with stable per-experiment context and cleanup.

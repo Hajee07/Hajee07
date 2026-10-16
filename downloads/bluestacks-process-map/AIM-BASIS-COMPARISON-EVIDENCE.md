@@ -98,3 +98,20 @@ V38 compatibility. The extracted package, PowerShell syntax/ten modes, source/
 helper/plugin hashes and unchanged C# 5 suite pass. Matching turns still mean
 manual correlation only; camera/shot convention, LOS and aim integration remain
 unverified.
+
+## V38 complete manual three-capture experiment
+
+All three uploaded reports passed source/runtime identity, local getter/basis,
+selected local membership and cleanup. Machine/process/game/match/player context
+agreed. Physical reads: 26559, 24222, 23905; one capture had global roster counter
+changes, audited with selected-local proof. Independent offline parsing reproduced
+INCONCLUSIVE_TURN_DIRECTION_OR_SIZE. Reported-right yaw delta=-29.3161035972952,
+elevation drift=-0.637537664633102; reported-up yaw drift=0.122427890369877,
+elevation delta=11.3233406968309. V38 expected positive right yaw, so this does
+not pass that hypothesis. It does not establish that the user moved incorrectly,
+or that the actual game camera/shot convention has the opposite sign.
+The V38 result is retained, not rewritten or relabeled as success.
+
+V39 adds a separate four-stage yaw-sign experiment; see
+[sign evidence](CAMERA-YAW-COMPARISON-EVIDENCE.md). The older positive-right
+three-stage comparison retains its original acceptance rule and result.
