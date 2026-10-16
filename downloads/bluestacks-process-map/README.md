@@ -7,13 +7,14 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 36. Read-only Quaternion positive-Z basis.**
-`-ProbeAimState` retains the verified original local Quaternion and additionally
-calculates q * (0,0,1) using source-verified Unity float math. Full multiply code,
-CoreModule registration and metadata checks run initially/finally. V35 live
-rotation passed; V36 live validation pending. 700 offline checks pass.
-Camera/shot convention, target direction, LOS and aim integration remain unverified.
-See [aim-state evidence](AIM-STATE-EVIDENCE.md).
+**Current version: 37. Manual camera-turn comparison.**
+`Run-AimBasisCheck.ps1` guides baseline/right/up captures using -ProbeAimState.
+It compares the source-verified basis changes with user-reported camera actions,
+with strict same-context, snapshot and cleanup checks. 742 offline checks pass.
+V36 live basis passed; V37 live experiment pending. Matching turns establish
+manual correlation only; camera/shot convention and aiming remain unverified.
+See [camera comparison evidence](AIM-BASIS-COMPARISON-EVIDENCE.md) and
+[aim-state evidence](AIM-STATE-EVIDENCE.md).
 
 **V34 manual comparison produced two matching experiments:** reported HUD and
 counter values 2->1->2 and 7->6->7, with stable per-experiment context and cleanup.

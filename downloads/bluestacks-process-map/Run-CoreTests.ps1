@@ -10,3 +10,5 @@ Add-Type @options
 [HeadBridge.Mapping.Tests.PlayerObjectTests]::Run()
 
 & (Join-Path $PSScriptRoot 'Test-AmmoCounterCheck.ps1')
+
+& (Join-Path $PSScriptRoot 'Test-AimBasisCheck.ps1')

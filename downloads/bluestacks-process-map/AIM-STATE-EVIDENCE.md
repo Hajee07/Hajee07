@@ -102,3 +102,17 @@ Fixture phase cost is 3347 reads; limits remain 6000 additional / 1500 final
 reserve, 30000 global / 120 seconds. C# 5 compilation, PowerShell parsing,
 exclusive modes, extracted-package suite and all source/helper hashes pass.
 Previous weapon/ammo workflows remain available. No live V36 claim is made.
+
+## Accepted V36 Windows capture
+
+The uploaded V36 run passed module/layout identity and sampled the original local
+Quaternion (0.01869106, 0.05843848, -0.001094339, 0.9981154), squared norm
+1.00000000109373, without normalization. Source-verified positive-Z basis:
+(0.1166158, -0.03743957, 0.9924712). The original getter, runtime registration,
+Unity multiply and local membership rechecks passed. There were 14 verified
+roster objects (local plus 13 others). A moving TRS sample was discarded on
+attempt 1; the second independent head capture passed. Aim phase reads=3407;
+total=25377. Plugin unload, handler cleanup and session release passed.
+The V37 comparison parser independently accepted the uploaded V36 report and
+checked its printed Quaternion/basis agreement. This remains a derived basis,
+not camera convention or shot direction evidence.
