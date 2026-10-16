@@ -1,0 +1,371 @@
+{
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "selection_fields": [
+    {
+      "owner": 31824,
+      "local": 278,
+      "name": "GGBNFECEPJG",
+      "offset": 1544,
+      "offset_rva": 27159068,
+      "descriptor": 182280768,
+      "bits": 1179652,
+      "type_index": 32623,
+      "name_offset": 7877335,
+      "token": 67360560,
+      "metadata_offset": 44993716,
+      "record_hex": "439f5900028d000030d70304"
+    },
+    {
+      "owner": 31824,
+      "local": 319,
+      "name": "BKEPAKCAGNJ",
+      "offset": 1856,
+      "offset_rva": 27159232,
+      "descriptor": 182285344,
+      "bits": 1179652,
+      "type_index": 32430,
+      "name_offset": 7877904,
+      "token": 67360601,
+      "metadata_offset": 44994208,
+      "record_hex": "7ca15900278e000059d70304"
+    },
+    {
+      "owner": 32430,
+      "local": 37,
+      "name": "LMFNCLKHIIO",
+      "offset": 160,
+      "offset_rva": 27181016,
+      "descriptor": 182020432,
+      "bits": 1179649,
+      "type_index": 32463,
+      "name_offset": 8038602,
+      "token": 67366669,
+      "metadata_offset": 45067024,
+      "record_hex": "36155c00a06400000def0304"
+    },
+    {
+      "owner": 32430,
+      "local": 38,
+      "name": "PDIMNGEMALB",
+      "offset": 168,
+      "offset_rva": 27181020,
+      "descriptor": 182280912,
+      "bits": 1179649,
+      "type_index": 32613,
+      "name_offset": 8038614,
+      "token": 67366670,
+      "metadata_offset": 45067036,
+      "record_hex": "42155c000b8d00000eef0304"
+    },
+    {
+      "owner": 32430,
+      "local": 70,
+      "name": "OMHEPNBNEKL",
+      "offset": 328,
+      "offset_rva": 27181148,
+      "descriptor": 182019296,
+      "bits": 2147614721,
+      "type_index": -1,
+      "name_offset": 8039015,
+      "token": 67366702,
+      "metadata_offset": 45067420,
+      "record_hex": "d3165c000c6300002eef0304"
+    }
+  ],
+  "candidates": [
+    {
+      "local": 42,
+      "name": "CFJLLCEFDIP",
+      "offset_rva": 27188656,
+      "descriptor": 182031072,
+      "bits": 2148007940,
+      "name_offset": 8087008,
+      "token": 67368429,
+      "metadata_offset": 45088144,
+      "record_hex": "4cd25c00ab9b0000edf50304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    },
+    {
+      "local": 59,
+      "name": "BCMEFGAIEIG",
+      "offset_rva": 27188724,
+      "descriptor": 182031040,
+      "bits": 2148007937,
+      "name_offset": 8087217,
+      "token": 67368446,
+      "metadata_offset": 45088348,
+      "record_hex": "1dd35c00a99b0000fef50304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    },
+    {
+      "local": 63,
+      "name": "DKECMNNPBCE",
+      "offset_rva": 27188740,
+      "descriptor": 182031072,
+      "bits": 2148007940,
+      "name_offset": 8087265,
+      "token": 67368450,
+      "metadata_offset": 45088396,
+      "record_hex": "4dd35c00ab9b000002f60304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    },
+    {
+      "local": 86,
+      "name": "MCIBEDAEAMG",
+      "offset_rva": 27188832,
+      "descriptor": 182031072,
+      "bits": 2148007940,
+      "name_offset": 8087592,
+      "token": 67368473,
+      "metadata_offset": 45088672,
+      "record_hex": "94d45c00ab9b000019f60304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    },
+    {
+      "local": 88,
+      "name": "NJKBAOGODEC",
+      "offset_rva": 27188840,
+      "descriptor": 182031072,
+      "bits": 2148007940,
+      "name_offset": 8087616,
+      "token": 67368475,
+      "metadata_offset": 45088696,
+      "record_hex": "acd45c00ab9b00001bf60304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    },
+    {
+      "local": 94,
+      "name": "KCGKFGNDIFB",
+      "offset_rva": 27188864,
+      "descriptor": 182031072,
+      "bits": 2148007940,
+      "name_offset": 8087688,
+      "token": 67368481,
+      "metadata_offset": 45088768,
+      "record_hex": "f4d45c00ab9b000021f60304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    },
+    {
+      "local": 102,
+      "name": "<OBJDFBNHMNB>k__BackingField",
+      "offset_rva": 27188896,
+      "descriptor": 182031040,
+      "bits": 2148007937,
+      "name_offset": 8087869,
+      "token": 67368489,
+      "metadata_offset": 45088864,
+      "record_hex": "a9d55c00a99b000029f60304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    },
+    {
+      "local": 105,
+      "name": "NJEENAEMFAO",
+      "offset_rva": 27188908,
+      "descriptor": 182031040,
+      "bits": 2148007937,
+      "name_offset": 8087922,
+      "token": 67368492,
+      "metadata_offset": 45088900,
+      "record_hex": "ded55c00a99b00002cf60304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    },
+    {
+      "local": 164,
+      "name": "PBLOIJMLGLM",
+      "offset_rva": 27189144,
+      "descriptor": 182031040,
+      "bits": 2148007937,
+      "name_offset": 8088681,
+      "token": 67368551,
+      "metadata_offset": 45089608,
+      "record_hex": "d5d85c00a99b000067f60304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    },
+    {
+      "local": 183,
+      "name": "ANMEOOALCEE",
+      "offset_rva": 27189220,
+      "descriptor": 182031040,
+      "bits": 2148007937,
+      "name_offset": 8088909,
+      "token": 67368570,
+      "metadata_offset": 45089836,
+      "record_hex": "b9d95c00a99b00007af60304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    },
+    {
+      "local": 211,
+      "name": "GHHJKBMAHHA",
+      "offset_rva": 27189332,
+      "descriptor": 182031040,
+      "bits": 2148007937,
+      "name_offset": 8089233,
+      "token": 67368598,
+      "metadata_offset": 45090172,
+      "record_hex": "fdda5c00a99b000096f60304",
+      "source_registration": 2172748161,
+      "instance_offset": null
+    }
+  ],
+  "methods": [
+    {
+      "index": 210492,
+      "name": "GetActiveWeapon",
+      "rva": 116490100,
+      "pointer_rva": 179478920,
+      "metadata_offset": 26996268,
+      "record_hex": "01785800507c00009b91000000000008ffffffffffffffff470300003d36030686000000ffff0000"
+    },
+    {
+      "index": 210483,
+      "name": "GetWeaponOnHand",
+      "rva": 116490896,
+      "pointer_rva": 179478848,
+      "metadata_offset": 26995908,
+      "record_hex": "07775800507c00009b91000000000008ffffffffffffffff460300003436030686000000ffff0000"
+    },
+    {
+      "index": 221309,
+      "name": "DEIPJDIGKIP",
+      "rva": 121213320,
+      "pointer_rva": 179565456,
+      "metadata_offset": 27428948,
+      "record_hex": "f6235a00cf7e00000b6300000000000879140200ffffffff450300007e60030696080000ffff0100"
+    },
+    {
+      "index": 220608,
+      "name": "PDAGHPAOBLP",
+      "rva": 120895700,
+      "pointer_rva": 179559848,
+      "metadata_offset": 27400908,
+      "record_hex": "c6fd5b00ae7e00009f64000000000008ffffffffffffffff86020000c15d030686080000ffff0000"
+    },
+    {
+      "index": 220657,
+      "name": "CKIKAFHOBDC",
+      "rva": 120895792,
+      "pointer_rva": 179560240,
+      "metadata_offset": 27402868,
+      "record_hex": "26015c00ae7e00000b63000000000008ffffffffffffffff85020000f25d030686080000ffff0000"
+    },
+    {
+      "index": 224776,
+      "name": "IHBDOPMADIE",
+      "rva": 121995172,
+      "pointer_rva": 179593192,
+      "metadata_offset": 27567628,
+      "record_hex": "db565c0011800000a89b000000000008ffffffffffffffff28030000096e030686080000ffff0000"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "GetActiveWeapon_210492_0",
+      "rva": 116490100,
+      "hex": "fe4fbfa9f30300aae0688052e1031faaa64a649420010036e0688052e1031faacf4a6494e00100b4e10313aae2031faafe4fc1a8dd9b5414600643f9e1031faa"
+    },
+    {
+      "name": "GetActiveWeapon_210492_64",
+      "rva": 116490164,
+      "hex": "7504129480000036600643f9fe4fc1a8c0035fd6e00313aafe4fc1a8b0000014a9f3d094"
+    },
+    {
+      "name": "GetWeaponOnHand_210483_0",
+      "rva": 116490896,
+      "hex": "fe0f1ef8f44f01a9740402b088125e39f30300aac8000037c0c101d0000044f94bf2d0942800805288121e39c0688052e1031faad649649440010036c0688052"
+    },
+    {
+      "name": "GetWeaponOnHand_210483_64",
+      "rva": 116490960,
+      "hex": "e1031faaff496494a00300b4e10313aaf44f41a9e2031faafe0742f80c9b541460a243f9600200b4e1031faa76cd1094000200b4c8c101d0080144f9090040f9"
+    },
+    {
+      "name": "GetWeaponOnHand_210483_128",
+      "rva": 116491024,
+      "hex": "080140f92bc144390ac144397f010a6b62000054e0031faa06000014296540f9290d0a8b29815ff83f0108eb00009f9af44f41a9fe0742f8c0035fd6cbf2d094"
+    },
+    {
+      "name": "DEIPJDIGKIP_221309_0",
+      "rva": 121213320,
+      "hex": "fe4fbfa9f30300aaa0688052e1031faa2146529420010036a0688052e1031faa4a465294200100b4e10313aae2031faafe4fc1a8f24242147f0200f1e0079f1a"
+    },
+    {
+      "name": "DEIPJDIGKIP_221309_64",
+      "rva": 121213384,
+      "hex": "fe4fc1a8c0035fd62aefbe94"
+    },
+    {
+      "name": "PDAGHPAOBLP_220608_0",
+      "rva": 120895700,
+      "hex": "fe4fbfa9f30300aac0508052e1031faa4e7c539420010036c0508052e1031faa777c5394a00100b4e10313aae2031faafe4fc1a82cb24314e00313aa08000094"
+    },
+    {
+      "name": "PDAGHPAOBLP_220608_64",
+      "rva": 120895764,
+      "hex": "60000036605640f902000014605240f9fe4fc1a8c0035fd65325c094"
+    },
+    {
+      "name": "CKIKAFHOBDC_220657_0",
+      "rva": 120895792,
+      "hex": "fe4fbfa9f30300aaa0508052e1031faa377c539420010036a0508052e1031faa607c5394000100b4e10313aae2031faafe4fc1a80879431460224539fe4fc1a8"
+    },
+    {
+      "name": "CKIKAFHOBDC_220657_64",
+      "rva": 120895856,
+      "hex": "c0035fd64125c094"
+    },
+    {
+      "name": "IHBDOPMADIE_224776_0",
+      "rva": 121995172,
+      "hex": "fe4fbfa9f30300aa00658052e1031faa9a4a4f942001003600658052e1031faac34a4f94000100b4e10313aae2031faafe4fc1a8984c3f14601246b9fe4fc1a8"
+    },
+    {
+      "name": "IHBDOPMADIE_224776_64",
+      "rva": 121995236,
+      "hex": "c0035fd6a4f3bb94"
+    }
+  ],
+  "source_callers": [
+    {
+      "index": 123831,
+      "owner": "COW.UIHudInventoryWeaponSlotItemController",
+      "name": "RefreshWeaponAmmo",
+      "rva": 82629272,
+      "call_rva": 82629936,
+      "code_hex": "ff0301d1fe5f01a9f65702a9f44f03a9540603f088964d39f30300aac803003760c702f0002c45f9471e529520c402b0000044f9441e529560c30290006846f9411e529560c302b000d042f93e1e5295a0c3029000c444f93b1e5295c0c302d000f440f9381e529560c702f0003045f9351e5295a0c302b000e043f9321e529560c302b000e042f92f1e52952800805288960d39806792522000a072e1031faab975e594a0010036806792522000a072e1031faae175e594c02000b4e10313aaf44f43a9f65742a9fe5f41a9e2031faaff0301912574d514686e40f9a81f00b4b7c30290f7c644f914c540f9e00240f909e040b949000035711e5295e00314aae1031f2ae2031faae3031faa7c8ad394600240f9eb215295680240f9e00313aa095d42f9016142f920013fd6e01a00b428c402b0080144f9090040f9080140f92bc144390ac144397f010a6be3190054296540f9290d0a8b29815ff83f0108eb14009f9a341900b468c702f0082d45f9800240f9080140f90ac0443909c144395f01096bc30000540a6440f9490d098b29815ff83f0108eb60100054c9215295880240f9e00314aa091d43f9012143f920013fd61f0c0071a1010054e00314aae1031faad22a969420010035800240f9bc215295880240f9e00314aa097542f9017942f920013fd6a0150034800240f9b4215295880240f9e00314aa091d43f9012143f920013fd61f7c007141030054686e40f9e81500b400a940f9a01500b468c302b008e142f9e2031faa010140f95b4c9297686e40f9c81400b4e00240f913c540f909e040b9490000351c1e5295e00313aaf44f43a9f65742a9fe5f41a921008052e2031faae3031faaff030191238ad314e00314aae1031faa102c9694686e40f9681200b415a940f9f603002ae00314aae1031faa9d2a96943604003668c30290086946f9e00f00b9e1330091080140f9e00308aa031e529568c702f0083145f9e10300aae2031faa080140f9e00308aa85b33695d50f00b4e10300aae00315aae2031faa2d4c9297686e40f9080f00b4e00240f913c540f909e040b949000035ee1d529521008052e00313aae2031faae3031faaf989d3945b00001476c30290d66a46f9e00f00b9e1330091c80240f9e00308aae31d5295880240f9f30300aae00308aa5e215295880240f9e00314aa097542f9017942f920013fd6c80240f9e00b00b9e1230091e00308aad51d5295a8c302b008e143f9e20300aae10313aae3031faa080140f9e00308aa98e63695f50900b4e10300aae00315aa38000014f50313aaa08e4ff8a00000b4e1031f2ae2031faa870e37950c00001468c302b008d142f9000140f9011e5295e1031faaf60300aa640a3795e00315aae10316aab60200f9401d5295800240f9b60240f933215295880240f9e00314aa094549f9014949f920013fd668c30290086946f9e00f00b9e1330091080140f9e00308aaa81d5295560500b4c8c302d008f540f9e20300aae00316aae3031faa010140f95b153795686e40f9280400b4b40240f9f40300b4800240f913a940f918215295880240f9e00314aa098556a920013fd6f30200b4e10300aae00313aae2031faac64b9297f44f43a9f65742a9fe5f41a9ff030191c0035fd6686e40f9880100b400a940f9400100b468c302b008e142f9f44f43a9f65742a9fe5f41a9010140f9e2031faaff030191b44b9217c41d5295",
+      "scope": "Static call-site evidence only; not a reproduced UI/game policy."
+    },
+    {
+      "index": 168473,
+      "owner": "COW.HippoCrisisInGameItemUIData",
+      "name": "get_AmmoNum",
+      "rva": 99890752,
+      "call_rva": 99891196,
+      "code_hex": "fe0f1ef8f44f01a9f482029088fa6539f30300aa48020037c04302b0002c45f95f451095e03f0290006040f95c451095604002f0000044f95945109500400290008042f956451095a03f02d0003446f9534510952800805288fa253920e19c522000a072e1031faadd9ca3946001003620e19c522000a072e1031faa059da394a00b00b4e10313aae2031faae9d19994e00700f93a000014683e40b928060035e83f0290086140f9000140f908e040b94800003598451095e0031faa4f084a94a83f02d0083546f9f40300aa080140f909e140b969000035e00308aa8e451095e00314aae1031faae2031faa4da2029580030037140800b4e00314aae1031faa5ab43f94e00200b4e00314aae1031faa56b43f94000700b4611240b9e2031faadb315094e00100b4684002f0080144f9f30300aa000040f90a0140f908c044394bc144391f010b6bc3000054096440f92b0d0b8b6b815ff87f010aeb8001005408400290088142f9e0230091e1031f2aff0700f9020140f90b25e894e00740f9f44f41a9fe0742f8c0035fd6ca4302b04a2d45f94a0140f94bc144391f010b6ba3000054280d0b8b08815ff81f010aeb40010054e00313aae1031faaea51549408400290088142f9e103002aff0700f9e0230091e8ffff17d0481095680240f9e00313aa094549f9014949f920013fd6f4ffff1791451095",
+      "scope": "Static call-site evidence only; not a reproduced UI/game policy."
+    },
+    {
+      "index": 210671,
+      "owner": "COW.GamePlay.Player",
+      "name": "GetThrowingKnifeLegMountCount",
+      "rva": 116900756,
+      "call_rva": 116901016,
+      "code_hex": "fe57bea9f44f01a9540102b088026039f30300aa88010037a0be01d0000044f90a62cf94e0be01b0003440f90762cf94e0bd01d0006c40f90462cf942800805288022039809c83524000a072e1031faa8eb9629460010036809c83524000a072e1031faab6b96294400700b4e10313aaf44f41a9e2031faafe57c2a88abb5214f5be01b0b53640f974a243f9a00240f908e040b9480000354a62cf94b40500b4a80240f9e00314aae2031faa085d40f9011940b9d1a30f94c00100b4a8be01d0080144f9090040f9080140f92bc144390ac144397f010a6bc3000054296540f9290d0a8b29815ff83f0108eba0000054f44f41a9e0031f2afe57c2a8c0035fd6e1031faac36e1394f403002ae00313aa7cffff97e8bd01d0086d40f90a00001293020a4b080140f909e140b969000035",
+      "scope": "Static call-site evidence only; not a reproduced UI/game policy."
+    }
+  ],
+  "owner_index": 32785,
+  "owner_field_count": 253,
+  "getter_offset": 1552,
+  "scope": "Original selected weapon Int32 counter used by ammo UI and throwing-knife count. No magazine/reserve, unlimited-ammo policy, firing readiness, LOS or aim assertion."
+}

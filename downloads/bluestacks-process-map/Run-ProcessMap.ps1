@@ -8,6 +8,7 @@ param(
     [Parameter(ParameterSetName='MatchDamagePolicy')]
     [Parameter(ParameterSetName='WeaponContext')]
     [Parameter(ParameterSetName='WeaponFiring')]
+    [Parameter(ParameterSetName='WeaponAmmo')]
     [string] $MachineName = 'Pie64',
     [ValidatePattern('^[A-Za-z0-9_.:-]+$')]
     [string] $Device = '127.0.0.1:5555',
@@ -30,7 +31,9 @@ param(
     [Parameter(ParameterSetName='WeaponContext')]
     [switch] $ProbeWeaponContext,
     [Parameter(ParameterSetName='WeaponFiring')]
-    [switch] $ProbeWeaponFiring
+    [switch] $ProbeWeaponFiring,
+    [Parameter(ParameterSetName='WeaponAmmo')]
+    [switch] $ProbeWeaponAmmo
 )
 Set-StrictMode -Version 2
 $ErrorActionPreference = 'Stop'
@@ -106,7 +109,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=31 ReadOnly=1'
+Record 'ProcessMapVersion=32 ReadOnly=1'
 Record "PlayerStateMode=$($ProbePlayerState.IsPresent)"
 Record "TeamPolicyMode=$($ProbeTeamPolicy.IsPresent)"
 Record "CombatStateMode=$($ProbeCombatState.IsPresent) RequestedRosterIndex=$CombatRosterIndex"
@@ -114,6 +117,7 @@ Record "ZoneProtectionMode=$($ProbeZoneProtection.IsPresent) RequestedRosterInde
 Record "MatchDamagePolicyMode=$($ProbeMatchDamagePolicy.IsPresent)"
 Record "WeaponContextMode=$($ProbeWeaponContext.IsPresent)"
 Record "WeaponFiringMode=$($ProbeWeaponFiring.IsPresent)"
+Record "WeaponAmmoMode=$($ProbeWeaponAmmo.IsPresent)"
 try {
     if ($PSBoundParameters.ContainsKey('ZoneRosterIndex') -and -not $ProbeZoneProtection.IsPresent) { throw 'Use -ProbeZoneProtection with -ZoneRosterIndex.' }
     if ($PSBoundParameters.ContainsKey('CombatRosterIndex') -and -not $ProbeCombatState.IsPresent) { throw 'Use -ProbeCombatState with -CombatRosterIndex.' }
@@ -151,6 +155,8 @@ try {
     $weaponReferencePath = Join-Path $PSScriptRoot 'WeaponContextReference.cs'
     $firingPath = Join-Path $PSScriptRoot 'WeaponFiringProbe.cs'
     $firingReferencePath = Join-Path $PSScriptRoot 'WeaponFiringReference.cs'
+    $ammoPath = Join-Path $PSScriptRoot 'WeaponAmmoProbe.cs'
+    $ammoReferencePath = Join-Path $PSScriptRoot 'WeaponAmmoReference.cs'
     if ($manifest.plugin -cne 'VBoxDbgHeadAimBridge.dll' -or $manifest.sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.mapping_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.module_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
@@ -178,7 +184,9 @@ try {
         $manifest.weapon_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.weapon_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
         $manifest.firing_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
-        $manifest.firing_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
+        $manifest.firing_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.ammo_source_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+        $manifest.ammo_reference_sha256 -notmatch '^[0-9a-fA-F]{64}$') { throw 'Package manifest is invalid.' }
     if ((Get-FileHash -LiteralPath $pluginPath -Algorithm SHA256).Hash -ine $manifest.sha256 -or
         (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash -ine $manifest.mapping_source_sha256 -or
         (Get-FileHash -LiteralPath $modulePath -Algorithm SHA256).Hash -ine $manifest.module_source_sha256 -or
@@ -206,10 +214,12 @@ try {
         (Get-FileHash -LiteralPath $weaponPath -Algorithm SHA256).Hash -ine $manifest.weapon_source_sha256 -or
         (Get-FileHash -LiteralPath $weaponReferencePath -Algorithm SHA256).Hash -ine $manifest.weapon_reference_sha256 -or
         (Get-FileHash -LiteralPath $firingPath -Algorithm SHA256).Hash -ine $manifest.firing_source_sha256 -or
-        (Get-FileHash -LiteralPath $firingReferencePath -Algorithm SHA256).Hash -ine $manifest.firing_reference_sha256) {
+        (Get-FileHash -LiteralPath $firingReferencePath -Algorithm SHA256).Hash -ine $manifest.firing_reference_sha256 -or
+        (Get-FileHash -LiteralPath $ammoPath -Algorithm SHA256).Hash -ine $manifest.ammo_source_sha256 -or
+        (Get-FileHash -LiteralPath $ammoReferencePath -Algorithm SHA256).Hash -ine $manifest.ammo_reference_sha256) {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
-    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath, $damagePath, $damageReferencePath, $weaponPath, $weaponReferencePath, $firingPath, $firingReferencePath) -ErrorAction Stop
+    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath, $damagePath, $damageReferencePath, $weaponPath, $weaponReferencePath, $firingPath, $firingReferencePath, $ammoPath, $ammoReferencePath) -ErrorAction Stop
     $classId = (Get-Item -LiteralPath 'Registry::HKEY_CLASSES_ROOT\VirtualBox.VirtualBoxClient\CLSID').GetValue('')
     $server = [Environment]::ExpandEnvironmentVariables([string](Get-Item -LiteralPath "Registry::HKEY_CLASSES_ROOT\CLSID\$classId\InprocServer32").GetValue(''))
     if ([IO.Path]::GetFileName($server.Trim().Trim('"')) -ine 'BstkC.dll') { throw 'COM client is not the verified BlueStacks server.' }
@@ -352,7 +362,32 @@ try {
     $damageSummary = 'NOT_REQUESTED'
     $weaponSummary = 'NOT_REQUESTED'
     $firingSummary = 'NOT_REQUESTED'
-    if ($ProbeWeaponFiring) {
+    $ammoSummary = 'NOT_REQUESTED'
+    if ($ProbeWeaponAmmo) {
+        $stage = 'WeaponAmmo'
+        $ammoStart = $reader.PhysicalCalls
+        $ammo = $reader.SampleWeaponAmmo($kernel, $game, $module, $layout, $objects, $progress)
+        if ((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId) { throw 'Game PID changed during ammo sampling.' }
+        $ammoSummary = $ammo.StopReason
+        Record "WeaponAmmoSamples AdditionalPhysicalReads=$($reader.PhysicalCalls - $ammoStart) Attempted=$($ammo.Samples.Length) Sampled=$($ammo.Sampled) StopReason=$($ammo.StopReason) Detail=$($ammo.Detail)"
+        foreach ($sample in $ammo.Samples) {
+            if ($sample.Status -ceq 'SAMPLED_READ_ONLY') {
+                $weaponPointer = if ($null -eq $sample.Weapon) { 'UNKNOWN' } else { '0x' + $sample.Weapon.ToString('x') }
+                $ammoValue = if ($null -eq $sample.WeaponAmmoRaw) { 'UNKNOWN' } else { [string]$sample.WeaponAmmoRaw }
+                $fieldIndex = if ($null -eq $sample.WeaponAmmoFieldIndex) { 'UNKNOWN' } else { [string]$sample.WeaponAmmoFieldIndex }
+                Record "WeaponSelection Status=$($sample.WeaponStatus) Path=$($sample.WeaponSelectionPath) Weapon=$weaponPointer Class=$($sample.WeaponClass)"
+                Record "SelectedWeaponAmmoCounter=$ammoValue Status=$($sample.WeaponAmmoStatus) DataType=Int32 GetterRVA=0x7457fa4 Scope=ORIGINAL_SELECTED_WEAPON_COUNTER Magazine=UNVERIFIED Reserve=UNVERIFIED UnlimitedPolicy=UNVERIFIED"
+                Record "WeaponAmmoField LocalIndex=$fieldIndex Name=$($sample.WeaponAmmoFieldName) Registration=$($sample.WeaponAmmoRegistration) Binding=UNIQUE_RUNTIME_OFFSET_AND_NATIVE_GETTER"
+                Record "WeaponAmmoMembership RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) IsLocal=$($sample.IsLocal) Proof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Observations=$($sample.Observations)"
+            } else {
+                Record "WeaponAmmo=$($sample.Status) RosterIndex=$($sample.RosterIndex) Detail=$($sample.Detail)"
+                if ($sample.Status -ceq 'FAIL') { $failed = $true }
+            }
+        }
+        if ($ammo.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
+        Record 'WeaponAmmoSemantics DataId=NOT_REQUESTED ReloadPredicate=NOT_REQUESTED FiringPredicate=NOT_REQUESTED Ballistics=UNVERIFIED FiringReadiness=UNVERIFIED LineOfSight=UNVERIFIED GameMethodCalls=NONE Writes=NONE'
+        Record 'OtherOptionalPhases=NOT_REQUESTED_WEAPON_AMMO_MODE'
+    } elseif ($ProbeWeaponFiring) {
         $stage = 'WeaponFiring'
         $firingStart = $reader.PhysicalCalls
         $firing = $reader.SampleWeaponFiring($kernel, $game, $module, $layout, $objects, $progress)
@@ -545,7 +580,7 @@ try {
         }
         if ($otherHeads.StopReason -in @('FAIL', 'FINAL_CONTEXT_FAILED')) { $failed = $true }
     }
-    Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadPositionsSampled=$($otherHeads.Sampled) TeamPolicy=$teamSummary CombatState=$combatSummary ZoneProtection=$zoneSummary MatchDamagePolicy=$damageSummary WeaponContext=$weaponSummary WeaponFiring=$firingSummary TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
+    Record "AimIntegration=INCOMPLETE LocalPlayerObjects=VERIFIED LocalHeadWorldPosition=$($objects.HeadWorldStatus) OtherPlayerObjectsVerified=$($objects.RosterOtherVerified) OtherHeadPositionsSampled=$($otherHeads.Sampled) TeamPolicy=$teamSummary CombatState=$combatSummary ZoneProtection=$zoneSummary MatchDamagePolicy=$damageSummary WeaponContext=$weaponSummary WeaponFiring=$firingSummary WeaponAmmo=$ammoSummary TeamAliveVisibilitySemantics=UNVERIFIED AimWrites=NONE"
 } catch { $failed = $true; Failure $stage $_.Exception }
 finally {
     if ($null -ne $reader) {

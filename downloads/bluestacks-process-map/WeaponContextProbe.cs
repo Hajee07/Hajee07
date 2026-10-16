@@ -46,10 +46,10 @@ namespace HeadBridge.Mapping
         }
         private static void WeaponNone(PlayerStateObservation sample,string path)
         { sample.Weapon=0;sample.WeaponData=0;sample.WeaponSelectionPath=path;sample.WeaponStatus="ORIGINAL_NO_ACTIVE_WEAPON"; }
-        private static void ReadWeaponContext(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length,bool firing=false)
+        private static void ReadWeaponContext(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length,bool firing=false,bool ammo=false)
         {
-            Expect(sample.IsLocal,"weapon context selects local player only");sample.WeaponStatus="UNVERIFIED_HOTFIX_ACTIVE";sample.WeaponIdStatus="NOT_REQUESTED_UNVERIFIED_DATA";sample.WeaponReloadStatus="NOT_REQUESTED_UNVERIFIED_WEAPON";sample.WeaponFiringStatus="NOT_REQUESTED_UNVERIFIED_WEAPON";
-            StateField[] selectedFields=firing?WeaponFiringReference.Fields:null;
+            Expect(sample.IsLocal,"weapon context selects local player only");sample.WeaponStatus="UNVERIFIED_HOTFIX_ACTIVE";sample.WeaponIdStatus="NOT_REQUESTED_UNVERIFIED_DATA";sample.WeaponReloadStatus="NOT_REQUESTED_UNVERIFIED_WEAPON";sample.WeaponFiringStatus="NOT_REQUESTED_UNVERIFIED_WEAPON";sample.WeaponAmmoStatus="NOT_REQUESTED_UNVERIFIED_WEAPON";
+            StateField[] selectedFields=ammo?WeaponAmmoReference.SelectionFields:firing?WeaponFiringReference.Fields:null;
             if(!CombatGate(reads,wrappers,length,0x347,0x345))return;
             sample.WeaponStatus="NOT_READY_PLAYER_FIELD_TABLE";if(!WeaponFields(reads,playerBase,31824,module,layout,selectedFields))return;
             ulong candidate=reads.Value(sample.Player+0x608,"Weapon.ActiveField");bool handCast=false;int declared=32623;
@@ -79,6 +79,7 @@ namespace HeadBridge.Mapping
             }
             Expect((item.Family&2)!=0,"selected weapon family");ulong weaponBase=WeaponAncestor(reads,itemClass,item,32785,layout);
             sample.Weapon=candidate;sample.WeaponClass=item.Name;
+            if(ammo){sample.WeaponStatus="ORIGINAL_SELECTED_WEAPON_VERIFIED";ReadSelectedWeaponAmmo(reads,module,layout,sample,weaponBase,wrappers,length);return;}
             if(firing){sample.WeaponStatus="ORIGINAL_SELECTED_WEAPON_VERIFIED";ReadSelectedWeaponFiring(reads,module,layout,sample,itemClass,item,weaponBase,wrappers,length);return;}
             ReadSelectedWeaponReload(reads,module,layout,sample,itemClass,item,weaponBase,wrappers,length);sample.WeaponStatus="UNSUPPORTED_WEAPON_DATA_OVERRIDE";
             TeamVirtual dispatch=null;foreach(TeamVirtual v in WeaponContextReference.Virtuals)if(v.Index==item.Index)dispatch=v;

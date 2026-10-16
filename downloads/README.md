@@ -1,10 +1,13 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V31**. Separate `-ProbeWeaponFiring` mode verifies the
-selected weapon's original firing predicate through its cache/state-ID branch.
-583 offline checks pass; live V31 validation pending. Ammo, full firing readiness,
-LOS and aim integration remain unverified.
-See [firing evidence](bluestacks-process-map/WEAPON-FIRING-EVIDENCE.md).
+Current process probe: **V32**. Separate `-ProbeWeaponAmmo` mode verifies a
+runtime-bound original Int32 weapon counter used by ammo UI. 626 offline checks
+pass; live V32 validation pending. Magazine/reserve, unlimited policy, full
+readiness, LOS and aiming remain unverified.
+See [counter evidence](bluestacks-process-map/WEAPON-AMMO-EVIDENCE.md).
+
+V31's cache branch passed live: selected Firing=False, CacheEnabled=True,
+selected membership and all cleanup PASS. State-ID route remains offline-tested.
 
 V30's `-ProbeWeaponContext` passed live: ID 41, selected Reloading=False,
 StateRaw=2, selected membership and all cleanup PASS. Existing mode remains

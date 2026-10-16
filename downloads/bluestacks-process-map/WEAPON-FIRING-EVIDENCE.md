@@ -1,6 +1,7 @@
 # V31 selected-weapon firing predicate
 
-Live Windows validation is pending. Run `Run-ProcessMap.ps1 -ProbeWeaponFiring`.
+The cache branch passed live (report below); the state-ID branch remains
+offline-tested only. Run `Run-ProcessMap.ps1 -ProbeWeaponFiring`.
 This is an eighth, mutually exclusive optional mode. It replaces the data-ID /
 reload phase rather than accumulating another phase near the read ceiling.
 The previously accepted `-ProbeWeaponContext` remains available and unchanged
@@ -81,3 +82,20 @@ WeaponSelection and ResultFile. A sampled row may still contain an explicit
 unknown predicate status. A true firing predicate does not prove ammunition,
 shot completion, damage, full firing readiness, LOS or accuracy. ID/reload
 results from earlier reports are not combined into a simultaneous observation.
+
+## Accepted V31 live firing-predicate report
+
+The user's report (host 11784 / guest 7882) passed module identity and both
+80-check layout comparisons. Local head sampling passed on attempt three after
+two discarded motion samples. The first roster capture was discarded for a
+changed observation; the second verified all 14 active objects (local plus 13
+others). A0 hand selection accepted HBIBDMMOOOK. SelectedWeaponFiring=False
+accepted with the original selected-weapon status, Route=CACHE_BOOLEAN and
+CacheEnabled=True. StateRaw=UNKNOWN is expected for this branch, which does not
+read a state ID. The state-ID branch remains offline-tested, not live-validated.
+Selected membership revalidated; roster counters were unchanged since roster
+and during firing capture. There were 185 observations, 5030 additional reads
+and 28692 total reads. Plugin unload, handler cleanup and shared-session release
+passed. No methods or writes occurred. This is one selected-weapon predicate,
+not Player.IsFiring, ammo, full readiness, LOS or aim integration. Separate
+head/roster/firing phases are not an atomic simultaneous snapshot.

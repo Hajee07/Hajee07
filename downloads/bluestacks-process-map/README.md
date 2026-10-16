@@ -7,12 +7,18 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 31. Separate read-only weapon firing-predicate mode.**
-Run `-ProbeWeaponFiring` to verify the selected weapon's original slot-218
-predicate through the supported cache or state-ID branch. 583 offline checks
-pass; live V31 validation is pending. This replaces other optional phases for
-that run. It does not establish Player.IsFiring, ammo, full firing readiness,
-LOS or aim integration. See [firing evidence](WEAPON-FIRING-EVIDENCE.md).
+**Current version: 32. Separate read-only weapon counter mode.**
+Run `-ProbeWeaponAmmo` to sample the original selected-weapon Int32 getter used
+by ammo UI, after unique runtime field binding. 626 offline checks pass; live
+V32 validation pending. It replaces other optional phases. Magazine/reserve,
+unlimited-ammo policy, full readiness, LOS and aiming remain unverified.
+See [counter evidence](WEAPON-AMMO-EVIDENCE.md).
+
+**V31 firing cache branch passed live.** `-ProbeWeaponFiring` accepted the
+selected weapon's original cached predicate=False, CacheEnabled=True, selected
+membership revalidated. All 14 roster objects verified on retry two, local head
+sampled on attempt three, phase reads=5030, total=28692, all cleanup PASS.
+The state-ID branch is offline-tested only. See [firing evidence](WEAPON-FIRING-EVIDENCE.md).
 
 **V30 weapon-context mode passed live.** `-ProbeWeaponContext` retains selection,
 UInt32 data ID and the selected-weapon reload predicate. Latest accepted run:

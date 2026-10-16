@@ -760,3 +760,28 @@ through the actual GameVar cache/state-ID branch. 583 offline checks pass; live
 validation pending. Fixture additional reads=4803 (direct), 5292 (A0).
 V30's mode/read costs remain available. All global limits/plugin unchanged.
 No Player.IsFiring, readiness, ammo, LOS or aiming claim; no calls or writes.
+
+## Accepted V31 live firing-predicate report
+
+The user's report (host 11784 / guest 7882) passed module identity and both
+80-check layout comparisons. Local head sampling passed on attempt three after
+two discarded motion samples. The first roster capture was discarded for a
+changed observation; the second verified all 14 active objects (local plus 13
+others). A0 hand selection accepted HBIBDMMOOOK. SelectedWeaponFiring=False
+accepted with the original selected-weapon status, Route=CACHE_BOOLEAN and
+CacheEnabled=True. StateRaw=UNKNOWN is expected for this branch, which does not
+read a state ID. The state-ID branch remains offline-tested, not live-validated.
+Selected membership revalidated; roster counters were unchanged since roster
+and during firing capture. There were 185 observations, 5030 additional reads
+and 28692 total reads. Plugin unload, handler cleanup and shared-session release
+passed. No methods or writes occurred. This is one selected-weapon predicate,
+not Player.IsFiring, ammo, full readiness, LOS or aim integration. Separate
+head/roster/firing phases are not an atomic simultaneous snapshot.
+
+## V32 separate original weapon-counter probe
+
+-ProbeWeaponAmmo verifies the nonvirtual Int32 +0x610 getter after unique runtime
+FieldInfo binding among eleven unbound source candidates. 626 offline checks
+pass; fixture additional reads=3870 (direct), 4359 (A0). Live validation pending.
+All earlier modes, plugin and limits remain available. No magazine/reserve,
+readiness, LOS or aiming claim. No calls, initialization or writes.
