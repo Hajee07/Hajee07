@@ -7,12 +7,12 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 35. Read-only original local aim-rotation snapshot.**
-Run `-ProbeAimState` to verify Player.GetAimRotation's original Quaternion value
-at +0x614, including runtime field identity and finite/unit checks. This is a
-separate optional mode; it does not read or substitute m_CurrentAimRotation.
-684 offline checks pass; live V35 validation pending. Camera convention, target
-direction, LOS and aim integration remain unverified.
+**Current version: 36. Read-only Quaternion positive-Z basis.**
+`-ProbeAimState` retains the verified original local Quaternion and additionally
+calculates q * (0,0,1) using source-verified Unity float math. Full multiply code,
+CoreModule registration and metadata checks run initially/finally. V35 live
+rotation passed; V36 live validation pending. 700 offline checks pass.
+Camera/shot convention, target direction, LOS and aim integration remain unverified.
 See [aim-state evidence](AIM-STATE-EVIDENCE.md).
 
 **V34 manual comparison produced two matching experiments:** reported HUD and

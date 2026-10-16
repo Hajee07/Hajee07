@@ -1,6 +1,6 @@
 # V35 original local GetAimRotation snapshot
 
-Live Windows validation pending. Run `Run-ProcessMap.ps1 -ProbeAimState` with
+V35 Windows validation passed; V36 validation pending. Run `Run-ProcessMap.ps1 -ProbeAimState` with
 Free Fire running and hold the camera steady during capture. This tenth mutually
 exclusive mode replaces other optional phases. It does not invoke an aim method
 or write to the game.
@@ -60,3 +60,45 @@ Inspect LocalAimRotation, AimQuaternion, AimStateMembership, AimStateSamples,
 cleanup and ResultFile. A sampled row with a NOT_READY/hotfix status does not
 establish a usable aim rotation. Full readiness, camera convention, LOS and aim
 integration remain incomplete.
+
+## Accepted V35 Windows snapshot
+
+The uploaded V35 report verified the exact module and both 80-check layout
+passes, all 12 roster objects (local plus 11 others), and the local Quaternion.
+X=0.002605755, Y=0.5796037, Z=0.001853381, W=-0.8148922;
+NormSquared=0.999999964012677. The original local getter and selected membership
+were verified without normalization. Aim phase used 3297 additional reads;
+total reads=22754. Plugin unload, handler cleanup and session release passed.
+This proves a local original-getter snapshot, not an actual shot/camera direction.
+
+## V36 derived positive-Z basis
+
+Live V36 validation pending. `Run-ProcessMap.ps1 -ProbeAimState` additionally
+reports QuaternionPositiveZBasis: the verified Quaternion applied to the
+explicit input vector (0,0,1). CameraConvention and ShotDirection remain
+UNVERIFIED. No target, LOS, screen projection or firing readiness is inferred.
+
+The exact ELF/metadata builder verifies Quaternion.op_Multiply(Quaternion,Vector3),
+method 317467, RVA 0x9fddc4c, length 0xa4. UnityEngine.CoreModule.dll has its own
+code module at 0xa729470, 4752 methods, pointer table 0xaf5a718. Assembly-CSharp's
+method table is not used for Unity methods. Full multiply instructions, module
+name/count/table, method registration and runtime metadata are verified before
+and after capture. These checks extend the existing original getter checks.
+
+The host calculation follows the native scalar float multiply/add/subtract
+order, including zero terms. It does not call the native method, normalize the
+Quaternion/vector or write memory. For unit q=(x,y,z,w), the positive-Z basis
+has mathematical components (2xz+2wy, 2yz-2wx, 1-2xx-2yy). This algebra does not
+establish which direction the game's camera, weapon or projectile uses.
+Tentative basis values are discarded with any failed snapshot/final identity
+check. Nonfinite/nonunit/hotfix statuses publish no basis.
+
+700 offline checks pass (684 previous, 15 new basis/identity cases, one comparison
+version-36 compatibility case). Cases cover identity, sign, half turns, yaw,
+pitch, mixed axes, preserving source values without normalization, initial/final
+code and module/method/metadata mismatches, and shared invalidation. The existing
+mutation tests also require no basis after nonfinite or changing snapshots.
+Fixture phase cost is 3347 reads; limits remain 6000 additional / 1500 final
+reserve, 30000 global / 120 seconds. C# 5 compilation, PowerShell parsing,
+exclusive modes, extracted-package suite and all source/helper hashes pass.
+Previous weapon/ammo workflows remain available. No live V36 claim is made.

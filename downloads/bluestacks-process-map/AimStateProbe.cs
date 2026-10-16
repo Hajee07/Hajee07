@@ -11,10 +11,25 @@ namespace HeadBridge.Mapping
         }
         private static void AimStateSchema(ObjectReads reads,ModuleResult module,GameLayoutResult layout)
         {
-            CombatSchema(reads,module,layout,new StateMethod[]{AimStateReference.Method},AimStateReference.Fields);
+            CombatSchema(reads,module,layout,new StateMethod[]{AimStateReference.Method,AimStateReference.VectorMethod},AimStateReference.Fields);
             Expect(EqualBytes(reads.Read(layout.RuntimeMetadataBase+AimStateReference.QuaternionMetadata,88),Hex(AimStateReference.QuaternionRecord)),"aim Quaternion metadata identity");
             Expect(reads.Word(module.LoadBias+AimStateReference.ReturnDescriptor+8)==AimStateReference.ReturnBits &&
                 reads.Value(module.LoadBias+AimStateReference.ReturnDescriptor)==layout.RuntimeMetadataBase+AimStateReference.QuaternionMetadata,"aim getter return Quaternion type");
+        }
+        // Explicit float intermediates preserve the verified scalar ARM64 operation order.
+        // This evaluates q * (0,0,1); it does not establish camera/shot convention.
+        internal static float[] PositiveZBasis(float x,float y,float z,float w)
+        {
+            float x2=x+x,y2=y+y,z2=z+z;
+            float xx=x*x2,yy=y*y2,zz=z*z2,xy=x*y2,xz=x*z2,yz=y*z2;
+            float wx=w*x2,wy=w*y2,wz=w*z2;
+            float yyzz=yy+zz,xxzz=xx+zz,xyMinusWz=xy-wz,xyPlusWz=xy+wz;
+            float xzPlusWy=xz+wy,xzMinusWy=xz-wy,yzMinusWx=yz-wx,yzPlusWx=yz+wx,xxYy=xx+yy;
+            float a=1f-yyzz,b=1f-xxzz,c=1f-xxYy;
+            float p0=0f*xyMinusWz,p1=0f*xyPlusWz,p2=0f*xzMinusWy,p3=0f*yzPlusWx;
+            float p4=0f*a,p5=0f*b,p6=1f*xzPlusWy,p7=1f*yzMinusWx;
+            float t0=p2+p3,p8=1f*c,t1=p0+p4,t2=p1+p5;
+            return new float[]{p6+t1,p7+t2,t0+p8};
         }
         private static void ReadAimState(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length)
         {
@@ -31,6 +46,8 @@ namespace HeadBridge.Mapping
             }
             if(norm<0.98 || norm>1.02){sample.AimRotationStatus="NOT_READY_AIM_ROTATION_NONUNIT";return;}
             sample.AimX=value[0];sample.AimY=value[1];sample.AimZ=value[2];sample.AimW=value[3];sample.AimNormSquared=norm;
+            float[] basis=PositiveZBasis(value[0],value[1],value[2],value[3]);
+            sample.BasisX=basis[0];sample.BasisY=basis[1];sample.BasisZ=basis[2];
             sample.AimRotationStatus="ORIGINAL_LOCAL_GET_AIM_ROTATION_SAMPLED";
         }
         public PlayerStateResult SampleAimState(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)

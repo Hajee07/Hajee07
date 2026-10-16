@@ -8,6 +8,13 @@
     "metadata_offset": 27005628,
     "record_hex": "a4895800507c00002fbd000000000008ffffffffffffffffb90400002737030686000000ffff0000"
   },
+  "vector_method": {
+    "index": 317467,
+    "rva": 167631948,
+    "pointer_rva": 183892968,
+    "metadata_offset": 31275268,
+    "record_hex": "75afe70014a00000f119010000000008afed0300ffffffffffffffff9b0a000696080000ffff0200"
+  },
   "fields": [
     {
       "owner": 31824,
@@ -90,6 +97,41 @@
       "name": "GetAimRotation_64",
       "rva": 116541932,
       "hex": "621e46bd632246bdfe4fc1a8c0035fd61fc1d094"
+    },
+    {
+      "name": "QuaternionVectorMultiply_0",
+      "rva": 167631948,
+      "hex": "0728201e3028211e5128221e1308271e3408301e4208311e12102e1e1508301e0008311e2108311e6708271e7008301e6308311e912a221e622a221eb63a231e"
+    },
+    {
+      "name": "QuaternionVectorMultiply_64",
+      "rva": 167632012,
+      "hex": "a32a231e1528301e0038301e3038271e2128271e672a341e513a311e423a221eb308361e8308231e8008201ea108211e473a271e8408311ea208221ed408351e"
+    },
+    {
+      "name": "QuaternionVectorMultiply_128",
+      "rva": 167632076,
+      "hex": "d008301e0528211ec608271e602a241e6128221e802a201e012a211ea228261ec0035fd6"
+    },
+    {
+      "name": "UnityCoreModuleName",
+      "rva": 175281264,
+      "pointer": 26586994
+    },
+    {
+      "name": "UnityCoreModuleNameBytes",
+      "rva": 26586994,
+      "hex": "556e697479456e67696e652e436f72654d6f64756c652e646c6c00"
+    },
+    {
+      "name": "UnityCoreModuleCount",
+      "rva": 175281272,
+      "hex": "9012000000000000"
+    },
+    {
+      "name": "UnityCoreModuleTable",
+      "rva": 175281280,
+      "pointer": 183871256
     }
   ],
   "return_descriptor": 182039152,

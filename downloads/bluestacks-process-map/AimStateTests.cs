@@ -11,7 +11,7 @@ namespace HeadBridge.Mapping.Tests
             {
                 SetupCombat();
                 foreach(GameLayoutCheck c in AimStateReference.Anchors)Put(Module.LoadBias+c.Address,c.Expected(Module.LoadBias));
-                StateMethod m=AimStateReference.Method;U64(Module.LoadBias+m.PointerRva,Module.LoadBias+m.Rva);Put(Layout.RuntimeMetadataBase+m.MetadataOffset,Reader.Hex(m.RecordHex));
+                foreach(StateMethod m in new StateMethod[]{AimStateReference.Method,AimStateReference.VectorMethod}) {U64(Module.LoadBias+m.PointerRva,Module.LoadBias+m.Rva);Put(Layout.RuntimeMetadataBase+m.MetadataOffset,Reader.Hex(m.RecordHex)); }
                 Put(Layout.RuntimeMetadataBase+AimStateReference.QuaternionMetadata,Reader.Hex(AimStateReference.QuaternionRecord));
                 U64(Module.LoadBias+AimStateReference.ReturnDescriptor,Layout.RuntimeMetadataBase+AimStateReference.QuaternionMetadata);U32(Module.LoadBias+AimStateReference.ReturnDescriptor+8,AimStateReference.ReturnBits);
                 foreach(StateField f in AimStateReference.Fields)
@@ -32,6 +32,21 @@ namespace HeadBridge.Mapping.Tests
         { PlayerStateResult r=f.Aim(f.Run());if(r.Sampled!=1)throw new Exception("Aim sample failed "+r.StopReason+" "+r.Detail+(r.Samples.Length>0?" "+r.Samples[0].Detail:""));return r.Samples[0]; }
         private static void RunAimStateTests()
         {
+            float[][] values={new float[]{0,0,0,1},new float[]{0,0,0,-1},new float[]{0,1,0,0},new float[]{1,0,0,0},new float[]{0,0,1,0}};
+            float[][] expected={new float[]{0,0,1},new float[]{0,0,1},new float[]{0,0,-1},new float[]{0,0,-1},new float[]{0,0,1}};
+            for(int i=0;i<values.Length;i++){float[] v=values[i],a=Reader.PositiveZBasis(v[0],v[1],v[2],v[3]);Check(a[0]==expected[i][0] && a[1]==expected[i][1] && a[2]==expected[i][2],"positive-Z basis identity/sign/half-turn case "+i);}
+            float h=(float)Math.Sqrt(0.5);float[] yaw=Reader.PositiveZBasis(0,h,0,h),pitch=Reader.PositiveZBasis(h,0,0,h);
+            Check(Math.Abs(yaw[0]-1)<0.000001 && yaw[1]==0 && Math.Abs(yaw[2])<0.000001,"positive yaw rotates positive-Z toward positive-X");
+            Check(pitch[0]==0 && Math.Abs(pitch[1]+1)<0.000001 && Math.Abs(pitch[2])<0.000001,"positive pitch rotates positive-Z toward negative-Y");
+            Fixture vectorCode=AimFixture();vectorCode.Put(vectorCode.Module.LoadBias+0x9fddc4c,new byte[]{0});PlayerStateResult badCode=vectorCode.Aim(vectorCode.Run());Check(badCode.Sampled==0 && badCode.Samples.Length==0,"changed Unity multiply code suppresses rotation and derived basis");
+            Fixture vectorPointer=AimFixture();vectorPointer.U64(vectorPointer.Module.LoadBias+AimStateReference.VectorMethod.PointerRva,0);PlayerStateResult badPointer=vectorPointer.Aim(vectorPointer.Run());Check(badPointer.Sampled==0 && badPointer.Samples.Length==0,"Unity multiply requires its own registered CoreModule method pointer");
+            Fixture basisFixture=AimFixture();PlayerStateObservation bs=AimSample(basisFixture);Check(bs.BasisX==0 && bs.BasisY==0 && bs.BasisZ==1,"derived basis is published only with the validated local quaternion");
+            float[] cyclic=Reader.PositiveZBasis(0.5f,0.5f,0.5f,0.5f);Check(cyclic[0]==1 && cyclic[1]==0 && cyclic[2]==0,"mixed-axis Quaternion preserves component cross terms");
+            Fixture notNormalized=AimFixture();notNormalized.AimValue(0.1f,0,0,1);PlayerStateObservation nn=AimSample(notNormalized);Check(Math.Abs(nn.BasisY.Value+0.2f)<0.000001 && Math.Abs(nn.BasisZ.Value-0.98f)<0.000001 && nn.AimW==1,"basis calculation preserves accepted source values without normalization");
+            Fixture coreTable=AimFixture();coreTable.U64(coreTable.Module.LoadBias+0xa729480,0);PlayerStateResult ct=coreTable.Aim(coreTable.Run());Check(ct.Sampled==0 && ct.Samples.Length==0,"changed CoreModule table invalidates derived basis");
+            Fixture vectorMetadata=AimFixture();vectorMetadata.Put(vectorMetadata.Layout.RuntimeMetadataBase+AimStateReference.VectorMethod.MetadataOffset,new byte[]{0});PlayerStateResult vm=vectorMetadata.Aim(vectorMetadata.Run());Check(vm.Sampled==0 && vm.Samples.Length==0,"multiply metadata identity is required");
+            Fixture finalVector=AimFixture();PlayerObjectResult fvcore=finalVector.Run();ulong fva=finalVector.Physical(Fixture.Player+0x614);
+            finalVector.Memory.AfterRead=delegate(ulong p,int n){if(p==fva && n==16)finalVector.Put(finalVector.Module.LoadBias+0x9fddc4c,new byte[]{0});};PlayerStateResult fvr=finalVector.Aim(fvcore);Check(fvr.Sampled==0 && fvr.Samples.Length==0 && fvr.StopReason=="FINAL_CONTEXT_FAILED","changed final multiply code clears tentative rotation and basis");
             Fixture f=AimFixture();PlayerObjectResult core=f.Run();int start=f.Reader.PhysicalCalls;PlayerStateResult baseline=f.Aim(core);PlayerStateObservation b=baseline.Samples.Length>0?baseline.Samples[0]:new PlayerStateObservation();
             Check(baseline.Sampled==1 && b.AimRotationStatus=="ORIGINAL_LOCAL_GET_AIM_ROTATION_SAMPLED" && b.AimX==0 && b.AimY==0 && b.AimZ==0 && b.AimW==1 && b.AimNormSquared==1 && b.IsLocal && b.MembershipProof=="SELECTED_ENTRY_REVALIDATED",
                 "original local getter reads verified +0x614 Quaternion, not separate m_CurrentAimRotation: "+baseline.StopReason+" "+baseline.Detail+" "+b.Detail);
@@ -40,7 +55,7 @@ namespace HeadBridge.Mapping.Tests
             Fixture rotated=AimFixture();float s=(float)Math.Sqrt(0.5);rotated.AimValue(0,s,0,s);PlayerStateObservation rs=AimSample(rotated);
             Check(rs.AimY==s && rs.AimW==s && Math.Abs(rs.AimNormSquared.Value-1)<0.00001,"component order follows verified Unity Quaternion x/y/z/w layout");
             foreach(float invalid in new float[]{float.NaN,float.PositiveInfinity,float.NegativeInfinity})
-            { Fixture x=AimFixture();x.AimValue(invalid,0,0,1);PlayerStateObservation q=AimSample(x);Check(!q.AimX.HasValue && !q.AimW.HasValue && q.AimRotationStatus=="NOT_READY_AIM_ROTATION_NONFINITE","nonfinite quaternion never publishes tentative components: "+invalid); }
+            { Fixture x=AimFixture();x.AimValue(invalid,0,0,1);PlayerStateObservation q=AimSample(x);Check(!q.AimX.HasValue && !q.AimW.HasValue && !q.BasisZ.HasValue && q.AimRotationStatus=="NOT_READY_AIM_ROTATION_NONFINITE","nonfinite quaternion never publishes tentative components: "+invalid); }
             foreach(float w in new float[]{0,0.5f,2})
             { Fixture x=AimFixture();x.AimValue(0,0,0,w);PlayerStateObservation q=AimSample(x);Check(!q.AimW.HasValue && q.AimRotationStatus=="NOT_READY_AIM_ROTATION_NONUNIT","nonunit quaternion is not silently normalized: "+w); }
             Fixture hot=AimFixture();hot.U64(Fixture.Array+0x20+0x4b9UL*8UL,Fixture.Player);PlayerStateObservation hs=AimSample(hot);
@@ -57,7 +72,7 @@ namespace HeadBridge.Mapping.Tests
             Check(lr.Sampled==0 && lr.Samples.Length==0 && lr.Detail.Contains("Quaternion metadata"),"value-type metadata changes prevent a typed aim sample");
             Fixture changed=AimFixture();PlayerObjectResult cc=changed.Run();ulong ca=changed.Physical(Fixture.Player+0x614);bool flipped=false;
             changed.Memory.AfterRead=delegate(ulong p,int n){if(!flipped && p==ca && n==16){flipped=true;changed.AimValue(0,0,0,-1);}};PlayerStateResult cr=changed.Aim(cc);
-            Check(cr.Sampled==0 && !cr.Samples[0].AimW.HasValue,"changing quaternion invalidates the tentative snapshot without smoothing");
+            Check(cr.Sampled==0 && !cr.Samples[0].AimW.HasValue && !cr.Samples[0].BasisZ.HasValue,"changing quaternion invalidates the tentative snapshot without smoothing");
             Fixture gate=AimFixture();PlayerObjectResult gc=gate.Run();ulong ga=gate.Physical(Fixture.Player+0x614);
             gate.Memory.AfterRead=delegate(ulong p,int n){if(p==ga && n==16)gate.U64(Fixture.Array+0x20+0x4b9UL*8UL,Fixture.Player);};PlayerStateResult gr=gate.Aim(gc);
             Check(gr.Sampled==0 && !gr.Samples[0].AimW.HasValue,"hotfix changes during capture invalidate all quaternion values");
