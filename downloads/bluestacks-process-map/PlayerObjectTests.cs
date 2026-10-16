@@ -509,7 +509,7 @@ namespace HeadBridge.Mapping.Tests
                 "a verified nonlocal dictionary member resolves its own managed/native head rather than the local head");
             Check(otherCore.HeadWorldX==104 && one.Samples[0].Provider==otherRegion && one.Samples[0].RosterIndex==1,
                 "other-head sampling preserves the local sample and reports the exact collection member");
-            Check(one.Samples[0].MembershipProof=="FRESH_SELECTED_ENTRY" && !one.Samples[0].CountersChangedSinceRoster,
+            Check(one.Samples[0].MembershipProof=="SELECTED_ENTRY_REVALIDATED" && !one.Samples[0].CountersChangedSinceRoster,
                 "an accepted other-head observation reports its fresh selected-entry proof separately from the earlier roster");
             Check(other.Reader.PhysicalCalls>beforeOther && other.Reader.PhysicalCalls-beforeOther<=6000,"other-head phase consumes the same shared Reader within its additional-call bound");
             moving.SetupRoster();moving.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult motionCore=moving.Run();OtherHeadResult despiteMotion=moving.OtherHeads(motionCore);
@@ -526,7 +526,7 @@ namespace HeadBridge.Mapping.Tests
             Check(noHead.Sampled==0 && noHead.Samples[0].Status=="NOT_READY_MODEL_CACHE_NULL","an uncached other head is reported without initializing Unity or substituting the local head");
             Fixture versionMove=new Fixture();versionMove.SetupNative();versionMove.SetupRoster();versionMove.SetupOtherHead(Fixture.Other,otherRegion,31);
             PlayerObjectResult versionCore=versionMove.Run();versionMove.U32(Fixture.RDict+0x2c,2);OtherHeadResult staleCollection=versionMove.OtherHeads(versionCore);
-            Check(staleCollection.Sampled==1 && staleCollection.Samples[0].MembershipProof=="FRESH_SELECTED_ENTRY" && staleCollection.Samples[0].CountersChangedSinceRoster &&
+            Check(staleCollection.Sampled==1 && staleCollection.Samples[0].MembershipProof=="SELECTED_ENTRY_REVALIDATED" && staleCollection.Samples[0].CountersChangedSinceRoster &&
                 BitConverter.ToUInt32(versionCore.RosterCounterSnapshot,12)==1,
                 "a version changed before sampling permits a fresh exact selected-member proof without rewriting the old roster counters");
             Fixture removedOther=new Fixture();removedOther.SetupNative();removedOther.SetupRoster();removedOther.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult beforeRemoval=removedOther.Run();
@@ -563,14 +563,51 @@ namespace HeadBridge.Mapping.Tests
             Fixture changeDuring=new Fixture();changeDuring.SetupNative();changeDuring.SetupRoster();changeDuring.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult duringCore=changeDuring.Run();
             ulong otherPose=changeDuring.Physical(otherRegion+0x4000);changeDuring.Memory.AfterRead=delegate(ulong at,int length){if(at==otherPose && length==48)changeDuring.U32(Fixture.RDict+0x2c,2);};
             OtherHeadResult during=changeDuring.OtherHeads(duringCore);
-            Check(during.Sampled==0 && during.StopReason=="CONTEXT_CHANGED" && during.Samples[0].Status=="NOT_READY_CONTEXT_CHANGED" && during.Samples[0].Detail.Contains("Field=OtherMembership.Counters") &&
-                during.Samples[0].Attempts==1 && during.Samples[0].X==0 && during.Samples[0].MembershipProof==null,
-                "membership changes during capture discard coordinates and proof while preserving the actual attempted native count");
+            Check(during.Sampled==1 && during.Samples[0].CountersChangedDuringCapture && during.Samples[0].Attempts==1 && during.Samples[0].X==31 && during.Samples[0].MembershipProof=="SELECTED_ENTRY_REVALIDATED",
+                "a changed global version can accompany an unchanged revalidated selected entry without claiming a stable whole collection");
             Fixture freeDuring=new Fixture();freeDuring.SetupNative();freeDuring.SetupRoster();freeDuring.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult freeCore=freeDuring.Run();
             ulong freePose=freeDuring.Physical(otherRegion+0x4000);freeDuring.Memory.AfterRead=delegate(ulong at,int length){if(at==freePose && length==48){freeDuring.U32(Fixture.RDict+0x24,0);freeDuring.U32(Fixture.RDict+0x28,1);freeDuring.U32(Fixture.REntries+0x20,0xffffffff);}};
             OtherHeadResult changedFreeList=freeDuring.OtherHeads(freeCore);
-            Check(changedFreeList.Sampled==0 && changedFreeList.StopReason=="CONTEXT_CHANGED" && changedFreeList.Samples[0].Detail.Contains("FirstChangedOffset=4") && changedFreeList.Samples[0].X==0,
-                "the live free-list-change pattern during capture still discards the pose even when another entry was removed");
+            Check(changedFreeList.Sampled==1 && changedFreeList.Samples[0].CountersChangedDuringCapture && changedFreeList.Samples[0].X==31 && freeCore.RosterRemoved==0,
+                "removal of a different entry during capture permits only the unchanged selected-entry observation and leaves the historical roster untouched");
+            Fixture selectedDuring=new Fixture();selectedDuring.SetupNative();selectedDuring.SetupRoster();selectedDuring.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult selectedCore=selectedDuring.Run();
+            ulong selectedPose=selectedDuring.Physical(otherRegion+0x4000);selectedDuring.Memory.AfterRead=delegate(ulong at,int length){if(at==selectedPose && length==48){selectedDuring.U32(Fixture.RDict+0x24,1);selectedDuring.U32(Fixture.RDict+0x28,1);selectedDuring.U32(Fixture.REntries+0x20UL+40UL,0xffffffff);}};
+            OtherHeadResult removedDuring=selectedDuring.OtherHeads(selectedCore);
+            Check(removedDuring.Sampled==0 && removedDuring.StopReason=="CONTEXT_CHANGED" && removedDuring.Samples[0].CountersChangedDuringCapture &&
+                removedDuring.Samples[0].Detail.Contains("Field=OtherMembership.SelectedEntry") && removedDuring.Samples[0].X==0 && removedDuring.Samples[0].MembershipProof==null,
+                "selected-entry removal during capture discards coordinates even though global counter changes are audited separately");
+            Fixture shrinkDuring=new Fixture();shrinkDuring.SetupNative();shrinkDuring.SetupRoster();shrinkDuring.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult shrinkCore=shrinkDuring.Run();
+            ulong shrinkPose=shrinkDuring.Physical(otherRegion+0x4000);shrinkDuring.Memory.AfterRead=delegate(ulong at,int length){if(at==shrinkPose && length==48)shrinkDuring.U32(Fixture.RDict+0x20,1);};
+            OtherHeadResult shrunkDuring=shrinkDuring.OtherHeads(shrinkCore);
+            Check(shrunkDuring.Sampled==0 && shrunkDuring.StopReason=="CONTEXT_CHANGED" && shrunkDuring.Samples[0].Detail.Contains("selected entry index at AFTER") && shrunkDuring.Samples[0].X==0,
+                "the selected index must remain inside the final audited used-slot range");
+            Fixture badFinal=new Fixture();badFinal.SetupNative();badFinal.SetupRoster();badFinal.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult badFinalCore=badFinal.Run();
+            ulong badFinalPose=badFinal.Physical(otherRegion+0x4000);badFinal.Memory.AfterRead=delegate(ulong at,int length){if(at==badFinalPose && length==48)badFinal.U32(Fixture.RDict+0x28,3);};
+            OtherHeadResult invalidFinal=badFinal.OtherHeads(badFinalCore);
+            Check(invalidFinal.Sampled==0 && invalidFinal.StopReason=="SAMPLE_FAILED" && invalidFinal.Samples[0].Detail.Contains("counter bounds Phase=AFTER") && invalidFinal.Samples[0].X==0,
+                "invalid final counter bounds remain a hard failure despite otherwise unchanged selected bytes");
+            Fixture auditBefore=new Fixture();auditBefore.SetupNative();auditBefore.SetupRoster();auditBefore.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult beforeAuditCore=auditBefore.Run();
+            ulong auditBeforeAt=auditBefore.Physical(Fixture.RDict+0x20);uint changingVersion=1;
+            auditBefore.Memory.AfterRead=delegate(ulong at,int length){if(at==auditBeforeAt && length==16)auditBefore.U32(Fixture.RDict+0x2c,++changingVersion);};
+            OtherHeadResult unstableBefore=auditBefore.OtherHeads(beforeAuditCore);
+            Check(unstableBefore.Sampled==0 && unstableBefore.StopReason=="CONTEXT_CHANGED" && unstableBefore.Samples[0].Attempts==0 && unstableBefore.Samples[0].Detail.Contains("audit changed at BEFORE"),
+                "both before-capture header copies must match and an unstable endpoint causes no native attempt");
+            Fixture auditAfter=new Fixture();auditAfter.SetupNative();auditAfter.SetupRoster();auditAfter.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult afterAuditCore=auditAfter.Run();
+            ulong auditAfterAt=auditAfter.Physical(Fixture.RDict+0x20),auditPose=auditAfter.Physical(otherRegion+0x4000);uint afterVersion=1;bool captured=false;
+            auditAfter.Memory.AfterRead=delegate(ulong at,int length){if(at==auditPose && length==48)captured=true;if(captured && at==auditAfterAt && length==16)auditAfter.U32(Fixture.RDict+0x2c,++afterVersion);};
+            OtherHeadResult unstableAfter=auditAfter.OtherHeads(afterAuditCore);
+            Check(unstableAfter.Sampled==0 && unstableAfter.StopReason=="CONTEXT_CHANGED" && unstableAfter.Samples[0].Attempts==1 && unstableAfter.Samples[0].Detail.Contains("audit changed at AFTER") && unstableAfter.Samples[0].X==0,
+                "an unstable final audit discards a native pose without retrying or relaxing endpoint comparisons");
+            Fixture swappedDictionary=new Fixture();swappedDictionary.SetupNative();swappedDictionary.SetupRoster();swappedDictionary.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult swappedCore=swappedDictionary.Run();
+            ulong swappedPose=swappedDictionary.Physical(otherRegion+0x4000);swappedDictionary.Memory.AfterRead=delegate(ulong at,int length){if(at==swappedPose && length==48)swappedDictionary.U64(Fixture.Match+0x128,Fixture.RDict+0x1000);};
+            OtherHeadResult swappedResult=swappedDictionary.OtherHeads(swappedCore);
+            Check(swappedResult.Sampled==0 && swappedResult.Samples.Length==0 && swappedResult.StopReason=="FINAL_CONTEXT_FAILED",
+                "a dictionary pointer swap invalidates the phase rather than treating it as a global counter change");
+            Fixture capacityDuring=new Fixture();capacityDuring.SetupNative();capacityDuring.SetupRoster();capacityDuring.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult capacityCore=capacityDuring.Run();
+            ulong capacityPose=capacityDuring.Physical(otherRegion+0x4000);capacityDuring.Memory.AfterRead=delegate(ulong at,int length){if(at==capacityPose && length==48)capacityDuring.U64(Fixture.REntries+0x18,4);};
+            OtherHeadResult capacityResult=capacityDuring.OtherHeads(capacityCore);
+            Check(capacityResult.Sampled==0 && capacityResult.StopReason=="CONTEXT_CHANGED" && capacityResult.Samples[0].Detail.Contains("Field=OtherMembership.Capacity") && capacityResult.Samples[0].X==0,
+                "a changed entry-array capacity is still rejected independently of the global counter audit");
             Fixture schemaDuring=new Fixture();schemaDuring.SetupNative();schemaDuring.SetupRoster();schemaDuring.SetupOtherHead(Fixture.Other,otherRegion,31);PlayerObjectResult schemaCore=schemaDuring.Run();
             ulong schemaPose=schemaDuring.Physical(otherRegion+0x4000);schemaDuring.Memory.AfterRead=delegate(ulong at,int length){if(at==schemaPose && length==48)schemaDuring.U32(schemaDuring.Module.LoadBias+RosterReference.FieldOffsetRva,0x130);};
             OtherHeadResult changedSchema=schemaDuring.OtherHeads(schemaCore);

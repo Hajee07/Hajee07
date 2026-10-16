@@ -78,7 +78,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=19 ReadOnly=1'
+Record 'ProcessMapVersion=20 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -274,9 +274,9 @@ try {
     $culture = [Globalization.CultureInfo]::InvariantCulture
     foreach ($sample in $otherHeads.Samples) {
         if ($sample.Status -ceq 'SAMPLED_READ_ONLY') {
-            Record "OtherHeadWorldPosition=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) Source=$($sample.Source) X=$($sample.X.ToString('R', $culture)) Y=$($sample.Y.ToString('R', $culture)) Z=$($sample.Z.ToString('R', $culture)) Attempts=$($sample.Attempts) ParentCount=$($sample.ParentCount) Observations=$($sample.Observations) Provider=0x$($sample.Provider.ToString('x')) Transform=0x$($sample.Transform.ToString('x'))"
+            Record "OtherHeadWorldPosition=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Source=$($sample.Source) X=$($sample.X.ToString('R', $culture)) Y=$($sample.Y.ToString('R', $culture)) Z=$($sample.Z.ToString('R', $culture)) Attempts=$($sample.Attempts) ParentCount=$($sample.ParentCount) Observations=$($sample.Observations) Provider=0x$($sample.Provider.ToString('x')) Transform=0x$($sample.Transform.ToString('x'))"
         } else {
-            Record "OtherHeadWorldPosition=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) Attempts=$($sample.Attempts) Detail=$($sample.Detail)"
+            Record "OtherHeadWorldPosition=$($sample.Status) RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) Class=$($sample.Class) MembershipProof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Attempts=$($sample.Attempts) Detail=$($sample.Detail)"
             if ($sample.Status -ceq 'FAIL') { $failed = $true }
         }
     }

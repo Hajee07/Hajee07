@@ -1,15 +1,10 @@
-# V19 bounded nonlocal head samples
+# V20 bounded nonlocal head samples
 
-The sections below record the original V17/V18 design; the V19 membership
-contract and current validation are specified in the final section.
-
-
-V16 verified the observed match dictionary's 14 objects (local plus 13 others),
-including Player_Watching. It also repeated the live local-head sample after
-rejecting one moving pose. V17 adds at most two nonlocal head samples. Its V17 Windows run was blocked by an unstable local pose and collection
-snapshot; no other-head sample was attempted. Live other-head validation remains
-pending. No enemy/team/alive/visibility classification
-or aim-control write is implemented.
+The sections below preserve the earlier V17-V19 design and results. The current
+V20 selected-entry contract and validation are specified in the final section.
+V19 verified a live local position and 12 collection objects, but rejected its
+nonlocal result on a global free-list change. No live nonlocal XYZ is yet
+accepted. Team/alive/visibility classification and aim writes remain absent.
 
 ## Reuse and membership
 
@@ -163,3 +158,72 @@ free-list/selected-key changes, final schema invalidation, precise native field
 labels and accurate rejected-row attempt counts. Existing distinct two-head,
 model-cache, motion, identity-failure and read-budget tests still pass. Live V19
 head sampling remains pending; no target classification or aim write is added.
+
+## V20 selected-entry revalidation with endpoint counter audits
+
+V19's latest failure was Field=OtherMembership.Counters, FirstChangedOffset=4,
+a global free-list change during capture. That does not identify which entry
+changed. A single dictionary's version/free-list is collection-wide state;
+selected entry identity and supported Player/Transform ancestry are separate
+checks. V20 reports this distinction instead of requiring unrelated header
+bytes to stay constant throughout a long native read.
+
+The optional observation contract is now SELECTED_ENTRY_REVALIDATED:
+
+- The existing exact typed schema and field/code registration are still
+  captured at phase start and rechecked at phase end.
+- The same current game/match/local player, dictionary/class, entry array/class
+  and exact capacity must match the previously verified storage and remain
+  identical in the per-member snapshot recheck.
+- Before capture, read the 16-byte counter header twice via the existing live
+  virtual reader. Both copies must match. Used <=256, free <=used, the signed
+  free-list is -1 or an index below used, capacity covers used and stays <=8192,
+  and the selected slot must be inside used. An unstable endpoint stops with
+  NOT_READY_CONTEXT_CHANGED; malformed counters fail.
+- The exact original 40-byte selected entry must match, with active signed
+  hash, bounded next link and the same stored key/value bytes. Supported object
+  class/parents, nonlocal marker, original hotfix path and own managed/native
+  head are still independently checked.
+- After the native observation, perform another pair of matching counter
+  reads and repeat the bounds/index checks. The selected next link must fit
+  this final used count as well. Then recheck all selected entry, object,
+  provider/Transform and other managed snapshots plus process context.
+- Only after all per-member checks pass is the proof assigned and XYZ copied
+  into a successful output row. Phase-wide final checks can still discard all
+  tentative rows. Removed/changed selected entries, replaced storage, capacity
+  changes and native identity errors are not excused by the counter audit.
+
+CountersChangedSinceRoster compares the first audit with the historical roster
+header. CountersChangedDuringCapture compares the before/after audited headers.
+The latter reports observed endpoint differences, not every intervening update;
+false does not prove that no change or ABA occurred. On a rejected row an audit
+may not have completed, so flags alone are never a membership proof. Counter
+contents and account/key data are not printed. The historical roster result is
+never rewritten or claimed current.
+
+A version/free-list change during the interval may accompany an accepted
+selected-entry observation if both audited endpoints are bounded and the exact
+selected entry and identities pass. It does not establish that only other
+entries changed or that the selected object stayed continuously present. There
+is no root, lock, pause or atomic transaction; selected removal/reinsertion or
+address reuse returning to identical bytes can escape rereads, as can other
+ABA/lifetime races. This output is a bounded read-only observation, not a safe
+handle, synchronized frame or permission to dereference the pointer later.
+
+The global 30000-call/120-second limits and optional 6000-call phase / 1000-call
+final reserve are unchanged. Only four bounded 16-byte header reads per completed
+member are used; no polling/retry loop is added. Native offsets/math/comparisons
+and three TRS-only attempts are unchanged. The simple fixture uses 3364 extra
+physical calls and 158 per-object snapshot observations plus separate counter/
+schema checks. The deep fixture still stops at its read cap and completes final
+checks at 5699 extra calls.
+
+248 offline checks pass: 51 core/kernel, 31 module, 30 metadata and 136 object/
+native/collection cases. The changed contract is explicitly tested: another
+entry's removal or a global version change during capture can preserve the
+selected observation, while selected removal/key changes, a shrunken final
+used range, invalid final counts, unstable before/after header copies, replaced
+dictionary, changed capacity/schema and native identity failures reject it.
+Existing two-head, model-cache, motion and shared-budget cases still pass. Live
+V20 nonlocal validation remains pending; no enemy/visibility or aim-write path
+has been introduced.

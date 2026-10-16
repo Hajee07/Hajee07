@@ -152,3 +152,14 @@ same original entry bytes, current bounds and supported object, then holds
 that fresh context stable through capture. It does not relabel the earlier
 roster report as current or complete. See OTHER-HEAD-EVIDENCE.md for the updated
 selected-entry contract and its limitations.
+
+## V20 counter audit belongs to a selected observation
+
+The full roster stage is unchanged. In the later optional head phase, the
+selected entry and storage/object snapshot must still match exactly, while
+collection-wide counters are audited twice at each endpoint rather than held
+constant across the interval. Output uses SELECTED_ENTRY_REVALIDATED and reports
+observed header differences. This is a revised selected-observation contract,
+not proof of continuous membership or a stable whole dictionary. Selected
+changes still reject XYZ. See OTHER-HEAD-EVIDENCE.md for all endpoint, read-bound
+and lifetime limitations.

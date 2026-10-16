@@ -9,7 +9,7 @@ namespace HeadBridge.Mapping
         public ulong Player,Provider,Transform;
         public string Class,Status,Source,Detail;
         public string MembershipProof;
-        public bool CountersChangedSinceRoster;
+        public bool CountersChangedSinceRoster,CountersChangedDuringCapture;
         public float X,Y,Z;
     }
     public sealed class OtherHeadResult
@@ -41,6 +41,16 @@ namespace HeadBridge.Mapping
             uint dictionarySize=schema.Word(core.RosterClass+0xf8);Expect(dictionarySize>=80 && dictionarySize<=1048576,"other-head dictionary storage size");
             RosterArray(schema,core.RosterEntries,layout);
         }
+        private byte[] OtherCounterAudit(GameProcess game,PlayerObjectResult core,MatchPlayerObservation member,string phase)
+        {
+            byte[] first=Virtual(game.Root,core.RosterDictionary+0x20,16),second=Virtual(game.Root,core.RosterDictionary+0x20,16);
+            OtherContext(EqualBytes(first,second),"counter audit changed at "+phase);
+            uint used=BitConverter.ToUInt32(second,0),free=BitConverter.ToUInt32(second,8);int freeList=BitConverter.ToInt32(second,4);
+            Expect(used<=256 && free<=used && freeList>=-1 && (freeList==-1 || (uint)freeList<used),"other-head current collection counter bounds Phase="+phase);
+            Expect(core.RosterCapacity>=used && core.RosterCapacity<=8192,"other-head current entry-array capacity Phase="+phase);
+            OtherContext(member.EntryIndex>=0 && member.EntryIndex<used,"selected entry index at "+phase);
+            return second;
+        }
         private void ReadOtherHead(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,
             PlayerObjectResult core,MatchPlayerObservation member,int rosterIndex,OtherHeadObservation sample,Action<string> progress)
         {
@@ -51,17 +61,14 @@ namespace HeadBridge.Mapping
                 reads.Value(core.Match+0xd8,"OtherMembership.LocalPlayer")==core.LocalPlayer,"current game/match/local player");
             OtherContext(reads.Value(core.Match+0x128,"OtherMembership.Dictionary")==core.RosterDictionary && reads.Value(core.RosterDictionary,"OtherMembership.DictionaryClass")==core.RosterClass &&
                 reads.Value(core.RosterDictionary+0x18,"OtherMembership.Entries")==core.RosterEntries,"collection identity");
-            // A roster report is an earlier observation. Revalidate this selected
-            // entry against fresh typed storage, then hold the fresh counters
-            // stable through capture. Never merge or recalculate the old roster.
-            byte[] counters=reads.Read(core.RosterDictionary+0x20,16,"OtherMembership.Counters");
-            uint used=BitConverter.ToUInt32(counters,0),free=BitConverter.ToUInt32(counters,8);int freeList=BitConverter.ToInt32(counters,4);
-            Expect(used<=256 && free<=used && freeList>=-1 && (freeList==-1 || (uint)freeList<used),"other-head current collection counter bounds");
+            // Global counters can change when a different member is removed.
+            // Audit bounded endpoint headers separately; the selected entry,
+            // storage and object identity still use exact snapshot rechecks.
+            byte[] counters=OtherCounterAudit(game,core,member,"BEFORE");uint used=BitConverter.ToUInt32(counters,0);
             sample.CountersChangedSinceRoster=!EqualBytes(counters,core.RosterCounterSnapshot);
             OtherContext(reads.Value(core.RosterEntries,"OtherMembership.ArrayClass")==core.RosterArrayClass &&
                 reads.Value(core.RosterEntries+0x18,"OtherMembership.Capacity")==core.RosterCapacity,"entry array identity/length");
-            Expect(core.RosterCapacity>=used && core.RosterCapacity<=8192,"other-head current entry-array capacity");
-            OtherContext(member.EntryIndex>=0 && member.EntryIndex<used && member.EntrySnapshot!=null && member.EntrySnapshot.Length==40,"selected entry index");
+            OtherContext(member.EntrySnapshot!=null && member.EntrySnapshot.Length==40,"selected entry fingerprint length");
             byte[] entry=reads.Read(core.RosterEntries+0x20UL+(ulong)member.EntryIndex*40UL,40,"OtherMembership.SelectedEntry");
             OtherContext(EqualBytes(entry,member.EntrySnapshot),"selected entry fingerprint");
             int next=BitConverter.ToInt32(entry,4);Expect(BitConverter.ToInt32(entry,0)>=0 && next>=-1 && next<used,"other-head selected active entry/link");
@@ -80,8 +87,11 @@ namespace HeadBridge.Mapping
             try { ReadNativeHeadPosition(game,module,head,note); }
             catch(NativeHeadMotionException error){head.HeadWorldStatus="NOT_READY_MOTION";head.HeadWorldError=error.Message;}
             finally { sample.Attempts=head.HeadSampleAttempts; }
-            Recheck(kernel,game);int observations=reads.Recheck();Recheck(kernel,game);
-            sample.MembershipProof="FRESH_SELECTED_ENTRY";
+            Recheck(kernel,game);byte[] finalCounters=OtherCounterAudit(game,core,member,"AFTER");
+            sample.CountersChangedDuringCapture=!EqualBytes(counters,finalCounters);
+            int finalNext=BitConverter.ToInt32(entry,4);Expect(finalNext>=-1 && finalNext<BitConverter.ToUInt32(finalCounters,0),"other-head selected final link bound");
+            int observations=reads.Recheck();Recheck(kernel,game);
+            sample.MembershipProof="SELECTED_ENTRY_REVALIDATED";
             sample.Status=head.HeadWorldStatus=="SAMPLED_READ_ONLY" ? head.HeadWorldStatus : head.HeadStatus!="MANAGED_TRANSFORM_VERIFIED" ? head.HeadStatus : head.HeadWorldStatus;
             sample.Detail=head.HeadWorldError;sample.ParentCount=head.HeadParentCount;sample.Observations=observations+head.HeadWorldObservations;
             if(sample.Status=="SAMPLED_READ_ONLY"){sample.X=head.HeadWorldX;sample.Y=head.HeadWorldY;sample.Z=head.HeadWorldZ;}

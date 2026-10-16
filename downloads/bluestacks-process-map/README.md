@@ -7,35 +7,30 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 19.** The latest V18 user report passed exact module/layout
-checks and verified 14 dictionary objects, including one local and 13 others.
-Its native local-head identity changed, so no local XYZ was accepted. The saved
-collection context had changed before the other-head read started; V18 combines
-pointer and counter mismatches in that message, so it does not identify which.
-An earlier V18 run sampled the local head and verified 15 objects, but discarded
-the other-head result when the free-list header changed during capture. All
-cleanup stages passed in both runs. The native changed field cannot be named
-from V18's address-only diagnostic.
+**Current version: 20.** The user's V19 run passed exact module/layout, local
+managed head, local native position on attempt two, and 12 observed dictionary
+objects (one local plus 11 others). The optional head result was discarded when
+the global free-list field changed during capture. That header change does not
+establish which entry changed. All cleanup stages passed; no live nonlocal XYZ
+has yet been accepted.
 
-V19 revalidates selected membership at sample time. It checks the current typed
-dictionary/entry-array schema, bounded fresh counters, exact original entry
-bytes, supported object class and nonlocal marker. Prior counter changes do
-not by themselves reject a still-identical selected entry. All fresh counters,
-selected bytes and context must remain unchanged through that capture; a change
-still discards coordinates. The earlier roster report is never revised or
-claimed current. New output identifies FRESH_SELECTED_ENTRY proof and whether
-counters differed from that earlier report. See OTHER-HEAD-EVIDENCE.md.
+V20 distinguishes selected-entry verification from a whole-collection snapshot.
+It audits bounded counters before and after capture, using two identical quick
+copies at each endpoint. Differences between those two endpoints are reported
+as CountersChangedDuringCapture; they do not alone invalidate the selected
+entry. The exact selected 40-byte entry, dictionary/array identity and capacity,
+object class/local marker, head provider/Transform and native hierarchy still
+must pass all snapshot checks. If the selected member or storage changed, its
+pose is discarded. The endpoint headers must both be valid and cover the
+selected slot. No full roster is refreshed or claimed stable. See
+OTHER-HEAD-EVIDENCE.md for this revised observation contract and its limits.
 
-Native snapshot errors now include field labels. Native identity changes still
-fail immediately; only TRS motion gets the existing three bounded attempts.
-Rejected other-head rows preserve actual attempt counts. No native offset or
-comparison was changed. 241 offline checks pass; live V19 validation is pending.
-
-At most two nonlocal members are attempted. The phase still has a 6000-call
-additional ceiling, reserving 1000 for final schema/code/process checks; global
-30000-call/120-second limits are unchanged. V18's bounded collection retry and
-unavailable-motion statuses remain. An unavailable local pose does not prevent
-an independent other-head observation.
+Accepted membership is labelled SELECTED_ENTRY_REVALIDATED. No lock, GC root,
+VM pause or lifetime guarantee is provided. Native comparisons, motion retries,
+phase-wide exact schema/code checks and read limits remain unchanged. At most
+two nonlocal members are attempted, with a 6000-call outer ceiling and 1000
+reserved for final checks, within the same 30000-call/120-second global bounds.
+248 offline checks pass; live V20 validation is pending.
 
 Team/alive/visibility semantics and aim writes remain unimplemented. No target
 classification is inferred from these samples.

@@ -452,3 +452,29 @@ reject the pose, and no roster report is refreshed or merged. Native snapshots
 add field labels without weakening validation. Rejected rows preserve actual
 attempt counts. 241 offline checks pass; live V19 sampling and all team/alive/
 visibility/aim integration remain pending.
+
+## V19 live result and V20 selected-entry endpoint observation
+
+V19 guest PID 4356 / host PID 14916 passed exact module/layout (80 checks twice),
+managed local head and a native sample on attempt two after rejecting TRS motion
+on attempt one. Local XYZ=68.11773,12.7306881,17.23389; hierarchy capacity=236,
+parents=9, native observations=105. The dictionary had 14 used slots, 2 removed,
+12 active/unique verified objects: one local and 11 others. A Watching object
+was among them. Collection observations=122.
+
+The first other member resolved its own 23-entry model-cache head and made one
+native attempt, then failed the fresh counter recheck at dictionary+0x20,
+first changed byte 4 (global free-list +0x24). CountersChangedSinceRoster was
+true as well. This does not establish which entry was affected. No other XYZ
+or membership proof was accepted. Optional-phase calls=5089; total=24501;
+cache hits=3809. All cleanup stages passed.
+
+V20 changes the optional phase's contract from global-header stability to
+selected-entry revalidation with bounded endpoint counter audits. Two identical
+16-byte copies are required at each endpoint; both must satisfy count/free-list/
+capacity/index bounds. Different endpoint values are reported, while the exact
+selected entry, storage pointers/classes/capacity, object and head/native
+snapshots remain checked. Selected-member changes still discard the pose. This
+is an observation without a lock or lifetime guarantee, not a stable full
+collection snapshot. Native code and comparison rules are unchanged. All 248
+offline checks pass. Live V20 nonlocal sampling and aim integration are pending.

@@ -1,11 +1,11 @@
 # Standalone head-direction DLL core
 
-Current process probe: **V19**. Recent V18 runs verified the observed player
-dictionary but rejected other-head samples when collection context changed before or
-during capture. The latest run also rejected a changed local native identity.
-V19 uses fresh selected-entry membership with exact storage/type/context checks,
-retains strict rejection of capture-time changes, and labels native fields in
-errors. 241 offline checks pass; live V19 validation is pending.
+Current process probe: **V20**. V19 passed the local head sample and 12 observed
+dictionary objects, then discarded the other-head result on a changed global
+free-list field. V20 audits global counters at both capture endpoints while
+requiring the selected entry and all storage/object/native identities to pass
+exact rechecks. It reports counter changes without claiming a stable whole
+collection. 248 offline checks pass; live V20 validation is pending.
 See [the probe instructions](bluestacks-process-map/README.md).
 Team/alive/visibility semantics and aim control remain incomplete.
 
