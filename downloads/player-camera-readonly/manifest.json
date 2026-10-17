@@ -9,6 +9,11 @@
       "sha256": "2aa91ed418aa76499110fb44c7022ef25512c8a5cde006daeb95188a0c4354d4"
     },
     {
+      "name": "Compare-CameraCaptures.ps1",
+      "bytes": 2524,
+      "sha256": "f38e1b1ae6ddbd26e334467ca7cdf31ccd0a1f37fd2e108b4d09fa63cd41b959"
+    },
+    {
       "name": "GuestProcessMap.Diagnostics.cs",
       "bytes": 27981,
       "sha256": "8fc5f06d029bb61b7e834347b80f9aaf25f6c22d8aa345440e077564c6c1b712"
@@ -30,8 +35,13 @@
     },
     {
       "name": "README.md",
-      "bytes": 6433,
-      "sha256": "adb76b3acaa99eafe07f6cfbaf1b457810f86bd8b3909ceecf56ffc6c05f9bc9"
+      "bytes": 6927,
+      "sha256": "ecd889d00ed5ed3912b6bd43fc981a017e630d707b16dfeec68aa050f225ed93"
+    },
+    {
+      "name": "Run-CameraComparison.ps1",
+      "bytes": 1507,
+      "sha256": "fdcdcd83dd4b1951f8fcec453f1b4c043a07e6abb0509b884dc7dd79d3b180a9"
     },
     {
       "name": "Run-Checks.ps1",
@@ -42,6 +52,11 @@
       "name": "Run-PlayerCamera.ps1",
       "bytes": 26866,
       "sha256": "6a92614adcd245ed6e611f60d389b94264fc70b055a110ff815982a3a3f34625"
+    },
+    {
+      "name": "Test-CameraComparison.ps1",
+      "bytes": 1882,
+      "sha256": "1861c33bb3fe3b4f0432b4227d67b4991f0b8070037906991696d2445cdd27f9"
     },
     {
       "name": "Test-CompilerCompatibility.ps1",
@@ -57,6 +72,11 @@
       "name": "evidence/checks.txt",
       "bytes": 1583,
       "sha256": "b0907e06726745b915da5b42c9b9f05662771d825f9bcac6c55873bd837a51f9"
+    },
+    {
+      "name": "evidence/comparison.txt",
+      "bytes": 167,
+      "sha256": "29c48059859a589d67174f50aa2815aed74f3279659ff3ce077be215b89675a8"
     },
     {
       "name": "evidence/compiler-compatibility.txt",

@@ -1,6 +1,6 @@
 {
-  "package_sha256": "2bf2571df872d590118d75c77b1e8612efe4a56cdbb114c9130b965778d72249",
-  "extracted_extension_manifest_files": 17,
+  "package_sha256": "fd43862f447ad80e2684d388d7aa760267d0fba3b8a7c72b29754a876e54bbfb",
+  "extracted_extension_manifest_files": 21,
   "unchanged_baseline_files": 124,
   "extracted_camera_assertions": 27,
   "inherited_suite_pass_lines": 1028,

@@ -104,3 +104,5 @@ accuracy or validate active rendering.
 PowerShell compatibility fix: compiler options are supplied only when Add-Type exposes that parameter. Both parameter surfaces are covered by Test-CompilerCompatibility.ps1. Live Windows capture remains unverified.
 
 Probe version 3 resolves live mappings before and after every data read. Cached translations cannot select an unvalidated data page. Changes during reads remain fatal and evict the cache entry. Local-context failures now carry LOCAL_CONTEXT. Offline: 27 assertions pass. Additional validation can exhaust existing retry budgets; no stale coordinates are returned. Live Windows validation is pending.
+
+Run-CameraComparison.ps1 guides three fresh captures: initial, manually turn right, then manually tilt up. It compares full quaternion angular changes only, including q/-q equivalence. It does not infer turn direction or certify rendered-camera correspondence. Stay stationary and stop turning before typing READY. Share the resulting JSON and, if available, a recording of the three on-screen views. Same process/player/managed transform required. Failed or invalid captures stop the helper.

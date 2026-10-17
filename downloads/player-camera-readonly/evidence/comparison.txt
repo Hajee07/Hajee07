@@ -1,0 +1,1 @@
+PASS: known 30 degree rotation; q/-q equivalence; reject identity mismatch, failed capture, duplicate field, nonfinite quaternion. Windows guided interaction pending.
