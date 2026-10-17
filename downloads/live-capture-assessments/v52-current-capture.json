@@ -1,0 +1,51 @@
+{
+  "evidence_scope": "USER_SUPPLIED_LIVE_OBSERVATION_PARSED_IN_CLOUD; NOT INDEPENDENT LIVE VALIDATION",
+  "assessment": {
+    "Assessment": "OFFLINE_REPORT_ONLY_LIVE_BINDING_UNBOUND",
+    "ReportSHA256": "6f6942dd27dcc4caeb8e740d26f48f2e30a557bbe57b87a2a1839e4b41bae6a5",
+    "RunnerVersion": 52,
+    "NativePoseReportChecks": "PASS",
+    "ControllerStatusReported": "REGISTERED_CAMERA_NATIVE_LINK_MATCH",
+    "ReportedAdditionalReads": 5199,
+    "CameraVerifiedProof": "Unknown",
+    "CoherentFrameProof": "Unknown",
+    "GenerationAwareTargetIdentityProof": "Unknown",
+    "FullCombatEligibilityProof": "Unknown",
+    "AuthoritativeLosProof": "Unknown",
+    "CompleteCollisionGeometry": "Not supplied",
+    "AimOutputAdapter": "Unbound",
+    "LiveBindingReady": false,
+    "MissingContracts": [
+      "coherent observation and target lifetime",
+      "active game camera and shot convention",
+      "full hostility/attackability proof",
+      "authoritative collision query or complete matching geometry",
+      "verified output adapter with application-time checks"
+    ],
+    "GameFunctionsInvoked": false,
+    "AimWrites": "NONE"
+  },
+  "reported": {
+    "host_pid": 23976,
+    "guest_pid": 2937,
+    "total_physical_reads": 24272,
+    "optional_aim_reads": 5199,
+    "roster_players": 13,
+    "nonlocal_objects": 12,
+    "nonlocal_head_samples": 0,
+    "watching_class_present": true,
+    "initial_head_motion_attempt_rejected": true,
+    "local_head_accepted_attempt": 2,
+    "getter_gate": "NOT_READY_GETTER_METADATA_INITIALIZATION",
+    "getter_metadata_raw": 0,
+    "camera_null_data": "ORIGINAL_NULL_COMPARISON_DATA_VERIFIED",
+    "cleanup": "PASS",
+    "aim_writes": "NONE"
+  },
+  "validation": {
+    "strict_existing_parser": "PASS",
+    "missing_cleanup_fixture": "REJECTED"
+  },
+  "live_binding_enabled": false,
+  "runtime_modified": false
+}
