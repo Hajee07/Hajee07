@@ -236,3 +236,29 @@ Reproduce with Capstone 5.0.3 available to Python:
 `python3 Audit-HitAssociation.py libil2cpp.so global-metadata.dat report.json`.
 The sibling pinned hit-query report is a required input. Windows remains V52;
 this source inspection does not require another Windows run.
+
+## Declared attackable interface and slot 4
+
+[Inspector](Audit-AttackableInterface.py) and [report](attackable-interface.json)
+catalog all 22 methods of interface `COW.GamePlay.OGKFEMJNCGM` (type 31910).
+The helper's fallback dispatch argument and fast-path slot addition both select
+slot 4, declared as parameterless boolean `IsStreamerVisible`. The reference
+through source cell `0xa7b7520` leads to a raw type-usage marker matching this
+interface's byval descriptor index. This is source identity evidence, not a
+captured runtime class pointer or resolved concrete method.
+
+The interface separately declares Position, attackable center, damage position,
+locked collider and other eligibility methods. These names do not establish a
+head coordinate or visibility policy. In particular, `IsStreamerVisible` must
+not be substituted for head LOS merely because of its name. Concrete dispatch,
+implementation semantics, hotfix selection and object lifetime remain unknown.
+No listed setter, damage/healing method or other game function was invoked.
+
+Validation: 22 distinct method declarations with slots 0–21, boolean return and
+zero parameters for slot 4, matching type descriptor/usage marker, and three
+source anchors checked. Capstone independently decoded the fallback slot 4,
+fast-path addition of 4, and indirect call. Regeneration was byte-identical;
+an incorrect ELF was rejected. Runtime V52 remains unchanged.
+
+Reproduce: `python3 Audit-AttackableInterface.py libil2cpp.so global-metadata.dat report.json`
+with the pinned inputs and sibling parser. No new Windows capture is required.

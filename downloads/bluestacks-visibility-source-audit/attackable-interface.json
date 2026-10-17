@@ -1,0 +1,476 @@
+{
+  "audit_version": 1,
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "scope": "OFFLINE DECLARATION AND SLOT EVIDENCE; NO CONCRETE IMPLEMENTATION",
+  "interface_index": 31910,
+  "interface_name": "COW.GamePlay.OGKFEMJNCGM",
+  "methods": [
+    {
+      "index": 215833,
+      "name": "get_Position",
+      "slot": 0,
+      "return_type": {
+        "index": 72177,
+        "rva": 182051808,
+        "kind": 17,
+        "data": 40979,
+        "name": "UnityEngine.Vector3"
+      },
+      "parameters": [],
+      "flags": 3526
+    },
+    {
+      "index": 215834,
+      "name": "get_Rotation",
+      "slot": 1,
+      "return_type": {
+        "index": 48431,
+        "rva": 182039152,
+        "kind": 17,
+        "data": 40980,
+        "name": "UnityEngine.Quaternion"
+      },
+      "parameters": [],
+      "flags": 3526
+    },
+    {
+      "index": 215835,
+      "name": "get_gameObject",
+      "slot": 2,
+      "return_type": {
+        "index": 36684,
+        "rva": 182027488,
+        "kind": 18,
+        "data": 41050,
+        "name": "UnityEngine.GameObject"
+      },
+      "parameters": [],
+      "flags": 3526
+    },
+    {
+      "index": 215836,
+      "name": "IsVisible",
+      "slot": 3,
+      "return_type": {
+        "index": 25355,
+        "rva": 182019280,
+        "kind": 2,
+        "data": 37476,
+        "name": null
+      },
+      "parameters": [],
+      "flags": 1478
+    },
+    {
+      "index": 215837,
+      "name": "IsStreamerVisible",
+      "slot": 4,
+      "return_type": {
+        "index": 25355,
+        "rva": 182019280,
+        "kind": 2,
+        "data": 37476,
+        "name": null
+      },
+      "parameters": [],
+      "flags": 1478
+    },
+    {
+      "index": 215838,
+      "name": "get_IsDead",
+      "slot": 5,
+      "return_type": {
+        "index": 25355,
+        "rva": 182019280,
+        "kind": 2,
+        "data": 37476,
+        "name": null
+      },
+      "parameters": [],
+      "flags": 3526
+    },
+    {
+      "index": 215839,
+      "name": "GetAttackableRadius",
+      "slot": 6,
+      "return_type": {
+        "index": 50621,
+        "rva": 182042176,
+        "kind": 12,
+        "data": 37579,
+        "name": null
+      },
+      "parameters": [],
+      "flags": 1478
+    },
+    {
+      "index": 215840,
+      "name": "GetAttackableCenterWS",
+      "slot": 7,
+      "return_type": {
+        "index": 72177,
+        "rva": 182051808,
+        "kind": 17,
+        "data": 40979,
+        "name": "UnityEngine.Vector3"
+      },
+      "parameters": [],
+      "flags": 1478
+    },
+    {
+      "index": 215841,
+      "name": "GetHitDamagePos",
+      "slot": 8,
+      "return_type": {
+        "index": 72177,
+        "rva": 182051808,
+        "kind": 17,
+        "data": 40979,
+        "name": "UnityEngine.Vector3"
+      },
+      "parameters": [],
+      "flags": 1478
+    },
+    {
+      "index": 215842,
+      "name": "get_LockedAimingCollider",
+      "slot": 9,
+      "return_type": {
+        "index": 29508,
+        "rva": 182179120,
+        "kind": 18,
+        "data": 43051,
+        "name": "UnityEngine.Collider"
+      },
+      "parameters": [],
+      "flags": 3526
+    },
+    {
+      "index": 215843,
+      "name": "set_LockedAimingCollider",
+      "slot": 10,
+      "return_type": {
+        "index": 72608,
+        "rva": 182846000,
+        "kind": 1,
+        "data": 37620,
+        "name": null
+      },
+      "parameters": [
+        {
+          "name": "BOKHFCBMCAB",
+          "type": {
+            "index": 29508,
+            "rva": 182179120,
+            "kind": 18,
+            "data": 43051,
+            "name": "UnityEngine.Collider"
+          }
+        }
+      ],
+      "flags": 3526
+    },
+    {
+      "index": 215844,
+      "name": "NeedAssit",
+      "slot": 11,
+      "return_type": {
+        "index": 25355,
+        "rva": 182019280,
+        "kind": 2,
+        "data": 37476,
+        "name": null
+      },
+      "parameters": [],
+      "flags": 1478
+    },
+    {
+      "index": 215845,
+      "name": "CanAssitByWeapon",
+      "slot": 12,
+      "return_type": {
+        "index": 25355,
+        "rva": 182019280,
+        "kind": 2,
+        "data": 37476,
+        "name": null
+      },
+      "parameters": [
+        {
+          "name": "GGNHNJGOHNH",
+          "type": {
+            "index": 47671,
+            "rva": 182038528,
+            "kind": 18,
+            "data": 31824,
+            "name": "COW.GamePlay.Player"
+          }
+        },
+        {
+          "name": "CCKJDJEMBPM",
+          "type": {
+            "index": 37275,
+            "rva": 182298688,
+            "kind": 18,
+            "data": 32785,
+            "name": "COW.GamePlay.HBIBDMMOOOK"
+          }
+        }
+      ],
+      "flags": 1478
+    },
+    {
+      "index": 215846,
+      "name": "IsSameTeamWithPlayerID",
+      "slot": 13,
+      "return_type": {
+        "index": 25355,
+        "rva": 182019280,
+        "kind": 2,
+        "data": 37476,
+        "name": null
+      },
+      "parameters": [
+        {
+          "name": "JHMDMEEIHOC",
+          "type": {
+            "index": 24174,
+            "rva": 182017664,
+            "kind": 17,
+            "data": 34565,
+            "name": "COW.GamePlay.BEADLMGGGGL"
+          }
+        }
+      ],
+      "flags": 1478
+    },
+    {
+      "index": 215847,
+      "name": "get_CanBeLockedByAimAssist",
+      "slot": 14,
+      "return_type": {
+        "index": 25355,
+        "rva": 182019280,
+        "kind": 2,
+        "data": 37476,
+        "name": null
+      },
+      "parameters": [],
+      "flags": 3526
+    },
+    {
+      "index": 215848,
+      "name": "get_IsMovableEntity",
+      "slot": 15,
+      "return_type": {
+        "index": 25355,
+        "rva": 182019280,
+        "kind": 2,
+        "data": 37476,
+        "name": null
+      },
+      "parameters": [],
+      "flags": 3526
+    },
+    {
+      "index": 215849,
+      "name": "CanAssistByUGC",
+      "slot": 16,
+      "return_type": {
+        "index": 25355,
+        "rva": 182019280,
+        "kind": 2,
+        "data": 37476,
+        "name": null
+      },
+      "parameters": [
+        {
+          "name": "BOHHIDJAJCE",
+          "type": {
+            "index": 50621,
+            "rva": 182042176,
+            "kind": 12,
+            "data": 37579,
+            "name": null
+          }
+        }
+      ],
+      "flags": 1478
+    },
+    {
+      "index": 215850,
+      "name": "GetUGCEntityID",
+      "slot": 17,
+      "return_type": {
+        "index": 51369,
+        "rva": 182043168,
+        "kind": 14,
+        "data": 37434,
+        "name": null
+      },
+      "parameters": [],
+      "flags": 1478
+    },
+    {
+      "index": 215851,
+      "name": "GetAttackableID",
+      "slot": 18,
+      "return_type": {
+        "index": 71579,
+        "rva": 182050048,
+        "kind": 9,
+        "data": 37607,
+        "name": null
+      },
+      "parameters": [],
+      "flags": 1478
+    },
+    {
+      "index": 215852,
+      "name": "GetAttackableType",
+      "slot": 19,
+      "return_type": {
+        "index": 44679,
+        "rva": 182411392,
+        "kind": 17,
+        "data": 2896,
+        "name": "message.NAKCPFCOHMH"
+      },
+      "parameters": [],
+      "flags": 1478
+    },
+    {
+      "index": 215853,
+      "name": "TakeDamage",
+      "slot": 20,
+      "return_type": {
+        "index": 72608,
+        "rva": 182846000,
+        "kind": 1,
+        "data": 37620,
+        "name": null
+      },
+      "parameters": [
+        {
+          "name": "INBDALGGDLH",
+          "type": {
+            "index": 37723,
+            "rva": 182305728,
+            "kind": 18,
+            "data": 33965,
+            "name": "COW.GamePlay.HNLIMBLIANL"
+          }
+        },
+        {
+          "name": "FFDDBCAKLJP",
+          "type": {
+            "index": 46804,
+            "rva": 182444496,
+            "kind": 18,
+            "data": 32549,
+            "name": "COW.GamePlay.PIAEKELILCJ"
+          }
+        },
+        {
+          "name": "PNLJGJBALAB",
+          "type": {
+            "index": 14113,
+            "rva": 174201584,
+            "kind": 21,
+            "data": 0,
+            "name": null
+          }
+        },
+        {
+          "name": "DKDBBODEMGA",
+          "type": {
+            "index": 71595,
+            "rva": 182050304,
+            "kind": 9,
+            "data": 37607,
+            "name": null
+          }
+        }
+      ],
+      "flags": 1478
+    },
+    {
+      "index": 215854,
+      "name": "TakeHealing",
+      "slot": 21,
+      "return_type": {
+        "index": 72608,
+        "rva": 182846000,
+        "kind": 1,
+        "data": 37620,
+        "name": null
+      },
+      "parameters": [
+        {
+          "name": "BAFJKOFOLAG",
+          "type": {
+            "index": 41628,
+            "rva": 182364432,
+            "kind": 18,
+            "data": 34645,
+            "name": "COW.GamePlay.LEIDIKFIFNH"
+          }
+        },
+        {
+          "name": "PNLJGJBALAB",
+          "type": {
+            "index": 14113,
+            "rva": 174201584,
+            "kind": 21,
+            "data": 0,
+            "name": null
+          }
+        }
+      ],
+      "flags": 1478
+    }
+  ],
+  "usage_reference": {
+    "got_cell_rva": 175863072,
+    "storage_rva": 180572920,
+    "raw_word": 536962617,
+    "byval_descriptor_index": 45852,
+    "expected_type_usage_word": 536962617,
+    "status": "MATCHES_TYPE_USAGE_MARKER_FORM; NOT A LIVE CLASS POINTER"
+  },
+  "dispatch": {
+    "helper_rva": 117019168,
+    "slot": 4,
+    "declared_method": "IsStreamerVisible",
+    "fallback_slot_argument_rva": 117019604,
+    "fast_path_slot_add_rva": 117019628,
+    "indirect_call_rva": 117019648,
+    "concrete_target": "UNRESOLVED",
+    "source_anchors": [
+      {
+        "rva": 117019604,
+        "word_hex": "82008052"
+      },
+      {
+        "rva": 117019628,
+        "word_hex": "08110011"
+      },
+      {
+        "rva": 117019648,
+        "word_hex": "00013fd6"
+      }
+    ]
+  },
+  "limitations": [
+    "The source marker matches the interface byval type descriptor; no runtime class pointer was captured.",
+    "Slot 4 is declared IsStreamerVisible. Its name alone does not prove line of sight, occlusion, head visibility or player eligibility.",
+    "Concrete interface implementation, overrides, hotfix selection and runtime vtable entries remain unverified.",
+    "Position, attackable center and damage position declarations are distinct contracts; none is established as a head coordinate.",
+    "Setters and damage/healing methods are declaration inventory only and were not invoked."
+  ],
+  "functions_invoked": false,
+  "memory_writes": false,
+  "head_los_verified": false,
+  "concrete_target_verified": false
+}
