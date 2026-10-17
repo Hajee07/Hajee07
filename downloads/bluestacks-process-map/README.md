@@ -1,3 +1,12 @@
+## V45 camera position diagnostic
+
+Run `Run-ProcessMap.ps1 -ProbeAimState` with Free Fire running and the camera
+steady. V45 adds `CameraWorldPosition` for the selected original native camera's
+Transform intermediate, with source, hierarchy, job and final snapshot checks.
+This package remains read-only. Live V45 Windows verification is pending.
+World rotation, actual game camera, LOS/eligibility and aim-update integration
+remain unverified. See [source evidence and remaining gates](CAMERA-POSITION-EVIDENCE.md).
+
 # Read-only Free Fire process-mapping probe
 
 This probe uses the already tested native physical-read DLL and the kernel

@@ -21,6 +21,8 @@ $fixture=@(
 )
 $version44=@($fixture | ForEach-Object { $_.Replace("ProcessMapVersion=34","ProcessMapVersion=44") })
 Check-Comparison ((ConvertFrom-AmmoCounterReport $version44).Version -eq 44) "comparison workflow accepts unchanged counter contract from V44"
+$version45=@($fixture | ForEach-Object { $_.Replace("ProcessMapVersion=34","ProcessMapVersion=45") })
+Check-Comparison ((ConvertFrom-AmmoCounterReport $version45).Version -eq 45) "comparison workflow accepts unchanged counter contract from V45"
 $version43=@($fixture | ForEach-Object { $_.Replace("ProcessMapVersion=34","ProcessMapVersion=43") })
 Check-Comparison ((ConvertFrom-AmmoCounterReport $version43).Version -eq 43) "comparison workflow accepts unchanged counter contract from V43"
 $version42=@($fixture | ForEach-Object { $_.Replace("ProcessMapVersion=34","ProcessMapVersion=42") })

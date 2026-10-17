@@ -1075,3 +1075,12 @@ hotfix/fallback, actual rendered camera and pose are unverified. 876 offline
 checks pass; live V44 pending. Candidate fixture=4003 reads, null-manager=3843;
 all existing limits/rechecks remain. Fresh environment inputs/toolchain restored
 and checksum-verified; baseline V43 suite passed before this change.
+
+
+## Accepted V44 / V45 preparation
+
+V44 live original native camera selection completed with predicate raw byte 1;
+selected owner and source snapshot checks passed, 23561 total physical reads,
+all plugin/session cleanup PASS. V45 adds native Transform-intermediate world
+position sampling and requires a new Windows run. This does not validate the
+actual game camera, rotation, LOS, aim writes or end-to-end automatic aiming.

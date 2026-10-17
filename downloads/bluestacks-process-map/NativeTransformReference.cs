@@ -47,6 +47,10 @@ namespace HeadBridge.Mapping {
             new GameLayoutCheck("ComponentTransform_code_64", 0x453d44UL, "e20313aaff0b00f9ff63003900013fd6e21f40f9880240f9e1e30091e0031faaff1f00f900013fd6e21f40f9880240f9e1230091e0031faa00013fd6e8634039"),
             new GameLayoutCheck("ComponentTransform_code_128", 0x453d84UL, "68020034e00b40f9000300b4131840f9d30400b4880240f9e1830091e0031faae2031faa00013fd6ff1700f9681a40f9140540f9882240b91f090071e1040054"),
             new GameLayoutCheck("ComponentTransform_code_192", 0x453dc4UL, "931640f9d30500b529000014e00740f9400000b47e2e0b9428008052e00b00f9e863003940fdffb5880240f9e1e30091e20313aa00013fd6e01f40f9472d0b94"),
+            new GameLayoutCheck("ComponentTransform_code_256", 0x453e04UL, "880240f9e20300aaf30301aae1830091e0031faa00013fd6e01340f9e10313aaf31700f9be2b0b9480e6fff0005c11916b2d0b94880240f9e20300aaf40301aa"),
+            new GameLayoutCheck("ComponentTransform_code_320", 0x453e44UL, "e1830091e0031faa00013fd6e8031faaf41700f90d000014800e40f9800000b4bf0a0b94f30300aab30000b5e00314aadc330b94f30300aa200200b4e00313aa"),
+            new GameLayoutCheck("ComponentTransform_code_384", 0x453e84UL, "532e0b94e80300aae01340f9c00100b5e11740f9a10100b5880000b4e00308aad0330b94f30300aae00313aaf44f44a9fe1b40f9ff430191c0035fd6e8031faa"),
+            new GameLayoutCheck("ComponentTransform_code_448", 0x453ec4UL, "f2ffff17e11740f9952b0b94"),
         };
         internal static readonly GameLayoutCheck[] CameraSelectorAnchors = new GameLayoutCheck[] {
             new GameLayoutCheck("main_selector_0", 0x608a98UL, "fe0f1df8f65701a9f44f02a9e287fc97a1008052b7a2f997600200b4160440f9f30300aadf0200ebe0010054147000b094020191c00a40f9e10314aaf688fc97"),

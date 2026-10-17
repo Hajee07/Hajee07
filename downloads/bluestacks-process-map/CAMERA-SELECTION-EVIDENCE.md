@@ -1,7 +1,8 @@
 # V44 original native camera-selector sampling
 
-Live V44 Windows validation pending. Run `Run-ProcessMap.ps1 -ProbeAimState`
-with Free Fire already running and camera steady. No manual turns are required.
+Live V44 Windows output confirmed one selected original native camera with
+predicate byte 1, complete source selection and cleanup PASS. See
+CAMERA-POSITION-EVIDENCE.md for the accepted observation and V45 scope.
 This extends V43's bounded native candidate walk with read-only evaluation of
 its one verified virtual predicate and source-order native selection. It does
 not call the function, resolve managed wrappers, read camera pose or control aim.

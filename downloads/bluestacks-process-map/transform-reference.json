@@ -197,6 +197,26 @@
       "name": "ComponentTransform_code_192",
       "rva": 4537796,
       "hex": "931640f9d30500b529000014e00740f9400000b47e2e0b9428008052e00b00f9e863003940fdffb5880240f9e1e30091e20313aa00013fd6e01f40f9472d0b94"
+    },
+    {
+      "name": "ComponentTransform_code_256",
+      "rva": 4537860,
+      "hex": "880240f9e20300aaf30301aae1830091e0031faa00013fd6e01340f9e10313aaf31700f9be2b0b9480e6fff0005c11916b2d0b94880240f9e20300aaf40301aa"
+    },
+    {
+      "name": "ComponentTransform_code_320",
+      "rva": 4537924,
+      "hex": "e1830091e0031faa00013fd6e8031faaf41700f90d000014800e40f9800000b4bf0a0b94f30300aab30000b5e00314aadc330b94f30300aa200200b4e00313aa"
+    },
+    {
+      "name": "ComponentTransform_code_384",
+      "rva": 4537988,
+      "hex": "532e0b94e80300aae01340f9c00100b5e11740f9a10100b5880000b4e00308aad0330b94f30300aae00313aaf44f44a9fe1b40f9ff430191c0035fd6e8031faa"
+    },
+    {
+      "name": "ComponentTransform_code_448",
+      "rva": 4538052,
+      "hex": "f2ffff17e11740f9952b0b94"
     }
   ],
   "camera_selector_anchors": [
@@ -287,7 +307,7 @@
       "stub_rva": 4643516,
       "string_rva": 1204075,
       "target_rva": 4537604,
-      "code_bytes": 256,
+      "code_bytes": 460,
       "executable_start": 4274688,
       "executable_end": 20665712
     }

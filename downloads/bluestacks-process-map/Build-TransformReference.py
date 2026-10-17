@@ -31,7 +31,7 @@ def pair(base,word):
  assert word&0xffc00000==0x91000000 and (word>>5)&31==base[1] and word&31==base[1]
  return base[0]+((word>>10)&4095)
 camera_anchors=[];camera_bindings=[]
-for name,stub,text,target,size in [('CameraMain',0x468ddc,0x11aa87,0x41d8c4,24),('ComponentTransform',0x46dabc,0x125f6b,0x453d04,256)]:
+for name,stub,text,target,size in [('CameraMain',0x468ddc,0x11aa87,0x41d8c4,24),('ComponentTransform',0x46dabc,0x125f6b,0x453d04,0x1cc)]:
  words=struct.unpack('<5I',e.bytes(stub,20));assert pair(adrp(words[0],stub),words[2])==text and pair(adrp(words[1],stub+4),words[3])==target
  assert words[4]&0xfc000000==0x14000000
  raw=('UnityEngine.Camera::get_main' if name=='CameraMain' else 'UnityEngine.Component::get_transform').encode()+b'\0';assert e.bytes(text,len(raw))==raw

@@ -1,3 +1,9 @@
+V45 process-map package adds a source-checked, read-only world-position sample
+for the original Unity native camera selector's Transform intermediate.
+Live Windows V45 results, camera rotation/game getter identity, LOS/eligibility,
+aim updates and end-to-end integration remain pending. See
+[remaining gates](bluestacks-process-map/CAMERA-POSITION-EVIDENCE.md).
+
 # Standalone head-direction DLL core
 
 Current package: **V44**. `-ProbeAimState` verifies the full native camera predicate

@@ -118,6 +118,51 @@ namespace HeadBridge.Mapping
             sample.CameraSelectionStatus="NOT_READY_TAG_NODE_LIMIT";
             if(sample.CameraCandidateObject==0)sample.CameraCandidateStatus="NOT_READY_TAG_NODE_LIMIT";
         }
+        // Only the native intermediate of Component.get_transform is evaluated.
+        // Managed wrapper resolution, game getter selection and rotation are not inferred.
+        private static void ReadCameraPosition(ObjectReads reads,PlayerStateObservation sample)
+        {
+            sample.CameraPositionStatus="NOT_READY_NATIVE_SELECTION";
+            if(sample.CameraSelectionStatus!="ORIGINAL_UNITY_MAIN_SELECTED_READ_ONLY" || !sample.CameraSelectionComplete)return;
+            ulong owner=sample.SelectedNativeCameraOwner;
+            byte[] header=reads.Read(owner+0x30,24,"Camera.TransformComponentHeader");
+            ulong entries=BitConverter.ToUInt64(header,0),count=BitConverter.ToUInt64(header,16);
+            sample.CameraPositionStatus="NOT_READY_COMPONENT_BOUND";if(count==0 || count>256)return;
+            ObjectReads.User(entries,8,"camera Transform component table");
+            ulong native=reads.Value(entries+8,"Camera.FirstNativeComponent");
+            sample.CameraPositionStatus="NOT_READY_FIRST_COMPONENT_IS_CAMERA";if(native==sample.SelectedNativeCamera)return;
+            ObjectReads.User(native,8,"camera native Transform intermediate");
+            Expect(reads.Value(native+0x30,"Camera.TransformOwner")==owner,"camera Transform owner backlink");
+            ulong data=reads.Pointer(native+0x38,"camera Transform hierarchy");
+            int index=unchecked((int)reads.Word(native+0x40,"Camera.TransformIndex"));
+            sample.CameraPositionStatus="NOT_READY_HIERARCHY_JOB_PENDING";
+            if(reads.Value(data,"Camera.HierarchyJob")!=0 || reads.Word(data+8,"Camera.HierarchyJobTag")!=0)return;
+            uint capacity=reads.Word(data+0x10,"Camera.HierarchyCapacity");
+            Expect(capacity>0 && capacity<=65536 && index>=0 && (uint)index<capacity,"camera hierarchy capacity/index");
+            ulong matrices=reads.Pointer(data+0x18,"camera TRS array"),parents=reads.Pointer(data+0x20,"camera parent indices"),links=reads.Pointer(data+0x30,"camera Transform backlinks");
+            NativeAnchors(reads,sample.CameraUnityLoadBias,NativeTransformReference.UnityAnchors);
+            var visited=new System.Collections.Generic.HashSet<int>();float[] position=null;ulong expected=native;
+            for(int depth=0;depth<32;depth++)
+            {
+                Expect(index>=0 && (uint)index<capacity && visited.Add(index),"camera parent bounds/cycle");
+                ulong current=reads.Pointer(checked(links+(ulong)index*8),"camera hierarchy object");
+                Expect(current==expected && reads.Value(current+0x38,"Camera.HierarchyBacklink")==data && reads.Word(current+0x40,"Camera.IndexBacklink")==unchecked((uint)index),"camera Transform hierarchy backlinks");
+                byte[] trs=reads.Read(checked(matrices+(ulong)index*48),48,"Camera.SelectedTRS"+depth);
+                NativeVector(trs,0,3);NativeVector(trs,16,4);NativeVector(trs,32,3);
+                position=depth==0?NativeVector(trs,0,3):NativeParentPosition(position,trs);
+                for(int axis=0;axis<3;axis++)Expect(!float.IsNaN(position[axis]) && !float.IsInfinity(position[axis]) && Math.Abs(position[axis])<=10000000,"finite bounded camera world position");
+                int parent=unchecked((int)reads.Word(checked(parents+(ulong)index*4),"Camera.ParentIndex"));
+                expected=reads.Value(current+0x90,"Camera.ParentTransform");
+                if(parent==-1)
+                {
+                    Expect(expected==0,"camera root parent backlink");sample.CameraNativeTransform=native;sample.CameraParentCount=depth;
+                    sample.CameraWorldX=position[0];sample.CameraWorldY=position[1];sample.CameraWorldZ=position[2];
+                    sample.CameraPositionStatus="ORIGINAL_NATIVE_CAMERA_WORLD_POSITION_READ_ONLY";return;
+                }
+                Expect(parent>=0 && (uint)parent<capacity && expected!=0,"camera parent-index/object link");index=parent;
+            }
+            sample.CameraPositionStatus="NOT_READY_PARENT_LIMIT";
+        }
         private static void ReadAimState(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length)
         {
             Expect(sample.IsLocal,"aim snapshot is local only");sample.AimRotationStatus="UNVERIFIED_AIM_GETTER_HOTFIX_ACTIVE";
@@ -143,6 +188,7 @@ namespace HeadBridge.Mapping
             sample.CameraBindingStatus=camera==0 || transform==0 ? "NOT_READY_UNINITIALIZED_ICALL" : "NONZERO_FUNCTION_POINTERS_ONLY";
             ReadCameraUnityCode(reads,sample,camera,transform);
             ReadNativeCameraCandidate(reads,sample);
+            ReadCameraPosition(reads,sample);
             sample.AimRotationStatus="ORIGINAL_LOCAL_GET_AIM_ROTATION_SAMPLED";
         }
         public PlayerStateResult SampleAimState(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)
