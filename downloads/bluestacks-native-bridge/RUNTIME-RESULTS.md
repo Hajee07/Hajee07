@@ -1146,3 +1146,21 @@ PluginUnload=PASS, HandlerCleanup=PASS, SharedSession=RELEASED. Total reads 2661
 V51 moves invariant-format initialization before the head-status branch. No
 native code, read budget or validation changes. Actual camera/controller results
 remain pending a fresh complete live report. No aim integration or accuracy claim.
+
+## Accepted V51 / V52 preparation
+
+V51 HostPID=9352, GuestPID=3012: module/layout checks passed. Head sampled on
+attempt 1; roster attempt 1 verified 11 players including local. Aim-state phase
+completed with 4920 additional reads, Sampled=1. Registered manager 0x7f2b5489dc80,
+managed camera 0x7f2b542f1b40, cached native 0x7f2b522fae10 matched the original
+Unity native selector. Camera position (67.92874,12.8195686,18.19867) and original
+native rotation were reported. Player getter metadata guard remained zero.
+Three registered controller getter slots were absent. Selected-entry proof was
+revalidated; collection counters changed during capture, so no whole-roster
+atomicity is inferred. Total reads 22392; plugin unload/cleanup/session release
+passed. Actual game getter execution, LOS and aim writes remain unverified/none.
+
+V52 adds original Unity Object null-comparison data for this registered reference,
+with exact source/method checks and conservative metadata/class readiness gates.
+The new result does not establish actual invocation, object lifetime or active
+rendering/aiming camera. Live verification pending. No functions or writes added.

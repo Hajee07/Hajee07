@@ -200,3 +200,6 @@ Check-AimComparison ((ConvertFrom-AimBasisReport $version50).Version -eq 50) 'V5
 
 $version51=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=51') })
 Check-AimComparison ((ConvertFrom-AimBasisReport $version51).Version -eq 51) 'V51 comparison input remains supported'
+
+$v52=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=52') })
+Check-AimComparison ((ConvertFrom-AimBasisReport $v52).Version -eq 52) 'V52 comparison input remains supported'

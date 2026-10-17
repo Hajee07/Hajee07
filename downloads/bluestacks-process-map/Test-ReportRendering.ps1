@@ -5,8 +5,8 @@ $start=$source.IndexOf('    $culture = [Globalization.CultureInfo]::InvariantCul
 $end=$source.IndexOf('    Record "MatchPlayerDictionary=', $start)
 if($start -lt 0 -or $end -le $start){throw 'Head report initialization block missing.'}
 $head=$source.Substring($start,$end-$start)
-$camera=@($source -split '\r?\n' | Where-Object {$_ -match '^\s+Record "(CameraWorldPosition|CameraWorldRotation|GameCameraGetterGate|CameraControllerInventory) '})
-if($camera.Count -ne 4){throw 'Expected four actual camera report statements.'}
+$camera=@($source -split '\r?\n' | Where-Object {$_ -match '^\s+Record "(CameraWorldPosition|CameraWorldRotation|GameCameraGetterGate|CameraControllerInventory|CameraObjectNullCheck) '})
+if($camera.Count -ne 5){throw 'Expected five actual camera report statements.'}
 $fields=@{}
 foreach($m in [regex]::Matches(($camera -join "`n"),'\$sample\.(\w+)')){$fields[$m.Groups[1].Value]=[ulong]1}
 foreach($name in @('CameraWorldX','CameraWorldY','CameraWorldZ','CameraQX','CameraQY','CameraQZ','CameraQW','CameraRotationNorm','CameraBasisX','CameraBasisY','CameraBasisZ')){$fields[$name]=[single]1.25}
@@ -22,7 +22,7 @@ try{
         $script:lines=[Collections.Generic.List[string]]::new()
         . ([scriptblock]::Create($head))
         . ([scriptblock]::Create($camera -join "`n"))
-        if($lines.Count -ne 5 -or $failed){throw "Report did not finish for $status"}
+        if($lines.Count -ne 6 -or $failed){throw "Report did not finish for $status"}
         if($lines[1] -notmatch ' X=1\.25 Y=1\.25 Z=1\.25 ' -or $lines[2] -notmatch ' X=1\.25 '){throw 'Camera numeric output is not invariant.'}
         if($lines[4] -notmatch '^CameraControllerInventory '){throw 'Controller inventory was not printed.'}
         Write-Host "PASS: actual camera report renders after head status $status under fr-FR and strict mode"

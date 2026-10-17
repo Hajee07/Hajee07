@@ -66,6 +66,15 @@ for mi,owner,mn,rv,size,tab,image_name,cache_adrp,string_adrp,icall in [
   anchors.append(dict(name=mn+'_icall_name',rva=text,hex=raw.hex()))
   camera_bindings.append(dict(method=mn,cell_rva=cell,string_rva=text,icall=icall))
 assert [b['cell_rva'] for b in camera_bindings]==[0xafb7380,0xafb9668]
+# Exact Unity Object null comparison source. No functions are invoked.
+for mi,mn,rv,size,argc in [(318127,'CompareBaseObjects',0x9feef94,0xa8,2),(318128,'IsNativeObjectAlive',0x9fef0a0,0x20,1),(318129,'GetCachedPtr',0x9fef0c0,8,0),(318192,'op_Equality',0x9fec060,0x64,2),(318193,'op_Inequality',0x9feadf4,0x70,2)]:
+ nq=m.methods[mi];assert nq[1]==41079 and m.string(nq[0])==mn and nq[11]==argc
+ ns=table+((nq[7]&0xffffff)-1)*8;assert e.pointer(ns)==rv
+ camera_methods.append(dict(index=mi,name='UnityEngine.Object.'+mn,rva=rv,pointer_rva=ns,metadata_offset=m.header[12]+mi*40,record_hex=struct.pack('<8i4H',*nq).hex()))
+ for off in range(0,size,64):anchors.append(dict(name='ObjectNull_'+mn+'_'+str(off),rva=rv+off,hex=e.bytes(rv+off,min(64,size-off)).hex()))
+assert e.bytes(0x9e4d19c,12).hex()=='1f0001eb e0079f1a c0035fd6'.replace(' ','')
+anchors.append(dict(name='ObjectNull_IntPtrNotEqual',rva=0x9e4d19c,hex=e.bytes(0x9e4d19c,12).hex()))
+
 # Recover the game camera getter entry gates; never execute IFix or initialize metadata.
 def byte_cell(adrp_at,load_at):
  base,reg=adrp(adrp_at);word=struct.unpack('<I',e.bytes(load_at,4))[0]
@@ -96,12 +105,19 @@ for idx in [32002,40830,41031,41037,41079]:
  t=m.types[idx];size=struct.unpack('<4I',e.bytes(e.pointer(0xa925200+idx*8),16));assert 24<=size[0]<=1048576
  controller_profiles.append(dict(index=idx,name=m.type_name(idx),parent=ti(t[4])[1],name_offset=m.header[6]+t[0],namespace_offset=m.header[6]+t[1],record_hex=m.data[m.header[40]+idx*88:m.header[40]+(idx+1)*88].hex(),bits=ti(t[2])[2],instance_size=size[0],static_size=size[2],token=t[-1]))
 facade_init=byte_cell(0x71d034c,0x71d0350);assert facade_init==0xafa67ed
+null_eq_init=byte_cell(0x9fec06c,0x9fec074);null_ne_init=byte_cell(0x9feae00,0x9feae08);null_compare_init=byte_cell(0x9feef9c,0x9feefa0)
+assert (null_eq_init,null_ne_init,null_compare_init)==(0xafb9997,0xafb9998,0xafb991b)
+assert cache(0x9fec088)==cache(0x9feae1c)==cache(0x9feefb0)==0xa739c68
+null_class_cell=e.pointer(0xa739c68);assert null_class_cell==0xac356c8
+anchors.append(dict(name='ObjectNull_ClassUsageGOT',rva=0xa739c68,pointer=null_class_cell))
+assert e.bytes(0x9fef0a8,4)==e.bytes(0x9fef0c0,4) # same Object.m_CachedPtr load
+
 for at,off in [(0x7323918,0xd8),(0x718cacc,0x20)]:
  word=struct.unpack('<I',e.bytes(at,4))[0];assert word&0xffc003ff==0xf9400260 and ((word>>10)&4095)*8==off
 assert m.methods[35118][6]==0x370 and m.methods[35620][6]==0x36f and m.methods[216274][6]==0x42e
 for at,mi in [(0x71d0378,35118),(0x73238e8,35620),(0x718ca9c,216274)]:
  word=struct.unpack('<I',e.bytes(at,4))[0];assert word&0xff80001f==0x52800000 and (word>>21)&3==0 and (word>>5)&65535==m.methods[mi][6]
-report=dict(controller_fields=controller_fields,controller_profiles=controller_profiles,controller_facade_init_cell=facade_init,camera_getter_entry_gates=dict(getter_init_cell=getter_init,patch_init_cell=patch_init,slot=camera_gate,scope="Entry gates only; managed camera, hotfix function, class constructors and fallback not evaluated"),elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,method=method,vector_method=vector_method,camera_methods=camera_methods,camera_bindings=camera_bindings,fields=fields,anchors=anchors,return_descriptor=ret_desc,return_bits=ret_bits,quaternion_record_offset=record_offset,quaternion_record_hex=record,getter_offset=0x614,scope='Original local GetAimRotation, camera entry gates and registered controller/camera field inventory; actual getter execution, game camera selection, target direction and aim writes are not established.')
+report=dict(object_null_guards=[null_eq_init,null_ne_init,null_compare_init],object_null_class_cell=null_class_cell,controller_fields=controller_fields,controller_profiles=controller_profiles,controller_facade_init_cell=facade_init,camera_getter_entry_gates=dict(getter_init_cell=getter_init,patch_init_cell=patch_init,slot=camera_gate,scope="Entry gates only; managed camera, hotfix function, class constructors and fallback not evaluated"),elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,method=method,vector_method=vector_method,camera_methods=camera_methods,camera_bindings=camera_bindings,fields=fields,anchors=anchors,return_descriptor=ret_desc,return_bits=ret_bits,quaternion_record_offset=record_offset,quaternion_record_hex=record,getter_offset=0x614,scope='Original local GetAimRotation, camera entry gates and registered controller/camera field inventory; actual getter execution, game camera selection, target direction and aim writes are not established.')
 out=Path(a.output_directory);out.mkdir(parents=True,exist_ok=True);(out/'aim-state-reference.json').write_text(json.dumps(report,indent=2)+'\n')
 lines=['// Generated from exact SHA-256-verified ELF/metadata inputs.','namespace HeadBridge.Mapping {','    internal static class AimStateReference {','        internal const ulong ReturnDescriptor=0x%xUL; internal const uint ReturnBits=%dU;'%(ret_desc,ret_bits),'        internal const ulong QuaternionMetadata=%dUL; internal const string QuaternionRecord=%s;'%(record_offset,json.dumps(record)),'        internal static readonly StateMethod Method=new StateMethod(%dUL,0x%xUL,0x%xUL,%s);'%(method['metadata_offset'],slot,address,json.dumps(method['record_hex'])),'        internal static readonly StateField[] Fields = {']
 for f in fields:lines.append('            new StateField(%d,%d,%s,0x%xUL,0x%xUL,0x%xUL,%dU,%d,%dUL,%dU,%dUL,%s),'%(f['owner'],f['local'],json.dumps(f['name']),f['offset'],f['offset_rva'],f['descriptor'],f['bits'],f['type_index'],f['name_offset'],f['token'],f['metadata_offset'],json.dumps(f['record_hex'])))
@@ -114,4 +130,4 @@ lines+=['        };','        internal static readonly StateField[] ControllerFi
 for f in controller_fields:lines.append('            new StateField(%d,%d,%s,0x%xUL,0x%xUL,0x%xUL,%dU,%d,%dUL,%dU,%dUL,%s),'%(f['owner'],f['local'],json.dumps(f['name']),f['offset'],f['offset_rva'],f['descriptor'],f['bits'],f['type_index'],f['name_offset'],f['token'],f['metadata_offset'],json.dumps(f['record_hex'])))
 lines+=['        };','        internal static readonly ObjectClassProfile[] ControllerClasses={']
 for c in controller_profiles:lines.append('            new ObjectClassProfile(%d,%s,0,%d,%dUL,%dUL,%s,%dU,%dU,%dU,%dU,0UL,%dU,true),'%(c['index'],json.dumps(c['name']),c['parent'],c['name_offset'],c['namespace_offset'],json.dumps(c['record_hex']),c['bits'],c['instance_size'],c['static_size'],c['token'],c['instance_size']))
-lines+=['        };','        internal const ulong ControllerFacadeInitCell=0x%xUL;'%facade_init,'        internal const ulong GameCameraGetterInitCell=0x%xUL, CameraPatchInitCell=0x%xUL;'%(getter_init,patch_init),'        internal const int GameCameraGetterGate=0x%x;'%camera_gate,'    }','}',''];(out/'AimStateReference.cs').write_text('\n'.join(lines));print('AimStateReference=PASS OriginalGetter=0x6f249ac Field=0x614 Quaternion=40980 Components=4')
+lines+=['        };','        internal const ulong ObjectNullEqualityInit=0x%xUL, ObjectNullInequalityInit=0x%xUL, ObjectNullCompareInit=0x%xUL;'%(null_eq_init,null_ne_init,null_compare_init),'        internal const ulong ObjectNullClassCell=0x%xUL;'%null_class_cell,'        internal const ulong ControllerFacadeInitCell=0x%xUL;'%facade_init,'        internal const ulong GameCameraGetterInitCell=0x%xUL, CameraPatchInitCell=0x%xUL;'%(getter_init,patch_init),'        internal const int GameCameraGetterGate=0x%x;'%camera_gate,'    }','}',''];(out/'AimStateReference.cs').write_text('\n'.join(lines));print('AimStateReference=PASS OriginalGetter=0x6f249ac Field=0x614 Quaternion=40980 Components=4')

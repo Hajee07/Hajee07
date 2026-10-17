@@ -1,4 +1,10 @@
 {
+  "object_null_guards": [
+    184261015,
+    184261016,
+    184260891
+  ],
+  "object_null_class_cell": 180573896,
   "controller_fields": [
     {
       "owner": 12425,
@@ -176,6 +182,46 @@
       "pointer_rva": 183896224,
       "metadata_offset": 31291548,
       "record_hex": "83b523004da000006acd000000000008ffffffffffffffffffffffff320c000686080010ffff0000"
+    },
+    {
+      "index": 318127,
+      "name": "UnityEngine.Object.CompareBaseObjects",
+      "rva": 167702420,
+      "pointer_rva": 183898248,
+      "metadata_offset": 31301668,
+      "record_hex": "4b2fef0077a000000b6300000000000896f00300ffffffffffffffff2f0d000691000000ffff0200"
+    },
+    {
+      "index": 318128,
+      "name": "UnityEngine.Object.IsNativeObjectAlive",
+      "rva": 167702688,
+      "pointer_rva": 183898256,
+      "metadata_offset": 31301708,
+      "record_hex": "5e2fef0077a000000b6300000000000898f00300ffffffffffffffff300d000691000000ffff0100"
+    },
+    {
+      "index": 318129,
+      "name": "UnityEngine.Object.GetCachedPtr",
+      "rva": 167702720,
+      "pointer_rva": 183898264,
+      "metadata_offset": 31301748,
+      "record_hex": "722fef0077a00000e69b000000000008ffffffffffffffffffffffff310d000681000000ffff0000"
+    },
+    {
+      "index": 318192,
+      "name": "UnityEngine.Object.op_Equality",
+      "rva": 167690336,
+      "pointer_rva": 183898768,
+      "metadata_offset": 31304268,
+      "record_hex": "67be010077a000000b630000000000080ff10300ffffffffffffffff700d000696080000ffff0200"
+    },
+    {
+      "index": 318193,
+      "name": "UnityEngine.Object.op_Inequality",
+      "rva": 167685620,
+      "pointer_rva": 183898776,
+      "metadata_offset": 31304308,
+      "record_hex": "73be010077a000000b6300000000000811f10300ffffffffffffffff710d000696080000ffff0200"
     }
   ],
   "camera_bindings": [
@@ -401,6 +447,56 @@
       "hex": "556e697479456e67696e652e436f6d706f6e656e743a3a6765745f7472616e73666f726d282900"
     },
     {
+      "name": "ObjectNull_CompareBaseObjects_0",
+      "rva": 167702420,
+      "hex": "fe57bea9f44f01a9557e00f0a86e6439f30301aaf40300aac8000037403a00f0003446f909970d9428008052a86e2439880213aa680000b52800805217000014"
+    },
+    {
+      "name": "ObjectNull_CompareBaseObjects_64",
+      "rva": 167702484,
+      "hex": "b30000b4940100b49f0213ebe8179f1a12000014483a00f0083546f9000140f908e040b94800003556970d94e00314aa08000014483a00d0083546f9000140f9"
+    },
+    {
+      "name": "ObjectNull_CompareBaseObjects_128",
+      "rva": 167702548,
+      "hex": "08e040b9480000354e970d94e00313aa1f00009408000052f44f41a900010012fe57c2a8c0035fd6"
+    },
+    {
+      "name": "ObjectNull_IsNativeObjectAlive_0",
+      "rva": 167702688,
+      "hex": "fe0f1ff8c00000b4000840f9e1031faae2031faafe0741f83978f9176f970d94"
+    },
+    {
+      "name": "ObjectNull_GetCachedPtr_0",
+      "rva": 167702720,
+      "hex": "000840f9c0035fd6"
+    },
+    {
+      "name": "ObjectNull_op_Equality_0",
+      "rva": 167690336,
+      "hex": "fe0f1df8f65701a9f44f02a9757e00b0763a00b0a85e6639d63646f9f30301aaf40300aac8000037603a00b0003446f9d3a20d9428008052a85e2639c00240f9"
+    },
+    {
+      "name": "ObjectNull_op_Equality_64",
+      "rva": 167690400,
+      "hex": "08e040b9480000352ba30d94e00314aae10313aaf44f42a9f65741a9fe0743f8b50b0014"
+    },
+    {
+      "name": "ObjectNull_op_Inequality_0",
+      "rva": 167685620,
+      "hex": "fe0f1df8f65701a9f44f02a9757e00f0763a00f0a8626639d63646f9f30301aaf40300aac8000037603a00f0003446f96ea70d9428008052a8622639c00240f9"
+    },
+    {
+      "name": "ObjectNull_op_Inequality_64",
+      "rva": 167685684,
+      "hex": "08e040b948000035c6a70d94e00314aae10313aa53100094f44f42a9f65741a9e803202a00010012fe0743f8c0035fd6"
+    },
+    {
+      "name": "ObjectNull_IntPtrNotEqual",
+      "rva": 165990812,
+      "hex": "1f0001ebe0079f1ac0035fd6"
+    },
+    {
       "name": "CameraCheckPatch_0",
       "rva": 142780956,
       "hex": "fe57bea9f44f01a9353c01d0740301f0a8f65e3994ce45f9f303002ac8000037600301f000cc45f966a86c9428008052a8f61e39800240f908e040b968000035"
@@ -414,6 +510,11 @@
       "name": "CameraCheckPatch_128",
       "rva": 142781084,
       "hex": "3f01136b6901005408cd338b081140f91f0100f1e0079f1a02000014e0031f2af44f41a9fe57c2a8c0035fd6eca86c94eda86c94"
+    },
+    {
+      "name": "ObjectNull_ClassUsageGOT",
+      "rva": 175348840,
+      "pointer": 180573896
     }
   ],
   "return_descriptor": 182039152,

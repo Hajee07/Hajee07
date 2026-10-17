@@ -40,9 +40,20 @@ namespace HeadBridge.Mapping {
             new GameLayoutCheck("get_main_icall_name",0x1966d4bUL,"556e697479456e67696e652e43616d6572613a3a6765745f6d61696e282900"),
             new GameLayoutCheck("get_transform_0",0x9fe7aa8UL,"fe0f1ef8f44f01a9947e00d0813643f9f30300aac10000b520cefb9000b0239134b40d94e10300aa803603f9e00313aaf44f41a9fe0742f820001fd6"),
             new GameLayoutCheck("get_transform_icall_name",0x19ab8ecUL,"556e697479456e67696e652e436f6d706f6e656e743a3a6765745f7472616e73666f726d282900"),
+            new GameLayoutCheck("ObjectNull_CompareBaseObjects_0",0x9feef94UL,"fe57bea9f44f01a9557e00f0a86e6439f30301aaf40300aac8000037403a00f0003446f909970d9428008052a86e2439880213aa680000b52800805217000014"),
+            new GameLayoutCheck("ObjectNull_CompareBaseObjects_64",0x9feefd4UL,"b30000b4940100b49f0213ebe8179f1a12000014483a00f0083546f9000140f908e040b94800003556970d94e00314aa08000014483a00d0083546f9000140f9"),
+            new GameLayoutCheck("ObjectNull_CompareBaseObjects_128",0x9fef014UL,"08e040b9480000354e970d94e00313aa1f00009408000052f44f41a900010012fe57c2a8c0035fd6"),
+            new GameLayoutCheck("ObjectNull_IsNativeObjectAlive_0",0x9fef0a0UL,"fe0f1ff8c00000b4000840f9e1031faae2031faafe0741f83978f9176f970d94"),
+            new GameLayoutCheck("ObjectNull_GetCachedPtr_0",0x9fef0c0UL,"000840f9c0035fd6"),
+            new GameLayoutCheck("ObjectNull_op_Equality_0",0x9fec060UL,"fe0f1df8f65701a9f44f02a9757e00b0763a00b0a85e6639d63646f9f30301aaf40300aac8000037603a00b0003446f9d3a20d9428008052a85e2639c00240f9"),
+            new GameLayoutCheck("ObjectNull_op_Equality_64",0x9fec0a0UL,"08e040b9480000352ba30d94e00314aae10313aaf44f42a9f65741a9fe0743f8b50b0014"),
+            new GameLayoutCheck("ObjectNull_op_Inequality_0",0x9feadf4UL,"fe0f1df8f65701a9f44f02a9757e00f0763a00f0a8626639d63646f9f30301aaf40300aac8000037603a00f0003446f96ea70d9428008052a8622639c00240f9"),
+            new GameLayoutCheck("ObjectNull_op_Inequality_64",0x9feae34UL,"08e040b948000035c6a70d94e00314aae10313aa53100094f44f42a9f65741a9e803202a00010012fe0743f8c0035fd6"),
+            new GameLayoutCheck("ObjectNull_IntPtrNotEqual",0x9e4d19cUL,"1f0001ebe0079f1ac0035fd6"),
             new GameLayoutCheck("CameraCheckPatch_0",0x882aa1cUL,"fe57bea9f44f01a9353c01d0740301f0a8f65e3994ce45f9f303002ac8000037600301f000cc45f966a86c9428008052a8f61e39800240f908e040b968000035"),
             new GameLayoutCheck("CameraCheckPatch_64",0x882aa5cUL,"bea86c94800240f9085c40f9080140f9e80200b4091940b93f01136b0d02005409e040b9c9000035b4a86c94880240f9085d40f9080140f9a80100b4091940b9"),
             new GameLayoutCheck("CameraCheckPatch_128",0x882aa9cUL,"3f01136b6901005408cd338b081140f91f0100f1e0079f1a02000014e0031f2af44f41a9fe57c2a8c0035fd6eca86c94eda86c94"),
+            new GameLayoutCheck("ObjectNull_ClassUsageGOT",0xa739c68UL,0xac356c8UL),
         };
         internal const ulong CameraMainCell=0xafb7380UL, ComponentTransformCell=0xafb9668UL;
         internal static readonly StateMethod[] CameraMethods={
@@ -52,6 +63,11 @@ namespace HeadBridge.Mapping {
             new StateMethod(27227548UL,0xab35638UL,0x718ca94UL,"39ad2e00027d00005970000000000008ffffffffffffffff2e040000d34c030686080000ffff0000"),
             new StateMethod(31183028UL,0xaf5b3d8UL,0x9fa01d8UL,"3b76ee007e9f00005970000000000008ffffffffffffffffffffffff9901000696080010ffff0000"),
             new StateMethod(31291548UL,0xaf608a0UL,0x9fe7aa8UL,"83b523004da000006acd000000000008ffffffffffffffffffffffff320c000686080010ffff0000"),
+            new StateMethod(31301668UL,0xaf61088UL,0x9feef94UL,"4b2fef0077a000000b6300000000000896f00300ffffffffffffffff2f0d000691000000ffff0200"),
+            new StateMethod(31301708UL,0xaf61090UL,0x9fef0a0UL,"5e2fef0077a000000b6300000000000898f00300ffffffffffffffff300d000691000000ffff0100"),
+            new StateMethod(31301748UL,0xaf61098UL,0x9fef0c0UL,"722fef0077a00000e69b000000000008ffffffffffffffffffffffff310d000681000000ffff0000"),
+            new StateMethod(31304268UL,0xaf61290UL,0x9fec060UL,"67be010077a000000b630000000000080ff10300ffffffffffffffff700d000696080000ffff0200"),
+            new StateMethod(31304308UL,0xaf61298UL,0x9feadf4UL,"73be010077a000000b6300000000000811f10300ffffffffffffffff710d000696080000ffff0200"),
         };
         internal static readonly StateField[] ControllerFields={
             new StateField(12425,9,"m_CameraControllerManager",0xd8UL,0x1afca14UL,0xadbaa70UL,1179652U,32002,3937257UL,67203611U,43110328UL,"55801d00707000001b720104"),
@@ -65,6 +81,8 @@ namespace HeadBridge.Mapping {
             new ObjectClassProfile(41037,"UnityEngine.Component",0,41079,2329274UL,17627183UL,"26f704009b64ee0041740000ffffffffb0b4000041740000ffffffff01001000ffffffffb2d90400ffffffff60560000fffffffffffffffff7390b00ffffffff31000300000000000000040000000000000c00004f010002",1179648U,24U,0U,33554767U,0UL,24U,true),
             new ObjectClassProfile(41079,"UnityEngine.Object",0,37718,2123429UL,17627183UL,"11d301009b64ee00b0b40000ffffffff9eb40000b0b40000ffffffff0900100016190700abda0400ffffffff77560000ffffffffffffffff523b0b00ffffffff5d000200060000000000040000000000180c000079010002",1179648U,24U,4U,33554809U,0UL,24U,true),
         };
+        internal const ulong ObjectNullEqualityInit=0xafb9997UL, ObjectNullInequalityInit=0xafb9998UL, ObjectNullCompareInit=0xafb991bUL;
+        internal const ulong ObjectNullClassCell=0xac356c8UL;
         internal const ulong ControllerFacadeInitCell=0xafa67edUL;
         internal const ulong GameCameraGetterInitCell=0xafa571aUL, CameraPatchInitCell=0xafb07bdUL;
         internal const int GameCameraGetterGate=0x21bc0;

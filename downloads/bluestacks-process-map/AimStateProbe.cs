@@ -214,8 +214,29 @@ namespace HeadBridge.Mapping
             Expect(BitConverter.ToUInt64(h,0x78)==klass && BitConverter.ToUInt64(h,0x20)==row && BitConverter.ToUInt32(h,0x28)==p.Bits,"controller inventory class identity");
             Expect(BitConverter.ToUInt64(h,0x10)==layout.RuntimeMetadataBase+p.NameOffset && BitConverter.ToUInt64(h,0x18)==layout.RuntimeMetadataBase+p.NamespaceOffset && BitConverter.ToUInt32(h,0x11c)==p.Token && BitConverter.ToUInt32(h,0xf8)==p.InstanceSize,"controller inventory class layout");return p;
         }
+        private static void ReadCameraObjectNullPredicate(ObjectReads reads,ModuleResult module,PlayerStateObservation sample,ulong objectClass,ulong native)
+        {
+            sample.CameraCachedPointerNonzero=native!=0;
+            byte eq=reads.Byte(module.LoadBias+AimStateReference.ObjectNullEqualityInit,"CameraNull.EqualityMetadata");
+            byte ne=reads.Byte(module.LoadBias+AimStateReference.ObjectNullInequalityInit,"CameraNull.InequalityMetadata");
+            byte compare=reads.Byte(module.LoadBias+AimStateReference.ObjectNullCompareInit,"CameraNull.CompareMetadata");
+            sample.CameraNullEqualityInit=eq;sample.CameraNullInequalityInit=ne;sample.CameraNullCompareInit=compare;
+            sample.CameraNullPredicateStatus="NOT_READY_METADATA_INITIALIZATION";
+            if((eq&1)==0 || (ne&1)==0 || (compare&1)==0)return;
+            ulong usage=reads.Value(module.LoadBias+AimStateReference.ObjectNullClassCell,"CameraNull.ObjectClassUsage");
+            sample.CameraNullPredicateStatus="NOT_READY_OBJECT_CLASS_USAGE";if(usage==0 || (usage&1)!=0)return;
+            Expect(usage==objectClass,"Unity Object null-operator class usage matches verified camera parent");
+            uint init=reads.Word(objectClass+0xe0,"CameraNull.ObjectClassInitialized");sample.CameraNullClassInit=init;
+            sample.CameraNullPredicateStatus="NOT_READY_CLASS_INITIALIZATION";if(init==0)return;
+            // Exact source branch for this non-null managed Camera reference:
+            // CompareBaseObjects(camera,null) negates IsNativeObjectAlive,
+            // which tail-calls IntPtr inequality on m_CachedPtr and zero.
+            sample.CameraEqualsNull=native==0;sample.CameraNotEqualsNull=native!=0;
+            sample.CameraNullPredicateStatus="ORIGINAL_NULL_COMPARISON_DATA_VERIFIED";
+        }
         private void ReadCameraControllerInventory(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,PlayerObjectResult core,ulong wrappers,ulong length)
         {
+            sample.CameraNullPredicateStatus="NOT_EVALUATED_NO_TYPED_CAMERA";
             sample.ControllerFacadeMetadataRaw=reads.Byte(module.LoadBias+AimStateReference.ControllerFacadeInitCell,"Controller.FacadeMetadataGuard");
             sample.ControllerFacadeSlotPresent=HotfixEntry(reads,wrappers,length,0x370);sample.ControllerMatchSlotPresent=HotfixEntry(reads,wrappers,length,0x36f);sample.ControllerCameraSlotPresent=HotfixEntry(reads,wrappers,length,0x42e);
             ulong matchBase=RootClass(reads,module,layout,ObjectReference.MatchGameCell,12425,null);
@@ -239,6 +260,7 @@ namespace HeadBridge.Mapping
             }
             CombatFields(reads,cameraClass,41079,module,layout,AimStateReference.ControllerFields);
             ulong native=reads.Value(camera+0x10,"Controller.CameraCachedNativeField");sample.ControllerCachedNative=native;
+            ReadCameraObjectNullPredicate(reads,module,sample,cameraClass,native);
             sample.CameraControllerInventoryStatus="REGISTERED_CAMERA_CACHED_NATIVE_NULL";if(native==0)return;
             ObjectReads.User(native,8,"registered camera cached native pointer");
             sample.CameraControllerInventoryStatus="REGISTERED_CAMERA_NATIVE_LINK_UNCOMPARED";
