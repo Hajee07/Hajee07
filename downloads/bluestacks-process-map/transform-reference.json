@@ -261,6 +261,15 @@
       "hex": "c0035fd6"
     }
   ],
+  "camera_predicate_anchors": [
+    {
+      "name": "native_camera_predicate",
+      "rva": 5271564,
+      "hex": "08e040391f010071e0079f1ac0035fd6"
+    }
+  ],
+  "camera_predicate_rva": 5271564,
+  "camera_predicate_byte_offset": 56,
   "camera_tag_manager_cell": 21224808,
   "camera_type_descriptor": 21008448,
   "camera_bindings": [

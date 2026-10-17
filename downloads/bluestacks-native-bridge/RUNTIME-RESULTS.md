@@ -1053,3 +1053,25 @@ only TYPE_RANGE_CANDIDATE_ONLY and unevaluated predicate address/RVA. It never
 asserts selected Camera.main, resolves managed wrappers, calls a predicate or
 reads pose. 858 offline checks pass; live V43 pending. Fixtures:3979 candidate,
 3843 null manager. Original limits and failure/recheck rules remain intact.
+
+## Accepted V43 live candidate observation
+
+The uploaded report returned TYPE_RANGE_CANDIDATE_ONLY at native object
+0x77f1c0a1e810, owner 0x77f1cfcd9a90. Predicate function=0x380300c, RVA=0x50700c;
+TagProbes=1, NodesVisited=1. Exact Unity entry/code identity and local snapshot
+passed; no roster counters changed during this capture. Aim phase=4035 reads,
+total=24472. Plugin unload, handler cleanup and session release passed.
+V43 did not evaluate the predicate or claim selection/pose. The exact predicate
+was subsequently disassembled from the checksum-verified Unity reference file.
+
+## V44 original native selector predicate sampling
+
+Verified predicate RVA 0x50700c is a complete nonzero-byte check at component+0x38.
+-ProbeAimState now evaluates that exact code equivalently through read-only data
+sampling, never invoking it. False advances to next tagged object; unknown
+predicate stops unverified; source-prefix true or exhausted false list yields
+explicit original-native selected/null status. Managed wrappers, game getter
+hotfix/fallback, actual rendered camera and pose are unverified. 876 offline
+checks pass; live V44 pending. Candidate fixture=4003 reads, null-manager=3843;
+all existing limits/rechecks remain. Fresh environment inputs/toolchain restored
+and checksum-verified; baseline V43 suite passed before this change.

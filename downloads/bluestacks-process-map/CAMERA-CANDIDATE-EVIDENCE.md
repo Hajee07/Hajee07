@@ -72,3 +72,15 @@ parsing/ten modes, all source/helper/plugin hashes and extracted-package checks
 pass. Live V43 remains pending. The next needed evidence is the bounded native
 candidate and its predicate RVA, so predicate source can be verified before any
 claim about selected Camera.main or actual camera pose.
+
+## Accepted V43 live candidate observation
+
+The uploaded report returned TYPE_RANGE_CANDIDATE_ONLY at native object
+0x77f1c0a1e810, owner 0x77f1cfcd9a90. Predicate function=0x380300c, RVA=0x50700c;
+TagProbes=1, NodesVisited=1. Exact Unity entry/code identity and local snapshot
+passed; no roster counters changed during this capture. Aim phase=4035 reads,
+total=24472. Plugin unload, handler cleanup and session release passed.
+V43 did not evaluate the predicate or claim selection/pose. The exact predicate
+was subsequently disassembled from the checksum-verified Unity reference file.
+
+V44 adds source-equivalent predicate/selection sampling; see [selection evidence](CAMERA-SELECTION-EVIDENCE.md).

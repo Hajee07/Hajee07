@@ -57,6 +57,7 @@ namespace HeadBridge.Mapping
         }
         private static void ReadNativeCameraCandidate(ObjectReads reads,PlayerStateObservation sample)
         {
+            sample.CameraSelectionStatus="NOT_READY_SOURCE_SELECTION";
             sample.CameraCandidateStatus="NOT_READY_UNITY_CODE";
             if(sample.CameraUnityCodeStatus!="REGISTERED_ENTRIES_AND_CODE_VERIFIED")return;
             ulong bias=sample.CameraUnityLoadBias;NativeAnchors(reads,bias,NativeTransformReference.CameraSelectorAnchors);
@@ -82,7 +83,7 @@ namespace HeadBridge.Mapping
             sample.CameraCandidateStatus="NOT_READY_CAMERA_TYPE_RANGE";if(span==0 || span>4096)return;
             for(int n=0;n<2;n++)
             {
-                if(node==head){sample.CameraCandidateStatus="NOT_READY_NO_CAMERA_IN_VISITED_NODES";return;}
+                if(node==head){if(sample.CameraCandidateObject==0)sample.CameraCandidateStatus="NOT_READY_NO_CAMERA_IN_VISITED_NODES";sample.CameraSelectionStatus="ORIGINAL_UNITY_MAIN_NULL_READ_ONLY";sample.CameraSelectionComplete=true;return;}
                 ObjectReads.User(node,8,"camera tag node");Expect(visited.Add(node),"camera tag-list cycle");sample.CameraNodesVisited=n+1;
                 byte[] item=reads.Read(node,24,"Camera.TagNode"+n);Expect(BitConverter.ToUInt64(item,0)==previous,"camera tag-list previous link");
                 ulong obj=BitConverter.ToUInt64(item,16);ObjectReads.User(obj,8,"tagged native game object");
@@ -99,12 +100,23 @@ namespace HeadBridge.Mapping
                         ulong vtable=reads.Pointer(candidate,"native camera vtable"),predicate=reads.Value(vtable+0xd0,"Camera.NativePredicateFunction");ObjectReads.User(predicate,4,"native camera predicate function");
                         Expect(predicate>=bias+NativeTransformReference.CameraExecutableStart && predicate<bias+NativeTransformReference.CameraExecutableEnd,"camera predicate in reference executable range");
                         sample.CameraCandidateObject=candidate;sample.CameraCandidateOwner=obj;sample.CameraPredicateFunction=predicate;sample.CameraPredicateRva=predicate-bias;
-                        sample.CameraCandidateStatus="TYPE_RANGE_CANDIDATE_ONLY";return;
+                        sample.CameraCandidateStatus="TYPE_RANGE_CANDIDATE_ONLY";
+                        sample.CameraPredicateRaw=null;sample.CameraPredicateValue=null;
+                        if(predicate!=bias+NativeTransformReference.CameraPredicateTarget){sample.CameraSelectionStatus="UNVERIFIED_PREDICATE_OVERRIDE";return;}
+                        NativeAnchors(reads,bias,NativeTransformReference.CameraPredicateAnchors);
+                        byte rawPredicate=reads.Byte(candidate+NativeTransformReference.CameraPredicateByteOffset,"Camera.NativePredicateByte");
+                        sample.CameraPredicateRaw=rawPredicate;sample.CameraPredicateValue=rawPredicate!=0;sample.CameraPredicatesEvaluated++;
+                        if(rawPredicate!=0){sample.SelectedNativeCamera=candidate;sample.SelectedNativeCameraOwner=obj;sample.CameraSelectionStatus="ORIGINAL_UNITY_MAIN_SELECTED_READ_ONLY";sample.CameraSelectionComplete=true;return;}
+                        // The original selector advances to the next tagged object after
+                        // a false predicate, not a later component on this object.
+                        break;
                     }
                 }
                 previous=node;node=BitConverter.ToUInt64(item,8);
             }
-            sample.CameraCandidateStatus="NOT_READY_TAG_NODE_LIMIT";
+            if(node==head){if(sample.CameraCandidateObject==0)sample.CameraCandidateStatus="NOT_READY_NO_CAMERA_IN_VISITED_NODES";sample.CameraSelectionStatus="ORIGINAL_UNITY_MAIN_NULL_READ_ONLY";sample.CameraSelectionComplete=true;return;}
+            sample.CameraSelectionStatus="NOT_READY_TAG_NODE_LIMIT";
+            if(sample.CameraCandidateObject==0)sample.CameraCandidateStatus="NOT_READY_TAG_NODE_LIMIT";
         }
         private static void ReadAimState(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length)
         {

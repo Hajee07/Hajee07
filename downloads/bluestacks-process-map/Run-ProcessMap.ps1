@@ -112,7 +112,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=43 ReadOnly=1'
+Record 'ProcessMapVersion=44 ReadOnly=1'
 Record "PlayerStateMode=$($ProbePlayerState.IsPresent)"
 Record "TeamPolicyMode=$($ProbeTeamPolicy.IsPresent)"
 Record "CombatStateMode=$($ProbeCombatState.IsPresent) RequestedRosterIndex=$CombatRosterIndex"
@@ -389,7 +389,8 @@ try {
                     Record "QuaternionPositiveZBasis X=$($sample.BasisX) Y=$($sample.BasisY) Z=$($sample.BasisZ) InputBasis=0,0,1 Math=VERIFIED_UNITY_QUATERNION_VECTOR_MULTIPLY NormalizedByProbe=False CameraConvention=UNVERIFIED ShotDirection=UNVERIFIED"
                     Record "CameraNativeBindings Status=$($sample.CameraBindingStatus) MainFunction=0x$($sample.CameraMainICall.ToString('x')) ComponentTransformFunction=0x$($sample.ComponentTransformICall.ToString('x')) Scope=ICALL_FUNCTION_POINTERS_ONLY SelectedCamera=UNVERIFIED ManagedCamera=NOT_READ CameraPose=UNVERIFIED GameGetterHotfix=NOT_EVALUATED FunctionsInvoked=False"
                     Record "CameraUnityCode Status=$($sample.CameraUnityCodeStatus) LoadBias=0x$($sample.CameraUnityLoadBias.ToString('x')) BuildId=667862f2d29b22ee ReferenceFileSHA256=1029519376944ff6310fcbbe84356976a839e080da67da716b3aae470f80dd77 MainRVA=0x41d8c4 ComponentTransformRVA=0x453d04 CodeScope=MAIN_24_COMPONENT_256_BYTES SelectedCamera=UNVERIFIED ManagedCamera=NOT_READ CameraPose=UNVERIFIED FunctionsInvoked=False"
-                    Record "NativeCameraCandidate Status=$($sample.CameraCandidateStatus) NativeObject=0x$($sample.CameraCandidateObject.ToString('x')) Owner=0x$($sample.CameraCandidateOwner.ToString('x')) PredicateFunction=0x$($sample.CameraPredicateFunction.ToString('x')) PredicateRVA=0x$($sample.CameraPredicateRva.ToString('x')) TagProbes=$($sample.CameraTagProbes) NodesVisited=$($sample.CameraNodesVisited) PredicateEvaluated=False MatchesCameraMain=UNVERIFIED ManagedCamera=NOT_READ CameraPose=UNVERIFIED"
+                    Record "NativeCameraCandidate Status=$($sample.CameraCandidateStatus) NativeObject=0x$($sample.CameraCandidateObject.ToString('x')) Owner=0x$($sample.CameraCandidateOwner.ToString('x')) PredicateFunction=0x$($sample.CameraPredicateFunction.ToString('x')) PredicateRVA=0x$($sample.CameraPredicateRva.ToString('x')) TagProbes=$($sample.CameraTagProbes) NodesVisited=$($sample.CameraNodesVisited) PredicateEvaluated=$($null -ne $sample.CameraPredicateRaw) GameGetterCamera=UNVERIFIED ManagedCamera=NOT_READ CameraPose=UNVERIFIED"
+                    Record "CameraMainSelection Status=$($sample.CameraSelectionStatus) NativeObject=0x$($sample.SelectedNativeCamera.ToString('x')) Owner=0x$($sample.SelectedNativeCameraOwner.ToString('x')) PredicateRawByte=$($sample.CameraPredicateRaw) PredicatesEvaluated=$($sample.CameraPredicatesEvaluated) CompleteSourceSelection=$($sample.CameraSelectionComplete) Scope=ORIGINAL_UNITY_NATIVE_SELECTOR EvaluatedBy=READ_ONLY_SOURCE_EQUIVALENT FunctionsInvoked=False ManagedCamera=NOT_READ CameraPose=UNVERIFIED GameGetterHotfix=NOT_EVALUATED"
                 }
                 Record "AimStateMembership RosterIndex=$($sample.RosterIndex) Player=0x$($sample.Player.ToString('x')) IsLocal=$($sample.IsLocal) Proof=$($sample.MembershipProof) CountersChangedSinceRoster=$($sample.CountersChangedSinceRoster) CountersChangedDuringCapture=$($sample.CountersChangedDuringCapture) Observations=$($sample.Observations)"
             } else {

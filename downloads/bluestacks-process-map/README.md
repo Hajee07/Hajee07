@@ -7,14 +7,15 @@ its page table, and walks its VMAs to verify an ARM64 `libil2cpp.so` load layout
 against the inspected APK. Other matching Unity/metadata mappings seen before
 the target are reported as observations.
 
-**Current version: 43. Bounded native camera-component candidate.**
-`-ProbeAimState` adds a source-verified tag-5/component walk after native-code
-identity, recording at most a candidate and unevaluated predicate address/RVA.
-858 offline checks pass; live V43 pending. V42 native-code identity passed.
-No selected Camera.main, managed wrapper, actual pose or aiming is claimed.
-See [candidate evidence](CAMERA-CANDIDATE-EVIDENCE.md). Prior [native code](CAMERA-NATIVE-CODE-EVIDENCE.md),
-[yaw](CAMERA-YAW-COMPARISON-EVIDENCE.md) and [pitch](CAMERA-PITCH-COMPARISON-EVIDENCE.md)
-evidence retain their scopes.
+**Current version: 44. Read-only original native camera-selector sampling.**
+`-ProbeAimState` verifies the complete observed predicate and reads component+0x38
+without invoking it. False advances in source order; unknown overrides and partial
+walks remain unverified. Explicit selected/null results refer only to the original
+native selector's sampled inputs. 876 offline checks pass; live V44 pending.
+V43 candidate/dispatch observation passed. Managed/game camera, pose and aiming
+remain unverified. See [selection evidence](CAMERA-SELECTION-EVIDENCE.md).
+Prior [candidate](CAMERA-CANDIDATE-EVIDENCE.md), [yaw](CAMERA-YAW-COMPARISON-EVIDENCE.md)
+and [pitch](CAMERA-PITCH-COMPARISON-EVIDENCE.md) evidence retain their scopes.
 
 **V34 manual comparison produced two matching experiments:** reported HUD and
 counter values 2->1->2 and 7->6->7, with stable per-experiment context and cleanup.

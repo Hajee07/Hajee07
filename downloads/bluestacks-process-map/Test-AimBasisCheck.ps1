@@ -50,6 +50,8 @@ $fixture=New-AimFixture
 $old=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=36') })
 Check-AimComparison ((ConvertFrom-AimBasisReport $old).Version -eq 36) 'accepted V36 report remains supported'
 Check-AimComparison ((ConvertFrom-AimBasisReport (@('')+$fixture+@(''))).Version -eq 38) 'blank pasted-output lines do not invalidate accepted records'
+$version44=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=44') })
+Check-AimComparison ((ConvertFrom-AimBasisReport $version44).Version -eq 44) 'V44 comparison input remains supported'
 $version43=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=43') })
 Check-AimComparison ((ConvertFrom-AimBasisReport $version43).Version -eq 43) 'V43 comparison input remains supported'
 $version42=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=42') })

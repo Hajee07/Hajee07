@@ -62,11 +62,15 @@ namespace HeadBridge.Mapping {
             new GameLayoutCheck("component_type_lookup_0", 0x52aeacUL, "0b2040f98b0100b4091840f9282846296bed7cd3292100912c815fb88c01084b9f010a6bc30000546b4100f12941009141ffff54e0031faac0035fd6200140f9"),
             new GameLayoutCheck("component_type_lookup_64", 0x52aeecUL, "c0035fd6"),
         };
+        internal static readonly GameLayoutCheck[] CameraPredicateAnchors = new GameLayoutCheck[] {
+            new GameLayoutCheck("native_camera_predicate", 0x50700cUL, "08e040391f010071e0079f1ac0035fd6"),
+        };
         internal static readonly GameLayoutCheck[] Il2CppAnchors = new GameLayoutCheck[] {
             new GameLayoutCheck("get_position", 0x9ff5f40UL, "ffc300d1fe0b00f9f44f02a9347e0090880247f9f30300aaff0b00b9ff0300f9c80000b580cdfbf0000033910b7b0d94e80300aa800207f9e1030091e00313aa00013fd6e007402de20b40bdf44f42a9fe0b40f9ffc30091c0035fd6"),
             new GameLayoutCheck("get_position_injected", 0x9ff5f9cUL, "fe57bea9f44f01a9357e0090a20247f9f30301aaf40300aac20000b580cdfbf000003391f67a0d94e20300aaa00207f9e00314aae10313aaf44f41a9fe57c2a840001fd6"),
             new GameLayoutCheck("get_local_position_injected", 0x9ff6078UL, "fe57bea9f44f01a9157e00f0a20a47f9f30301aaf40300aac20000b5a0cbfbf000542391bf7a0d94e20300aaa00a07f9e00314aae10313aaf44f41a9fe57c2a840001fd6"),
         };
+        internal const ulong CameraPredicateTarget=0x50700cUL, CameraPredicateByteOffset=0x38UL;
         internal const ulong CameraTagManagerCell=0x143dd68UL, CameraTypeDescriptor=0x1409040UL;
         internal const ulong CameraMainTarget=0x41d8c4UL, ComponentTransformTarget=0x453d04UL;
         internal const ulong CameraExecutableStart=0x413a00UL, CameraExecutableEnd=0x13b5570UL;

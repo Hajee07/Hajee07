@@ -1,14 +1,14 @@
 # Standalone head-direction DLL core
 
-Current package: **V43**. `-ProbeAimState` adds bounded native camera-component
-candidate discovery with its unevaluated predicate address/RVA. 858 offline
-checks pass; live V43 pending. V42 native entry/code identity passed. Selected
-camera, managed wrapper, actual pose and aiming remain unverified.
-See [candidate evidence](bluestacks-process-map/CAMERA-CANDIDATE-EVIDENCE.md).
+Current package: **V44**. `-ProbeAimState` verifies the full native camera predicate
+and evaluates its data equivalently without function calls, preserving source
+selection order and unknown/bounded statuses. 876 offline checks pass; live V44
+pending. Managed/game camera, actual pose, LOS and aiming remain unverified.
+See [selection evidence](bluestacks-process-map/CAMERA-SELECTION-EVIDENCE.md).
 
 V34 comparison matched two per-experiment HUD/counter patterns (2->1->2,
 7->6->7). Model names were not captured; evidence remains manual HUD correlation.
-The comparison workflow remains available in V43.
+The comparison workflow remains available in V44.
 
 V33 stable head/counter path passed live: 16 roster objects, counter 2 / field 105,
 all cleanup PASS. No job transition was observed; retries remain offline-tested.
