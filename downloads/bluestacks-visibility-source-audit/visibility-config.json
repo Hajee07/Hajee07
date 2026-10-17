@@ -1,0 +1,44 @@
+{
+  "audit_version": 1,
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "scope": "OFFLINE CONFIG DECLARATION; NO LIVE FLAG CAPTURE",
+  "owner": "COW.GameVarDef",
+  "source_usage": {
+    "cell_rva": 175371688,
+    "storage_rva": 180549144,
+    "raw_word": 536944357,
+    "descriptor_index": 36722,
+    "status": "MATCHES_TYPE_USAGE_MARKER; NOT LIVE CLASS ADDRESS"
+  },
+  "field": {
+    "local_index": 2485,
+    "name": "AimCheckPlayerStreamerVisibility",
+    "source_offset": 7867,
+    "offset_registration_rva": 28216852,
+    "type_descriptor_rva": 182019408,
+    "type_bits": 2147614742,
+    "type_kind": 2,
+    "static_attribute": true
+  },
+  "partial_visibility_argument": {
+    "method_index": 210411,
+    "parameter_name": "PFIEHKHEFAM",
+    "type_kind": 9,
+    "type_name": "UInt32",
+    "source_argument": 4,
+    "meaning": "UNVERIFIED"
+  },
+  "findings": [
+    "The static Boolean field is AimCheckPlayerStreamerVisibility on COW.GameVarDef.",
+    "The previously inspected original Player path bypasses the partial-visibility check when this flag is zero.",
+    "A configuration switch is not a target visibility result.",
+    "Raw argument 4 is passed to a UInt32 parameter; no head-specific meaning is established."
+  ],
+  "live_flag": "NOT_CAPTURED",
+  "default_value": "NOT_DECODED",
+  "writers": "NOT_TRACED",
+  "head_los_verified": false,
+  "functions_invoked": false,
+  "memory_writes": false
+}

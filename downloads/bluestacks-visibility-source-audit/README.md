@@ -286,3 +286,25 @@ checked, key policy operands asserted, direct B/BL targets independently decoded
 from ARM64 words, reproducible byte-identical report, and incorrect ELF rejected.
 Reproduce using Capstone 5.0.3 and pinned inputs:
 `python3 Audit-StreamerVisibility.py libil2cpp.so global-metadata.dat report.json`.
+
+## Visibility configuration identity
+
+[Inspector](Audit-VisibilityConfig.py) and [report](visibility-config.json)
+resolve the static field used by the original Player streamer-visibility path:
+`COW.GameVarDef.AimCheckPlayerStreamerVisibility`, a static Boolean registered at
+static-storage offset `0x1ebb`. The source reference cell is `0xa73f5a8`; its
+on-disk type-usage marker matches GameVarDef's byval descriptor. It is not a live
+class address. The declaration/type/offset chain matches the previously inspected
+source load; the current flag value, its default and writers remain unknown.
+
+The config switch enables or bypasses the original partial-visibility check;
+it is not itself a per-target visibility result. `IsPartialVisible` accepts a
+UInt32 parameter and receives raw value 4. No enum/head-specific meaning for
+that value is inferred. This closes the source field-identity question, not LOS.
+
+Validation: unique offset/name match, static Boolean type attributes, matching
+type-usage marker and UInt32 argument descriptor; cross-report source operands
+agree. Regeneration was byte-identical and an incorrect ELF was rejected.
+Reproduce with pinned inputs:
+`python3 Audit-VisibilityConfig.py libil2cpp.so global-metadata.dat report.json`.
+No live reads/writes, game calls, runtime changes or Windows reruns are included.
