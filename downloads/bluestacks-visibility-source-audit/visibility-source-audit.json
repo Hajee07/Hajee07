@@ -1,0 +1,1750 @@
+{
+  "audit_version": 1,
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "scope": "OFFLINE SOURCE EVIDENCE ONLY",
+  "functions_invoked": false,
+  "live_memory_access": false,
+  "aim_writes": false,
+  "methods": [
+    {
+      "method_index": 34931,
+      "owner": "COW.GameFacade",
+      "name": "CheckVisibleByCameraMode",
+      "rva": 119270516,
+      "registration_slot_rva": 178074432,
+      "metadata_record_hex": "39221d00823000000b63000000000008aa510000ffffffff093c00007488000696000000ffff0100",
+      "window_bytes": 220,
+      "window_end_rva": 119270736,
+      "window_bound": "NEXT_METHOD_IN_METADATA_ORDER; NOT A GENERAL FUNCTION-SIZE ALGORITHM",
+      "source_hex": "ff0302d1fe3300f9f44f07a954ef019088da5c39f30300aac800003700ac01b0006040f9d157c6942800805288da1c3920818752e1031faa5caf59942002003620818752e1031faa85af5994680a40f96002c03de82b00f9e013803de00300b4e013c03de82b40f9e1830091e2031faae00b803de81b00f948ed49941200001408ac01b0086140f9000140f908e040b9480000351358c69480fdff97200100b4680a40f96002c03de1030091e2031faae80b00f9e003803d47d000940200001420008052f44f47a9fe3340f900000012ff030291c0035fd64b58c694",
+      "direct_unconditional_transfers": [
+        {
+          "rva": 119270552,
+          "kind": "BL",
+          "target_rva": 171264988
+        },
+        {
+          "rva": 119270572,
+          "kind": "BL",
+          "target_rva": 142780956
+        },
+        {
+          "rva": 119270588,
+          "kind": "BL",
+          "target_rva": 142781136
+        },
+        {
+          "rva": 119270636,
+          "kind": "BL",
+          "target_rva": 138650124
+        },
+        {
+          "rva": 119270640,
+          "kind": "B",
+          "target_rva": 119270712
+        },
+        {
+          "rva": 119270664,
+          "kind": "BL",
+          "target_rva": 171265364
+        },
+        {
+          "rva": 119270668,
+          "kind": "BL",
+          "target_rva": 119268108
+        },
+        {
+          "rva": 119270700,
+          "kind": "BL",
+          "target_rva": 119483976
+        },
+        {
+          "rva": 119270704,
+          "kind": "B",
+          "target_rva": 119270712
+        },
+        {
+          "rva": 119270732,
+          "kind": "BL",
+          "target_rva": 171265656
+        }
+      ]
+    },
+    {
+      "method_index": 210384,
+      "owner": "COW.GamePlay.Player",
+      "name": "IsVisible",
+      "rva": 116623412,
+      "registration_slot_rva": 179478056,
+      "metadata_record_hex": "4d4e0200507c00000b63000000000008fffffffffffffffff31b0200d1350306c600000046000000",
+      "window_bytes": 84,
+      "window_end_rva": 116623496,
+      "window_bound": "NEXT_METHOD_IN_METADATA_ORDER; NOT A GENERAL FUNCTION-SIZE ALGORITHM",
+      "source_hex": "fe4fbfa9f30300aa607e83524000a072e1031faa75c8639440010036607e83524000a072e1031faa9dc86394200100b4e10313aae2031faafe4fc1a845c55314606a45f9e1031faafe4fc1a806044d147d71d094",
+      "direct_unconditional_transfers": [
+        {
+          "rva": 116623432,
+          "kind": "BL",
+          "target_rva": 142780956
+        },
+        {
+          "rva": 116623452,
+          "kind": "BL",
+          "target_rva": 142781136
+        },
+        {
+          "rva": 116623472,
+          "kind": "B",
+          "target_rva": 138583428
+        },
+        {
+          "rva": 116623488,
+          "kind": "B",
+          "target_rva": 136812696
+        },
+        {
+          "rva": 116623492,
+          "kind": "BL",
+          "target_rva": 171265656
+        }
+      ]
+    },
+    {
+      "method_index": 210385,
+      "owner": "COW.GamePlay.Player",
+      "name": "IsVisibleByFlag",
+      "rva": 116623496,
+      "registration_slot_rva": 179478064,
+      "metadata_record_hex": "8f6f5800507c00000b6300000000000836f00100ffffffff23410000d235030686000000ffff0100",
+      "window_bytes": 104,
+      "window_end_rva": 116623600,
+      "window_bound": "NEXT_METHOD_IN_METADATA_ORDER; NOT A GENERAL FUNCTION-SIZE ALGORITHM",
+      "source_hex": "fe0f1ef8f44f01a9f303012af40300aa60248852e1031faa5fc863946001003660248852e1031faa88c86394c00100b4e10314aae203132af44f41a9e3031faafe0742f844fa5314806a45f9c00000b4e103132af44f41a9e2031faafe0742f847024d146371d094",
+      "direct_unconditional_transfers": [
+        {
+          "rva": 116623520,
+          "kind": "BL",
+          "target_rva": 142780956
+        },
+        {
+          "rva": 116623536,
+          "kind": "BL",
+          "target_rva": 142781136
+        },
+        {
+          "rva": 116623564,
+          "kind": "B",
+          "target_rva": 138637788
+        },
+        {
+          "rva": 116623592,
+          "kind": "B",
+          "target_rva": 136811012
+        },
+        {
+          "rva": 116623596,
+          "kind": "BL",
+          "target_rva": 171265656
+        }
+      ]
+    },
+    {
+      "method_index": 211257,
+      "owner": "COW.GamePlay.Player",
+      "name": "CheckVisibleByDis",
+      "rva": 117293348,
+      "registration_slot_rva": 179485040,
+      "metadata_record_hex": "00b75800507c00000b6300000000000868f20100ffffffff535a00003a39030686000000ffff0100",
+      "window_bytes": 420,
+      "window_end_rva": 117293768,
+      "window_bound": "NEXT_METHOD_IN_METADATA_ORDER; NOT A GENERAL FUNCTION-SIZE ALGORITHM",
+      "source_hex": "ed33bb6deb2b016de923026dfe1b00f9f44f04a954fe01b088fa6539481ca24e291ca14e0a1ca04ef30300aa2801003700bb01f0006040f9a0e2cd94e0ba01b0003446f99de2cd942800805288fa2539604a8b52e1031faa283a619400020036604a8b52e1031faa513a6194a00900b4e10313aa401daa4e211da94e021da84ef44f44a9fe1b40f9e923426deb2b416de2031faaed33c56ca7da511414bb01f0946240f9800240f908e040b948000035e0e2cd94e0031faae39c0794e8ba01b0083546f9f30300aa080140f909e140b969000035e00308aad6e2cd94e00313aae1031faae2031faafa3ac094c0040036930500b4e00313aae1031faa5ff84994800240f90d1ca04e2c1ca14e4b1ca24e08e040b968000035c6e2cd94800240f9085c40f9e0031f2a008d42bd8129201e2021211ea8020054018942bda239211e4021221e2b020054a129211e4021211ec80100548039201e2021201e6b010054009142bd6129201e6039201e0021201ee8b79f1a0021211ee9879f1a0001090a0200001420008052f44f44a9fe1b40f9e923426deb2b416ded33c56cc0035fd6ede2cd94",
+      "direct_unconditional_transfers": [
+        {
+          "rva": 117293404,
+          "kind": "BL",
+          "target_rva": 171264988
+        },
+        {
+          "rva": 117293416,
+          "kind": "BL",
+          "target_rva": 171264988
+        },
+        {
+          "rva": 117293436,
+          "kind": "BL",
+          "target_rva": 142780956
+        },
+        {
+          "rva": 117293452,
+          "kind": "BL",
+          "target_rva": 142781136
+        },
+        {
+          "rva": 117293500,
+          "kind": "B",
+          "target_rva": 138751064
+        },
+        {
+          "rva": 117293524,
+          "kind": "BL",
+          "target_rva": 171265364
+        },
+        {
+          "rva": 117293532,
+          "kind": "BL",
+          "target_rva": 119289192
+        },
+        {
+          "rva": 117293564,
+          "kind": "BL",
+          "target_rva": 171265364
+        },
+        {
+          "rva": 117293580,
+          "kind": "BL",
+          "target_rva": 167685620
+        },
+        {
+          "rva": 117293600,
+          "kind": "BL",
+          "target_rva": 136684444
+        },
+        {
+          "rva": 117293628,
+          "kind": "BL",
+          "target_rva": 171265364
+        },
+        {
+          "rva": 117293732,
+          "kind": "B",
+          "target_rva": 117293740
+        },
+        {
+          "rva": 117293764,
+          "kind": "BL",
+          "target_rva": 171265656
+        }
+      ]
+    },
+    {
+      "method_index": 266312,
+      "owner": "GCommon.BitArrayBoolean",
+      "name": "op_Implicit",
+      "rva": 136812696,
+      "registration_slot_rva": 179925480,
+      "metadata_record_hex": "5bbe0100048e00000b63000000000008cfa50200ffffffffffffffff4910040696080000ffff0100",
+      "window_bytes": 52,
+      "window_end_rva": 136812748,
+      "window_bound": "NEXT_METHOD_IN_METADATA_ORDER; NOT A GENERAL FUNCTION-SIZE ALGORITHM",
+      "source_hex": "fe0f1ff8600100b4081040b9091840b91f010071ea079f1a1f050031e8179f1a3f0500714001881afe0741f8c0035fd66c6d8394",
+      "direct_unconditional_transfers": [
+        {
+          "rva": 136812744,
+          "kind": "BL",
+          "target_rva": 171265656
+        }
+      ]
+    }
+  ],
+  "delegate_identities": [
+    {
+      "method_index": 35021,
+      "owner": "COW.GameFacade",
+      "name": "CurrentCameraModeManager",
+      "rva": 119268108,
+      "registration_slot_rva": 178075152,
+      "scope": "IDENTITY ONLY; IMPLEMENTATION NOT FULLY EVALUATED"
+    },
+    {
+      "method_index": 217009,
+      "owner": "COW.GamePlay.ICCMOIAKHOE",
+      "name": "CKHGHGPDGGO",
+      "rva": 119483976,
+      "registration_slot_rva": 179531056,
+      "scope": "IDENTITY ONLY; IMPLEMENTATION NOT FULLY EVALUATED"
+    },
+    {
+      "method_index": 266278,
+      "owner": "GCommon.BitArray",
+      "name": "HasFlag",
+      "rva": 136811012,
+      "registration_slot_rva": 179925208,
+      "scope": "IDENTITY ONLY; IMPLEMENTATION NOT FULLY EVALUATED"
+    }
+  ],
+  "name_inventory_count": 209,
+  "name_inventory": [
+    {
+      "index": 33678,
+      "owner": "COW.EventLogger",
+      "name": "LogLeaveVehicleByOverheadRayCast",
+      "argument_count": 0,
+      "token": 100696975
+    },
+    {
+      "index": 34931,
+      "owner": "COW.GameFacade",
+      "name": "CheckVisibleByCameraMode",
+      "argument_count": 1,
+      "token": 100698228
+    },
+    {
+      "index": 41508,
+      "owner": "COW.UGCLLMChatHudRepItem",
+      "name": "get_IsVisible",
+      "argument_count": 0,
+      "token": 100704805
+    },
+    {
+      "index": 41509,
+      "owner": "COW.UGCLLMChatHudRepItem",
+      "name": "set_IsVisible",
+      "argument_count": 1,
+      "token": 100704806
+    },
+    {
+      "index": 52500,
+      "owner": "COW.UIMilestone_MainController",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100715797
+    },
+    {
+      "index": 52555,
+      "owner": "COW.UIMilestone_MainController",
+      "name": "<>iFixBaseProxy_IsVisible",
+      "argument_count": 0,
+      "token": 100715852
+    },
+    {
+      "index": 54464,
+      "owner": "COW.UISA_SYSMainController",
+      "name": "RaycastPlayerSummary3DUI",
+      "argument_count": 2,
+      "token": 100717761
+    },
+    {
+      "index": 58256,
+      "owner": "COW.UIHudAdminAbuseGamePlayBuffController",
+      "name": "CompareRaycastDepthEntry",
+      "argument_count": 2,
+      "token": 100721553
+    },
+    {
+      "index": 58257,
+      "owner": "COW.UIHudAdminAbuseGamePlayBuffController",
+      "name": "GetRaycastDepthEntry",
+      "argument_count": 0,
+      "token": 100721554
+    },
+    {
+      "index": 58258,
+      "owner": "COW.UIHudAdminAbuseGamePlayBuffController",
+      "name": "ResetRaycastDepthEntries",
+      "argument_count": 0,
+      "token": 100721555
+    },
+    {
+      "index": 58259,
+      "owner": "COW.UIHudAdminAbuseGamePlayBuffController",
+      "name": "ClearRaycastDepthCache",
+      "argument_count": 0,
+      "token": 100721556
+    },
+    {
+      "index": 58260,
+      "owner": "COW.UIHudAdminAbuseGamePlayBuffController",
+      "name": "RaycastForClickedItem",
+      "argument_count": 0,
+      "token": 100721557
+    },
+    {
+      "index": 58261,
+      "owner": "COW.UIHudAdminAbuseGamePlayBuffController",
+      "name": "RaycastForClickedItemInternal",
+      "argument_count": 0,
+      "token": 100721558
+    },
+    {
+      "index": 61379,
+      "owner": "COW.UIBRMatchReviewTeamMemberItemController",
+      "name": "get_IsVisible",
+      "argument_count": 0,
+      "token": 100724676
+    },
+    {
+      "index": 63705,
+      "owner": "COW.UIHudCSShopController",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100727002
+    },
+    {
+      "index": 63793,
+      "owner": "COW.UIHudCSShopController",
+      "name": "<>iFixBaseProxy_IsVisible",
+      "argument_count": 0,
+      "token": 100727090
+    },
+    {
+      "index": 68192,
+      "owner": "COW.UIHudTakeTurnsShopBaseController",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100731489
+    },
+    {
+      "index": 68225,
+      "owner": "COW.UIHudTakeTurnsShopBaseController",
+      "name": "<>iFixBaseProxy_IsVisible",
+      "argument_count": 0,
+      "token": 100731522
+    },
+    {
+      "index": 75810,
+      "owner": "COW.UIHudMapThrowerSelectWndController",
+      "name": "GetIsVisible",
+      "argument_count": 0,
+      "token": 100739107
+    },
+    {
+      "index": 77895,
+      "owner": "COW.UILobbyV2ResidentFriendListController",
+      "name": "IsVisibleAndActive",
+      "argument_count": 0,
+      "token": 100741192
+    },
+    {
+      "index": 95968,
+      "owner": "COW.UISparkPetAvatarWindowController",
+      "name": "SetupRaycastDragHandler",
+      "argument_count": 0,
+      "token": 100759265
+    },
+    {
+      "index": 95971,
+      "owner": "COW.UISparkPetAvatarWindowController",
+      "name": "SetupCollabRaycastDragHandler",
+      "argument_count": 0,
+      "token": 100759268
+    },
+    {
+      "index": 96359,
+      "owner": "COW.UISparkPetInputHandler",
+      "name": "SetRaycastCamera",
+      "argument_count": 1,
+      "token": 100759656
+    },
+    {
+      "index": 96362,
+      "owner": "COW.UISparkPetInputHandler",
+      "name": "IsRaycastHitSelf",
+      "argument_count": 1,
+      "token": 100759659
+    },
+    {
+      "index": 96566,
+      "owner": "COW.UISparkPetRaycastDragHandler",
+      "name": "SetupRaycastDragHandler",
+      "argument_count": 1,
+      "token": 100759863
+    },
+    {
+      "index": 96579,
+      "owner": "COW.UISparkPetRaycastDragHandler",
+      "name": "IsRaycastHitSparkPet",
+      "argument_count": 1,
+      "token": 100759876
+    },
+    {
+      "index": 97777,
+      "owner": "COW.UIHudChatBoxController",
+      "name": "IsVisibleWithZoneType",
+      "argument_count": 1,
+      "token": 100761074
+    },
+    {
+      "index": 97785,
+      "owner": "COW.UIHudChatBoxController",
+      "name": "<>iFixBaseProxy_IsVisibleWithZoneType",
+      "argument_count": 1,
+      "token": 100761082
+    },
+    {
+      "index": 97980,
+      "owner": "COW.UIHudVoiceboxController",
+      "name": "IsVisibleWithZoneType",
+      "argument_count": 1,
+      "token": 100761277
+    },
+    {
+      "index": 97992,
+      "owner": "COW.UIHudVoiceboxController",
+      "name": "<>iFixBaseProxy_IsVisibleWithZoneType",
+      "argument_count": 1,
+      "token": 100761289
+    },
+    {
+      "index": 101240,
+      "owner": "COW.UIHUDUGC_PlayerHeadController",
+      "name": "IsVisiblePlayer",
+      "argument_count": 1,
+      "token": 100764537
+    },
+    {
+      "index": 104870,
+      "owner": "COW.UIBRMatchReviewMapController",
+      "name": "IsVisibleLocalTeamPlayer",
+      "argument_count": 1,
+      "token": 100768167
+    },
+    {
+      "index": 125872,
+      "owner": "COW.UIHudNameBaseController",
+      "name": "IsVisibleWithZoneType",
+      "argument_count": 1,
+      "token": 100789169
+    },
+    {
+      "index": 125888,
+      "owner": "COW.UIHudNameBattleFlagController",
+      "name": "IsVisibleWithZoneType",
+      "argument_count": 1,
+      "token": 100789185
+    },
+    {
+      "index": 125893,
+      "owner": "COW.UIHudNameBattleFlagController",
+      "name": "<>iFixBaseProxy_IsVisibleWithZoneType",
+      "argument_count": 1,
+      "token": 100789190
+    },
+    {
+      "index": 156772,
+      "owner": "COW.UIGlobalCOWImpl",
+      "name": "GetEnableNGUIRaycastNonAlloc",
+      "argument_count": 0,
+      "token": 100820069
+    },
+    {
+      "index": 168739,
+      "owner": "COW.UIModelIAPBundle",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100832036
+    },
+    {
+      "index": 168741,
+      "owner": "COW.UIModelIAPBundle",
+      "name": "IsVisible",
+      "argument_count": 1,
+      "token": 100832038
+    },
+    {
+      "index": 182162,
+      "owner": "COW.UIUGCBridgingGameScene",
+      "name": "OnAddCameraRayCastHud",
+      "argument_count": 1,
+      "token": 100845459
+    },
+    {
+      "index": 183280,
+      "owner": "COW.UIUnBlockOtherHudScript",
+      "name": "Raycast",
+      "argument_count": 1,
+      "token": 100846577
+    },
+    {
+      "index": 183281,
+      "owner": "COW.UIUnBlockOtherHudScript",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100846578
+    },
+    {
+      "index": 183282,
+      "owner": "COW.UIUnBlockOtherHudScript",
+      "name": "Raycast",
+      "argument_count": 1,
+      "token": 100846579
+    },
+    {
+      "index": 196411,
+      "owner": "COW.PotentiallyVisible.PotentiallyVisibleSetItem",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100859708
+    },
+    {
+      "index": 196684,
+      "owner": "COW.HUD.UIHudEnermyPointController",
+      "name": "IsVisibleWithZoneType",
+      "argument_count": 1,
+      "token": 100859981
+    },
+    {
+      "index": 196693,
+      "owner": "COW.HUD.UIHudEnermyPointController",
+      "name": "<>iFixBaseProxy_IsVisibleWithZoneType",
+      "argument_count": 1,
+      "token": 100859990
+    },
+    {
+      "index": 200732,
+      "owner": "COW.Gameplay.UGC.UGCIconEntityObject",
+      "name": "IsVisiblePlayer",
+      "argument_count": 1,
+      "token": 100864029
+    },
+    {
+      "index": 200961,
+      "owner": "COW.Gameplay.UGC.UGCTextEntityObject",
+      "name": "IsVisiblePlayer",
+      "argument_count": 1,
+      "token": 100864258
+    },
+    {
+      "index": 210384,
+      "owner": "COW.GamePlay.Player",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100873681
+    },
+    {
+      "index": 210385,
+      "owner": "COW.GamePlay.Player",
+      "name": "IsVisibleByFlag",
+      "argument_count": 1,
+      "token": 100873682
+    },
+    {
+      "index": 210676,
+      "owner": "COW.GamePlay.Player",
+      "name": "IsGroundedByRayCastHit",
+      "argument_count": 0,
+      "token": 100873973
+    },
+    {
+      "index": 211257,
+      "owner": "COW.GamePlay.Player",
+      "name": "CheckVisibleByDis",
+      "argument_count": 1,
+      "token": 100874554
+    },
+    {
+      "index": 211789,
+      "owner": "COW.GamePlay.Player",
+      "name": "RaycastCheckForItemMark",
+      "argument_count": 3,
+      "token": 100875086
+    },
+    {
+      "index": 211790,
+      "owner": "COW.GamePlay.Player",
+      "name": "RaycastCheckForItemMark",
+      "argument_count": 3,
+      "token": 100875087
+    },
+    {
+      "index": 211791,
+      "owner": "COW.GamePlay.Player",
+      "name": "RaycastCheckForItemMarkWithScreenPos",
+      "argument_count": 4,
+      "token": 100875088
+    },
+    {
+      "index": 211792,
+      "owner": "COW.GamePlay.Player",
+      "name": "RaycastCheckForItemMarkWithScreenPos",
+      "argument_count": 4,
+      "token": 100875089
+    },
+    {
+      "index": 213913,
+      "owner": "COW.GamePlay.Player",
+      "name": "<>iFixBaseProxy_IsVisible",
+      "argument_count": 0,
+      "token": 100877210
+    },
+    {
+      "index": 215819,
+      "owner": "COW.GamePlay.AttackableBaseLevelObject",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100879116
+    },
+    {
+      "index": 215836,
+      "owner": "COW.GamePlay.OGKFEMJNCGM",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100879133
+    },
+    {
+      "index": 215867,
+      "owner": "COW.GamePlay.AttackableEntity",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100879164
+    },
+    {
+      "index": 226724,
+      "owner": "COW.GamePlay.LevelObjectJSGhost",
+      "name": "IsVisibleToLocalViewer",
+      "argument_count": 0,
+      "token": 100890021
+    },
+    {
+      "index": 226933,
+      "owner": "COW.GamePlay.CCMIBKABMLD",
+      "name": "IsVisibleToLocalViewer",
+      "argument_count": 0,
+      "token": 100890230
+    },
+    {
+      "index": 230142,
+      "owner": "COW.GamePlay.LevelForceField",
+      "name": "IsVisibleToLocalViewer",
+      "argument_count": 0,
+      "token": 100893439
+    },
+    {
+      "index": 230408,
+      "owner": "COW.GamePlay.LevelHitAndExplodeGiftBox",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100893705
+    },
+    {
+      "index": 231763,
+      "owner": "COW.GamePlay.LevelObjectBounceCoinCollector",
+      "name": "IsVisibleToLocalViewer",
+      "argument_count": 0,
+      "token": 100895060
+    },
+    {
+      "index": 232643,
+      "owner": "COW.GamePlay.LevelObjectSocialObj",
+      "name": "get_IsVisibleGlobal",
+      "argument_count": 0,
+      "token": 100895940
+    },
+    {
+      "index": 232644,
+      "owner": "COW.GamePlay.LevelObjectSocialObj",
+      "name": "set_IsVisibleGlobal",
+      "argument_count": 1,
+      "token": 100895941
+    },
+    {
+      "index": 232650,
+      "owner": "COW.GamePlay.LevelObjectSocialObj",
+      "name": "SetIsVisibleGlobal",
+      "argument_count": 1,
+      "token": 100895947
+    },
+    {
+      "index": 232670,
+      "owner": "COW.GamePlay.LevelObjectSpawned",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100895967
+    },
+    {
+      "index": 232892,
+      "owner": "COW.GamePlay.LevelObjectWukongIllusion",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100896189
+    },
+    {
+      "index": 232894,
+      "owner": "COW.GamePlay.LevelObjectWukongIllusion",
+      "name": "IsVisibleToLocalViewer",
+      "argument_count": 0,
+      "token": 100896191
+    },
+    {
+      "index": 232934,
+      "owner": "COW.GamePlay.LevelObjectWukongIllusion",
+      "name": "<>iFixBaseProxy_IsVisible",
+      "argument_count": 0,
+      "token": 100896231
+    },
+    {
+      "index": 233155,
+      "owner": "COW.GamePlay.LevelPocketRevivePoint",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100896452
+    },
+    {
+      "index": 233793,
+      "owner": "COW.GamePlay.LevelSantinoDummy",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100897090
+    },
+    {
+      "index": 234629,
+      "owner": "COW.GamePlay.LevelTeleportDoor",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100897926
+    },
+    {
+      "index": 236259,
+      "owner": "COW.GamePlay.UGCEradicateZone",
+      "name": "get_IsVisible",
+      "argument_count": 0,
+      "token": 100899556
+    },
+    {
+      "index": 238763,
+      "owner": "COW.GamePlay.LevelDynamicColliderAttackScript",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100902060
+    },
+    {
+      "index": 243322,
+      "owner": "COW.GamePlay.NetworkPet",
+      "name": "get_IsVisible",
+      "argument_count": 0,
+      "token": 100906619
+    },
+    {
+      "index": 247113,
+      "owner": "COW.GamePlay.Player_Watching",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100910410
+    },
+    {
+      "index": 247149,
+      "owner": "COW.GamePlay.Player_Watching",
+      "name": "<>iFixBaseProxy_IsVisible",
+      "argument_count": 0,
+      "token": 100910446
+    },
+    {
+      "index": 252187,
+      "owner": "COW.GamePlay.SceneEditObjectBase",
+      "name": "get_IsVisible",
+      "argument_count": 0,
+      "token": 100915484
+    },
+    {
+      "index": 252354,
+      "owner": "COW.GamePlay.SceneEditObjectBase",
+      "name": "UpdateRayCastDis",
+      "argument_count": 1,
+      "token": 100915651
+    },
+    {
+      "index": 255198,
+      "owner": "COW.GamePlay.UGCAimAssistEntity",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100918495
+    },
+    {
+      "index": 256882,
+      "owner": "COW.GamePlay.Vehicle",
+      "name": "IsVisible",
+      "argument_count": 0,
+      "token": 100920179
+    },
+    {
+      "index": 257172,
+      "owner": "COW.GamePlay.Vehicle",
+      "name": "<>iFixBaseProxy_IsVisible",
+      "argument_count": 0,
+      "token": 100920469
+    },
+    {
+      "index": 263029,
+      "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+      "name": "UGCAPICameraMultiRaycast",
+      "argument_count": 9,
+      "token": 100926326
+    },
+    {
+      "index": 263030,
+      "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+      "name": "UGCAPICameraSingleRaycast",
+      "argument_count": 9,
+      "token": 100926327
+    },
+    {
+      "index": 263043,
+      "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+      "name": "IsVisibleWidgetHit",
+      "argument_count": 4,
+      "token": 100926340
+    },
+    {
+      "index": 263046,
+      "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+      "name": "IsVisibleInParentPanels",
+      "argument_count": 2,
+      "token": 100926343
+    },
+    {
+      "index": 263242,
+      "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+      "name": "UGCAPIMultiRaycast",
+      "argument_count": 10,
+      "token": 100926539
+    },
+    {
+      "index": 263359,
+      "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+      "name": "UGCAPISingleRaycast",
+      "argument_count": 10,
+      "token": 100926656
+    },
+    {
+      "index": 263893,
+      "owner": "COW.GamePlay.UGCRuntime.Generate.UGCAPIGenerate",
+      "name": "UGCAPICameraMultiRaycast",
+      "argument_count": 2,
+      "token": 100927190
+    },
+    {
+      "index": 263894,
+      "owner": "COW.GamePlay.UGCRuntime.Generate.UGCAPIGenerate",
+      "name": "UGCAPICameraSingleRaycast",
+      "argument_count": 2,
+      "token": 100927191
+    },
+    {
+      "index": 264075,
+      "owner": "COW.GamePlay.UGCRuntime.Generate.UGCAPIGenerate",
+      "name": "UGCAPIMultiRaycast",
+      "argument_count": 2,
+      "token": 100927372
+    },
+    {
+      "index": 264187,
+      "owner": "COW.GamePlay.UGCRuntime.Generate.UGCAPIGenerate",
+      "name": "UGCAPISingleRaycast",
+      "argument_count": 2,
+      "token": 100927484
+    },
+    {
+      "index": 315119,
+      "owner": "UnityEngine.Camera",
+      "name": "set_useOcclusionCulling",
+      "argument_count": 1,
+      "token": 100663663
+    },
+    {
+      "index": 315407,
+      "owner": "UnityEngine.Plane",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100663951
+    },
+    {
+      "index": 315661,
+      "owner": "UnityEngine.LightProbes",
+      "name": "CalculateInterpolatedLightAndOcclusionProbes",
+      "argument_count": 3,
+      "token": 100664205
+    },
+    {
+      "index": 315662,
+      "owner": "UnityEngine.LightProbes",
+      "name": "CalculateInterpolatedLightAndOcclusionProbes",
+      "argument_count": 3,
+      "token": 100664206
+    },
+    {
+      "index": 315663,
+      "owner": "UnityEngine.LightProbes",
+      "name": "CalculateInterpolatedLightAndOcclusionProbes_Internal",
+      "argument_count": 4,
+      "token": 100664207
+    },
+    {
+      "index": 315908,
+      "owner": "UnityEngine.Renderer",
+      "name": "get_isVisible",
+      "argument_count": 0,
+      "token": 100664452
+    },
+    {
+      "index": 325506,
+      "owner": "UnityEngine.UI.Graphic",
+      "name": "get_raycastTarget",
+      "argument_count": 0,
+      "token": 100663526
+    },
+    {
+      "index": 325507,
+      "owner": "UnityEngine.UI.Graphic",
+      "name": "set_raycastTarget",
+      "argument_count": 1,
+      "token": 100663527
+    },
+    {
+      "index": 325508,
+      "owner": "UnityEngine.UI.Graphic",
+      "name": "get_raycastPadding",
+      "argument_count": 0,
+      "token": 100663528
+    },
+    {
+      "index": 325509,
+      "owner": "UnityEngine.UI.Graphic",
+      "name": "set_raycastPadding",
+      "argument_count": 1,
+      "token": 100663529
+    },
+    {
+      "index": 325517,
+      "owner": "UnityEngine.UI.Graphic",
+      "name": "SetRaycastDirty",
+      "argument_count": 0,
+      "token": 100663537
+    },
+    {
+      "index": 325549,
+      "owner": "UnityEngine.UI.Graphic",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100663569
+    },
+    {
+      "index": 325574,
+      "owner": "UnityEngine.UI.GraphicRaycaster",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100663594
+    },
+    {
+      "index": 325576,
+      "owner": "UnityEngine.UI.GraphicRaycaster",
+      "name": "Raycast",
+      "argument_count": 5,
+      "token": 100663596
+    },
+    {
+      "index": 325584,
+      "owner": "UnityEngine.UI.GraphicRegistry",
+      "name": "RegisterRaycastGraphicForCanvas",
+      "argument_count": 2,
+      "token": 100663604
+    },
+    {
+      "index": 325586,
+      "owner": "UnityEngine.UI.GraphicRegistry",
+      "name": "UnregisterRaycastGraphicForCanvas",
+      "argument_count": 2,
+      "token": 100663606
+    },
+    {
+      "index": 325588,
+      "owner": "UnityEngine.UI.GraphicRegistry",
+      "name": "DisableRaycastGraphicForCanvas",
+      "argument_count": 2,
+      "token": 100663608
+    },
+    {
+      "index": 325590,
+      "owner": "UnityEngine.UI.GraphicRegistry",
+      "name": "GetRaycastableGraphicsForCanvas",
+      "argument_count": 1,
+      "token": 100663610
+    },
+    {
+      "index": 325659,
+      "owner": "UnityEngine.UI.Image",
+      "name": "IsRaycastLocationValid",
+      "argument_count": 2,
+      "token": 100663679
+    },
+    {
+      "index": 326108,
+      "owner": "UnityEngine.UI.Mask",
+      "name": "IsRaycastLocationValid",
+      "argument_count": 2,
+      "token": 100664128
+    },
+    {
+      "index": 326145,
+      "owner": "UnityEngine.UI.MultipleDisplayUtilities",
+      "name": "GetRelativeMousePositionForRaycast",
+      "argument_count": 1,
+      "token": 100664165
+    },
+    {
+      "index": 326181,
+      "owner": "UnityEngine.UI.RectMask2D",
+      "name": "IsRaycastLocationValid",
+      "argument_count": 2,
+      "token": 100664201
+    },
+    {
+      "index": 326786,
+      "owner": "UnityEngine.UIElements.PanelRaycaster",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100664806
+    },
+    {
+      "index": 326812,
+      "owner": "UnityEngine.EventSystems.PointerEventData",
+      "name": "get_pointerCurrentRaycast",
+      "argument_count": 0,
+      "token": 100664832
+    },
+    {
+      "index": 326813,
+      "owner": "UnityEngine.EventSystems.PointerEventData",
+      "name": "set_pointerCurrentRaycast",
+      "argument_count": 1,
+      "token": 100664833
+    },
+    {
+      "index": 326814,
+      "owner": "UnityEngine.EventSystems.PointerEventData",
+      "name": "get_pointerPressRaycast",
+      "argument_count": 0,
+      "token": 100664834
+    },
+    {
+      "index": 326815,
+      "owner": "UnityEngine.EventSystems.PointerEventData",
+      "name": "set_pointerPressRaycast",
+      "argument_count": 1,
+      "token": 100664835
+    },
+    {
+      "index": 326910,
+      "owner": "UnityEngine.EventSystems.EventSystem",
+      "name": "RaycastComparer",
+      "argument_count": 2,
+      "token": 100664930
+    },
+    {
+      "index": 326911,
+      "owner": "UnityEngine.EventSystems.EventSystem",
+      "name": "RaycastAll",
+      "argument_count": 2,
+      "token": 100664931
+    },
+    {
+      "index": 327032,
+      "owner": "UnityEngine.EventSystems.BaseInputModule",
+      "name": "FindFirstRaycast",
+      "argument_count": 1,
+      "token": 100665052
+    },
+    {
+      "index": 327127,
+      "owner": "UnityEngine.EventSystems.RaycasterManager",
+      "name": "AddRaycaster",
+      "argument_count": 1,
+      "token": 100665147
+    },
+    {
+      "index": 327128,
+      "owner": "UnityEngine.EventSystems.RaycasterManager",
+      "name": "GetRaycasters",
+      "argument_count": 0,
+      "token": 100665148
+    },
+    {
+      "index": 327129,
+      "owner": "UnityEngine.EventSystems.RaycasterManager",
+      "name": "RemoveRaycasters",
+      "argument_count": 1,
+      "token": 100665149
+    },
+    {
+      "index": 327131,
+      "owner": "UnityEngine.EventSystems.BaseRaycaster",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100665151
+    },
+    {
+      "index": 327136,
+      "owner": "UnityEngine.EventSystems.BaseRaycaster",
+      "name": "get_rootRaycaster",
+      "argument_count": 0,
+      "token": 100665156
+    },
+    {
+      "index": 327144,
+      "owner": "UnityEngine.EventSystems.Physics2DRaycaster",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100665164
+    },
+    {
+      "index": 327154,
+      "owner": "UnityEngine.EventSystems.PhysicsRaycaster",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100665174
+    },
+    {
+      "index": 332878,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 5,
+      "token": 100663328
+    },
+    {
+      "index": 332879,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 4,
+      "token": 100663329
+    },
+    {
+      "index": 332880,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 3,
+      "token": 100663330
+    },
+    {
+      "index": 332881,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100663331
+    },
+    {
+      "index": 332882,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 6,
+      "token": 100663332
+    },
+    {
+      "index": 332883,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastExtraMask",
+      "argument_count": 6,
+      "token": 100663333
+    },
+    {
+      "index": 332884,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 5,
+      "token": 100663334
+    },
+    {
+      "index": 332885,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 4,
+      "token": 100663335
+    },
+    {
+      "index": 332886,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 3,
+      "token": 100663336
+    },
+    {
+      "index": 332887,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 4,
+      "token": 100663337
+    },
+    {
+      "index": 332888,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 3,
+      "token": 100663338
+    },
+    {
+      "index": 332889,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100663339
+    },
+    {
+      "index": 332890,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 1,
+      "token": 100663340
+    },
+    {
+      "index": 332891,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 5,
+      "token": 100663341
+    },
+    {
+      "index": 332892,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 4,
+      "token": 100663342
+    },
+    {
+      "index": 332893,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 3,
+      "token": 100663343
+    },
+    {
+      "index": 332894,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100663344
+    },
+    {
+      "index": 332902,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastAll",
+      "argument_count": 5,
+      "token": 100663352
+    },
+    {
+      "index": 332903,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "argument_count": 5,
+      "token": 100663353
+    },
+    {
+      "index": 332904,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastExtraMaskAll",
+      "argument_count": 5,
+      "token": 100663354
+    },
+    {
+      "index": 332905,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastExtraMaskAll",
+      "argument_count": 5,
+      "token": 100663355
+    },
+    {
+      "index": 332906,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastExtraMaskAllNonAlloc",
+      "argument_count": 6,
+      "token": 100663356
+    },
+    {
+      "index": 332907,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastExtraMaskAllNonAlloc",
+      "argument_count": 6,
+      "token": 100663357
+    },
+    {
+      "index": 332908,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "argument_count": 4,
+      "token": 100663358
+    },
+    {
+      "index": 332909,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "argument_count": 3,
+      "token": 100663359
+    },
+    {
+      "index": 332910,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "argument_count": 2,
+      "token": 100663360
+    },
+    {
+      "index": 332911,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "argument_count": 4,
+      "token": 100663361
+    },
+    {
+      "index": 332912,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "argument_count": 3,
+      "token": 100663362
+    },
+    {
+      "index": 332913,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "argument_count": 2,
+      "token": 100663363
+    },
+    {
+      "index": 332914,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "argument_count": 1,
+      "token": 100663364
+    },
+    {
+      "index": 332915,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "argument_count": 5,
+      "token": 100663365
+    },
+    {
+      "index": 332916,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "argument_count": 4,
+      "token": 100663366
+    },
+    {
+      "index": 332917,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "argument_count": 3,
+      "token": 100663367
+    },
+    {
+      "index": 332918,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "argument_count": 2,
+      "token": 100663368
+    },
+    {
+      "index": 332919,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "argument_count": 6,
+      "token": 100663369
+    },
+    {
+      "index": 332920,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "argument_count": 5,
+      "token": 100663370
+    },
+    {
+      "index": 332921,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "argument_count": 4,
+      "token": 100663371
+    },
+    {
+      "index": 332922,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "argument_count": 3,
+      "token": 100663372
+    },
+    {
+      "index": 332995,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastAll_Injected",
+      "argument_count": 5,
+      "token": 100663445
+    },
+    {
+      "index": 332996,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastExtraMaskAll_Injected",
+      "argument_count": 5,
+      "token": 100663446
+    },
+    {
+      "index": 332997,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastExtraMaskAllNonAlloc_Injected",
+      "argument_count": 6,
+      "token": 100663447
+    },
+    {
+      "index": 333305,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Raycast",
+      "argument_count": 5,
+      "token": 100663755
+    },
+    {
+      "index": 333306,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastTest",
+      "argument_count": 5,
+      "token": 100663756
+    },
+    {
+      "index": 333307,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Raycast",
+      "argument_count": 6,
+      "token": 100663757
+    },
+    {
+      "index": 333308,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_Raycast",
+      "argument_count": 6,
+      "token": 100663758
+    },
+    {
+      "index": 333309,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "RaycastExtraMask",
+      "argument_count": 6,
+      "token": 100663759
+    },
+    {
+      "index": 333310,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastExtraMask",
+      "argument_count": 6,
+      "token": 100663760
+    },
+    {
+      "index": 333311,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Raycast",
+      "argument_count": 6,
+      "token": 100663761
+    },
+    {
+      "index": 333312,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastNonAlloc",
+      "argument_count": 6,
+      "token": 100663762
+    },
+    {
+      "index": 333329,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastTest_Injected",
+      "argument_count": 5,
+      "token": 100663779
+    },
+    {
+      "index": 333330,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_Raycast_Injected",
+      "argument_count": 6,
+      "token": 100663780
+    },
+    {
+      "index": 333331,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastExtraMask_Injected",
+      "argument_count": 6,
+      "token": 100663781
+    },
+    {
+      "index": 333332,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastNonAlloc_Injected",
+      "argument_count": 6,
+      "token": 100663782
+    },
+    {
+      "index": 335467,
+      "owner": "UnityEngine.ICanvasRaycastFilter",
+      "name": "IsRaycastLocationValid",
+      "argument_count": 2,
+      "token": 100663297
+    },
+    {
+      "index": 335471,
+      "owner": "UnityEngine.CanvasGroup",
+      "name": "get_blocksRaycasts",
+      "argument_count": 0,
+      "token": 100663301
+    },
+    {
+      "index": 335474,
+      "owner": "UnityEngine.CanvasGroup",
+      "name": "IsRaycastLocationValid",
+      "argument_count": 2,
+      "token": 100663304
+    },
+    {
+      "index": 335639,
+      "owner": "UnityEngine.CameraRaycastHelper",
+      "name": "RaycastTry",
+      "argument_count": 4,
+      "token": 100663348
+    },
+    {
+      "index": 335640,
+      "owner": "UnityEngine.CameraRaycastHelper",
+      "name": "RaycastTry2D",
+      "argument_count": 4,
+      "token": 100663349
+    },
+    {
+      "index": 335641,
+      "owner": "UnityEngine.CameraRaycastHelper",
+      "name": "RaycastTry_Injected",
+      "argument_count": 4,
+      "token": 100663350
+    },
+    {
+      "index": 335642,
+      "owner": "UnityEngine.CameraRaycastHelper",
+      "name": "RaycastTry2D_Injected",
+      "argument_count": 4,
+      "token": 100663351
+    },
+    {
+      "index": 335850,
+      "owner": "UnityEngine.PhysicsScene2D",
+      "name": "Raycast",
+      "argument_count": 4,
+      "token": 100663301
+    },
+    {
+      "index": 335851,
+      "owner": "UnityEngine.PhysicsScene2D",
+      "name": "Raycast",
+      "argument_count": 4,
+      "token": 100663302
+    },
+    {
+      "index": 335852,
+      "owner": "UnityEngine.PhysicsScene2D",
+      "name": "Raycast_Internal",
+      "argument_count": 5,
+      "token": 100663303
+    },
+    {
+      "index": 335853,
+      "owner": "UnityEngine.PhysicsScene2D",
+      "name": "Raycast",
+      "argument_count": 5,
+      "token": 100663304
+    },
+    {
+      "index": 335854,
+      "owner": "UnityEngine.PhysicsScene2D",
+      "name": "RaycastArray_Internal",
+      "argument_count": 6,
+      "token": 100663305
+    },
+    {
+      "index": 335855,
+      "owner": "UnityEngine.PhysicsScene2D",
+      "name": "Raycast",
+      "argument_count": 5,
+      "token": 100663306
+    },
+    {
+      "index": 335856,
+      "owner": "UnityEngine.PhysicsScene2D",
+      "name": "RaycastList_Internal",
+      "argument_count": 6,
+      "token": 100663307
+    },
+    {
+      "index": 335861,
+      "owner": "UnityEngine.PhysicsScene2D",
+      "name": "Raycast_Internal_Injected",
+      "argument_count": 6,
+      "token": 100663312
+    },
+    {
+      "index": 335862,
+      "owner": "UnityEngine.PhysicsScene2D",
+      "name": "RaycastArray_Internal_Injected",
+      "argument_count": 6,
+      "token": 100663313
+    },
+    {
+      "index": 335863,
+      "owner": "UnityEngine.PhysicsScene2D",
+      "name": "RaycastList_Internal_Injected",
+      "argument_count": 6,
+      "token": 100663314
+    },
+    {
+      "index": 335873,
+      "owner": "UnityEngine.Physics2D",
+      "name": "Raycast",
+      "argument_count": 2,
+      "token": 100663324
+    },
+    {
+      "index": 335874,
+      "owner": "UnityEngine.Physics2D",
+      "name": "Raycast",
+      "argument_count": 3,
+      "token": 100663325
+    },
+    {
+      "index": 335875,
+      "owner": "UnityEngine.Physics2D",
+      "name": "Raycast",
+      "argument_count": 4,
+      "token": 100663326
+    },
+    {
+      "index": 335876,
+      "owner": "UnityEngine.Physics2D",
+      "name": "Raycast",
+      "argument_count": 5,
+      "token": 100663327
+    },
+    {
+      "index": 335877,
+      "owner": "UnityEngine.Physics2D",
+      "name": "Raycast",
+      "argument_count": 6,
+      "token": 100663328
+    },
+    {
+      "index": 335878,
+      "owner": "UnityEngine.Physics2D",
+      "name": "Raycast",
+      "argument_count": 4,
+      "token": 100663329
+    },
+    {
+      "index": 335879,
+      "owner": "UnityEngine.Physics2D",
+      "name": "Raycast",
+      "argument_count": 5,
+      "token": 100663330
+    },
+    {
+      "index": 335880,
+      "owner": "UnityEngine.Physics2D",
+      "name": "Raycast",
+      "argument_count": 5,
+      "token": 100663331
+    }
+  ],
+  "conclusions": [
+    "Original Player.IsVisible reads Player+0xad0 and tail-calls a stored mask conversion; this is not a verified target-head obstacle query.",
+    "CheckVisibleByCameraMode has a true-return fallback when its selected manager is absent. Its delegated implementation is not established as LOS here.",
+    "Method-name matches include UI, item marking and physics APIs; names alone do not establish gameplay LOS, query origin, target hit, mask or trigger policy.",
+    "Name filtering omits obfuscated methods. This is not an exhaustive call graph or proof that a LOS implementation is absent.",
+    "No live LOS result, combined eligibility, active aiming camera or working aim update is established."
+  ]
+}

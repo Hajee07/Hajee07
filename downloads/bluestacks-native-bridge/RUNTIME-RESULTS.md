@@ -1164,3 +1164,23 @@ V52 adds original Unity Object null-comparison data for this registered referenc
 with exact source/method checks and conservative metadata/class readiness gates.
 The new result does not establish actual invocation, object lifetime or active
 rendering/aiming camera. Live verification pending. No functions or writes added.
+
+## Accepted V52 / offline visibility source audit
+
+V52 HostPID=11148, GuestPID=3020 passed module/layout checks. Initial head motion
+and a changing job handle were discarded; attempt 3 sampled the head. Roster
+verified 15 players including local. Aim-state phase completed at 5199 additional
+reads, Sampled=1, total physical calls 24751. Controller cached native pointer
+matched the original Unity native selector. CameraObjectNullCheck reported
+ORIGINAL_NULL_COMPARISON_DATA_VERIFIED, cached pointer nonzero, EqualsNull=False,
+NotEqualsNull=True, all three metadata guard bytes and class-init word 1.
+The game camera getter metadata guard remained zero. Selected membership was
+revalidated; counters differed since roster but did not change during this
+capture. Cleanup/unload/shared-session release passed. No atomic frame, getter
+invocation, active aiming-camera or LOS claim; no aim writes.
+
+The subsequent visibility-source audit is a separate offline artifact. It
+verifies five source windows and distinguishes stored model visibility, camera
+mode policy and range checks from verified target-head LOS. It does not alter
+V52 runtime code or introduce a Windows V53 probe. See the sibling
+bluestacks-visibility-source-audit directory for evidence and reproduction.

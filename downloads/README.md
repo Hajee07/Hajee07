@@ -1,3 +1,5 @@
+An [offline visibility source audit](bluestacks-visibility-source-audit/README.md) now documents model visibility versus unverified target-head LOS. The Windows diagnostic runner remains V52; this source-only step needs no fresh Windows capture.
+
 V52 adds source-verified Unity Object null-comparison data and metadata/class readiness gates for the registered camera reference. No functions invoked or writes added; actual game getter/camera selection remains unverified. See [null predicate evidence](bluestacks-process-map/CAMERA-NULL-PREDICATE-EVIDENCE.md).
 
 V51 fixes camera report formatting when the local head sample is unavailable. V50 completed the live aim-state sample at 4920 reads but its report stopped before pose/controller output; those results remain unverified.
