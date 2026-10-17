@@ -3,18 +3,18 @@
   "files": [
     {
       "name": "Complete-CameraCapture.ps1",
-      "bytes": 7208,
-      "sha256": "dfb19dff89010dfa1a570d42fb1b2987de5449a19def974ad318ef61d708c1a0"
+      "bytes": 9013,
+      "sha256": "d800e82a92c3323abe398c461089575dd28018dc15f80e0952dfe7297a2f7992"
     },
     {
       "name": "README.md",
-      "bytes": 4885,
-      "sha256": "bc8e78156c5f0320a385bf890833aac5a784ca39bde68004d9d0af926f6ef5cc"
+      "bytes": 5135,
+      "sha256": "b14809307405522c398377c7eb96260ed7a071fb197b6fd8bf186b0ba17f0d35"
     },
     {
       "name": "Test-Completion.ps1",
-      "bytes": 7058,
-      "sha256": "a3c306c83f25a317795cf05560d53b3db43262399d1dc847cfd6cd2f71f01b34"
+      "bytes": 9639,
+      "sha256": "70f1fde9138155acb7987a8cd52faaf1e55a1cc6cf4df301a8d9fa87808efb6c"
     },
     {
       "name": "interrupted-assessment.json",
@@ -24,17 +24,22 @@
     {
       "name": "interrupted-seed.json",
       "bytes": 515,
-      "sha256": "d98420f994ab2e8a9dc43affcd7e1caf9454481f96fadac8e75cf3299409e0b3"
+      "sha256": "7b93ad06d39c3a44eea552d85a95fbf277c05b9ed9492665745c326114ecb1bf"
+    },
+    {
+      "name": "latest-run-assessment.json",
+      "bytes": 518,
+      "sha256": "59250fcba506c72377dfb3e579a23db155cfcdbb94e25ce87d473d9512164e83"
     },
     {
       "name": "test-summary.txt",
-      "bytes": 4758,
-      "sha256": "2e9f57a86dcbf570da38b7a0b0dbe67c259ade5ab4e440e0c62480abac39f148"
+      "bytes": 5044,
+      "sha256": "b7bf752726e6664854cf1dbaa3c3c056a0567057d90b23c60b8d7fd160bd8f67"
     },
     {
       "name": "validation.json",
       "bytes": 378,
-      "sha256": "9889eb3e98d8815e6894ba03f21f6dae93e87b52c5c1c154fd49f02cff700ff9"
+      "sha256": "c44b085de0f25ddc1d026910a0a13e8bd92b683facfe360986ddcce13d022dd3"
     }
   ]
 }

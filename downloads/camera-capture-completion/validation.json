@@ -1,10 +1,10 @@
 {
   "existing_pose_assertions": 54,
-  "completion_assertions": 13,
+  "completion_assertions": 17,
   "fixture_native_processes_invoked": false,
   "windows_launch_tested": false,
-  "actual_transcript_review_accepted": 6,
-  "actual_transcript_review_status": "INCOMPLETE_SIX_VALIDATED",
-  "raw_test_log_sha256": "b4b0bb72fe0df2fc8795f2a77db14d8cd1fd1ddc77a4a75d03923a5f9a5d369e",
+  "latest_transcript_review_accepted": 6,
+  "latest_transcript_review_status": "INCOMPLETE_SIX_VALIDATED",
+  "raw_test_log_sha256": "7eedbe45c55eb01dc1e56262e8376b7c2cbd79d82cc15ca9894911bcea2a70e6",
   "live_binding_ready": false
 }

@@ -46,11 +46,21 @@ try{
     # injectable native executor; these fixtures exercise the manual-loop branch.
     $global:completionFixtureNames=@($names[6..7]);$global:completionFixtureRoot=$work
     $global:completionFixtureBodies=@((Get-Content (Join-Path $work $names[6]) -Raw),(Get-Content (Join-Path $work $names[7]) -Raw))
+    $global:completionFixtureMode=''
     function global:Read-Host {param([string]$Prompt) 'READY'}
     function global:powershell.exe {
         $outcome=$global:completionFixtureQueue[$global:completionFixtureCalls];$global:completionFixtureCalls++
         $global:LASTEXITCODE=$outcome
         if($outcome -ne 0){'FIXTURE_CAPTURE_REJECTED';return}
+        if($global:completionFixtureMode -and ($global:completionFixtureCalls -eq 1 -or $global:completionFixtureMode -eq 'NoPoseAlways')){
+            $name='process-map-result-'+[guid]::NewGuid().ToString('N')+'.txt'
+            $body=[regex]::Replace($global:completionFixtureBodies[0],'(?m)^AimStateSamples.*$','AimStateSamples AdditionalPhysicalReads=0 Attempted=0 Sampled=0 StopReason=PREREQUISITES_UNVERIFIED Detail=')
+            $body=$body.TrimEnd()+"`nMatchPlayerDictionary=NOT_READY_COLLECTION_CHANGED Attempts=2`n"
+            if($global:completionFixtureMode -eq 'NoPoseBadCleanup'){$body=$body.Replace('PluginUnload=PASS','PluginUnload=FAIL')}
+            $path=Join-Path $global:completionFixtureRoot $name
+            $body.TrimEnd()|Set-Content -LiteralPath $path
+            $body -split '\r?\n';"ResultFile=$path";return
+        }
         $name=$global:completionFixtureNames[$global:completionFixtureSuccess]
         $body=$global:completionFixtureBodies[$global:completionFixtureSuccess];$global:completionFixtureSuccess++
         $path=Join-Path $global:completionFixtureRoot $name
@@ -64,6 +74,22 @@ try{
     $r=Get-Content $journal -Raw|ConvertFrom-Json
     Expect-Completion ($r.Accepted -eq 8 -and $r.Attempts.Count -eq 3 -and $r.Attempts[0].ExitCode -eq 1) 'one rejected manual attempt can retry without accepting failed data'
     Expect-Completion ($global:completionFixtureCalls -eq 3 -and $r.Status -eq 'REPORTED_NATIVE_CAMERA_TURNS_OBSERVED') 'manual-loop fixture completes only after eight strict samples'
+    $global:completionFixtureMode='NoPoseOnce';$global:completionFixtureQueue=@(0,0,0);$global:completionFixtureCalls=0;$global:completionFixtureSuccess=0
+    $journal=Join-Path $work 'no-pose-once.json'
+    & $runner -SourceDirectory $work -SeedFile $seed -JournalPath $journal
+    $r=Get-Content $journal -Raw|ConvertFrom-Json
+    Expect-Completion ($r.Accepted -eq 8 -and $r.Attempts.Count -eq 3 -and $r.Attempts[0].Rejection -eq 'NO_CAMERA_SAMPLE_COLLECTION_CHANGED') 'zero-sample exit-zero report is recorded as rejected, then retried'
+    Expect-Completion ($r.Reports.Count -eq 8 -and $r.Reports.Name -notcontains $r.Attempts[0].ResultName) 'unavailable report never enters accepted reports'
+    $global:completionFixtureMode='NoPoseAlways';$global:completionFixtureQueue=@(0,0);$global:completionFixtureCalls=0;$global:completionFixtureSuccess=0
+    $bad=$false;$journal=Join-Path $work 'no-pose-bound.json'
+    try{& $runner -SourceDirectory $work -SeedFile $seed -JournalPath $journal}catch{$bad=$true}
+    $r=Get-Content $journal -Raw|ConvertFrom-Json
+    Expect-Completion ($bad -and $r.Accepted -eq 6 -and $global:completionFixtureCalls -eq 2) 'zero samples twice stop at retry bound'
+    $global:completionFixtureMode='NoPoseBadCleanup';$global:completionFixtureQueue=@(0);$global:completionFixtureCalls=0;$global:completionFixtureSuccess=0
+    $bad=$false;$journal=Join-Path $work 'no-pose-bad-cleanup.json'
+    try{& $runner -SourceDirectory $work -SeedFile $seed -JournalPath $journal}catch{$bad=$true}
+    Expect-Completion ($bad -and $global:completionFixtureCalls -eq 1) 'failed cleanup is not classified as retryable collection churn'
+    $global:completionFixtureMode=''
     $global:completionFixtureQueue=@(1,1);$global:completionFixtureCalls=0;$global:completionFixtureSuccess=0
     $bad=$false;$journal=Join-Path $work 'retry-bound.json'
     try{& $runner -SourceDirectory $work -SeedFile $seed -JournalPath $journal}catch{$bad=$true}

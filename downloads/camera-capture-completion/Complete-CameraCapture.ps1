@@ -37,6 +37,20 @@ function Save-Completion {
     try{$record|ConvertTo-Json -Depth 14|Set-Content -LiteralPath $temporary -Encoding UTF8;Move-Item -LiteralPath $temporary -Destination $JournalPath -Force}
     finally{if(Test-Path -LiteralPath $temporary){Remove-Item -LiteralPath $temporary}}
 }
+function Test-UnavailablePoseReport {
+    param([string]$Path)
+    $file=Get-Item -LiteralPath $Path
+    if($file.PSIsContainer -or $file.Length -gt 2097152){throw 'Report size/type invalid.'}
+    $lines=@(Get-Content -LiteralPath $Path)
+    foreach($pattern in @(
+        '^AimStateSamples AdditionalPhysicalReads=0 Attempted=0 Sampled=0 StopReason=PREREQUISITES_UNVERIFIED Detail=$',
+        '^MatchPlayerDictionary=NOT_READY_COLLECTION_CHANGED ',
+        '^PluginUnload=PASS$','^HandlerCleanup=PASS$','^SharedSession=RELEASED$')){
+        if(@($lines|Where-Object {$_ -match $pattern}).Count -ne 1){return $false}
+    }
+    # This result permits a bounded manual retry only; it never accepts a sample.
+    return $true
+}
 function Add-CompletionReport {
     param([string]$Name,[int]$Stage,[string]$CaptureStart,[string]$CaptureEnd)
     if($Name -notmatch '^process-map-result-[0-9a-f]{32}\.txt$' -or $script:completionSeen -contains $Name){throw 'Invalid or repeated report basename.'}
@@ -78,6 +92,16 @@ try {
                 if($paths.Count -ne 1){throw 'Expected exactly one ResultFile.'}
                 $path=[IO.Path]::GetFullPath(([string]$paths[0]).Substring(11))
                 if([IO.Path]::GetDirectoryName($path) -cne $source){throw 'Unexpected result directory.'}
+                if([IO.Path]::GetFileName($path) -notmatch '^process-map-result-[0-9a-f]{32}\.txt$'){throw 'Invalid result basename.'}
+                if((Get-Item -LiteralPath $path).LastWriteTimeUtc -lt ([datetime]::Parse($start)).ToUniversalTime().AddSeconds(-2)){throw 'New capture result is stale.'}
+                if(Test-UnavailablePoseReport $path){
+                    $script:completionAttempts[-1]|Add-Member -NotePropertyName Rejection -NotePropertyValue 'NO_CAMERA_SAMPLE_COLLECTION_CHANGED'
+                    $script:completionAttempts[-1]|Add-Member -NotePropertyName ResultName -NotePropertyValue ([IO.Path]::GetFileName($path))
+                    $script:completionAttempts[-1]|Add-Member -NotePropertyName SHA256 -NotePropertyValue ((Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant())
+                    Save-Completion 'INCOMPLETE_NO_CAMERA_SAMPLE'
+                    Write-Host 'Roster changed: zero camera samples. Nothing accepted; hold the same pose for the next manual attempt.'
+                    continue
+                }
                 Add-CompletionReport ([IO.Path]::GetFileName($path)) $stage $start $end
                 Save-Completion 'INCOMPLETE';$accepted=$true;break
             }

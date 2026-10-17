@@ -1,18 +1,19 @@
 # Complete the interrupted camera experiment, preserving six reports
 
-The uploaded transcript contains seven attempted stages. The first six reports
-pass the existing V52 pose parser. Stage 7 failed its roster prerequisite: an
-observation changed during the first roster attempt, and the second attempt
-failed removed-slot/free-count consistency. Stage 8 was never captured. The
-message alone does not distinguish concurrent mutation from every possible
-layout problem; do not disable that invariant or assume every retry will pass.
-No full eight-stage comparison exists in this upload.
+## Latest interrupted run
 
-Partial yaw evidence: right +29.220829 degrees, left -22.306292 degrees. The
-restore yaw error is 3.782496 degrees. This is reported manual/native-pose
-correlation only. Stage 6 has a rejected local head sample but accepted optional
-native camera data. A screen recording was not supplied. Nothing here proves
-active rendered camera, shot convention, head LOS or a working output adapter.
+The newest paste includes older attempts and two fresh experiments. The current
+seed selects **only the first six reports after the last stage-1 BASELINE prompt**.
+Those six pass the unchanged V52 parser and context checks. Stage 7 reports
+NOT_READY_COLLECTION_CHANGED, AimState Sampled=0, PREREQUISITES_UNVERIFIED, with
+cleanup PASS. The original comparison wrapper rejects this zero-sample report;
+no stage 8 follows. See latest-run-assessment.json. Earlier uploads remain in
+interrupted-assessment.json as historical evidence; they are not the current seed.
+
+The collection-change report is not a pose sample and does not prove a wrong
+camera movement. It must not be promoted to PASS. The underlying roster checks
+remain unchanged. There is still no rendered-screen recording or verified live
+aim output.
 
 ## What the helper changes
 
@@ -27,7 +28,10 @@ bounded and their hashes are rechecked after parsing.
 The helper journals accepted stages and failed attempt metadata. It requests
 RESTORE (stage 7, return to stage-5 landmark) and DOWN (stage 8). Each stage has
 at most two attempts, with a fresh manual READY before each. A nonzero reader
-exit does not become a valid sample. Parser/context failures stop immediately.
+exit does not become a valid sample. Additionally, an exit-zero report with the
+specific zero-sample/collection-change records and successful cleanup is recorded
+as rejected and can request the next bounded manual attempt. It is never added
+to accepted reports. Other parser/context failures stop immediately.
 Partial evidence stays in the journal even if completion fails; existing
 journals are not replaced on a new invocation. A new invocation starts from the
 same six seeds, not from an unvalidated partial journal.
@@ -71,9 +75,10 @@ retain ActualGameCamera/ShotDirection/LOS UNVERIFIED and LiveBindingReady=false.
 
 Run Test-Completion.ps1 with -MappingSourceDirectory pointing to the pinned V52
 source directory. Cloud PowerShell 7.4.6 executed 54 existing pose assertions and
-13 new completion checks. Tests include partial evidence, duplicate/context/
-cleanup rejection, helper tampering, path traversal, a simulated rejected child
-attempt followed by completion, and stopping after two rejected attempts. Child
+17 new completion checks. Tests include partial evidence, duplicate/context/
+cleanup rejection, helper tampering, path traversal, simulated rejected child
+attempts, exit-zero zero-sample collection churn, completion only after strict valid
+samples, stopping after two rejected attempts and fatal failed-cleanup handling. Child
 execution and prompts are stubbed in those tests; no native process/plugin is
 invoked. Real Windows child launch remains NOT_TESTED here.
 

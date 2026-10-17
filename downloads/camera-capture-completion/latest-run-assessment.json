@@ -1,0 +1,13 @@
+{
+  "scope": "LATEST_FRESH_RUN_ONLY; USER_TRANSCRIPT_OFFLINE_REVIEW",
+  "source_sha256": "4f43def863f0314f7b4d3b9e890774b6db7b951cbd2a3e743d613fe3a0cf3c89",
+  "selection": "Reports after the last stage-1 BASELINE prompt; earlier runs excluded",
+  "accepted_stages": 6,
+  "rejected_stage": 7,
+  "rejection": "NOT_READY_COLLECTION_CHANGED; AimState Sampled=0 PREREQUISITES_UNVERIFIED",
+  "stage8": "NOT_CAPTURED",
+  "cleanup": "PASS",
+  "runtime_modified": false,
+  "live_binding_ready": false,
+  "aim_writes": "NONE"
+}

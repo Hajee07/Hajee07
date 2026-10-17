@@ -63,6 +63,10 @@ PASS-COMPLETION: failed cleanup capture rejected
 PASS-COMPLETION: seed traversal rejected
 PASS-COMPLETION: one rejected manual attempt can retry without accepting failed data
 PASS-COMPLETION: manual-loop fixture completes only after eight strict samples
+PASS-COMPLETION: zero-sample exit-zero report is recorded as rejected, then retried
+PASS-COMPLETION: unavailable report never enters accepted reports
+PASS-COMPLETION: zero samples twice stop at retry bound
+PASS-COMPLETION: failed cleanup is not classified as retryable collection churn
 PASS-COMPLETION: two rejected attempts stop with preserved partial journal
 PASS-COMPLETION: helper modification rejected before dot-sourcing
-CompletionTests=PASS Assertions=13 NativeProcessesInvoked=NONE LiveTest=NOT_RUN
+CompletionTests=PASS Assertions=17 NativeProcessesInvoked=NONE LiveTest=NOT_RUN
