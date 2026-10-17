@@ -1,3 +1,7 @@
+V49 adds registered camera-controller/camera field inventory and native-reference
+comparison. Getter invocation and actual game-camera selection remain unverified.
+See [inventory evidence](bluestacks-process-map/CAMERA-CONTROLLER-INVENTORY-EVIDENCE.md).
+
 V48 adds a read-only game camera getter entry-gate audit. One `-ProbeAimState`
 capture reports metadata guards and IFix slot presence; full managed camera and
 fallback selection remain unverified. See

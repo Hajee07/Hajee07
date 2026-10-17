@@ -1,6 +1,7 @@
 # V48 game camera getter entry gates
 
-Live V48 verification is pending. Run `Run-ProcessMap.ps1 -ProbeAimState` once,
+Live V48 capture passed, with getter metadata guard clear and patch guard set.
+See CAMERA-CONTROLLER-INVENTORY-EVIDENCE.md for the accepted result and V49 scope. Run `Run-ProcessMap.ps1 -ProbeAimState` once,
 with Free Fire running and the camera steady. The eight-turn experiment does
 not need to be repeated for this step. V48 adds `GameCameraGetterGate` to the
 existing read-only native camera/aim capture.

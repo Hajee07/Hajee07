@@ -51,6 +51,9 @@ def string_address(at):
 camera_methods=[];camera_bindings=[]
 for mi,owner,mn,rv,size,tab,image_name,cache_adrp,string_adrp,icall in [
  (210071,'COW.GamePlay.Player','GetRuntimeMainCameraTransform',0x6f2f368,0x130,0xa98efa8,'Assembly-CSharp.dll',None,None,None),
+ (35118,'COW.GameFacade','CurrentCameraControllerManager',0x71d0344,0x134,0xa98efa8,'Assembly-CSharp.dll',None,None,None),
+ (35620,'COW.MatchGame','GetCameraControllerManager',0x73238e0,0x48,0xa98efa8,'Assembly-CSharp.dll',None,None,None),
+ (216274,'COW.GamePlay.CameraControllerManager','get_GameCamera',0x718ca94,0x48,0xa98efa8,'Assembly-CSharp.dll',None,None,None),
  (315161,'UnityEngine.Camera','get_main',0x9fa01d8,0x28,table,'UnityEngine.CoreModule.dll',0x9fa01dc,0x9fa01e8,'UnityEngine.Camera::get_main()'),
  (317874,'UnityEngine.Component','get_transform',0x9fe7aa8,0x3c,table,'UnityEngine.CoreModule.dll',0x9fe7ab0,0x9fe7ac0,'UnityEngine.Component::get_transform()')]:
  cq=m.methods[mi];assert m.type_name(cq[1])==owner and m.string(cq[0])==mn and cq[11]==0
@@ -79,7 +82,26 @@ imm=call&0x3ffffff;imm-= (1<<26) if imm&(1<<25) else 0
 assert 0x6f2f3ac+imm*4==0x882aa1c
 assert getter_init==0xafa571a and patch_init==0xafb07bd and camera_gate==m.methods[210071][6]==0x21bc0
 for off in range(0,0xb4,64):anchors.append(dict(name='CameraCheckPatch_'+str(off),rva=0x882aa1c+off,hex=e.bytes(0x882aa1c+off,min(64,0xb4-off)).hex()))
-report=dict(camera_getter_entry_gates=dict(getter_init_cell=getter_init,patch_init_cell=patch_init,slot=camera_gate,scope="Entry gates only; managed camera, hotfix function, class constructors and fallback not evaluated"),elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,method=method,vector_method=vector_method,camera_methods=camera_methods,camera_bindings=camera_bindings,fields=fields,anchors=anchors,return_descriptor=ret_desc,return_bits=ret_bits,quaternion_record_offset=record_offset,quaternion_record_hex=record,getter_offset=0x614,scope='Original local GetAimRotation and native camera icall cache observations only; actual camera objects/pose, m_CurrentAimRotation, target direction and aim update remain unverified.')
+# Registered controller/camera fields are inventoried independently of getter execution.
+controller_fields=[]
+for owner,local,wanted,offset in [(12425,9,'m_CameraControllerManager',0xd8),(32002,0,'EKIPKGNKILM',0x20),(41079,0,'m_CachedPtr',0x10)]:
+ f=m.fields[m.types[owner][8]+local];assert m.string(f[0])==wanted
+ offslot=e.pointer(0xa8cfec0+owner*8)+local*4;assert struct.unpack('<I',e.bytes(offslot,4))[0]==offset
+ desc,data,bits=ti(f[1]);kind=bits>>16&255
+ controller_fields.append(dict(owner=owner,local=local,name=wanted,offset=offset,offset_rva=offslot,descriptor=desc,bits=bits,type_index=data if kind in (17,18) else -1,name_offset=m.header[6]+f[0],token=f[2],metadata_offset=m.header[24]+(m.types[owner][8]+local)*12,record_hex=struct.pack('<iiI',*f).hex()))
+assert controller_fields[0]['type_index']==32002 and controller_fields[1]['type_index']==40830
+assert ti(m.types[40830][4])[1]==41031 and ti(m.types[41031][4])[1]==41037 and ti(m.types[41037][4])[1]==41079
+controller_profiles=[]
+for idx in [32002,40830,41031,41037,41079]:
+ t=m.types[idx];size=struct.unpack('<4I',e.bytes(e.pointer(0xa925200+idx*8),16));assert 24<=size[0]<=1048576
+ controller_profiles.append(dict(index=idx,name=m.type_name(idx),parent=ti(t[4])[1],name_offset=m.header[6]+t[0],namespace_offset=m.header[6]+t[1],record_hex=m.data[m.header[40]+idx*88:m.header[40]+(idx+1)*88].hex(),bits=ti(t[2])[2],instance_size=size[0],static_size=size[2],token=t[-1]))
+facade_init=byte_cell(0x71d034c,0x71d0350);assert facade_init==0xafa67ed
+for at,off in [(0x7323918,0xd8),(0x718cacc,0x20)]:
+ word=struct.unpack('<I',e.bytes(at,4))[0];assert word&0xffc003ff==0xf9400260 and ((word>>10)&4095)*8==off
+assert m.methods[35118][6]==0x370 and m.methods[35620][6]==0x36f and m.methods[216274][6]==0x42e
+for at,mi in [(0x71d0378,35118),(0x73238e8,35620),(0x718ca9c,216274)]:
+ word=struct.unpack('<I',e.bytes(at,4))[0];assert word&0xff80001f==0x52800000 and (word>>21)&3==0 and (word>>5)&65535==m.methods[mi][6]
+report=dict(controller_fields=controller_fields,controller_profiles=controller_profiles,controller_facade_init_cell=facade_init,camera_getter_entry_gates=dict(getter_init_cell=getter_init,patch_init_cell=patch_init,slot=camera_gate,scope="Entry gates only; managed camera, hotfix function, class constructors and fallback not evaluated"),elf_sha256=r.ELF_SHA,metadata_sha256=r.META_SHA,method=method,vector_method=vector_method,camera_methods=camera_methods,camera_bindings=camera_bindings,fields=fields,anchors=anchors,return_descriptor=ret_desc,return_bits=ret_bits,quaternion_record_offset=record_offset,quaternion_record_hex=record,getter_offset=0x614,scope='Original local GetAimRotation, camera entry gates and registered controller/camera field inventory; actual getter execution, game camera selection, target direction and aim writes are not established.')
 out=Path(a.output_directory);out.mkdir(parents=True,exist_ok=True);(out/'aim-state-reference.json').write_text(json.dumps(report,indent=2)+'\n')
 lines=['// Generated from exact SHA-256-verified ELF/metadata inputs.','namespace HeadBridge.Mapping {','    internal static class AimStateReference {','        internal const ulong ReturnDescriptor=0x%xUL; internal const uint ReturnBits=%dU;'%(ret_desc,ret_bits),'        internal const ulong QuaternionMetadata=%dUL; internal const string QuaternionRecord=%s;'%(record_offset,json.dumps(record)),'        internal static readonly StateMethod Method=new StateMethod(%dUL,0x%xUL,0x%xUL,%s);'%(method['metadata_offset'],slot,address,json.dumps(method['record_hex'])),'        internal static readonly StateField[] Fields = {']
 for f in fields:lines.append('            new StateField(%d,%d,%s,0x%xUL,0x%xUL,0x%xUL,%dU,%d,%dUL,%dU,%dUL,%s),'%(f['owner'],f['local'],json.dumps(f['name']),f['offset'],f['offset_rva'],f['descriptor'],f['bits'],f['type_index'],f['name_offset'],f['token'],f['metadata_offset'],json.dumps(f['record_hex'])))
@@ -88,4 +110,8 @@ lines+=['        };','        internal static readonly StateMethod VectorMethod=
 for c in anchors:lines.append('            new GameLayoutCheck(%s,0x%xUL,%s),'%(json.dumps(c['name']),c['rva'],('0x%xUL'%c['pointer']) if 'pointer' in c else json.dumps(c['hex'])))
 lines+=['        };','        internal const ulong CameraMainCell=0xafb7380UL, ComponentTransformCell=0xafb9668UL;','        internal static readonly StateMethod[] CameraMethods={'];
 for cm in camera_methods:lines.append('            new StateMethod(%dUL,0x%xUL,0x%xUL,%s),'%(cm['metadata_offset'],cm['pointer_rva'],cm['rva'],json.dumps(cm['record_hex'])))
-lines+=['        };','        internal const ulong GameCameraGetterInitCell=0x%xUL, CameraPatchInitCell=0x%xUL;'%(getter_init,patch_init),'        internal const int GameCameraGetterGate=0x%x;'%camera_gate,'    }','}',''];(out/'AimStateReference.cs').write_text('\n'.join(lines));print('AimStateReference=PASS OriginalGetter=0x6f249ac Field=0x614 Quaternion=40980 Components=4')
+lines+=['        };','        internal static readonly StateField[] ControllerFields={']
+for f in controller_fields:lines.append('            new StateField(%d,%d,%s,0x%xUL,0x%xUL,0x%xUL,%dU,%d,%dUL,%dU,%dUL,%s),'%(f['owner'],f['local'],json.dumps(f['name']),f['offset'],f['offset_rva'],f['descriptor'],f['bits'],f['type_index'],f['name_offset'],f['token'],f['metadata_offset'],json.dumps(f['record_hex'])))
+lines+=['        };','        internal static readonly ObjectClassProfile[] ControllerClasses={']
+for c in controller_profiles:lines.append('            new ObjectClassProfile(%d,%s,0,%d,%dUL,%dUL,%s,%dU,%dU,%dU,%dU,0UL,%dU,true),'%(c['index'],json.dumps(c['name']),c['parent'],c['name_offset'],c['namespace_offset'],json.dumps(c['record_hex']),c['bits'],c['instance_size'],c['static_size'],c['token'],c['instance_size']))
+lines+=['        };','        internal const ulong ControllerFacadeInitCell=0x%xUL;'%facade_init,'        internal const ulong GameCameraGetterInitCell=0x%xUL, CameraPatchInitCell=0x%xUL;'%(getter_init,patch_init),'        internal const int GameCameraGetterGate=0x%x;'%camera_gate,'    }','}',''];(out/'AimStateReference.cs').write_text('\n'.join(lines));print('AimStateReference=PASS OriginalGetter=0x6f249ac Field=0x614 Quaternion=40980 Components=4')

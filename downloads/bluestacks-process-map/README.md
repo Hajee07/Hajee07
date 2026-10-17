@@ -1,3 +1,13 @@
+## V49 registered controller/camera field inventory
+
+Run `Run-ProcessMap.ps1 -ProbeAimState` once with camera steady. V49 adds
+`CameraControllerInventory`: typed MatchGame -> controller -> managed Camera ->
+cached native pointer, compared with original native selection when available.
+This is registered-field inventory, not proof of actual getter execution,
+hotfix/fallback semantics or the active game camera. Live V49 results are pending.
+No initialization, calls or writes are performed; existing read limits remain.
+See [source and scope evidence](CAMERA-CONTROLLER-INVENTORY-EVIDENCE.md).
+
 ## V48 game camera getter entry gates
 
 Run `Run-ProcessMap.ps1 -ProbeAimState` once with the camera steady. V48 audits

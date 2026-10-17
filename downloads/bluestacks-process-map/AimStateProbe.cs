@@ -12,7 +12,7 @@ namespace HeadBridge.Mapping
         private static void AimStateSchema(ObjectReads reads,ModuleResult module,GameLayoutResult layout)
         {
             CombatSchema(reads,module,layout,new StateMethod[]{AimStateReference.Method,AimStateReference.VectorMethod},AimStateReference.Fields);
-            CombatSchema(reads,module,layout,AimStateReference.CameraMethods,new StateField[0]);
+            CombatSchema(reads,module,layout,AimStateReference.CameraMethods,AimStateReference.ControllerFields);
             Expect(EqualBytes(reads.Read(layout.RuntimeMetadataBase+AimStateReference.QuaternionMetadata,88),Hex(AimStateReference.QuaternionRecord)),"aim Quaternion metadata identity");
             Expect(reads.Word(module.LoadBias+AimStateReference.ReturnDescriptor+8)==AimStateReference.ReturnBits &&
                 reads.Value(module.LoadBias+AimStateReference.ReturnDescriptor)==layout.RuntimeMetadataBase+AimStateReference.QuaternionMetadata,"aim getter return Quaternion type");
@@ -204,7 +204,47 @@ namespace HeadBridge.Mapping
             // This does not resolve a managed camera, evaluate Unity object null
             // semantics, invoke an active hotfix, initialize classes or choose fallback.
         }
-        private static void ReadAimState(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length)
+        private static ObjectClassProfile CameraInventoryClass(ObjectReads reads,ulong klass,GameLayoutResult layout)
+        {
+            ObjectReads.User(klass,8,"controller inventory class");byte[] h=reads.Read(klass,0x130,"Controller.ClassHeader");
+            ulong row=BitConverter.ToUInt64(h,0x68),first=layout.RuntimeMetadataBase+GameLayoutReference.TypeDefinitionsOffset;
+            Expect(row>=first && (row-first)%88UL==0 && (row-first)/88UL<43624,"controller inventory metadata row");
+            ObjectClassProfile p=CombatProfile((int)((row-first)/88UL),AimStateReference.ControllerClasses);if(p==null)return null;
+            Expect(EqualBytes(reads.Read(row,88),Hex(p.RecordHex)),"controller inventory class record "+p.Name);
+            Expect(BitConverter.ToUInt64(h,0x78)==klass && BitConverter.ToUInt64(h,0x20)==row && BitConverter.ToUInt32(h,0x28)==p.Bits,"controller inventory class identity");
+            Expect(BitConverter.ToUInt64(h,0x10)==layout.RuntimeMetadataBase+p.NameOffset && BitConverter.ToUInt64(h,0x18)==layout.RuntimeMetadataBase+p.NamespaceOffset && BitConverter.ToUInt32(h,0x11c)==p.Token && BitConverter.ToUInt32(h,0xf8)==p.InstanceSize,"controller inventory class layout");return p;
+        }
+        private void ReadCameraControllerInventory(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,PlayerObjectResult core,ulong wrappers,ulong length)
+        {
+            sample.ControllerFacadeMetadataRaw=reads.Byte(module.LoadBias+AimStateReference.ControllerFacadeInitCell,"Controller.FacadeMetadataGuard");
+            sample.ControllerFacadeSlotPresent=HotfixEntry(reads,wrappers,length,0x370);sample.ControllerMatchSlotPresent=HotfixEntry(reads,wrappers,length,0x36f);sample.ControllerCameraSlotPresent=HotfixEntry(reads,wrappers,length,0x42e);
+            ulong matchBase=RootClass(reads,module,layout,ObjectReference.MatchGameCell,12425,null);
+            ObjectFamily(reads,core.CurrentGame,4,12425,matchBase,layout,null);
+            CombatFields(reads,matchBase,12425,module,layout,AimStateReference.ControllerFields);
+            ulong manager=reads.Value(core.CurrentGame+0xd8,"Controller.MatchGameRegisteredField");sample.CameraControllerManager=manager;
+            sample.CameraControllerInventoryStatus="REGISTERED_MATCHGAME_MANAGER_FIELD_NULL";if(manager==0)return;
+            ObjectReads.User(manager,8,"registered camera controller manager");ulong klass=reads.Pointer(manager,"camera controller class");
+            ObjectClassProfile managerProfile=CameraInventoryClass(reads,klass,layout);
+            sample.CameraControllerInventoryStatus="UNVERIFIED_CONTROLLER_CLASS";if(managerProfile==null || managerProfile.Index!=32002)return;
+            CombatFields(reads,klass,32002,module,layout,AimStateReference.ControllerFields);
+            ulong camera=reads.Value(manager+0x20,"Controller.RegisteredCameraField");sample.ControllerManagedCamera=camera;
+            sample.CameraControllerInventoryStatus="REGISTERED_CONTROLLER_CAMERA_FIELD_NULL";if(camera==0)return;
+            ObjectReads.User(camera,8,"registered managed camera");ulong cameraClass=reads.Pointer(camera,"registered camera class");
+            ObjectClassProfile profile=CameraInventoryClass(reads,cameraClass,layout);
+            sample.CameraControllerInventoryStatus="UNVERIFIED_CAMERA_CLASS";if(profile==null || profile.Index!=40830)return;
+            for(int depth=0;profile.Index!=41079;depth++)
+            {
+                Expect(depth<4,"registered camera parent bound");int expected=profile.Parent;cameraClass=reads.Pointer(cameraClass+0x58,"registered camera parent class");
+                profile=CameraInventoryClass(reads,cameraClass,layout);Expect(profile!=null && profile.Index==expected,"registered camera metadata parent chain");
+            }
+            CombatFields(reads,cameraClass,41079,module,layout,AimStateReference.ControllerFields);
+            ulong native=reads.Value(camera+0x10,"Controller.CameraCachedNativeField");sample.ControllerCachedNative=native;
+            sample.CameraControllerInventoryStatus="REGISTERED_CAMERA_CACHED_NATIVE_NULL";if(native==0)return;
+            ObjectReads.User(native,8,"registered camera cached native pointer");
+            sample.CameraControllerInventoryStatus="REGISTERED_CAMERA_NATIVE_LINK_UNCOMPARED";
+            if(sample.SelectedNativeCamera!=0){sample.ControllerNativeMatchesSelection=native==sample.SelectedNativeCamera;sample.CameraControllerInventoryStatus=sample.ControllerNativeMatchesSelection.Value?"REGISTERED_CAMERA_NATIVE_LINK_MATCH":"REGISTERED_CAMERA_NATIVE_LINK_DIFFERS";}
+        }
+        private void ReadAimState(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,PlayerObjectResult core,ulong playerBase,ulong wrappers,ulong length)
         {
             Expect(sample.IsLocal,"aim snapshot is local only");sample.AimRotationStatus="UNVERIFIED_AIM_GETTER_HOTFIX_ACTIVE";
             if(!CombatGate(reads,wrappers,length,0x4b9))return;
@@ -231,6 +271,7 @@ namespace HeadBridge.Mapping
             ReadNativeCameraCandidate(reads,sample);
             ReadCameraPosition(reads,sample);
             ReadGameCameraEntryGate(reads,module,sample,wrappers,length);
+            ReadCameraControllerInventory(reads,module,layout,sample,core,wrappers,length);
             sample.AimRotationStatus="ORIGINAL_LOCAL_GET_AIM_ROTATION_SAMPLED";
         }
         public PlayerStateResult SampleAimState(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)

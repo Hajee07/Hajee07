@@ -1,4 +1,111 @@
 {
+  "controller_fields": [
+    {
+      "owner": 12425,
+      "local": 9,
+      "name": "m_CameraControllerManager",
+      "offset": 216,
+      "offset_rva": 28297748,
+      "descriptor": 182168176,
+      "bits": 1179652,
+      "type_index": 32002,
+      "name_offset": 3937257,
+      "token": 67203611,
+      "metadata_offset": 43110328,
+      "record_hex": "55801d00707000001b720104"
+    },
+    {
+      "owner": 32002,
+      "local": 0,
+      "name": "EKIPKGNKILM",
+      "offset": 32,
+      "offset_rva": 27169316,
+      "descriptor": 182020800,
+      "bits": 1179649,
+      "type_index": 40830,
+      "name_offset": 7952809,
+      "token": 67363755,
+      "metadata_offset": 45032056,
+      "record_hex": "15c65a005a700000abe30304"
+    },
+    {
+      "owner": 41079,
+      "local": 0,
+      "name": "m_CachedPtr",
+      "offset": 16,
+      "offset_rva": 28010284,
+      "descriptor": 182031936,
+      "bits": 2149056513,
+      "type_index": -1,
+      "name_offset": 17680078,
+      "token": 67110306,
+      "metadata_offset": 47555464,
+      "record_hex": "3a33ef00e79b0000a2050004"
+    }
+  ],
+  "controller_profiles": [
+    {
+      "index": 32002,
+      "name": "COW.GamePlay.CameraControllerManager",
+      "parent": 41057,
+      "name_offset": 7951736,
+      "namespace_offset": 7768922,
+      "record_hex": "e4c15a00c6f757006e700000ffffffff7ead00006e700000ffffffff00001000aae30300d24c0300ffffffff67310000dc210000ffffffffa62a0800ffffffff2e000100130000000300040000000000000c0000007d0002",
+      "bits": 1179648,
+      "instance_size": 152,
+      "static_size": 0,
+      "token": 33586432
+    },
+    {
+      "index": 40830,
+      "name": "UnityEngine.Camera",
+      "parent": 41031,
+      "name_offset": 3110550,
+      "namespace_offset": 17627183,
+      "record_hex": "02e310009b64ee0059700000ffffffffab61000059700000ffffffff01011000fc140700cfce0400ffffffff38540000ef2b0000ffffffff9d320b00ffffffff71002600070000000200040000000000000c00007e000002",
+      "bits": 1179648,
+      "instance_size": 24,
+      "static_size": 24,
+      "token": 33554558
+    },
+    {
+      "index": 41031,
+      "name": "UnityEngine.Behaviour",
+      "parent": 41037,
+      "name_offset": 17675211,
+      "namespace_offset": 17627183,
+      "record_hex": "3720ef009b64ee00ab610000ffffffff41740000ab610000ffffffff01001000ffffffffa1d90400ffffffff5e560000ffffffffffffffffdf390b00ffffffff04000200000000000000040000000000000c000049010002",
+      "bits": 1179648,
+      "instance_size": 24,
+      "static_size": 0,
+      "token": 33554761
+    },
+    {
+      "index": 41037,
+      "name": "UnityEngine.Component",
+      "parent": 41079,
+      "name_offset": 2329274,
+      "namespace_offset": 17627183,
+      "record_hex": "26f704009b64ee0041740000ffffffffb0b4000041740000ffffffff01001000ffffffffb2d90400ffffffff60560000fffffffffffffffff7390b00ffffffff31000300000000000000040000000000000c00004f010002",
+      "bits": 1179648,
+      "instance_size": 24,
+      "static_size": 0,
+      "token": 33554767
+    },
+    {
+      "index": 41079,
+      "name": "UnityEngine.Object",
+      "parent": 37718,
+      "name_offset": 2123429,
+      "namespace_offset": 17627183,
+      "record_hex": "11d301009b64ee00b0b40000ffffffff9eb40000b0b40000ffffffff0900100016190700abda0400ffffffff77560000ffffffffffffffff523b0b00ffffffff5d000200060000000000040000000000180c000079010002",
+      "bits": 1179648,
+      "instance_size": 24,
+      "static_size": 4,
+      "token": 33554809
+    }
+  ],
+  "controller_facade_init_cell": 184182765,
   "camera_getter_entry_gates": {
     "getter_init_cell": 184178458,
     "patch_init_cell": 184223677,
@@ -29,6 +136,30 @@
       "pointer_rva": 179475552,
       "metadata_offset": 26979428,
       "record_hex": "71575800507c00006acd000000000008ffffffffffffffffc01b02009834030686000000ffff0000"
+    },
+    {
+      "index": 35118,
+      "name": "COW.GameFacade.CurrentCameraControllerManager",
+      "rva": 119341892,
+      "pointer_rva": 178075928,
+      "metadata_offset": 19981308,
+      "record_hex": "fc331d00823000006e70000000000008ffffffffffffffff700300002f89000696000000ffff0000"
+    },
+    {
+      "index": 35620,
+      "name": "COW.MatchGame.GetCameraControllerManager",
+      "rva": 120731872,
+      "pointer_rva": 178079944,
+      "metadata_offset": 20001388,
+      "record_hex": "95711d00893000006e70000000000008ffffffffffffffff6f030000258b000686000000ffff0000"
+    },
+    {
+      "index": 216274,
+      "name": "COW.GamePlay.CameraControllerManager.get_GameCamera",
+      "rva": 119065236,
+      "pointer_rva": 179525176,
+      "metadata_offset": 27227548,
+      "record_hex": "39ad2e00027d00005970000000000008ffffffffffffffff2e040000d34c030686080000ffff0000"
     },
     {
       "index": 315161,
@@ -205,6 +336,51 @@
       "hex": "e0000036530100b4e00313aaf44f41a9e1031faafe0742f88ae1c214f44f41a9e0031faafe0742f8c0035fd67996d094"
     },
     {
+      "name": "CurrentCameraControllerManager_0",
+      "rva": 119341892,
+      "hex": "fe0f1ef8f44f01a9b3ee01d068b65f392801003760ab01f0006040f91f12c69420ad01b000e044f91c12c6942800805268b61f39006e8052e1031faaa7695994"
+    },
+    {
+      "name": "CurrentCameraControllerManager_64",
+      "rva": 119341956,
+      "hex": "20010036006e8052e1031faad0695994000700b4f44f41a9e1031faafe0742f8a0bc491473ab01f0736240f9680240f909e140b989000035e00308aa6512c694"
+    },
+    {
+      "name": "CurrentCameraControllerManager_128",
+      "rva": 119342020,
+      "hex": "680240f9095d40f9200140f9c00100b434ad01b094e244f90a0040f9890240f94cc144392bc144399f010b6bc30000544a6540f94a0d0b8b4a815ff85f0109eb"
+    },
+    {
+      "name": "CurrentCameraControllerManager_192",
+      "rva": 119342084,
+      "hex": "a0000054f44f41a9e0031faafe0742f8c0035fd60ae140b90a010035e00308aa4c12c694680240f9085d40f9000140f9000200b4890240f9080040f92ac14439"
+    },
+    {
+      "name": "CurrentCameraControllerManager_256",
+      "rva": 119342148,
+      "hex": "0bc144397f010a6b43010054086540f9080d0a8b08815ff81f0109eba1000054f44f41a9e1031faafe0742f81c4d05148112c694"
+    },
+    {
+      "name": "GetCameraControllerManager_0",
+      "rva": 120731872,
+      "hex": "fe4fbfa9f30300aae06d8052e1031faa4b1c549420010036e06d8052e1031faa741c5494000100b4e10313aae2031faafe4fc1a80d6f4414606e40f9fe4fc1a8"
+    },
+    {
+      "name": "GetCameraControllerManager_64",
+      "rva": 120731936,
+      "hex": "c0035fd655c5c094"
+    },
+    {
+      "name": "get_GameCamera_0",
+      "rva": 119065236,
+      "hex": "fe4fbfa9f30300aac0858052e1031faade775a9420010036c0858052e1031faa07785a94000100b4e10313aae2031faafe4fc1a8e6d84a14601240f9fe4fc1a8"
+    },
+    {
+      "name": "get_GameCamera_64",
+      "rva": 119065300,
+      "hex": "c0035fd6e820c794"
+    },
+    {
       "name": "get_main_0",
       "rva": 167379416,
       "hex": "fe4fbfa9b38000f060c241f9a00000b520cefbd0002c35916ad20e9460c201f9fe4fc1a800001fd6"
@@ -245,5 +421,5 @@
   "quaternion_record_offset": 54782828,
   "quaternion_record_hex": "e95b03009b64ee002fbd0000ffffffffbb1901002fbd0000ffffffff090110005b1807000dd80400ffffffff2f560000ffffffff391e0000ec380b00888d00002f000300060000000000060002000200190c000016010002",
   "getter_offset": 1556,
-  "scope": "Original local GetAimRotation and native camera icall cache observations only; actual camera objects/pose, m_CurrentAimRotation, target direction and aim update remain unverified."
+  "scope": "Original local GetAimRotation, camera entry gates and registered controller/camera field inventory; actual getter execution, game camera selection, target direction and aim writes are not established."
 }

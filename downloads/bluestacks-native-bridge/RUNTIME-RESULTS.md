@@ -1109,3 +1109,11 @@ recomputed from the uploaded reports. All cleanup passed. V48 adds only a
 read-only game getter entry-gate audit; its live results are pending. It does
 not establish managed camera identity, full hotfix/fallback semantics or aim
 integration.
+
+
+## Accepted V48 / V49 preparation
+
+V48 native camera capture passed, 4743 phase reads / 24035 total, all cleanup
+PASS. Its game getter metadata guard was 0, patch guard 1; no hotfix branch was
+inferred. V49 adds typed registered controller/camera field inventory without
+forcing initialization; live results and actual getter selection remain pending.
