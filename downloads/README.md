@@ -1,3 +1,14 @@
+## Integration review source package (owned simulation)
+
+[Guide and five-task evidence matrix](integration-review/README.md) ·
+[Download source ZIP](integration-review-source.zip)
+
+V52 baseline preserved. Adds provider-proof validation, generation-aware measured
+head tracking and an expiring local command lease. 144 review assertions, 579
+existing targeting assertions and the 1028-check V52 suite passed in the cloud.
+Live camera/target/LOS providers and the game output adapter remain BLOCKED.
+ZIP SHA-256: `75db396fdc09dbba1c32df6bb8eeb49f864b7f458c7d01114ce3a5063a146a20`.
+
 The [hit-query/cache contract](bluestacks-visibility-source-audit/README.md#follow-up-hit-query-contract-and-cached-reference-layouts) now records the exact query signature, collider-ID distinction and declared cache/interface layouts. These source references do not establish live head LOS or a game adapter.
 
 The uploaded advanced targeting sources are now [reviewed as a separate offline module](targeting-offline/README.md): V52 source compile compatibility, 579 synthetic assertions and a source-rebuilt simulation passed. Live geometry, target proofs and game output remain unbound.

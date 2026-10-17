@@ -1,0 +1,25 @@
+{
+  "Assessment": "OFFLINE_REPORT_ONLY_LIVE_BINDING_UNBOUND",
+  "ReportSHA256": "111a808cb5aec272a9ca17332aba342643b572dde371213d112f9b93cef62a68",
+  "RunnerVersion": 52,
+  "NativePoseReportChecks": "PASS",
+  "ControllerStatusReported": "REGISTERED_CAMERA_NATIVE_LINK_MATCH",
+  "ReportedAdditionalReads": 5199,
+  "CameraVerifiedProof": "Unknown",
+  "CoherentFrameProof": "Unknown",
+  "GenerationAwareTargetIdentityProof": "Unknown",
+  "FullCombatEligibilityProof": "Unknown",
+  "AuthoritativeLosProof": "Unknown",
+  "CompleteCollisionGeometry": "Not supplied",
+  "AimOutputAdapter": "Unbound",
+  "LiveBindingReady": false,
+  "MissingContracts": [
+    "coherent observation and target lifetime",
+    "active game camera and shot convention",
+    "full hostility/attackability proof",
+    "authoritative collision query or complete matching geometry",
+    "verified output adapter with application-time checks"
+  ],
+  "GameFunctionsInvoked": false,
+  "AimWrites": "NONE"
+}

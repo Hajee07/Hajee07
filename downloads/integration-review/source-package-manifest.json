@@ -1,0 +1,96 @@
+{
+  "scope": "OWNED_SIMULATION_ONLY_LIVE_BINDING_BLOCKED",
+  "runtime_baseline": 52,
+  "files": [
+    {
+      "name": "integration-review/EVIDENCE.md",
+      "bytes": 5708,
+      "sha256": "8ce502cde118a9e33f6a9c6441720f851c889ff9b4e74de5181e348b40cecb59"
+    },
+    {
+      "name": "integration-review/ExpiringCommandLease.cs",
+      "bytes": 5429,
+      "sha256": "a52a2e74416d6b5b762dde4155a4b0344478569f9a216bad5357589f6c07ac27"
+    },
+    {
+      "name": "integration-review/INTEGRATION.md",
+      "bytes": 5195,
+      "sha256": "904dd0ea4907d8439440d06fac8448b91acf7f3037fc51f2c5f2867fceaf9f8a"
+    },
+    {
+      "name": "integration-review/ObservationPipeline.cs",
+      "bytes": 9926,
+      "sha256": "c532101fdc0e0e711feab82e4124a124ebb2fb1eef4dc1440bef0702f81cdb7f"
+    },
+    {
+      "name": "integration-review/README.md",
+      "bytes": 6404,
+      "sha256": "09273d4b9f66a795ca70a33c6510efac2975c6c1d04807d90ff2959a040515c5"
+    },
+    {
+      "name": "integration-review/ReviewTests.cs",
+      "bytes": 14720,
+      "sha256": "052561bf842d02d9945a598ef087feac89f0a407f2507efabca2fddf2373b76c"
+    },
+    {
+      "name": "integration-review/Run-ReviewChecks.ps1",
+      "bytes": 1227,
+      "sha256": "aaa94e4370f9519136a8815822b172ec1641e879f841fbce726b2739433615b8"
+    },
+    {
+      "name": "integration-review/Verify-Baseline.py",
+      "bytes": 2278,
+      "sha256": "7bda74239791f68aba24820f4bbff7e5912aefc08dcead165c0bf2f007b160d4"
+    },
+    {
+      "name": "integration-review/evidence/baseline-targeting.txt",
+      "bytes": 10099,
+      "sha256": "418f48daac40b71dc8b6012dce2d4afd34bc5b8cd638688d47c716175eddd1b0"
+    },
+    {
+      "name": "integration-review/evidence/baseline-v52.txt",
+      "bytes": 72937,
+      "sha256": "f0836ceff2cdcef4a7eba5eb3f8e3035d253efbbe21c19de14f8d7d5013397b8"
+    },
+    {
+      "name": "integration-review/evidence/baseline.json",
+      "bytes": 2722,
+      "sha256": "e60abdd13887fbd61ac6937bbaebfc518e90b770985450e100e7667c759102f4"
+    },
+    {
+      "name": "integration-review/evidence/historical-v52-assessment.json",
+      "bytes": 971,
+      "sha256": "4a61d3a0e18a38cdce17245a8e5cbde7d1e9b7af3b1832566e83ff31b0e5b864"
+    },
+    {
+      "name": "integration-review/evidence/log-normalization.json",
+      "bytes": 255,
+      "sha256": "0b4af63ff1388055d08e84affa170578d74a70c4fd1b49dbee619699eebf7d9e"
+    },
+    {
+      "name": "integration-review/evidence/review-tests.txt",
+      "bytes": 352,
+      "sha256": "4f7ff3f2a0db73ee0e0c356d0f18ef1047294d8f788b7c71a72aeb041d3abe60"
+    },
+    {
+      "name": "targeting-offline/AdvancedController.cs",
+      "bytes": 10005,
+      "sha256": "53650d8f24e5bc25aeaf59d82e7bc8781c3013c50a5bec3730f1899ccb94877f"
+    },
+    {
+      "name": "targeting-offline/AimCoordinator.cs",
+      "bytes": 4171,
+      "sha256": "b6af31ef928177adf50241bc44cd16f8d9bcd2c3e446b0413f74958f3e625461"
+    },
+    {
+      "name": "targeting-offline/MeshLineOfSight.cs",
+      "bytes": 7167,
+      "sha256": "e7db94f777727fb57215a760b2f5a36ce85222d76db6fdc0c3076b816a744b96"
+    },
+    {
+      "name": "targeting-offline/Targeting.cs",
+      "bytes": 7603,
+      "sha256": "4f8f49314efea728e9ce1a544adc3285d92d2e9faf3570b09f66865029a8d116"
+    }
+  ]
+}

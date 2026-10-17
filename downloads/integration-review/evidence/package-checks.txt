@@ -1,0 +1,8 @@
+HEAD synthetic oldestAge=2 uncertainty=0 accepted=1
+SIMULATION sequence=1 status=Acquiring stored=False
+SIMULATION sequence=2 status=Applied stored=True
+SIMULATION sequence=3 status=NoVisibleTarget stored=False
+WATCHDOG observedElapsedMs=103 leaseAgeLimitMs=100 expirations=1
+ReviewChecks=PASS Assertions=144 Scope=OWNED_SIMULATION LiveBinding=BLOCKED
+TamperedSource=REJECTED_BEFORE_COMPILATION
+ExtractedManifest=PASS Files=18
