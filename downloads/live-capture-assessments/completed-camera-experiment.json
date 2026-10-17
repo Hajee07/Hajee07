@@ -1,0 +1,109 @@
+{
+  "scope": "USER_SUPPLIED_COMPLETED_EXPERIMENT; OFFLINE_RECOMPUTATION_ONLY",
+  "journal_sha256": "a1c9522c6eae8874c8c113d5fe64ee45f32ba2f850b2e1cd870b0ee7dfd1df06",
+  "console_transcript_sha256": "bd41a5438c539976d300bb80b695530120d8dfa00a8bdacb6aa8343619a0c1c7",
+  "accepted_reports": 8,
+  "raw_report_hash_checks": [
+    {
+      "stage": 1,
+      "sha256": "777bb1c4e0aea1cba4f8763a2b8dd43a0eef6fba341e9bb6d0651b905a36905d",
+      "journal_hash_matches": true
+    },
+    {
+      "stage": 2,
+      "sha256": "496f39f9015b7e67bc79a3e6210101f3bccfe69cf35b12f94289c586950afa50",
+      "journal_hash_matches": true
+    },
+    {
+      "stage": 3,
+      "sha256": "96388cd53a494a64cff742b612420b69459bc79ed9c8bd5f1f1a2d158a096a0d",
+      "journal_hash_matches": true
+    },
+    {
+      "stage": 4,
+      "sha256": "f42d94229bd671df5137bbfa838eb21ff42d3fdf3dfa51dcc32f98103473c34f",
+      "journal_hash_matches": true
+    },
+    {
+      "stage": 5,
+      "sha256": "ed86b6da9dbcbc098e4717d7158b9ada66000b15fa0a9de9e3129bbd43f785a2",
+      "journal_hash_matches": true
+    },
+    {
+      "stage": 6,
+      "sha256": "45605f71cc4eb4288c2a152cb1cb625aecf2cffb95296cf0a2dedd5e12c2ced3",
+      "journal_hash_matches": true
+    },
+    {
+      "stage": 7,
+      "sha256": "d315fa7f128822ce5089e8d786e11634e07a5c99c8b18d92518d078cbf0dc9eb",
+      "journal_hash_matches": true
+    },
+    {
+      "stage": 8,
+      "sha256": "d3738f65f38a6a2683e5bf0b1cc77ef22180c76abce26e6773808a66abb17f28",
+      "journal_hash_matches": true
+    }
+  ],
+  "hash_reconstruction": "Windows PowerShell UTF8 BOM + CRLF, excluding console-only ResultFile line",
+  "recomputed_status": "INCONCLUSIVE_CAMERA_TURNS",
+  "yaw": {
+    "Status": "REPORTED_OPPOSITE_YAW_SIGNS_OBSERVED",
+    "ObservedYawSign": "REPORTED_RIGHT_POSITIVE_LEFT_NEGATIVE",
+    "Evidence": "MANUAL_CAMERA_TURN_CORRELATION_ONLY",
+    "Actions": [
+      "USER_REPORTED_LANDMARK_BASELINE",
+      "USER_REPORTED_RIGHT_TURN",
+      "USER_REPORTED_RESTORED_LANDMARK_BASELINE",
+      "USER_REPORTED_LEFT_TURN"
+    ],
+    "RightYawDelta": 29.220829275349317,
+    "RestoredBaselineYawError": 3.782496171989578,
+    "LeftYawDelta": -22.306291635088385,
+    "RightElevationDrift": -0.5795883494241814,
+    "RestoredBaselineElevationError": 1.969955827303516,
+    "LeftElevationDrift": 0.6976911236516021,
+    "CapturesWithRosterCounterChanges": 4,
+    "MembershipScope": "SELECTED_LOCAL_PLAYER_ONLY",
+    "VectorFlipped": false,
+    "CameraConvention": "UNVERIFIED",
+    "ShotDirection": "UNVERIFIED",
+    "LineOfSight": "UNVERIFIED",
+    "AimWrites": "NONE",
+    "AimIntegration": "INCOMPLETE"
+  },
+  "pitch": {
+    "Status": "INCONCLUSIVE_BASELINE_NOT_RESTORED",
+    "ObservedPitchSign": "UNVERIFIED",
+    "Evidence": "MANUAL_CAMERA_TURN_CORRELATION_ONLY",
+    "Actions": [
+      "USER_REPORTED_LANDMARK_BASELINE",
+      "USER_REPORTED_UP_TILT",
+      "USER_REPORTED_RESTORED_LANDMARK_BASELINE",
+      "USER_REPORTED_DOWN_TILT"
+    ],
+    "UpElevationDelta": 12.085217518486592,
+    "RestoredBaselineElevationError": 4.356976625457645,
+    "DownElevationDelta": -9.629976880147234,
+    "UpYawDrift": -0.5138697431875272,
+    "RestoredBaselineYawError": 64.81946762122635,
+    "DownYawDrift": -0.03699516332051189,
+    "CapturesWithRosterCounterChanges": 3,
+    "MembershipScope": "SELECTED_LOCAL_PLAYER_ONLY",
+    "VectorFlipped": false,
+    "CameraConvention": "UNVERIFIED",
+    "ShotDirection": "UNVERIFIED",
+    "LineOfSight": "UNVERIFIED",
+    "AimWrites": "NONE",
+    "AimIntegration": "INCOMPLETE"
+  },
+  "restore_yaw_tolerance_degrees": 5,
+  "stage5_to_stage7_camera_position_displacement_raw_units": 16.426454978807502,
+  "maximum_aim_camera_angle_degrees": 7.244509618354401e-06,
+  "rendered_recording": "NOT_SUPPLIED",
+  "actual_game_camera": "UNVERIFIED",
+  "shot_direction": "UNVERIFIED",
+  "live_binding_ready": false,
+  "aim_writes": "NONE",
+  "runtime_changed": false
+}
