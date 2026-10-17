@@ -1,3 +1,15 @@
+## Single-capture Player.MainCameraTransform reader
+
+[Source and instructions](player-camera-readonly/README.md) ·
+[Download standalone ZIP](player-camera-readonly.zip) ·
+[Package validation](player-camera-readonly-validation.json)
+
+Separate read-only source integration; no eight-stage prompts or saved captures.
+24 camera checks and 1028 inherited checks pass offline. Original V52 baseline
+bytes preserved. Actual rendered camera, LOS, shot direction and live aim output
+remain unverified; this new Windows reader path still needs a user capture.
+ZIP SHA-256: `5282800306e5c80b346e0e9598b664e3587476c883abea6cb6c616ddde357356`.
+
 ## Uploaded Phoenix DLL reference review
 
 [Static inspection and pinned field crosscheck](phoenix-reference-review/README.md).

@@ -1,0 +1,18 @@
+{
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "owner": "COW.GamePlay.Player",
+  "field": "MainCameraTransform",
+  "constants": {
+    "Offset": 1000,
+    "OffsetRva": 27158652,
+    "DescriptorRva": 182046048,
+    "NameOffset": 7875663,
+    "MetadataOffset": 44992468,
+    "DescriptorBits": 1179654,
+    "FieldToken": 67360456,
+    "LocalIndex": 174,
+    "TransformTypeIndex": 41116,
+    "FieldRecordHex": "bb9859006dcd0000c8d60304"
+  }
+}

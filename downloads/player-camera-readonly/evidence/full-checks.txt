@@ -1,0 +1,1087 @@
+PASS-PLAYER-CAMERA: verified field yields read-only pose
+PASS-PLAYER-CAMERA: rotated scaled hierarchy world position oracle
+PASS-PLAYER-CAMERA: parent rotation source math
+MEASURE PlayerCameraStableReads=2283
+PASS-PLAYER-CAMERA: phase and hierarchy bounds
+PASS-PLAYER-CAMERA: null field never yields a pose
+PASS-PLAYER-CAMERA: unresolved binding remains unknown
+PASS-PLAYER-CAMERA: pending job not synchronized or sampled
+PASS-PLAYER-CAMERA: wrong offset rejected
+PASS-PLAYER-CAMERA: wrong type descriptor rejected
+PASS-PLAYER-CAMERA: local context change rejected
+PASS-PLAYER-CAMERA: active original-path hotfix rejected
+PASS-PLAYER-CAMERA: wrong managed transform class rejected
+PASS-PLAYER-CAMERA: root backlink rejected
+PASS-PLAYER-CAMERA: hierarchy cycle rejected
+PASS-PLAYER-CAMERA: zero quaternion rejected
+PASS-PLAYER-CAMERA: invalid coordinate rejected
+PASS-PLAYER-CAMERA: no full-roster dependency or roster claim
+MEASURE MotionStatus=SAMPLED_READ_ONLY Attempts=2 Reads=4432 Detail= Y=204
+PASS-PLAYER-CAMERA: motion discards complete attempt and reacquires
+PASS-PLAYER-CAMERA: continuous motion stays unready within shared read/attempt bounds
+PASS-PLAYER-CAMERA: field pointer change on final recheck is fatal
+PASS-PLAYER-CAMERA: nested budget is respected without resetting counters
+PASS-PLAYER-CAMERA: transient job change discards and reacquires
+PASS-PLAYER-CAMERA: context identity failure wins over simultaneous retryable job change
+PASS-PLAYER-CAMERA: transport failure is fatal without retry or stale pose
+PlayerCameraChecks=PASS Assertions=24 LiveCamera=UNVERIFIED
+PASS: 4 KiB translation strips PCID
+PASS: 2 MiB page translation
+PASS: 1 GiB page translation
+PASS: noncanonical virtual address rejected
+PASS: noncanonical address causes no native read
+PASS: nonpresent page rejected
+PASS: physical read outside RAM rejected
+PASS: virtual read crosses physical page boundary
+PASS: changed page mapping detected after read
+PASS: changed translation is evicted and fresh retry succeeds
+PASS: translation cache separates page-table roots
+PASS: cached translation cannot pass after page is unmapped
+PASS: incomplete native reply rejected
+PASS: real kernel identity with borrowed idle active_mm
+PASS: switched-away idle active_mm can be null
+PASS: initial boot active_mm remains accepted
+PASS: nonkernel idle active_mm rejected
+PASS: wrong initial PID remains rejected
+PASS: wrong idle name remains rejected
+PASS: non-null idle mm remains rejected
+PASS: game PID and mm discover process root
+PASS: game virtual read verifies ARM64 library header
+PASS: late ARM64 library is reached after 1800 VMAs
+PASS: large scan completes within unchanged read budget
+PASS: shared filename metadata is read once per file
+PASS: candidate progress distinguishes pending verification
+LARGE_FIXTURE_READ_CALLS=9663 CACHE_HITS=1698
+PASS: matched cached filename is revalidated before success
+PASS: partial scan progress survives a final identity failure
+PASS: targeted scan stops after the 800th VMA in a 4500-VMA list
+PASS: target is revalidated without traversing the remaining list
+TARGETED_FIXTURE_READ_CALLS=4372 VMAS=800 TOTAL_VMAs=4500
+PASS: target filename changes reject early success
+PASS: failed target revalidation retains provisional status
+PASS: changed target VMA file object is rejected
+PASS: detached target is rejected by neighbor link checks
+PASS: changed successor backlink is rejected
+PASS: changed target ELF bytes reject early success
+PASS: changed process mm rejects early success
+PASS: VMA mutation during final header read is detected
+PASS: detached head VMA is rejected
+PASS: wrong ELF architecture reaches end without target verification
+PASS: nonzero file offset cannot satisfy the ELF header probe
+PASS: Unity ARM64 header alone does not satisfy the IL2CPP goal
+PASS: single head VMA passes targeted verification
+PASS: PID command-name mismatch rejected
+PASS: changed game memory context rejected
+PASS: mismatched live kernel rejected
+PASS: scoped physical limit rejects an additional read
+PASS: scope exhaustion does not increment or reset the shared physical count
+PASS: disposing the scope restores the remaining global allowance
+PASS: nested scopes cannot expand a stricter parent limit
+PASS: zero-length physical scopes are rejected
+TOTAL=51 (offline kernel and synthetic process fixture)
+PASS: APK tables, all PT_LOADs, build ID and code samples identify the loaded layout
+PASS: whole-file mapping is rejected as a load bias
+PASS: module probe stops with an explicit partial-list status
+PASS: bounded module fixture fits the existing read budget
+MODULE_FIXTURE_READ_CALLS=681 WINDOW_VMAs=9
+PASS: changed ELF header is not accepted as the APK reference
+PASS: changed program headers are rejected
+PASS: wrong GNU build-ID note is rejected
+PASS: changed executable sample is rejected
+PASS: incorrect segment file offset is rejected
+PASS: anonymous mapping cannot replace file-backed segment bytes
+PASS: non-target backing filename is rejected
+PASS: gap inside a PT_LOAD is rejected
+PASS: a sample changed after its first read fails the final recheck
+PASS: module VMA mutation after fingerprint reads is rejected
+PASS: module verification rejects a changed game mm
+PASS: module filename is checked again before success
+PASS: exactly 128 module VMAs permit one outside-boundary observation
+PASS: excessively fragmented module cannot exceed the 128-VMA window
+PASS: transient repeated VMA is discarded and a fresh scan can verify the module
+PASS: retry preserves cumulative reads while replacing the provisional scan result
+PASS: persistent repeated node fails after exactly two attempts
+PASS: changed process identity prevents starting the retry
+PASS: module fingerprint mismatch is not retried
+PASS: retry cannot reset or exceed the shared physical-read budget
+PASS: 4096-node exhaustion is distinguished from repetition and is not retried
+PASS: an inconsistent backlink can recover only through a complete fresh scan
+PASS: persistent backlink failure stops after two attempts with the offending VMA fields
+PASS: an inconsistent traversal order can recover after a discarded first scan
+PASS: invalid VMA ranges are not retried
+PASS: unaligned VMA boundaries are not retried
+PASS: VMAs outside user space are rejected without retry
+MODULE_TOTAL=31 (synthetic mappings with exact APK reference bytes)
+PASS: native layout registration references pass both read-only verification rounds
+LAYOUT_FIXTURE_READ_CALLS=1324 CHECKS=80
+PASS: changed field offset is rejected
+PASS: unrelocated method RVA cannot pass as a runtime pointer
+PASS: changed method entry bytes are rejected
+PASS: registration mutation after first observation fails second round
+PASS: layout checks reject a changed process mm
+PASS: layout checks require the matching module profile
+PASS: wrong module profile causes no guest reads
+PASS: runtime descriptor differences remain failures
+PASS: diagnostics report exact bounded descriptor bytes
+PASS: stable mismatches are compared in both rounds and remain unverified
+PASS: diagnostics include later mismatches after the first failure
+PASS: a mismatched round completes all fixed comparisons
+PASS: between-round mutation is identified in diagnostic output
+PASS: omitting the diagnostic callback cannot turn mismatches into success
+PASS: resolved descriptors verify all nine exact records against a shared metadata base
+PASS: metadata base is derived from runtime descriptors instead of hardcoded
+PASS: on-disk type indexes cannot pass as resolved runtime descriptors
+PASS: descriptor attributes remain exact despite accepting runtime pointers
+PASS: a plausible pointer cannot bypass exact metadata header verification
+PASS: all 88 type-record bytes are checked including the last byte
+PASS: record mismatch diagnostics report a bounded sample at the actual difference
+PASS: descriptors cannot point into different metadata tables
+PASS: descriptor pointer is reread after checking its target record
+PASS: kernel addresses cannot be followed as user metadata pointers
+PASS: decoded file prefix is not accepted as the observed runtime header
+PASS: runtime metadata version must be exactly the observed 24
+PASS: runtime prefix acceptance does not relax metadata table offsets
+PASS: all 256 runtime-header bytes remain checked
+PASS: header and record differences are both reported while verification still fails
+LAYOUT_TOTAL=30 (synthetic memory with recovered registration references)
+PASS: verified classes and original paths identify local player and managed head Transform
+PASS: object verification fits the shared read and snapshot bounds
+OBJECT_FIXTURE_READ_CALLS=2438 OBSERVATIONS=114
+PASS: supported derived Player validates its metadata and runtime parent chain
+PASS: unresolved metadata usage is never followed as a class pointer
+PASS: lobby or unspawned local-player state is reported as not ready
+PASS: a Player cannot replace the current MatchGame object
+PASS: the selected Player must have its local-player marker set
+PASS: live class metadata records must match the exact input
+PASS: plausible class pointers do not bypass self identity
+PASS: incorrect runtime instance sizes are rejected
+PASS: derived object ancestry must match the decoded metadata
+PASS: an active local-player hotfix prevents accepting the original path
+PASS: malformed hotfix array lengths are bounded
+PASS: a null lazy head provider does not fabricate a Transform
+PASS: a head getter hotfix is reported separately from the verified local-player chain
+PASS: provider interface dispatch must select that class's exact getter
+PASS: a non-Transform object cannot pass as the managed head Transform
+PASS: changed local-player chain is rejected before a result is returned
+PASS: changed guest process memory context invalidates object observations
+PASS: new object-path instruction samples must match before pointers are followed
+PASS: object probe requires prior runtime metadata verification
+PASS: invalid prior profile causes no guest reads
+PASS: interface scans cannot exceed the exact profile count and hard bound
+PASS: an interface offset cannot index beyond the class's actual vtable count
+PASS: a null Transform is a distinct readiness result
+PASS: misaligned provider addresses are rejected before following them
+PASS: class layout diagnostics preserve expected and actual sizes and token
+PASS: token and instance-size failures remain distinct and cannot become a PASS
+PASS: opaque native sizes are never promoted to exact runtime expectations
+PASS: bounded IFix runtime sizes require the independently verified runtime field layout
+PASS: IFix runtime size cannot be smaller than its declared instance fields
+PASS: runtime static storage must contain the wrapper reference
+PASS: runtime field offset must independently agree with static offset zero
+PASS: an unrelated runtime field cannot masquerade as wrapperArray
+PASS: interface class size zero remains valid without treating it as an object instance
+PASS: a null player cache can resolve the exact cached bone_Head Transform without initialization
+PASS: model-cache lookup stays within the shared read and snapshot bounds
+HEAD_CACHE_FIXTURE_READ_CALLS=3109 OBSERVATIONS=168
+PASS: different bone names cannot substitute for bone_Head
+PASS: removed dictionary entries are ignored
+PASS: duplicate active head keys fail rather than choosing an arbitrary entry
+PASS: model dictionary scan is bounded to 512 used entries
+PASS: closed generic dictionary arguments must match the exact declared cache type
+PASS: dictionary version changes invalidate the lookup result
+PASS: model lookup hotfixes prevent following the original cache path
+PASS: unsupported virtual overrides are reported without guessing their field layout
+PASS: cache values must match the declared concrete node type
+PASS: string reads remain bounded even for corrupted dictionary keys
+PASS: cache key objects must be the exact System.String class
+PASS: native head hierarchy reproduces translation, nonuniform scale and rotation in parent order
+PASS: native sample keeps bounded hierarchy evidence and exact native identity
+PASS: an unresolved icall is not initialized by the probe
+PASS: incorrect icall binding fails exact module identification Detail=Object pointer invalid: Unity load bias Value=0x58000004
+PASS: changed native layout instructions fail the sample Detail=Object validation failed: native Transform code identity transform_access_0
+PASS: native sampling requires the exact Unity ELF header Detail=Object validation failed: Unity ELF header
+PASS: NaN local coordinates cannot produce a world sample Detail=Object validation failed: finite native TRS component
+PASS: invalid parent rotations fail the world calculation Detail=Object validation failed: native parent quaternion norm
+PASS: head index must fit the observed hierarchy allocation Detail=Object validation failed: native hierarchy capacity/index bound
+PASS: parent indices outside the hierarchy capacity fail Detail=Object validation failed: native parent-index/Transform link
+PASS: cyclic parent links fail without looping Detail=Object validation failed: native parent-chain bound/cycle
+PASS: hierarchy slots must point back to the exact native Transform Detail=Object validation failed: native hierarchy object/index backlinks
+PASS: root sentinel must agree with the native parent pointer Detail=Object validation failed: native root parent backlink
+PASS: pending native jobs are reported without synchronizing or writing
+PASS: destroyed native objects do not invalidate the earlier managed-object observation
+PASS: continuously moving selected TRS rows yield no pose after exactly three fresh attempts
+PASS: a fresh bounded attempt can capture a new stable pose after discarding a moving sample
+PASS: nearby head and ancestor rows share one bounded read per capture pass
+PASS: identity mutations fail immediately rather than taking the TRS-only retry path
+PASS: native identity diagnostics identify a changed hierarchy pointer without guessing from its address
+PASS: a job-only change discards the attempt and the fresh pending job prevents accepting a pose
+PASS: unused gap bytes in a coalesced read do not masquerade as selected head-chain motion
+PASS: widely separated native rows use separate bounded capture chunks
+PASS: read failures are fatal rather than eligible for motion retries
+PASS: simultaneous TRS motion and identity changes cannot enter the retry path
+PASS: local-position binding fallback and reflected nonuniform scale retain signed coordinates
+PASS: noncommuting rotations across Y and X preserve native quaternion lane order
+PASS: native SIMD reproduction agrees with an independent general quaternion matrix oracle
+PASS: typed match dictionary verifies local and other Player objects with exact generic context and entry stride
+PASS: bounded roster sampling shares the existing Reader and snapshot limits
+PASS: missing match collection is reported without initialization
+PASS: an empty typed collection does not require an allocated entry array
+PASS: active collection getter hotfix prevents following the original field path
+PASS: collection value generic argument must be the exact Player definition Detail=Object validation failed: roster value must be Player
+PASS: entry stride is checked against the runtime closed value-type size Detail=Object validation failed: roster entry runtime size must be boxed 16 plus stride 40
+PASS: an arbitrary object cannot substitute for the entry array Detail=Object validation failed: roster entry array identity
+PASS: entry array must cover all used slots Detail=Object validation failed: roster entry-array capacity
+PASS: roster scan is capped at 256 used entries Detail=Object validation failed: roster dictionary used/free bound Used=257 Free=0
+PASS: observed removed entries must agree with the dictionary free count Detail=Object validation failed: roster removed count matches dictionary free count
+PASS: active entry chain indices remain bounded Detail=Object validation failed: roster entry link bound
+PASS: noncanonical or low candidate addresses fail before dereference Detail=Object pointer invalid: roster Player candidate Value=0x8
+PASS: collection values must be supported Player objects Detail=Object validation failed: object family COW.GamePlay.JMAGGLCNGIG
+PASS: an additional locally marked object is not silently treated as another player Detail=Object validation failed: roster local-player marker consistency
+PASS: removed slots are ignored and local membership is observed rather than assumed for this collection
+PASS: null active values are counted without being promoted to Player objects
+PASS: repeated value pointers are deduplicated without equating entry count to unique players
+PASS: a changed dictionary version discards the first attempt and accepts a fresh stable counter snapshot
+PASS: persistent roster motion stops after two fresh attempts without leaking discarded membership proofs
+PASS: snapshot diagnostics locate the changed byte within the observed range without logging key contents
+PASS: retry rebuilds the entry snapshot and never merges a discarded member into a later accepted collection
+PASS: a retry checks the hotfix gate again and cannot accept the original collection path after an override
+PASS: roster call scope stops a costly observation and restores allowance for final object checks
+PASS: at most sixteen unique Player objects are verified and remaining candidates are reported as incomplete
+PASS: a failed roster stage preserves the earlier valid native head sample and emits no verified roster objects
+PASS: a verified nonlocal dictionary member resolves its own managed/native head rather than the local head
+PASS: other-head sampling preserves the local sample and reports the exact collection member
+PASS: an accepted other-head observation reports its fresh selected-entry proof separately from the earlier roster
+PASS: other-head phase consumes the same shared Reader within its additional-call bound
+PASS: an unavailable moving local pose does not prevent an independently verified other-head sample
+PASS: an animated other head is reported as unavailable with no XYZ after the same three-attempt limit
+PASS: an uncached other head is reported without initializing Unity or substituting the local head
+PASS: a version changed before sampling permits a fresh exact selected-member proof without rewriting the old roster counters
+PASS: removing a different entry before capture does not invalidate the unchanged selected entry or revise the historical roster
+PASS: removing the selected entry before capture never passes fresh membership even if its old object pointer remains stored
+PASS: a saved entry outside the fresh used-slot count cannot be sampled
+PASS: fresh collection counters still enforce hard bounds rather than accepting any changed header
+PASS: fresh selected membership revalidates exact field registration and rejects a changed declared generic type
+PASS: selected entry key/value bytes must still match even when its header version is unchanged
+PASS: a changed selected object's local marker invalidates its other-player role
+PASS: other-head sampling honors the existing head-getter hotfix gate
+PASS: a changed global version can accompany an unchanged revalidated selected entry without claiming a stable whole collection
+PASS: removal of a different entry during capture permits only the unchanged selected-entry observation and leaves the historical roster untouched
+PASS: selected-entry removal during capture discards coordinates even though global counter changes are audited separately
+PASS: the selected index must remain inside the final audited used-slot range
+PASS: invalid final counter bounds remain a hard failure despite otherwise unchanged selected bytes
+PASS: both before-capture header copies must match and an unstable endpoint causes no native attempt
+PASS: an unstable final audit discards a native pose without retrying or relaxing endpoint comparisons
+PASS: a dictionary pointer swap invalidates the phase rather than treating it as a global counter change
+PASS: a changed entry-array capacity is still rejected independently of the global counter audit
+PASS: a phase-wide schema change discards all tentative rows at final checks
+PASS: selected key/value changes during capture are rejected even when the fresh counter bytes stay unchanged
+PASS: a remote job-only change gets a fresh bounded attempt and remains unready while the job is pending
+PASS: at most two verified other objects are sampled and each uses its own head position
+PASS: an expensive native hierarchy stops at the optional phase's read cap while reserving final identity checks Stop=READ_LIMIT_REACHED Detail= Row=Physical call scope exhausted; partial results only. Calls=5699
+PASS: exhausting the optional read scope preserves the remaining global allowance
+PASS: the optional phase performs no reads when only its reserved global allowance remains
+PASS: other-head reads require the verified collection snapshot
+PASS: a remote owner's cached bone_Head resolves through its own model dictionary with the shared strict resolver
+OTHER_HEAD_FIXTURE_ADDITIONAL_READ_CALLS=3364 OBSERVATIONS=158
+ROSTER_FIXTURE_READ_CALLS=3369 OBSERVATIONS=94
+NATIVE_HEAD_FIXTURE_READ_CALLS=3376 OBSERVATIONS=63
+PASS: state sampling verifies separate local/nonlocal raw values and endpoint membership: SELECTED_OBJECTS_EXHAUSTED
+PASS: state sampling stays inside its independent 6000-read phase budget
+PASS: original really-dead truth table case 0
+PASS: original really-dead truth table case 1
+PASS: original really-dead truth table case 2
+PASS: original really-dead truth table case 3
+PASS: exact Boolean mask/mode branch case 0
+PASS: exact Boolean mask/mode branch case 1
+PASS: exact Boolean mask/mode branch case 2
+PASS: exact Boolean mask/mode branch case 3
+PASS: exact Boolean mask/mode branch case 4
+PASS: active hotfix suppresses only the unsupported interpretation Id=1095
+PASS: active hotfix suppresses only the unsupported interpretation Id=19928
+PASS: active hotfix suppresses only the unsupported interpretation Id=138227
+PASS: Player_Watching virtual override never inherits Player model visibility semantics
+PASS: a null visibility object produces unknown rather than false
+PASS: TeamIndex retains signed raw values without team classification
+PASS: noncanonical Boolean rejects the entire row without exposing earlier tentative fields
+PASS: changed state registration rejects the phase
+PASS: runtime field tables must match the verified registration
+PASS: visibility storage class extent is verified
+PASS: changed virtual dispatch cannot reuse original visibility semantics
+PASS: a state change during capture discards all tentative values
+PASS: selected-entry removal discards state observations
+PASS: hotfix activation during sampling invalidates the row
+PASS: phase-final schema failure discards every tentative state row
+PASS: state phase leaves its final-check reserve untouched when global budget is low
+PASS: state read exhaustion does not reset the global ceiling: READ_LIMIT_REACHED
+PASS: state reads require the verified roster
+PLAYER_STATE_FIXTURE_ADDITIONAL_READ_CALLS=4664
+PASS: team predicate follows verified packed IDs despite equal raw TeamIndex: ORIGINAL_PREDICATE_SAMPLED
+PASS: team phase respects its independent 6000-read budget
+PASS: matching original policy bytes reproduce SameTeam=true
+PASS: policy comparison preserves unsigned byte 255
+PASS: faction mode never falls back to packed team equality
+PASS: team original-path hotfix gate Id=1269
+PASS: team original-path hotfix gate Id=329
+PASS: team original-path hotfix gate Id=328
+PASS: team original-path hotfix gate Id=266
+PASS: team original-path hotfix gate Id=1268
+PASS: team original-path hotfix gate Id=312
+PASS: team original-path hotfix gate Id=350
+PASS: team original-path hotfix gate Id=348
+PASS: team original-path hotfix gate Id=347
+PASS: absent CurrentMatchGame is not silently replaced by CurrentGame
+PASS: distinct settings-selection branches remain unsupported
+PASS: missing settings are never initialized by the read-only probe
+PASS: verified dynamic null-dictionary path retains the original 255 default: ORIGINAL_DYNAMIC_NULL_DEFAULT
+PASS: a populated dynamic dictionary never reuses packed ID or raw TeamIndex equality
+PASS: dynamic lookup gate is honored before null-default interpretation
+PASS: dynamic flag alone does not apply a subclass-only dictionary path
+PASS: both original settings branches select the same verified CurrentGame/CurrentMatchGame object
+PASS: probe never assumes an unexecuted GameVar static constructor
+PASS: exact-build reference includes unsupported match-policy overrides
+PASS: custom match policy is not treated as base MatchGame
+PASS: invalid settings Boolean clears the entire tentative result
+PASS: native-null player is never classified by its leftover ID
+PASS: actual match dispatch must match metadata and the original target
+PASS: mode settings class extent must match the inspected build
+PASS: runtime MatchGame cast table must agree with metadata ancestry
+PASS: dynamic subclass cast cannot be inferred from names alone
+PASS: player ID mutation clears both tentative team values and the predicate
+PASS: selected member removal invalidates the team pair
+PASS: mode changes during sampling invalidate the route and predicate
+PASS: unrelated global version changes are audited while both selected entries remain exact
+PASS: final schema mismatch discards the entire team observation
+PASS: team probe requires both a verified local member and a nonlocal member
+PASS: team phase preserves its final-check reserve
+PASS: team sampling never resets the global physical read limit
+PASS: team probe requires verified core prerequisites
+TEAM_POLICY_FIXTURE_ADDITIONAL_READ_CALLS=4689
+PASS: combat samples one revalidated nonlocal member: SELECTED_OBJECTS_EXHAUSTED
+PASS: combat phase stays within its 6000-read allowance
+COMBAT_FIXTURE_ADDITIONAL_READ_CALLS=4805
+PASS: Watching Boolean is mode-dependent and its original side-effect counter remains unchanged
+PASS: Watching class name alone does not force IsWatching=true outside the required game family
+PASS: original ghost predicate retains signed raw enum: 0
+PASS: original ghost predicate retains signed raw enum: 1
+PASS: original ghost predicate retains signed raw enum: 2
+PASS: original ghost predicate retains signed raw enum: 99
+PASS: original ghost predicate retains signed raw enum: 4294967295
+PASS: base death short-circuits controller movement/state traversal
+PASS: nonzero direct movement short-circuits unused controller state
+PASS: original dying final state comparison: 0
+PASS: original dying final state comparison: 7
+PASS: original dying final state comparison: 8
+PASS: original dying final state comparison: 9
+PASS: original dying final state comparison: 4294967295
+PASS: null state uses the original zero state ID
+PASS: virtual movement getter supports the verified original zero-return implementation
+PASS: verified original movement dispatch: 70dd444
+PASS: verified original movement dispatch: 70dd7c4
+PASS: verified original movement dispatch: 70e5d54
+PASS: verified original movement dispatch: 70e9938
+PASS: verified original movement dispatch: 70ebe6c
+PASS: verified original movement dispatch: 70ec884
+PASS: verified original movement dispatch: 70ed0b8
+PASS: verified original movement dispatch: 70ed600
+PASS: verified original movement dispatch: 70ef0d8
+PASS: verified original movement dispatch: 70efb84
+PASS: verified original movement dispatch: 70f0440
+PASS: verified original movement dispatch: 70f0a70
+PASS: verified original movement dispatch: 70f2128
+PASS: verified original movement dispatch: 70f21a8
+PASS: verified original movement dispatch: 70f23c0
+PASS: verified original movement dispatch: 70f25d8
+PASS: verified original movement dispatch: 70f27f0
+PASS: verified original movement dispatch: 70f2cf4
+PASS: verified original movement dispatch: 70f2f10
+PASS: verified original movement dispatch: 70f337c
+PASS: verified original movement dispatch: 70f3dbc
+PASS: dying original-path gate: 1179
+PASS: dying original-path gate: 1178
+PASS: dying original-path gate: 1095
+PASS: dying original-path gate: 470
+PASS: dying original-path gate: 634
+PASS: dying original-path gate: 633
+PASS: combat semantic gate suppresses its interpretation: 15466
+PASS: combat semantic gate suppresses its interpretation: 154684
+PASS: combat semantic gate suppresses its interpretation: 139140
+PASS: combat semantic gate suppresses its interpretation: 266
+PASS: virtual movement hotfix suppresses the dying predicate
+PASS: missing controller is unknown rather than alive
+PASS: controller owner mismatch discards all tentative role values
+PASS: controller class extent is verified before reads
+PASS: Watching runtime dispatch must match the exact metadata slot
+PASS: invalid movement selector clears the entire tentative sample
+PASS: state changes invalidate the whole combat sample
+PASS: final combat schema rejection discards all samples
+PASS: unrecognized controller retains other independent predicates and unknown dying
+PASS: probe does not initialize GameVar statics
+PASS: runtime ghost FieldInfo offset must match registration
+PASS: member removal invalidates every tentative combat predicate
+PASS: Watching native hierarchy must agree with verified class ancestry
+PASS: mid-capture Watching hotfix activation discards all values
+PASS: selected movement code bytes are verified before its constant is reproduced
+PASS: explicit selection rejects a local or missing member without reads
+PASS: combat phase preserves final-check reserve
+PASS: combat phase never resets or exceeds global read ceiling
+PASS: combat phase requires a verified roster
+PASS: zone and invincibility snapshot validates unsafe pool and membership: SELECTED_OBJECTS_EXHAUSTED
+PASS: zone/protection phase stays within its 6000-read allowance
+ZONE_FIXTURE_ADDITIONAL_READ_CALLS=5833
+PASS: original UInt8 zone getter backend=False value=0
+PASS: original UInt8 zone getter backend=False value=1
+PASS: original UInt8 zone getter backend=False value=2
+PASS: original UInt8 zone getter backend=False value=3
+PASS: original UInt8 zone getter backend=False value=255
+PASS: original UInt8 zone getter backend=True value=0
+PASS: original UInt8 zone getter backend=True value=1
+PASS: original UInt8 zone getter backend=True value=2
+PASS: original UInt8 zone getter backend=True value=3
+PASS: original UInt8 zone getter backend=True value=255
+PASS: original invincibility mask/mode case 0
+PASS: original invincibility mask/mode case 1
+PASS: original invincibility mask/mode case 2
+PASS: original invincibility mask/mode case 3
+PASS: original invincibility mask/mode case 4
+PASS: original invincibility mask/mode case 5
+PASS: offline-training mode short-circuits unused replication data
+PASS: null zone pool retains the original zero result
+PASS: signed property-count short circuit 0
+PASS: signed property-count short circuit 37
+PASS: signed property-count short circuit 4294967295
+PASS: missing property entry returns original zero
+PASS: zone/protection original gate suppresses only its dependent result: 9560
+PASS: zone/protection original gate suppresses only its dependent result: 9559
+PASS: zone/protection original gate suppresses only its dependent result: 266
+PASS: zone/protection original gate suppresses only its dependent result: 17618
+PASS: zone/protection original gate suppresses only its dependent result: 16140
+PASS: zone/protection original gate suppresses only its dependent result: 18882
+PASS: missing attributes produce unknown protection independently of zone
+PASS: null protection mask is never interpreted as false
+PASS: null unsafe value pointer is unknown rather than zero
+PASS: a short array cannot yield an accepted property value
+PASS: attributes owner mismatch discards the entire tentative snapshot
+PASS: managed and unsafe pool targets cannot be interchanged
+PASS: native interface offset must match the exact metadata
+PASS: unsafe replication data array requires its exact element type
+PASS: array diagnostic identifies Element mismatch without accepting a typed sample
+PASS: array diagnostic identifies Self mismatch without accepting a typed sample
+PASS: array diagnostic identifies Bits mismatch without accepting a typed sample
+PASS: array diagnostic identifies TypeData mismatch without accepting a typed sample
+PASS: the erroneous V24/V25 ELF-descriptor expectation is now rejected
+PASS: a neighboring element-class member cannot substitute for byval_arg
+PASS: array constructor rule must match live code before the new representation is accepted
+PASS: a matching byval pointer cannot bypass element descriptor identity verification
+PASS: constructor-code change during capture discards every tentative zone/protection value
+PASS: zone byte mutation invalidates all tentative values
+PASS: protection-mask changes invalidate the snapshot
+PASS: phase-final zone schema rejection discards all output values
+PASS: pool field descriptor must resolve the exact replication-data element type
+PASS: selected member removal discards zone and protection values
+PASS: explicit zone selection rejects local/missing members without reads
+PASS: zone phase keeps its final-check reserve
+PASS: zone phase does not reset the global read ceiling
+PASS: zone phase requires exact verified prerequisites
+PASS: current mode class reproduces only the original argument-independent match policy: ORIGINAL_ARGUMENT_INDEPENDENT_TRUE
+PASS: match damage phase stays within its 6000-read allowance
+MATCH_DAMAGE_FIXTURE_ADDITIONAL_READ_CALLS=3402
+PASS: base policy ignores victim state and cannot itself establish combat eligibility
+PASS: active base policy hotfix never inherits the constant true result
+PASS: argument-dependent custom match override stays unknown
+PASS: null CurrentMatchGame does not become an implicit policy allow
+PASS: distinct current-game objects do not borrow one another's policy
+PASS: raw mode getter hotfix does not change argument-independent policy or validate mode semantics
+PASS: actual policy target must match metadata virtual slot
+PASS: class vtable extent must cover the policy slot
+PASS: policy context field registration is verified
+PASS: policy reader never initializes facade statics
+PASS: changed CurrentMatchGame discards every tentative policy value
+PASS: selected victim entry removal invalidates the pair-bound observation
+PASS: policy hotfix activation during capture rejects its earlier constant
+PASS: final policy-code failure discards all tentative output
+PASS: final context schema failure clears mode and predicate
+PASS: unrelated roster counter changes are audited without fabricating full-roster stability
+PASS: mode change during capture discards the entire match-policy context
+PASS: an original context hotfix invalidates the policy observation
+PASS: policy mode does not invent an unverified victim pair
+PASS: policy phase leaves its final reserve untouched
+PASS: policy phase cannot reset or exceed the global read ceiling
+PASS: match policy requires verified roster and exact-build context
+PASS: local active weapon and typed data reference are independently verified: SELECTED_OBJECTS_EXHAUSTED
+PASS: weapon phase respects the independent 6000-call allowance
+WEAPON_FIXTURE_ADDITIONAL_READ_CALLS=4988
+PASS: resolved registration still requires the exact getter/runtime field offset
+PASS: live-observed A0 path retains phase and final-check budget
+WEAPON_HAND_FIXTURE_ADDITIONAL_READ_CALLS=5477
+PASS: null active field follows verified on-hand controller and native cast
+PASS: alternate hand preserves the actual unsupported data getter override
+PASS: null controller yields original no-weapon result
+PASS: empty selected hand yields original no-weapon result
+PASS: verified non-weapon item follows the original failed HBIBDMMOOOK cast
+PASS: weapon selection original gate: 839
+PASS: weapon selection original gate: 837
+PASS: weapon selection original gate: 838
+PASS: weapon selection original gate: 646
+PASS: weapon selection original gate: 645
+PASS: active field short-circuits the unused fallback hotfix
+PASS: data hotfix suppresses only the unknown data interpretation
+PASS: an arbitrary opaque registration is never accepted
+PASS: opaque file entry cannot bypass the runtime +0x98 FieldInfo
+PASS: lazy field metadata is not initialized or guessed by the reader
+PASS: null weapon data is explicit and not replaced by an invented data object
+PASS: wrong data class is not a typed weapon-data result
+PASS: actual data virtual target must match source metadata
+PASS: noncanonical hand selector invalidates all tentative values
+PASS: native hand cast must agree with independently verified class ancestry
+PASS: active field requires its declared GEBIDMLCOJO family
+PASS: weapon-data changes discard the entire tentative row
+PASS: local member removal invalidates its weapon observation
+PASS: final getter-code failure clears the complete weapon sample
+PASS: local-only weapon mode never substitutes another roster member
+PASS: weapon phase preserves its final reserve
+PASS: weapon phase never resets or exceeds the global read ceiling
+PASS: exact data GetId returns the verified UInt32 field
+PASS: zero ID is preserved without assigning a weapon name
+PASS: UInt32 ID preserves all bits without signed conversion or a guessed range
+PASS: GetId hotfix leaves the verified data reference but suppresses the ID
+PASS: uninitialized data FieldInfo remains unknown without initialization
+PASS: ID runtime offset mismatch discards the tentative row
+PASS: GetUIntKey is not substituted for actual GetId dispatch
+PASS: ID source offset registration must match the exact getter
+PASS: ID field descriptor must remain UInt32
+PASS: ID changes during capture discard the tentative ID
+PASS: GetId gate activation during capture invalidates the snapshot
+PASS: changed final GetId code clears every weapon/ID observation
+PASS: selected weapon original reload predicate compares state ID eight
+PASS: other state is not labelled reloading or ready to fire
+PASS: raw state preserves the signed Int32 enum representation
+PASS: original null-machine branch yields false with no fabricated state ID
+PASS: reload hotfix does not fabricate state or suppress independent ID: 1223
+PASS: reload hotfix does not fabricate state or suppress independent ID: 1205
+PASS: null current state is unknown rather than original false
+PASS: wrong machine class is not dereferenced as state storage
+PASS: unrelated state class cannot supply a reload enum
+PASS: lazy state FieldInfo stays unknown while independent weapon data remains verified
+PASS: opaque state registration cannot bypass the live exact field offset
+PASS: reload dispatch must match the actual class's registered virtual
+PASS: state changes discard the complete tentative weapon snapshot
+PASS: derived state requires verified metadata and native parent ancestry
+PASS: mismatched native state parent invalidates the snapshot
+PASS: reload hotfix changes during capture discard tentative values
+PASS: final reload getter change clears every tentative value
+PASS: weapon observation requires exact build and roster prerequisites
+PASS: separate firing mode accepts original predicate without combining ID/reload phases: SELECTED_OBJECTS_EXHAUSTED
+PASS: firing phase retains its independent 6000-call allowance
+FIRING_FIXTURE_ADDITIONAL_READ_CALLS=4803
+PASS: exact original firing state-set boundary: 0
+PASS: exact original firing state-set boundary: 1
+PASS: exact original firing state-set boundary: 2
+PASS: exact original firing state-set boundary: 3
+PASS: exact original firing state-set boundary: 4
+PASS: exact original firing state-set boundary: 5
+PASS: exact original firing state-set boundary: 6
+PASS: exact original firing state-set boundary: 7
+PASS: exact original firing state-set boundary: 8
+PASS: exact original firing state-set boundary: 9
+PASS: exact original firing state-set boundary: 10
+PASS: exact original firing state-set boundary: 11
+PASS: exact original firing state-set boundary: 12
+PASS: exact original firing state-set boundary: 13
+PASS: exact original firing state-set boundary: 14
+PASS: exact original firing state-set boundary: 15
+PASS: exact original firing state-set boundary: 16
+PASS: exact original firing state-set boundary: 17
+PASS: exact original firing state-set boundary: 18
+PASS: exact original firing state-set boundary: 19
+PASS: exact original firing state-set boundary: 4294967295
+PASS: exact original firing state-set boundary: 2147483648
+PASS: cache branch short-circuits unused state getter and null state: 0
+PASS: cache branch short-circuits unused state getter and null state: 1
+PASS: A0 hand firing path retains selection checks and budget
+FIRING_HAND_FIXTURE_ADDITIONAL_READ_CALLS=5292
+PASS: custom firing override is not treated as the base method
+PASS: null machine yields original false without initializing feature metadata
+PASS: relevant firing hotfix suppresses interpretation: 1217
+PASS: relevant firing hotfix suppresses interpretation: 1205
+PASS: feature static constructor is never invoked by the reader
+PASS: lazy firing field metadata remains unknown: 11718
+PASS: lazy firing field metadata remains unknown: 32884
+PASS: lazy firing field metadata remains unknown: 32859
+PASS: noncanonical feature Boolean invalidates tentative values
+PASS: noncanonical cached Boolean is not accepted as true
+PASS: state-path null state remains unknown rather than false
+PASS: unrelated machine class is not firing storage
+PASS: derived current state requires the verified parent chain
+PASS: unrelated current state cannot provide a firing enum
+PASS: actual slot-218 dispatch must match the selected class
+PASS: feature offset cannot exceed verified static storage
+PASS: opaque cache registration still requires the exact runtime +0x20 FieldInfo
+PASS: changing firing storage discards tentative values: False
+PASS: changing firing storage discards tentative values: True
+PASS: changing feature route invalidates the snapshot
+PASS: firing hotfix activation during capture invalidates the snapshot
+PASS: final firing code failure clears all observations
+PASS: firing phase preserves the final-check reserve
+PASS: firing phase never resets the global ceiling
+PASS: firing never bypasses the original weapon-selection hotfix
+PASS: arbitrary opaque cache registration cannot be accepted
+PASS: firing feature descriptor must remain Boolean
+PASS: local-only firing mode never substitutes a nonlocal roster member
+PASS: selected-member removal invalidates the firing result
+PASS: firing requires exact-build roster prerequisites
+PASS: separate ammo mode verifies the original counter with runtime-bound field identity: SELECTED_OBJECTS_EXHAUSTED
+PASS: ammo phase retains its independent 6000-call allowance
+AMMO_FIXTURE_ADDITIONAL_READ_CALLS=3870
+PASS: field identity binds only after unique runtime +0x610 proof: 42
+PASS: field identity binds only after unique runtime +0x610 proof: 59
+PASS: field identity binds only after unique runtime +0x610 proof: 63
+PASS: field identity binds only after unique runtime +0x610 proof: 86
+PASS: field identity binds only after unique runtime +0x610 proof: 88
+PASS: field identity binds only after unique runtime +0x610 proof: 94
+PASS: field identity binds only after unique runtime +0x610 proof: 102
+PASS: field identity binds only after unique runtime +0x610 proof: 105
+PASS: field identity binds only after unique runtime +0x610 proof: 164
+PASS: field identity binds only after unique runtime +0x610 proof: 183
+PASS: field identity binds only after unique runtime +0x610 proof: 211
+PASS: Int32 counter preserves bits without inventing range or unlimited policy: 0
+PASS: Int32 counter preserves bits without inventing range or unlimited policy: 1
+PASS: Int32 counter preserves bits without inventing range or unlimited policy: 2147483647
+PASS: Int32 counter preserves bits without inventing range or unlimited policy: 2147483648
+PASS: Int32 counter preserves bits without inventing range or unlimited policy: 4294967295
+PASS: resolved source registration still needs unique runtime FieldInfo
+PASS: A0 ammo path retains selection validation and phase budget
+AMMO_HAND_FIXTURE_ADDITIONAL_READ_CALLS=4359
+PASS: ammo does not combine unused data/firing/reload getters
+PASS: ammo hotfix short-circuits unused runtime field metadata
+PASS: ammo never initializes lazy field metadata
+PASS: missing runtime offset is unknown rather than a guessed field name
+PASS: duplicate runtime offsets invalidate tentative values
+PASS: noncandidate field type cannot be treated as the Int32 counter
+PASS: chosen runtime field name/type/owner/token must agree: 0
+PASS: chosen runtime field name/type/owner/token must agree: 8
+PASS: chosen runtime field name/type/owner/token must agree: 16
+PASS: chosen runtime field name/type/owner/token must agree: 28
+PASS: ammo table count is exact and bounded
+PASS: arbitrary opaque source registration is never decoded or accepted
+PASS: chosen native field descriptor must remain Int32
+PASS: ammo never bypasses original weapon selection
+PASS: ammo selects only a verified local roster member
+PASS: changing counter discards tentative ammo values
+PASS: runtime field-table changes invalidate the counter binding
+PASS: ammo getter hotfix changes during capture invalidate the row
+PASS: selected-member removal invalidates the ammo observation
+PASS: final original getter code failure clears every tentative value
+PASS: ammo phase retains its final-check reserve
+PASS: ammo phase never resets the global read ceiling
+PASS: ammo requires exact-build roster prerequisites
+PASS: settled job-only transition requires one fully fresh native attempt: False
+PASS: settled job-only transition requires one fully fresh native attempt: True
+PASS: persistent job changes discard every attempt and produce no coordinates after the shared three-attempt limit
+PASS: hard identity changes take precedence over job changes regardless of reverse recheck order: False
+PASS: hard identity changes take precedence over job changes regardless of reverse recheck order: True
+PASS: transport errors cannot be downgraded to retryable job changes
+PASS: TRS and job transitions share one three-attempt allowance and never reuse a discarded pose
+PASS: a stable pending tag remains unready without synchronizing or pointless retries
+PASS: managed/native pointer changes remain immediate hard failures
+PASS: batch final recheck merges nearby overlapping observations while retaining all three proofs
+PASS: unobserved gap bytes are not promoted to snapshot evidence
+PASS: batch recheck rejects changed observed bytes with original range and label
+PASS: batch requests never merge observations across page boundaries
+PASS: non-aim probes retain their original individual rechecks
+PASS: batch option does not cache initial reads or hide changes on repeated access
+PASS: positive-Z basis identity/sign/half-turn case 0
+PASS: positive-Z basis identity/sign/half-turn case 1
+PASS: positive-Z basis identity/sign/half-turn case 2
+PASS: positive-Z basis identity/sign/half-turn case 3
+PASS: positive-Z basis identity/sign/half-turn case 4
+PASS: positive yaw rotates positive-Z toward positive-X
+PASS: positive pitch rotates positive-Z toward negative-Y
+PASS: changed Unity multiply code suppresses rotation and derived basis
+PASS: Unity multiply requires its own registered CoreModule method pointer
+PASS: derived basis is published only with the validated local quaternion
+PASS: mixed-axis Quaternion preserves component cross terms
+PASS: basis calculation preserves accepted source values without normalization
+PASS: changed CoreModule table invalidates derived basis
+PASS: multiply metadata identity is required
+PASS: changed final multiply code clears tentative rotation and basis
+PASS: camera icall caches expose function pointers only after source and local snapshot verification
+PASS: uninitialized camera binding stays explicit without invoking initialization: 184251264
+PASS: noncanonical icall address never publishes tentative binding: 184251264
+PASS: uninitialized camera binding stays explicit without invoking initialization: 184260200
+PASS: noncanonical icall address never publishes tentative binding: 184260200
+PASS: changing camera icall binding discards the tentative snapshot
+PASS: camera main method must use its verified owning CoreModule registration
+PASS: changed Camera.main wrapper cannot establish a typed binding
+PASS: camera wrapper metadata identity must match its original source record
+PASS: camera native icall name bytes are verified rather than inferred from function names alone
+PASS: changed final component wrapper clears all tentative binding and quaternion data
+PASS: two camera caches resolve to exact registered entries in the verified Unity ELF executable segment
+PASS: camera native entries cannot come from different candidate load biases
+PASS: camera bias subtraction cannot underflow
+PASS: consistent but non-page-aligned camera biases are rejected
+PASS: changed Unity header/program/note/registration/name/code suppresses tentative camera identity: 0
+PASS: changed Unity header/program/note/registration/name/code suppresses tentative camera identity: 64
+PASS: changed Unity header/program/note/registration/name/code suppresses tentative camera identity: 776
+PASS: changed Unity header/program/note/registration/name/code suppresses tentative camera identity: 4623836
+PASS: changed Unity header/program/note/registration/name/code suppresses tentative camera identity: 4643516
+PASS: changed Unity header/program/note/registration/name/code suppresses tentative camera identity: 1157767
+PASS: changed Unity header/program/note/registration/name/code suppresses tentative camera identity: 1204075
+PASS: changed Unity header/program/note/registration/name/code suppresses tentative camera identity: 4315332
+PASS: changed Unity header/program/note/registration/name/code suppresses tentative camera identity: 4537604
+PASS: changed Unity header/program/note/registration/name/code suppresses tentative camera identity: 4537852
+PASS: changing native camera code during capture invalidates the entire tentative snapshot
+PASS: native tag-5 hash matches recovered ARM64 unsigned arithmetic
+PASS: bounded native tag and component walk retains candidate identity with a supported predicate
+PASS: native camera candidate phase retains original 6000-read bound
+CAMERA_CANDIDATE_FIXTURE_ADDITIONAL_READ_CALLS=4300
+PASS: null native tag manager is not initialized
+PASS: tag hash collision uses the recovered eight-step probe sequence
+PASS: bounded source-order walk can identify a camera component in its second node
+PASS: two visited nodes ending at the sentinel prove a sampled null native selector result
+PASS: native list cycles fail rather than producing a candidate
+PASS: maximum supported component table is read in one bounded snapshot
+PASS: empty tag slot exposes no candidate
+PASS: empty native tag list is not a selected camera
+PASS: uninitialized camera class range is not initialized by the probe
+PASS: component scan cannot exceed 256 records
+PASS: native tag lookup has a hard sixteen-probe bound
+PASS: malformed native table mask cannot become a candidate
+PASS: native component owner must agree with tagged object
+PASS: predicate outside verified Unity reference text cannot establish a candidate
+PASS: native tag-list selected previous link is checked
+PASS: changed native selection code cannot support an object walk
+PASS: changed component-array identity clears tentative native candidate and pose remains unverified
+PASS: source predicate selects any nonzero byte without imposing canonical Boolean encoding: 1
+PASS: source predicate selects any nonzero byte without imposing canonical Boolean encoding: 2
+PASS: source predicate selects any nonzero byte without imposing canonical Boolean encoding: 255
+PASS: false predicate and exhausted source list yield sampled null, not a selected camera
+PASS: unknown virtual predicate preserves candidate but is not guessed or executed
+PASS: changed predicate code prevents source-equivalent evaluation
+PASS: changing predicate byte discards all tentative native selection data
+PASS: virtual dispatch changes during read-only predicate evaluation invalidate selection
+PASS: predicate code changing after evaluation fails exact final source rechecks
+PASS: false first camera advances to second source-order tagged object before selecting true predicate
+PASS: two false cameras and a complete list produce sampled null
+PASS: first true predicate terminates the original source selection without reading later nodes
+PASS: false predicate skips later matching components on the same object, matching native source order
+PASS: unknown first predicate blocks any claim that a later camera is selected
+PASS: bounded partial traversal never claims source selector returned null
+PASS: unresolved camera binding cannot evaluate or select a camera
+PASS: original local getter reads verified +0x614 Quaternion, not separate m_CurrentAimRotation: SELECTED_OBJECTS_EXHAUSTED
+PASS: aim-state phase retains 6000-call limit and final checks
+AIM_FIXTURE_ADDITIONAL_READ_CALLS=4140
+PASS: negative Quaternion sign is preserved without changing orientation convention
+PASS: component order follows verified Unity Quaternion x/y/z/w layout
+PASS: nonfinite quaternion never publishes tentative components: NaN
+PASS: nonfinite quaternion never publishes tentative components: Infinity
+PASS: nonfinite quaternion never publishes tentative components: -Infinity
+PASS: nonunit quaternion is not silently normalized: 0
+PASS: nonunit quaternion is not silently normalized: 0.5
+PASS: nonunit quaternion is not silently normalized: 2
+PASS: active aim getter hotfix suppresses the original field interpretation
+PASS: another plausible Quaternion field cannot replace the getter's actual backing field
+PASS: runtime FieldInfo must agree with the original getter load
+PASS: getter return type must remain the verified Quaternion value type
+PASS: component registration cannot reorder y and z
+PASS: value-type metadata changes prevent a typed aim sample
+PASS: changing quaternion invalidates the tentative snapshot without smoothing
+PASS: hotfix changes during capture invalidate all quaternion values
+PASS: selected local membership changes invalidate the aim snapshot
+PASS: changed final aim getter code clears all tentative components
+PASS: aim snapshot never substitutes a nonlocal player
+PASS: aim phase retains its final-check reserve
+PASS: aim snapshot cannot reset the global read ceiling
+PASS: selected native camera first-component intermediate yields rechecked root world position
+PASS: camera position remains inside existing aim read allowance
+CAMERA_POSITION_FIXTURE_ADDITIONAL_READ_CALLS=4727
+PASS: camera pending cameraPositionTest_job is not synchronized or sampled
+PASS: camera Transform ownership mismatch discards tentative selection and position
+PASS: cameraPositionTest_changed camera TRS discards tentative world position
+PASS: camera hierarchy backlink mismatch fails closed
+PASS: nonfinite camera position is rejected
+PASS: camera component itself is not misread as its Transform
+PASS: camera world position composes parent translation and nonuniform scale in verified source order
+PASS: camera parent cycle cannot produce a position
+PASS: camera job tag changing after TRS capture discards the entire snapshot
+PASS: previously unchecked Component.Transform source tail must now match exact image
+PASS: root camera world rotation uses its own sampled TRS and independently rotates positive Z to positive X
+PASS: invalid camera quaternion is rejected without normalization: 0
+PASS: invalid camera quaternion is rejected without normalization: 2
+PASS: invalid camera quaternion is rejected without normalization: NaN
+PASS: invalid camera quaternion is rejected without normalization: Infinity
+PASS: native parent rotation composes noncommuting Y then X rotations in source order
+PASS: parent scale reflections follow exact native quaternion sign convention: 0
+PASS: parent scale reflections follow exact native quaternion sign convention: 1
+PASS: parent scale reflections follow exact native quaternion sign convention: 2
+PASS: parent scale reflections follow exact native quaternion sign convention: 3
+PASS: parent scale reflections follow exact native quaternion sign convention: 4
+PASS: parent scale reflections follow exact native quaternion sign convention: 5
+PASS: parent scale reflections follow exact native quaternion sign convention: 6
+PASS: parent scale reflections follow exact native quaternion sign convention: 7
+PASS: negative-zero parent scale retains native sign-bit behavior
+PASS: changed complete native rotation code suppresses tentative camera pose
+PASS: rotation changes discard both tentative position and quaternion
+PASS: hierarchy camera world rotation composes identity parent alongside position using the same rechecked rows
+PASS: camera parent quaternion matches independent ARM64 lane simulation bit-for-bit: 0
+PASS: camera parent quaternion matches independent ARM64 lane simulation bit-for-bit: 1
+PASS: camera parent quaternion matches independent ARM64 lane simulation bit-for-bit: 2
+PASS: camera parent quaternion matches independent ARM64 lane simulation bit-for-bit: 3
+PASS: source-checked game camera entry gates report only original-branch availability
+PASS: any nonzero IFix slot indicates the hotfix entry branch without dereferencing or invoking it
+PASS: getter metadata initialization is not triggered when bit zero is clear: 0
+PASS: patch helper metadata initialization is not triggered when bit zero is clear: 0
+PASS: getter metadata initialization is not triggered when bit zero is clear: 2
+PASS: patch helper metadata initialization is not triggered when bit zero is clear: 2
+PASS: metadata guards test only source bit zero, without imposing a canonical Boolean byte
+PASS: slot equal to array length is not read and follows source CheckPatch false branch
+PASS: changed camera getter metadata flag clears the entire tentative sample: 184178458
+PASS: changed camera getter metadata flag clears the entire tentative sample: 184223677
+PASS: IFix slot mutation during capture discards all tentative gate observations
+PASS: full CheckPatch entry metadata guard code is verified beyond the old dispatch-only anchor
+PASS: registered MatchGame/controller/managed Camera fields link to the selected native camera
+PASS: full typed controller inventory retains the existing aim phase read budget
+CONTROLLER_INVENTORY_FIXTURE_ADDITIONAL_READ_CALLS=5018
+PASS: registered field inventory does not execute or initialize an unused game getter
+PASS: source-verified Object null comparison data reports nonzero cached native pointer
+PASS: original null comparison uses zero cached pointer without a native object existence call
+PASS: clear null-operator metadata bit withholds equality result without initialization: 184261015
+PASS: clear null-operator metadata bit withholds equality result without initialization: 184261016
+PASS: clear null-operator metadata bit withholds equality result without initialization: 184260891
+PASS: zero class initialization flag is not initialized by the probe
+PASS: tagged unresolved Object class usage is not followed
+PASS: wrong null-operator class usage rejects the tentative sample
+PASS: metadata gates use bit zero and class source gate uses nonzero without canonical Boolean assumptions
+PASS: changed null comparison metadata guard discards tentative observations
+PASS: changed IntPtr comparison code prevents source predicate interpretation
+PASS: a different cached native camera pointer is reported rather than forced equal
+PASS: null registered manager field remains explicit without initialization
+PASS: null registered camera field is not interpreted as Unity object-null semantics
+PASS: null cached native pointer yields no liveness or selection claim
+PASS: unknown controller types are not followed as the registered manager class
+PASS: unknown managed camera types are not dereferenced as Unity Camera
+PASS: active getter slots are audited while registered field links remain an inventory only
+PASS: changed controller/camera/native link clears all tentative observations: 1140850904
+PASS: changed controller/camera/native link clears all tentative observations: 1965031456
+PASS: changed controller/camera/native link clears all tentative observations: 1965035536
+PASS: controller field registration offset must match exact metadata/source
+PASS: managed camera parent chain must match metadata before reading Object cached pointer
+PASS: grouped controller class-header validation still enforces exact instance size
+PASS: changed grouped camera class header discards the tentative inventory and pose
+PASS: registered native reference is not compared against a missing original native selection
+PASS: aim snapshot requires exact-build roster prerequisites
+OBJECT_TOTAL=705 (synthetic exact-build objects, native head sample, match dictionary and state)
+PASS: comparison workflow accepts unchanged counter contract from V44
+PASS: comparison workflow accepts unchanged counter contract from V45
+PASS: comparison workflow accepts unchanged counter contract from V46
+PASS: comparison workflow accepts unchanged counter contract from V47
+PASS: comparison workflow accepts unchanged counter contract from V48
+PASS: comparison workflow accepts unchanged counter contract from V49
+PASS: comparison workflow accepts unchanged counter contract from V43
+PASS: comparison workflow accepts unchanged counter contract from V42
+PASS: comparison workflow accepts unchanged counter contract from V41
+PASS: comparison workflow accepts unchanged counter contract from V40
+PASS: comparison workflow accepts unchanged counter contract from V39
+PASS: comparison workflow accepts unchanged counter contract from V38
+PASS: comparison workflow accepts unchanged counter contract from V37
+PASS: comparison workflow accepts unchanged counter contract from V36
+PASS: comparison workflow accepts unchanged counter contract from V35
+PASS: comparison parser accepts the exact counter contract
+PASS: missing PluginUnload cannot establish an accepted comparison sample
+PASS: missing HandlerCleanup cannot establish an accepted comparison sample
+PASS: missing SharedSession cannot establish an accepted comparison sample
+PASS: missing WeaponAmmoField cannot establish an accepted comparison sample
+PASS: missing GameLayoutRegistration cannot establish an accepted comparison sample
+PASS: duplicate counter records are rejected
+PASS: invalid report contract is rejected: PhysicalReadCalls=30001
+PASS: invalid report contract is rejected: AdditionalPhysicalReads=6001
+PASS: invalid report contract is rejected: IsLocal=False
+PASS: invalid report contract is rejected: Scope=OTHER
+PASS: invalid report contract is rejected: Counter=2147483648
+PASS: matching one-shot/reload pattern remains empirical HUD correlation only
+PASS: a HUD mismatch cannot be accepted as magazine correlation
+PASS: changed GuestPid prevents combining captures
+PASS: changed Weapon prevents combining captures
+PASS: changed Player prevents combining captures
+PASS: changed FieldName prevents combining captures
+PASS: changed LoadBias prevents combining captures
+PASS: changed Device prevents combining captures
+PASS: unchanged counter after the reported shot remains inconclusive
+PASS: a reload without an increase remains inconclusive
+PASS: negative HUD input is rejected without reinterpreting sentinel values
+PASS: incomplete experiments cannot establish correlation
+COMPARISON_TOTAL=39
+PASS: manual camera correlation recognizes independent right and upward changes
+PASS: matching turns do not assert camera or shot convention
+PASS: yaw crossing plus/minus 180 wraps correctly
+PASS: absent reversed or excessive horizontal turn remains inconclusive: 0
+PASS: absent reversed or excessive horizontal turn remains inconclusive: -30
+PASS: absent reversed or excessive horizontal turn remains inconclusive: 100
+PASS: downward turn cannot satisfy upward instruction
+PASS: elevation drift during horizontal turn remains inconclusive
+PASS: yaw drift during upward turn remains inconclusive
+PASS: near-vertical captures avoid unstable yaw inference
+PASS: changed Version prevents combining camera captures
+PASS: changed Machine prevents combining camera captures
+PASS: changed HostPid prevents combining camera captures
+PASS: changed Device prevents combining camera captures
+PASS: changed GuestPid prevents combining camera captures
+PASS: changed BuildId prevents combining camera captures
+PASS: changed LoadBias prevents combining camera captures
+PASS: changed Player prevents combining camera captures
+PASS: changed Match prevents combining camera captures
+PASS: changed CurrentGame prevents combining camera captures
+PASS: accepted V36 report remains supported
+PASS: blank pasted-output lines do not invalidate accepted records
+PASS: V44 comparison input remains supported
+PASS: V45 comparison input remains supported
+PASS: V46 comparison input remains supported
+PASS: V47 comparison input remains supported
+PASS: V48 comparison input remains supported
+PASS: V49 comparison input remains supported
+PASS: V43 comparison input remains supported
+PASS: V42 comparison input remains supported
+PASS: V41 comparison input remains supported
+PASS: V40 comparison input remains supported
+PASS: V39 comparison input remains supported
+PASS: V37 comparison input remains supported
+PASS: global roster counter flags are retained with verified local membership: True,False
+PASS: global roster counter flags are retained with verified local membership: False,True
+PASS: global roster counter flags are retained with verified local membership: True,True
+PASS: local-only comparison audits global changes without claiming complete roster stability
+PASS: unverified selected membership still fails despite valid roster flags
+PASS: reject invalid camera report: Sampled=1
+PASS: reject invalid camera report: CountersChangedDuringCapture=False
+PASS: reject invalid camera report: IsLocal=True
+PASS: reject invalid camera report: AdditionalPhysicalReads=3407
+PASS: reject invalid camera report: PhysicalReadCalls=25377
+PASS: reject invalid camera report: PluginUnload=PASS
+PASS: reject invalid camera report: SharedSession=RELEASED
+PASS: reject invalid camera report: NormSquared=1
+PASS: reject invalid camera report: Basis X=0
+PASS: reject invalid camera report: W=1
+PASS: reject invalid camera report: Player=0x700010000000
+PASS: reject invalid camera report: GameMethodCalls=NONE
+PASS: duplicate version record is rejected
+PASS: missing basis record is rejected
+PASS: dot decimal report parsing is independent of host culture
+PASS: incomplete manual experiment cannot establish correlation
+AIM_COMPARISON_TOTAL=55
+PASS: negative reported right plus positive left is observed without flipping vectors or asserting camera convention
+PASS: opposite reported yaw-sign pattern is equally supported
+PASS: four-stage yaw experiment handles 180-degree wrap
+PASS: yaw sign inference refuses changed Version
+PASS: yaw sign inference refuses changed Machine
+PASS: yaw sign inference refuses changed HostPid
+PASS: yaw sign inference refuses changed Device
+PASS: yaw sign inference refuses changed GuestPid
+PASS: yaw sign inference refuses changed BuildId
+PASS: yaw sign inference refuses changed LoadBias
+PASS: yaw sign inference refuses changed Player
+PASS: yaw sign inference refuses changed Match
+PASS: yaw sign inference refuses changed CurrentGame
+PASS: yaw sign refuses small/large turn pair 0,-25
+PASS: yaw sign refuses small/large turn pair 100,-25
+PASS: yaw sign refuses small/large turn pair 30,0
+PASS: yaw sign refuses small/large turn pair 30,-100
+PASS: same-sign right/left reports remain inconclusive
+PASS: yaw sign remains unverified near vertical
+PASS: landmark yaw must return close to baseline
+PASS: landmark height must return close to baseline
+PASS: right turn vertical drift prevents yaw sign inference
+PASS: left turn vertical drift prevents yaw sign inference
+PASS: four-stage experiment audits global roster changes with selected local proof
+PASS: three captures cannot complete four-stage sign experiment
+PASS: reported up-positive/down-negative correlation preserves source vectors and unverified camera convention
+PASS: opposite vertical sign pattern is equally supported
+PASS: pitch experiment measures yaw drift correctly across 180-degree boundary
+PASS: pitch sign inference refuses changed Version
+PASS: pitch sign inference refuses changed Machine
+PASS: pitch sign inference refuses changed HostPid
+PASS: pitch sign inference refuses changed Device
+PASS: pitch sign inference refuses changed GuestPid
+PASS: pitch sign inference refuses changed BuildId
+PASS: pitch sign inference refuses changed LoadBias
+PASS: pitch sign inference refuses changed Player
+PASS: pitch sign inference refuses changed Match
+PASS: pitch sign inference refuses changed CurrentGame
+PASS: pitch sign refuses small/large tilt pair 0,-20
+PASS: pitch sign refuses small/large tilt pair 65,-20
+PASS: pitch sign refuses small/large tilt pair 20,0
+PASS: pitch sign refuses small/large tilt pair 20,-65
+PASS: same-sign up/down reports remain inconclusive
+PASS: near-vertical tilt cannot establish pitch sign
+PASS: pitch experiment requires landmark horizontal restoration
+PASS: pitch experiment requires landmark height restoration
+PASS: up tilt horizontal drift prevents pitch sign inference
+PASS: down tilt horizontal drift prevents pitch sign inference
+PASS: pitch experiment audits global changes with local membership proof
+PASS: three captures cannot complete pitch countertilt experiment
+PASS: wrapper performs three explicit manual stages and saves separate child reports plus comparison
+PASS: wrapper rejects helper checksum mismatch before any child capture
+PASS: manual cancellation launches no child capture
+PASS: child failure stops the experiment without saving a new successful comparison
+PASS: four-stage wrapper prompts baseline/right/restore/left and saves all reports plus observed sign
+PASS: pitch wrapper prompts baseline/up/restore/down and saves all reports plus observed vertical sign
+AIM_COMPARISON_WITH_RUNNER_TOTAL=111
+PASS: V50 comparison input remains supported
+PASS: V51 comparison input remains supported
+PASS: V52 comparison input remains supported
+PASS: native camera parser retains source pose, position and identity
+PASS: matching camera/aim quaternions have a near-zero angle metric only
+PASS: duplicate native rotation record is rejected
+PASS: native pose refuses malformed/unverified report: NativeTransform=0x71001000
+PASS: native pose refuses malformed/unverified report: Owner=0x71002001
+PASS: native pose refuses malformed/unverified report: LoadBias=0x3200008
+PASS: native pose refuses malformed/unverified report: PredicateRawByte=0
+PASS: native pose refuses malformed/unverified report: PredicateRawByte=256
+PASS: native pose refuses malformed/unverified report: ParentCount=32
+PASS: native pose refuses malformed/unverified report: NativeTransform=0x71003000 X=NaN
+PASS: native pose refuses malformed/unverified report: ChangedBasisX=
+PASS: native pose refuses malformed/unverified report: NormalizedByProbe=True
+PASS: native pose refuses malformed/unverified report: FunctionsInvoked=True
+PASS: native pose refuses malformed/unverified report: Status=FAIL
+PASS: native pose refuses malformed/unverified report: CompleteSourceSelection=False
+PASS: native pose refuses malformed/unverified report: ProcessMapVersion=45
+PASS: native pose refuses malformed/unverified report: SharedSession=LOCKED
+PASS: native pose refuses malformed/unverified report: BuildId=0000000000000000
+PASS: native basis must agree with camera quaternion, independently of aim basis
+PASS: reported native quaternion norm must match raw components
+PASS: q and minus-q compare as the same orientation while raw quaternion remains unchanged
+PASS: native pose parser retains V48 report compatibility without asserting game camera identity
+PASS: native pose parser retains V49 compatibility with separate controller inventory scope
+PASS: subdegree-sensitive angle metric uses floating-point Math overloads without integer rounding
+PASS: four fractional quaternion components contribute to a double-precision norm
+PASS: eight native camera captures correlate both reported horizontal and vertical turns
+PASS: manual pose correlation retains all captures and does not assert game camera or aim integration
+PASS: native camera turn evidence does not substitute an unchanged player aim quaternion
+PASS: native pose comparison refuses changed Version
+PASS: native pose comparison refuses changed Machine
+PASS: native pose comparison refuses changed HostPid
+PASS: native pose comparison refuses changed Device
+PASS: native pose comparison refuses changed GuestPid
+PASS: native pose comparison refuses changed BuildId
+PASS: native pose comparison refuses changed LoadBias
+PASS: native pose comparison refuses changed Player
+PASS: native pose comparison refuses changed Match
+PASS: native pose comparison refuses changed CurrentGame
+PASS: native pose comparison refuses changed NativeCamera
+PASS: native pose comparison refuses changed NativeOwner
+PASS: native pose comparison refuses changed NativeTransform
+PASS: native pose comparison refuses changed UnityLoadBias
+PASS: unrestored native baseline cannot complete the experiment
+PASS: unchanged native pose never establishes turn correlation
+PASS: seven reports cannot complete the eight-capture experiment
+PASS: manual pose wrapper runs eight explicit stages and saves source reports, hashes and native comparisons
+PASS: pose wrapper stops on CANCEL without publishing another comparison
+PASS: pose wrapper stops on FAIL without publishing another comparison
+PASS: pose wrapper stops on STALE without publishing another comparison
+PASS: pose wrapper stops on BAD without publishing another comparison
+PASS: pose helper checksum mismatch prevents any child capture
+CAMERA_POSE_COMPARISON_TOTAL=51
+PASS: native pose parser supports V50 without asserting game camera identity
+PASS: native pose parser supports V51 without asserting game camera identity
+PASS: V52 comparison input remains supported
+PASS: actual camera report renders after head status NOT_READY_MOTION under fr-FR and strict mode
+PASS: actual camera report renders after head status NOT_READY_READ_BUDGET under fr-FR and strict mode
+PASS: actual camera report renders after head status SAMPLED_READ_ONLY under fr-FR and strict mode
+PASS: missing camera components render NA without inventing values

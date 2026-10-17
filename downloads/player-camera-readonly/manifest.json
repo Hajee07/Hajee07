@@ -1,0 +1,72 @@
+{
+  "scope": "PLAYER_FIELD_POSE_ONLY_LIVE_RENDER_AND_AIM_UNVERIFIED",
+  "baseline_version": 52,
+  "baseline_archive_sha256": "9e4ce6fbebf42e5e8398cc1dc7deb6ff238aa7760a82cb3bc0ea712ee5ef3279",
+  "files": [
+    {
+      "name": "Build-Reference.py",
+      "bytes": 2278,
+      "sha256": "2aa91ed418aa76499110fb44c7022ef25512c8a5cde006daeb95188a0c4354d4"
+    },
+    {
+      "name": "PlayerCameraProbe.cs",
+      "bytes": 12756,
+      "sha256": "eee97a596c16f4f5731de460579bf468638bb5404b6e0085aa4c70821e23a826"
+    },
+    {
+      "name": "PlayerCameraReference.cs",
+      "bytes": 630,
+      "sha256": "22d369405a2a05070a73dbac5d8dc34bb230ba98fd27b2d7e8be9877ae9be9ca"
+    },
+    {
+      "name": "PlayerCameraTests.cs",
+      "bytes": 8983,
+      "sha256": "34e965f3d84e80466a45f3e925da82faac794d9e9f6d1ec3d3ee2b9b41a14be5"
+    },
+    {
+      "name": "README.md",
+      "bytes": 5816,
+      "sha256": "97d58a062a9c2d359974d30be5b3c9261143c83e892576b13305c170d724e71a"
+    },
+    {
+      "name": "Run-Checks.ps1",
+      "bytes": 1083,
+      "sha256": "39a8ba952d3d791e1b54bf6eb7b5987555dc44ec79739291a6a09c7efd6b884d"
+    },
+    {
+      "name": "Run-PlayerCamera.ps1",
+      "bytes": 26562,
+      "sha256": "4605015719ed1792f8d023ebe92f2c80ed24dc980d6409ff97079c8a8344d0bc"
+    },
+    {
+      "name": "Test-Rendering.ps1",
+      "bytes": 2098,
+      "sha256": "ae64dfe2d465af375eb16af776fe9324b794d2f032a979bdb790892be319da5d"
+    },
+    {
+      "name": "evidence/checks.txt",
+      "bytes": 1583,
+      "sha256": "b0907e06726745b915da5b42c9b9f05662771d825f9bcac6c55873bd837a51f9"
+    },
+    {
+      "name": "evidence/full-checks.txt",
+      "bytes": 74520,
+      "sha256": "7dfedc702e7c7c41c2777a52a5563ad937315516b650521c14f73cfd7814026e"
+    },
+    {
+      "name": "evidence/rendering.txt",
+      "bytes": 72,
+      "sha256": "4030aa7f8e764f57482ad2d88f1aac2c7507b49921a7e59e0572226dd7778596"
+    },
+    {
+      "name": "evidence/validation.json",
+      "bytes": 567,
+      "sha256": "d36a3f34bf648801ca9445b811f6b6482b8e32163fc67d0e9f28ea1a386be8f8"
+    },
+    {
+      "name": "reference.json",
+      "bytes": 568,
+      "sha256": "49d138c651b50edbaba3804c6879f45aa6c24c18148769422db98123a63445a2"
+    }
+  ]
+}

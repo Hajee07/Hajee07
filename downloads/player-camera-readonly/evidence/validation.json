@@ -1,0 +1,19 @@
+{
+  "scope": "OFFLINE_SYNTHETIC_MEMORY_ONLY",
+  "targeted_assertions": 24,
+  "inherited_pass_lines": 1028,
+  "renderer_cases": 2,
+  "reference_regeneration": "BYTE_IDENTICAL",
+  "stable_fixture_phase_reads": 2283,
+  "motion_recovery_fixture_reads": 4432,
+  "motion_recovery_attempts": 2,
+  "global_read_limit": 30000,
+  "global_time_limit_seconds": 120,
+  "phase_read_limit": 6000,
+  "per_attempt_read_limit": 4500,
+  "attempt_limit": 3,
+  "windows_execution": "NOT_TESTED",
+  "active_camera": "UNVERIFIED",
+  "game_functions_invoked": false,
+  "aim_writes": false
+}

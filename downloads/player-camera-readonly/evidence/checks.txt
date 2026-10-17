@@ -1,0 +1,27 @@
+PASS-PLAYER-CAMERA: verified field yields read-only pose
+PASS-PLAYER-CAMERA: rotated scaled hierarchy world position oracle
+PASS-PLAYER-CAMERA: parent rotation source math
+MEASURE PlayerCameraStableReads=2283
+PASS-PLAYER-CAMERA: phase and hierarchy bounds
+PASS-PLAYER-CAMERA: null field never yields a pose
+PASS-PLAYER-CAMERA: unresolved binding remains unknown
+PASS-PLAYER-CAMERA: pending job not synchronized or sampled
+PASS-PLAYER-CAMERA: wrong offset rejected
+PASS-PLAYER-CAMERA: wrong type descriptor rejected
+PASS-PLAYER-CAMERA: local context change rejected
+PASS-PLAYER-CAMERA: active original-path hotfix rejected
+PASS-PLAYER-CAMERA: wrong managed transform class rejected
+PASS-PLAYER-CAMERA: root backlink rejected
+PASS-PLAYER-CAMERA: hierarchy cycle rejected
+PASS-PLAYER-CAMERA: zero quaternion rejected
+PASS-PLAYER-CAMERA: invalid coordinate rejected
+PASS-PLAYER-CAMERA: no full-roster dependency or roster claim
+MEASURE MotionStatus=SAMPLED_READ_ONLY Attempts=2 Reads=4432 Detail= Y=204
+PASS-PLAYER-CAMERA: motion discards complete attempt and reacquires
+PASS-PLAYER-CAMERA: continuous motion stays unready within shared read/attempt bounds
+PASS-PLAYER-CAMERA: field pointer change on final recheck is fatal
+PASS-PLAYER-CAMERA: nested budget is respected without resetting counters
+PASS-PLAYER-CAMERA: transient job change discards and reacquires
+PASS-PLAYER-CAMERA: context identity failure wins over simultaneous retryable job change
+PASS-PLAYER-CAMERA: transport failure is fatal without retry or stale pose
+PlayerCameraChecks=PASS Assertions=24 LiveCamera=UNVERIFIED

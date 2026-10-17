@@ -1,0 +1,14 @@
+{
+  "package_sha256": "5282800306e5c80b346e0e9598b664e3587476c883abea6cb6c616ddde357356",
+  "extracted_extension_manifest_files": 13,
+  "unchanged_baseline_files": 124,
+  "extracted_camera_assertions": 24,
+  "inherited_suite_pass_lines": 1028,
+  "actual_renderer_cases": 2,
+  "runner_syntax": "PASS",
+  "authored_integrity_block": "PASS",
+  "modified_reference_fixture": "REJECTED",
+  "windows_live_execution": "NOT_RUN",
+  "game_functions_invoked": false,
+  "aim_writes": false
+}
