@@ -1,9 +1,18 @@
+## V46 camera world rotation diagnostic
+
+Run `Run-ProcessMap.ps1 -ProbeAimState` with Free Fire running and camera steady.
+V46 adds `CameraWorldRotation` for the selected original native camera's Transform
+intermediate, using the same checked TRS rows as position. Parent scale signs,
+source arithmetic, identity and final snapshot checks are retained. This is
+read-only; live V46 validation and actual game-camera identity are pending.
+See [rotation source evidence](CAMERA-ROTATION-EVIDENCE.md).
+
 ## V45 camera position diagnostic
 
 Run `Run-ProcessMap.ps1 -ProbeAimState` with Free Fire running and the camera
 steady. V45 adds `CameraWorldPosition` for the selected original native camera's
 Transform intermediate, with source, hierarchy, job and final snapshot checks.
-This package remains read-only. Live V45 Windows verification is pending.
+This package remains read-only. V45 live position sampling and cleanup passed.
 World rotation, actual game camera, LOS/eligibility and aim-update integration
 remain unverified. See [source evidence and remaining gates](CAMERA-POSITION-EVIDENCE.md).
 

@@ -1,3 +1,8 @@
+V46 adds source-checked original native camera world rotation and its mathematical
+positive-Z basis, without game calls, synchronization or writes. Live V46 and
+actual game-camera verification are pending. See
+[rotation evidence](bluestacks-process-map/CAMERA-ROTATION-EVIDENCE.md).
+
 V45 process-map package adds a source-checked, read-only world-position sample
 for the original Unity native camera selector's Transform intermediate.
 Live Windows V45 results, camera rotation/game getter identity, LOS/eligibility,

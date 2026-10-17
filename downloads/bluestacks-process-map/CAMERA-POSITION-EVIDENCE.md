@@ -1,7 +1,8 @@
 # V45 native camera Transform position
 
 V45 is a read-only diagnostic increment. It does not complete automatic aiming.
-Live Windows V45 validation is pending.
+Live Windows V45 position sampling and cleanup passed. See
+CAMERA-ROTATION-EVIDENCE.md for the accepted observation and V46 scope.
 
 ## Accepted V44 live result
 
@@ -41,8 +42,8 @@ managed camera identity, world rotation, projection, shot origin or shot directi
 
 ## Remaining completion gates
 
-1. Live V45 selected-native Transform/position validation, including stable
-   sample and cleanup on the user's Windows machine.
+1. V45 selected-native Transform/position validation and cleanup passed in the
+   supplied live capture. Broader movement/scene-change checks remain pending.
 2. Source-checked camera world rotation; manual pose correlation, including
    independent movement and rotation checks.
 3. Game camera getter hotfix/fallback selection and managed-wrapper identity;

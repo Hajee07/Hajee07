@@ -118,10 +118,33 @@ namespace HeadBridge.Mapping
             sample.CameraSelectionStatus="NOT_READY_TAG_NODE_LIMIT";
             if(sample.CameraCandidateObject==0)sample.CameraCandidateStatus="NOT_READY_TAG_NODE_LIMIT";
         }
+        private static uint FloatBits(float f){return BitConverter.ToUInt32(BitConverter.GetBytes(f),0);}
+        private static float FlipFloat(float f,uint mask){return BitConverter.ToSingle(BitConverter.GetBytes(FloatBits(f)^mask),0);}
+        private static double CameraQuaternionNorm(float[] q)
+        {
+            double norm=0;for(int i=0;i<4;i++){Expect(!float.IsNaN(q[i]) && !float.IsInfinity(q[i]),"finite camera rotation");norm+=(double)q[i]*q[i];}
+            Expect(norm>=0.98 && norm<=1.02,"camera rotation quaternion norm");return norm;
+        }
+        // Exact scalar lane order of 0x696610..0x696694, including sign bits
+        // of parent scale (also negative zero); no normalization or fused ops.
+        internal static float[] CameraParentRotation(float[] child,byte[] trs)
+        {
+            float[] p=NativeVector(trs,16,4),scale=NativeVector(trs,32,3);CameraQuaternionNorm(p);
+            uint sx=FloatBits(scale[0])&0x80000000U,sy=FloatBits(scale[1])&0x80000000U,sz=FloatBits(scale[2])&0x80000000U;
+            float a=FlipFloat(child[0],sy^sz),b=FlipFloat(child[1],sx^sz),c=FlipFloat(child[2],sx^sy),d=child[3];
+            float A=p[0],B=p[1],C=p[2],D=p[3];
+            float r0=B*a-D*c;r0=r0-C*d;r0=r0-A*b;
+            float r1=D*d-A*a;r1=r1-C*c;r1=r1-B*b;
+            float r2=C*b-B*c;r2=r2-D*a;r2=r2-A*d;
+            float r3=A*c-C*a;r3=r3-D*b;r3=r3-B*d;
+            return new float[]{FlipFloat(r2,0x80000000U),FlipFloat(r3,0x80000000U),FlipFloat(r0,0x80000000U),r1};
+        }
         // Only the native intermediate of Component.get_transform is evaluated.
-        // Managed wrapper resolution, game getter selection and rotation are not inferred.
+        // Managed wrapper resolution and game getter selection are not inferred.
+        // Position and rotation are evaluated from finally rechecked native TRS rows.
         private static void ReadCameraPosition(ObjectReads reads,PlayerStateObservation sample)
         {
+            sample.CameraRotationStatus="NOT_READY_CAMERA_POSITION";
             sample.CameraPositionStatus="NOT_READY_NATIVE_SELECTION";
             if(sample.CameraSelectionStatus!="ORIGINAL_UNITY_MAIN_SELECTED_READ_ONLY" || !sample.CameraSelectionComplete)return;
             ulong owner=sample.SelectedNativeCameraOwner;
@@ -141,7 +164,8 @@ namespace HeadBridge.Mapping
             Expect(capacity>0 && capacity<=65536 && index>=0 && (uint)index<capacity,"camera hierarchy capacity/index");
             ulong matrices=reads.Pointer(data+0x18,"camera TRS array"),parents=reads.Pointer(data+0x20,"camera parent indices"),links=reads.Pointer(data+0x30,"camera Transform backlinks");
             NativeAnchors(reads,sample.CameraUnityLoadBias,NativeTransformReference.UnityAnchors);
-            var visited=new System.Collections.Generic.HashSet<int>();float[] position=null;ulong expected=native;
+            NativeAnchors(reads,sample.CameraUnityLoadBias,NativeTransformReference.CameraRotationAnchors);
+            var visited=new System.Collections.Generic.HashSet<int>();float[] position=null,rotation=null;ulong expected=native;
             for(int depth=0;depth<32;depth++)
             {
                 Expect(index>=0 && (uint)index<capacity && visited.Add(index),"camera parent bounds/cycle");
@@ -150,6 +174,7 @@ namespace HeadBridge.Mapping
                 byte[] trs=reads.Read(checked(matrices+(ulong)index*48),48,"Camera.SelectedTRS"+depth);
                 NativeVector(trs,0,3);NativeVector(trs,16,4);NativeVector(trs,32,3);
                 position=depth==0?NativeVector(trs,0,3):NativeParentPosition(position,trs);
+                rotation=depth==0?NativeVector(trs,16,4):CameraParentRotation(rotation,trs);CameraQuaternionNorm(rotation);
                 for(int axis=0;axis<3;axis++)Expect(!float.IsNaN(position[axis]) && !float.IsInfinity(position[axis]) && Math.Abs(position[axis])<=10000000,"finite bounded camera world position");
                 int parent=unchecked((int)reads.Word(checked(parents+(ulong)index*4),"Camera.ParentIndex"));
                 expected=reads.Value(current+0x90,"Camera.ParentTransform");
@@ -157,7 +182,10 @@ namespace HeadBridge.Mapping
                 {
                     Expect(expected==0,"camera root parent backlink");sample.CameraNativeTransform=native;sample.CameraParentCount=depth;
                     sample.CameraWorldX=position[0];sample.CameraWorldY=position[1];sample.CameraWorldZ=position[2];
-                    sample.CameraPositionStatus="ORIGINAL_NATIVE_CAMERA_WORLD_POSITION_READ_ONLY";return;
+                    sample.CameraPositionStatus="ORIGINAL_NATIVE_CAMERA_WORLD_POSITION_READ_ONLY";
+                    sample.CameraQX=rotation[0];sample.CameraQY=rotation[1];sample.CameraQZ=rotation[2];sample.CameraQW=rotation[3];sample.CameraRotationNorm=CameraQuaternionNorm(rotation);
+                    float[] cameraBasis=PositiveZBasis(rotation[0],rotation[1],rotation[2],rotation[3]);sample.CameraBasisX=cameraBasis[0];sample.CameraBasisY=cameraBasis[1];sample.CameraBasisZ=cameraBasis[2];
+                    sample.CameraRotationStatus="ORIGINAL_NATIVE_CAMERA_WORLD_ROTATION_READ_ONLY";return;
                 }
                 Expect(parent>=0 && (uint)parent<capacity && expected!=0,"camera parent-index/object link");index=parent;
             }

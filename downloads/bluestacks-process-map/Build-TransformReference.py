@@ -53,11 +53,28 @@ predicate_rva=0x50700c;predicate_code=e.bytes(predicate_rva,16);words=struct.unp
 assert words[0]&0xffc003ff==0x39400008 and words[1:]==(0x7100011f,0x1a9f07e0,0xd65f03c0)
 predicate_offset=(words[0]>>10)&4095;assert predicate_offset==0x38
 predicate_anchors=[dict(name='native_camera_predicate',rva=predicate_rva,hex=predicate_code.hex())]
-report=dict(unity_sha256=sha,unity_build_id=note[16:].hex(),header_hex=header.hex(),programs_hex=programs.hex(),note_rva=0x308,note_hex=note.hex(),unity_anchors=anchors,camera_anchors=camera_anchors,camera_selector_anchors=selector_anchors,camera_predicate_anchors=predicate_anchors,camera_predicate_rva=predicate_rva,camera_predicate_byte_offset=predicate_offset,camera_tag_manager_cell=manager_cell,camera_type_descriptor=descriptor,camera_bindings=camera_bindings,il2cpp_anchors=ilanchors,coefficients=coefficients,bindings=[dict(cell=0xafb9e00,target=0x45ea4c),dict(cell=0xafb9e10,target=0x45ec64)],scope='Exact resolved icall binding and bounded sampled local-head native hierarchy; no game calls or writes.')
+# Named rotation registration and complete world-rotation implementation.
+rotation_stub=0x46ea34;rotation_string=0x16252a;rotation_target=0x45ee7c
+rw=struct.unpack('<5I',e.bytes(rotation_stub,20))
+assert pair(adrp(rw[0],rotation_stub),rw[2])==rotation_string
+assert pair(adrp(rw[1],rotation_stub+4),rw[3])==rotation_target
+rotation_name=b'UnityEngine.Transform::get_rotation_Injected\0'
+assert e.bytes(rotation_string,len(rotation_name))==rotation_name
+# Exact direct-call chain to hierarchy access and quaternion routine.
+def bl(at):
+ w=struct.unpack('<I',e.bytes(at,4))[0];assert w&0xfc000000==0x94000000
+ imm=w&0x3ffffff;imm-=(1<<26) if imm&(1<<25) else 0
+ return at+imm*4
+assert bl(0x45ef0c)==0x6965d8 and bl(0x6965dc)==0x69304c
+assert e.bytes(0x1847a0,16).hex()=='00000080000000000000008000000080'
+rotation_anchors=[]
+for nm,rv,sz in [('rotation_registration',rotation_stub,20),('rotation_icall_name',rotation_string,len(rotation_name)),('rotation_icall',rotation_target,0x108),('world_rotation',0x6965d8,0xd8),('rotation_sign_mask',0x1847a0,16)]:
+ for off in range(0,sz,64):rotation_anchors.append(dict(name=nm+'_'+str(off),rva=rv+off,hex=e.bytes(rv+off,min(64,sz-off)).hex()))
+report=dict(unity_sha256=sha,unity_build_id=note[16:].hex(),header_hex=header.hex(),programs_hex=programs.hex(),note_rva=0x308,note_hex=note.hex(),unity_anchors=anchors,camera_anchors=camera_anchors,camera_selector_anchors=selector_anchors,camera_rotation_anchors=rotation_anchors,camera_predicate_anchors=predicate_anchors,camera_predicate_rva=predicate_rva,camera_predicate_byte_offset=predicate_offset,camera_tag_manager_cell=manager_cell,camera_type_descriptor=descriptor,camera_bindings=camera_bindings,il2cpp_anchors=ilanchors,coefficients=coefficients,bindings=[dict(cell=0xafb9e00,target=0x45ea4c),dict(cell=0xafb9e10,target=0x45ec64)],scope='Exact resolved icall binding and bounded sampled local-head native hierarchy; no game calls or writes.')
 out=Path(a.output_directory);out.mkdir(parents=True,exist_ok=True);(out/'transform-reference.json').write_text(json.dumps(report,indent=2)+'\n')
 lines=['// Generated from exact SHA-256-verified Unity/IL2CPP ELF inputs.','namespace HeadBridge.Mapping {','    internal static class NativeTransformReference {']
 for name,val in [('FileSha256',sha),('BuildId',report['unity_build_id']),('HeaderHex',header.hex()),('ProgramsHex',programs.hex()),('NoteHex',note.hex())]:lines.append('        internal const string %s = %s;'%(name,json.dumps(val)))
-for label,items in [('UnityAnchors',anchors),('CameraAnchors',camera_anchors),('CameraSelectorAnchors',selector_anchors),('CameraPredicateAnchors',predicate_anchors),('Il2CppAnchors',ilanchors)]:
+for label,items in [('UnityAnchors',anchors),('CameraAnchors',camera_anchors),('CameraSelectorAnchors',selector_anchors),('CameraPredicateAnchors',predicate_anchors),('CameraRotationAnchors',rotation_anchors),('Il2CppAnchors',ilanchors)]:
  lines.append('        internal static readonly GameLayoutCheck[] %s = new GameLayoutCheck[] {'%label)
  for x in items:lines.append('            new GameLayoutCheck(%s, 0x%xUL, %s),'%(json.dumps(x['name']),x['rva'],json.dumps(x['hex'])))
  lines.append('        };')

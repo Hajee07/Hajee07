@@ -69,6 +69,20 @@ namespace HeadBridge.Mapping {
         internal static readonly GameLayoutCheck[] CameraPredicateAnchors = new GameLayoutCheck[] {
             new GameLayoutCheck("native_camera_predicate", 0x50700cUL, "08e040391f010071e0079f1ac0035fd6"),
         };
+        internal static readonly GameLayoutCheck[] CameraRotationAnchors = new GameLayoutCheck[] {
+            new GameLayoutCheck("rotation_registration_0", 0x46ea34UL, "a0e7ff9081ffff9000a8149121f039914f8e0a14"),
+            new GameLayoutCheck("rotation_icall_name_0", 0x16252aUL, "556e697479456e67696e652e5472616e73666f726d3a3a6765745f726f746174696f6e5f496e6a656374656400"),
+            new GameLayoutCheck("rotation_icall_0", 0x45ee7cUL, "ff4301d1fe5703a9f44f04a9157d00b0b56243f9f30301aaf40300aae1030091a80240f9e0031faae2031faaffff01a9ff0300f900013fd6a80240f9e1a30091"),
+            new GameLayoutCheck("rotation_icall_64", 0x45eebcUL, "e0031faae20314aaff0700f9ff43003900013fd6e21740f9a80240f9e1a30091e0031faaff1700f900013fd6e21740f9a80240f9e1030091e0031faa00013fd6"),
+            new GameLayoutCheck("rotation_icall_128", 0x45eefcUL, "e843403948010034e00740f9e00100b4b3dd08946006002d620e012df44f44a9fe5743a9ff430191c0035fd6e00340f9400000b428020b9428008052e00700f9"),
+            new GameLayoutCheck("rotation_icall_192", 0x45ef3cUL, "e843003960feffb5a80240f9e1a30091e20314aa00013fd6e01740f9f1000b94a80240f9e20300aaf30301aae1630091e0031faa00013fd6e00f40f9e10313aa"),
+            new GameLayoutCheck("rotation_icall_256", 0x45ef7cUL, "f31300f968ff0a94"),
+            new GameLayoutCheck("world_rotation_0", 0x6965d8UL, "fe0f1ff89cf2ff9708a441a92b7c40920a0680526c210a9b2b5961b88005c03d2b05f8376cd7ffd081e9c13d0264044f03f6034f6c21aa9b859140ad2b596bb8"),
+            new GameLayoutCheck("world_rotation_64", 0x696618UL, "841c224e841c236e9018844e105a844e8438844e8460046e84dc306ee41f1c4e841c224e801c206e0420006e1060046e8460106e1018804ea660056e1022006e"),
+            new GameLayoutCheck("world_rotation_128", 0x696658UL, "c6dc306e1008a04ea778854e1042006ee7dc306eb020056eb058904e04de246ea504084e0068804e84d4a64e84d4a74ea0dc206e80d4a04e001c216e0040006e"),
+            new GameLayoutCheck("world_rotation_192", 0x696698UL, "abfbff3601040c5e0204145e03041c5efe0741f8c0035fd6"),
+            new GameLayoutCheck("rotation_sign_mask_0", 0x1847a0UL, "00000080000000000000008000000080"),
+        };
         internal static readonly GameLayoutCheck[] Il2CppAnchors = new GameLayoutCheck[] {
             new GameLayoutCheck("get_position", 0x9ff5f40UL, "ffc300d1fe0b00f9f44f02a9347e0090880247f9f30300aaff0b00b9ff0300f9c80000b580cdfbf0000033910b7b0d94e80300aa800207f9e1030091e00313aa00013fd6e007402de20b40bdf44f42a9fe0b40f9ffc30091c0035fd6"),
             new GameLayoutCheck("get_position_injected", 0x9ff5f9cUL, "fe57bea9f44f01a9357e0090a20247f9f30301aaf40300aac20000b580cdfbf000003391f67a0d94e20300aaa00207f9e00314aae10313aaf44f41a9fe57c2a840001fd6"),

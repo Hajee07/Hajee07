@@ -1084,3 +1084,11 @@ selected owner and source snapshot checks passed, 23561 total physical reads,
 all plugin/session cleanup PASS. V45 adds native Transform-intermediate world
 position sampling and requires a new Windows run. This does not validate the
 actual game camera, rotation, LOS, aim writes or end-to-end automatic aiming.
+
+
+## Accepted V45 / V46 preparation
+
+V45 live original-native camera position sampling and final checks passed,
+4550 phase reads / 24881 total, all cleanup PASS. V46 adds source-checked
+native camera rotation using the same TRS snapshot; live V46 validation remains
+pending. Actual game camera, LOS/eligibility and aim updates remain unverified.

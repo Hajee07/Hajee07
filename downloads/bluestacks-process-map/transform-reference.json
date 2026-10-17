@@ -281,6 +281,68 @@
       "hex": "c0035fd6"
     }
   ],
+  "camera_rotation_anchors": [
+    {
+      "name": "rotation_registration_0",
+      "rva": 4647476,
+      "hex": "a0e7ff9081ffff9000a8149121f039914f8e0a14"
+    },
+    {
+      "name": "rotation_icall_name_0",
+      "rva": 1451306,
+      "hex": "556e697479456e67696e652e5472616e73666f726d3a3a6765745f726f746174696f6e5f496e6a656374656400"
+    },
+    {
+      "name": "rotation_icall_0",
+      "rva": 4583036,
+      "hex": "ff4301d1fe5703a9f44f04a9157d00b0b56243f9f30301aaf40300aae1030091a80240f9e0031faae2031faaffff01a9ff0300f900013fd6a80240f9e1a30091"
+    },
+    {
+      "name": "rotation_icall_64",
+      "rva": 4583100,
+      "hex": "e0031faae20314aaff0700f9ff43003900013fd6e21740f9a80240f9e1a30091e0031faaff1700f900013fd6e21740f9a80240f9e1030091e0031faa00013fd6"
+    },
+    {
+      "name": "rotation_icall_128",
+      "rva": 4583164,
+      "hex": "e843403948010034e00740f9e00100b4b3dd08946006002d620e012df44f44a9fe5743a9ff430191c0035fd6e00340f9400000b428020b9428008052e00700f9"
+    },
+    {
+      "name": "rotation_icall_192",
+      "rva": 4583228,
+      "hex": "e843003960feffb5a80240f9e1a30091e20314aa00013fd6e01740f9f1000b94a80240f9e20300aaf30301aae1630091e0031faa00013fd6e00f40f9e10313aa"
+    },
+    {
+      "name": "rotation_icall_256",
+      "rva": 4583292,
+      "hex": "f31300f968ff0a94"
+    },
+    {
+      "name": "world_rotation_0",
+      "rva": 6907352,
+      "hex": "fe0f1ff89cf2ff9708a441a92b7c40920a0680526c210a9b2b5961b88005c03d2b05f8376cd7ffd081e9c13d0264044f03f6034f6c21aa9b859140ad2b596bb8"
+    },
+    {
+      "name": "world_rotation_64",
+      "rva": 6907416,
+      "hex": "841c224e841c236e9018844e105a844e8438844e8460046e84dc306ee41f1c4e841c224e801c206e0420006e1060046e8460106e1018804ea660056e1022006e"
+    },
+    {
+      "name": "world_rotation_128",
+      "rva": 6907480,
+      "hex": "c6dc306e1008a04ea778854e1042006ee7dc306eb020056eb058904e04de246ea504084e0068804e84d4a64e84d4a74ea0dc206e80d4a04e001c216e0040006e"
+    },
+    {
+      "name": "world_rotation_192",
+      "rva": 6907544,
+      "hex": "abfbff3601040c5e0204145e03041c5efe0741f8c0035fd6"
+    },
+    {
+      "name": "rotation_sign_mask_0",
+      "rva": 1591200,
+      "hex": "00000080000000000000008000000080"
+    }
+  ],
   "camera_predicate_anchors": [
     {
       "name": "native_camera_predicate",

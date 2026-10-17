@@ -16,7 +16,7 @@ function Read-AimNumber {
 }
 function ConvertFrom-AimBasisReport {
     param([Parameter(Mandatory=$true)][AllowEmptyString()][string[]]$Lines)
-    $version=Match-AimReportLine $Lines 'ProcessMapVersion' '^ProcessMapVersion=(36|37|38|39|40|41|42|43|44|45) ReadOnly=1$'
+    $version=Match-AimReportLine $Lines 'ProcessMapVersion' '^ProcessMapVersion=(36|37|38|39|40|41|42|43|44|45|46) ReadOnly=1$'
     $hostInfo=Match-AimReportLine $Lines 'Preflight' '^Preflight=PASS Machine=(\S+) HostPID=([1-9][0-9]*) VmmDigest=MATCH$'
     $deviceInfo=Match-AimReportLine $Lines 'SelectedDevice' '^SelectedDevice=(\S+) State=device$'
     $gameInfo=Match-AimReportLine $Lines 'GameIdentity' '^GameIdentity=PASS GuestPID=([1-9][0-9]*) Name=(?:com)?\.dts\.freefireth$'
