@@ -1,0 +1,63 @@
+{
+  "scope": "OWNED_LOCAL_GAME_AND_SERVER_ONLY",
+  "sdk": "8.0.426",
+  "runtime": "8.0.32",
+  "host": "Linux x64",
+  "build": "PASS_ZERO_WARNINGS",
+  "automated_checks": 86,
+  "real_http_modes": [
+    "geometric",
+    "convert",
+    "convert_wall"
+  ],
+  "separate_process_experiments": {
+    "geometric": {
+      "shots": 6,
+      "accepted": 6,
+      "geometricAgreementWithAnalyticCenter": 6,
+      "serverPolicyAgreement": 6,
+      "claimDisagreements": 5,
+      "outcomes": {
+        "SERVER_VALIDATED": 6
+      },
+      "rttMedianMs": 46.388400000000004,
+      "rttP95Ms": 116.9947,
+      "sampleCount": 6
+    },
+    "converted": {
+      "shots": 6,
+      "accepted": 6,
+      "geometricAgreementWithAnalyticCenter": 6,
+      "serverPolicyAgreement": 6,
+      "claimDisagreements": 5,
+      "outcomes": {
+        "SERVER_VALIDATED": 6
+      },
+      "rttMedianMs": 45.29325,
+      "rttP95Ms": 101.2474,
+      "sampleCount": 6
+    },
+    "wall": {
+      "shots": 6,
+      "accepted": 0,
+      "geometricAgreementWithAnalyticCenter": 0,
+      "serverPolicyAgreement": 0,
+      "claimDisagreements": 0,
+      "outcomes": {
+        "OCCLUDED": 6
+      },
+      "rttMedianMs": 46.14105,
+      "rttP95Ms": 154.2306,
+      "sampleCount": 6
+    }
+  },
+  "v48_source_commit": "b09fbf00cfd4461b1fd4b8700bf284060b0355b2",
+  "v48_source_files_reviewed": 115,
+  "v48_csharp_compile": "PASS_ZERO_WARNINGS",
+  "v48_native_execution": "NOT_RUN",
+  "windows_execution": "NOT_RUN",
+  "browser_visual_clicks": "NOT_RUN",
+  "freefire_max_compatibility": "UNESTABLISHED",
+  "freefire_server_acceptance": "NOT_TESTED",
+  "commercial_game_writes": false
+}

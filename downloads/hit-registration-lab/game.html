@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Owned Hit Registration Lab</title>
+<style>body{font:16px system-ui;background:#121827;color:#e7edf7;max-width:900px;margin:24px auto}canvas{background:#202c40;border:1px solid #64748b;max-width:100%;cursor:crosshair}button{padding:10px}pre{white-space:pre-wrap}small{color:#b7c3d4}</style>
+<h1>Owned Hit Registration Lab</h1><p>Click a colored sphere to submit a shot intent. The server recomputes the collision and decides the awarded region.</p>
+<canvas id="view" width="800" height="500"></canvas><p><button id="newSession">New session</button> <label>Client claim <select id="claim"><option>Head</option><option>Chest</option><option>Shoulder</option><option>Stomach</option><option>Arm</option><option>Leg</option></select></label></p>
+<small>Static sphere mannequin; perspective visualization is approximate. Hit testing and wall occlusion run on the server. This game has no Free Fire connection.</small><pre id="result">Loading...</pre>
+<script>
+const canvas=document.getElementById('view'),g=canvas.getContext('2d'),out=document.getElementById('result');let scene,session,sequence=0,busy=false;
+async function json(url,body){let response=await fetch(url,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(!response.ok)throw Error(await response.text());return response.json()}
+async function start(){session=(await json('/session',{})).session;sequence=0;out.textContent='Session ready. Click a sphere.'}
+function draw(){g.clearRect(0,0,800,500);g.font='15px system-ui';scene.boxes.forEach((b,i)=>{let d=b.center.z-scene.origin.z,x=400+700*(b.center.x-scene.origin.x)/d,y=250-700*(b.center.y-scene.origin.y)/d;g.fillStyle=['#fbbf24','#60a5fa','#a78bfa','#34d399','#fb7185','#f472b6'][i];g.beginPath();g.arc(x,y,700*b.radius/d,0,Math.PI*2);g.fill();g.fillText(b.region,x+25,y)});if(scene.wall){g.fillStyle='#ffffff44';g.fillRect(0,0,800,500);g.fillStyle='white';g.fillText('SERVER WALL BLOCKS SHOTS',20,30)}}
+canvas.onclick=async e=>{if(busy||!scene||!session)return;busy=true;try{let r=canvas.getBoundingClientRect(),x=(e.clientX-r.left)*800/r.width,y=(e.clientY-r.top)*500/r.height;let start=performance.now();let receipt=await json('/shot',{session,sequence:++sequence,direction:{x:(x-400)/700,y:-(y-250)/700,z:1},claimedRegion:document.getElementById('claim').value});out.textContent=JSON.stringify({receipt,rttMs:performance.now()-start},null,2)}catch(e){out.textContent=e.message}finally{busy=false}};
+document.getElementById('newSession').onclick=()=>start().catch(e=>out.textContent=e.message);
+(async()=>{scene=await json('/scene');draw();await start()})().catch(e=>out.textContent=e.message);
+</script></html>

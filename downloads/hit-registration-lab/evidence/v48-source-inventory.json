@@ -1,0 +1,466 @@
+{
+  "commit": "b09fbf00cfd4461b1fd4b8700bf284060b0355b2",
+  "scope": "STATIC_SOURCE_REVIEW_NO_VM_ACCESS",
+  "files": [
+    {
+      "path": "downloads/bluestacks-native-bridge/ABI-EVIDENCE.md",
+      "sha256": "d5c33529bb486869e5496eafc3813b43eb72fb9f435048e8dcaf986fcec12b29"
+    },
+    {
+      "path": "downloads/bluestacks-native-bridge/Export-KernelCandidate.ps1",
+      "sha256": "99ca4bba22c1cfc66111aa6baa265347306e39d4c12fe4dc9460a435fd013b76"
+    },
+    {
+      "path": "downloads/bluestacks-native-bridge/Get-GuestMappingContext.ps1",
+      "sha256": "f42135e281020d4d867953719093d13daa52d945ab3845eda83f5411d1cc6088"
+    },
+    {
+      "path": "downloads/bluestacks-native-bridge/README.md",
+      "sha256": "9cd6c200ea1c6bca01dfdbbf069f7df4434006f04a29b27a2ed763026ac75644"
+    },
+    {
+      "path": "downloads/bluestacks-native-bridge/RUNTIME-RESULTS.md",
+      "sha256": "52bf415ea05d2aabd956513064e5532f30618750f4deb5d7c3c1e20aeafb4d6f"
+    },
+    {
+      "path": "downloads/bluestacks-native-bridge/Run-BridgeProbe.ps1",
+      "sha256": "9004e09f935e832501f58ca0d76a1a80e469cc458e5256927be96abed368969e"
+    },
+    {
+      "path": "downloads/bluestacks-native-bridge/bridge.cpp",
+      "sha256": "008608c70e90b897773e3097afdf4be13b4079ff978e972602959ec9e949c24f"
+    },
+    {
+      "path": "downloads/bluestacks-native-bridge/bridge.hpp",
+      "sha256": "b6e82e116ba12eda7724fd0a7a982678bab7e18d781a8d99d6fcbc562e70f78a"
+    },
+    {
+      "path": "downloads/bluestacks-native-bridge/manifest.json",
+      "sha256": "714a830abf1fd4dedfcc9a0dc1793d0fb6898576b823f0c77656d7accb5fd218"
+    },
+    {
+      "path": "downloads/bluestacks-native-bridge/plugin.cpp",
+      "sha256": "23ff40ded160fd31d2cf1891f63ea5b7ef806562cf26a6d5cafc2a9edec10217"
+    },
+    {
+      "path": "downloads/bluestacks-native-bridge/tests.cpp",
+      "sha256": "320bb491ccb31257ffe6e36dda71e1f0d2fc13b4a3f73d528c66437d8e2fd269"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/AIM-BASIS-COMPARISON-EVIDENCE.md",
+      "sha256": "39ef4b6603d5d70daa80ce02ee9127759c7ce0cb0b202f15635c39e99a0aba80"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/AIM-STATE-EVIDENCE.md",
+      "sha256": "79c4c7c3f626ca72dcc71ba6a24edff1e01f5a81f031623446d4b3e9b3dc8513"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/AMMO-COMPARISON-EVIDENCE.md",
+      "sha256": "346cd3e2a895b72718d81c6ed16787d6ffedab318093aafd6a5923a4f3a2c304"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/AimBasisCheck.ps1",
+      "sha256": "b0230e6e7e2c9614c4ad0d68ccbf5bfda856dbf5b664d232afb4d96d51fce075"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/AimStateProbe.cs",
+      "sha256": "77885ed30f7b9850a0cfab0415d76401827bb1b3d7cce93aca8c291054137779"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/AimStateReference.cs",
+      "sha256": "e0d7ee239e0ae5b75b8ff74ae8a7b14f76f17b3c8ddf0b1422f7fee067194e91"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/AimStateTests.cs",
+      "sha256": "022425fa3f6df5f1aa628fcc476f780ae9d48e3b3330ade7243a5bc57226c0f8"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/AmmoCounterCheck.ps1",
+      "sha256": "a39abd67b60815936e6108b1f8710e4ca492310b163f7a00c79f49d5f5253925"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CAMERA-BINDING-EVIDENCE.md",
+      "sha256": "31b7c0c5c6389f79db71cc4c63fdca9e61d3c89fa04ececbae6dad6d4ad7764d"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CAMERA-CANDIDATE-EVIDENCE.md",
+      "sha256": "a9fcbb01c9d74a93b3b51d5fc01874a69c3a9911eaac708948892500b26020f3"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CAMERA-NATIVE-CODE-EVIDENCE.md",
+      "sha256": "063933b69e6756b8a37b4d30684ca5e6822af657b44c86ce00d831d93fafa8c1"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CAMERA-PITCH-COMPARISON-EVIDENCE.md",
+      "sha256": "b3002bb4f3feb46128b1083cd763e32a8311db33514dde16af6062b251b5e6d9"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CAMERA-POSE-COMPARISON-EVIDENCE.md",
+      "sha256": "612e6a67493fbac685b317fdedeeba21c11e55570a608da2b15c77af34d4e6f6"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CAMERA-POSITION-EVIDENCE.md",
+      "sha256": "cb3460b9bd77d53860cd79aadaabcba0e9adc670ae766e68cba4122d35593430"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CAMERA-ROTATION-EVIDENCE.md",
+      "sha256": "509875656cb76b7a6ee799c3ba8c05dc8114cd163cbb0db0463d8e0221c3f582"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CAMERA-SELECTION-EVIDENCE.md",
+      "sha256": "b8853269a5a70c568e3b5f9cddf8054c743822bd0b8574d9099015c1e54d278f"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CAMERA-YAW-COMPARISON-EVIDENCE.md",
+      "sha256": "473d20093ce0a4a6a0c128c9d8a0a365e0698ae5013dcbd84ba424404342c3b2"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/COMBAT-STATE-EVIDENCE.md",
+      "sha256": "81d11d4c8e8ecdc37038652698bafc6c038c928eede8d65ed73c45a9aadeab69"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CameraPoseCheck.ps1",
+      "sha256": "af12695d77057bfe3a3c277a3763c2753248c002e7a0e75c69c71ac2f6764781"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CombatStateProbe.cs",
+      "sha256": "f5427ded3bf0cdeb956b7a29d58eedacb27cb6ddd1a5dd2d886771929528fc0a"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CombatStateReference.cs",
+      "sha256": "b74c8c0a2d20314e76e78656897edac58562d83b8ab65c6b25720e2a3ab8e251"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CombatStateTests.cs",
+      "sha256": "f604ac8a7fe6e57cba6b3cf3cec3817f2f3d246e1b7f0048f76d407405582a60"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/CoreTests.cs",
+      "sha256": "b29dc8f482c0bb90e9f204618da263717eed21d18de2a84912714b253d24294c"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/GAME-CAMERA-ENTRY-GATES-EVIDENCE.md",
+      "sha256": "ec07ffdb1d4282bbfcbc9bde4e42904bd5ea916ed11f1ac33644c7b3f9178aee"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/GAME-LAYOUT-EVIDENCE.md",
+      "sha256": "b9d3a219808fac0ddc1685e20031febdbf3218c55a471aad83a099fe4393033a"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/GameLayoutProbe.cs",
+      "sha256": "141da2ecc36d9a36481a29b7e567cf0067ae10f39e31c7120e2300e483988c45"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/GameLayoutReference.cs",
+      "sha256": "6c32ded45ab71f01b66378e46c89594a6028f677a641c44bb13e6df6f6d359c9"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/GameLayoutTests.cs",
+      "sha256": "adfc2eb35421198ff1050818500f112d9abf7803df8c5f0a241a08d4872aa437"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/GuestProcessMap.cs",
+      "sha256": "9315af3b246704d8dc79a98d02809c223a0a061427574315d82be1a1215a9d0f"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/HEAD-JOB-RETRY-EVIDENCE.md",
+      "sha256": "63217201514a1726bc2ec5a3d6aa6ea40806667452c6410061fbf53106d5308a"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/HeadCacheProbe.cs",
+      "sha256": "4fb26d17b878c5cf26c0e007aac2c650f89eed0b83a2b87e1266250a8fa43707"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/LAYOUT-EVIDENCE.md",
+      "sha256": "b2dd1ffe900ff3d0f13264fd2e813f47fa2570c9463cb899dd45535f8fc04cc3"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/MATCH-DAMAGE-EVIDENCE.md",
+      "sha256": "57368fa3b07767f482298916a7cf8ae702c4189db4583b50789ee13106ac5867"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/MODULE-EVIDENCE.md",
+      "sha256": "dce5d5c2abae460c940eb9200e7cb212c4483efb0f423290353c698034b9e1fa"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/MatchDamageProbe.cs",
+      "sha256": "44761c5c703d1557450804323f734faec284af9185e00a55a740255709fdfb82"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/MatchDamageReference.cs",
+      "sha256": "e89e616707ae0e1dcdb4ab39b7ea8b2fea3828921d1e6fda92514df1f7e7850f"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/MatchDamageTests.cs",
+      "sha256": "695e72cd1d2450d69a53a946b7e720311b349da797bd2373f17c769cc525a9a0"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/ModuleProbe.cs",
+      "sha256": "d3402347fa54c424cc0cdcc20f382974548d3b0814262ca8a2ecbc7789fa3777"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/ModuleReference.cs",
+      "sha256": "51c5e75cd461cd901499dcbac835fda8029b5b20881f5ce33d0e0d55e47ee0b8"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/ModuleTests.cs",
+      "sha256": "23b3447b9a7cbb1675f13e5ae0525ec584d3bd44fcad3a2edc2d2fddc81e4361"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/NativeJobRetryTests.cs",
+      "sha256": "4f77449ad581d0b575e13ffc5dbc518efd6c5b47f31cae3d4e590ac4a2bb875c"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/NativeTransformProbe.cs",
+      "sha256": "29baaa5637252096c3f0233c172d2025a68c2d2ee533af7ef770e4a04dc982ee"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/NativeTransformReference.cs",
+      "sha256": "9442c1af9cb5374a10a9fc6eedcbecb371492f3a3e60b4231fdc829eee79e53b"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/OBJECT-EVIDENCE.md",
+      "sha256": "d630b7b0a9200af26db910368a3888c209d210ecc8856639b5a053ff4d839edc"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/OTHER-HEAD-EVIDENCE.md",
+      "sha256": "cca8872af7be54e17799119e58f2025d0cdeb96898d484f637bfe907464d1f33"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/ObjectReference.cs",
+      "sha256": "ee9d25a1f06725cb8f33dd8dd29b596bffe86125c217a86b98b97d59b3991b7f"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/OtherHeadProbe.cs",
+      "sha256": "4858a35800cdd9cbaaeef1c5d34d2018f843657b5363e5a4fee7e6aaaa42feda"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/PLAYER-STATE-EVIDENCE.md",
+      "sha256": "bd5b28dcb2f6502170f6f0624ef2c784965ec4b65cf0e3ae445225354a284621"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/PLAYER-STATE-RESEARCH.md",
+      "sha256": "f155e2b45542e621d8dc72e81cb45eb127c8725cd91d455e13b3197a6d5e71ee"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/PlayerObjectProbe.cs",
+      "sha256": "326acf5eebb216a0d2d38373b2179de09c8ecaba9b2caba6e423063323165896"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/PlayerObjectTests.cs",
+      "sha256": "a44a4dbbc30555dcd1bbd4a1584f5ec5e02c84938873bd79c8387b96f0bfe04f"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/PlayerStateProbe.cs",
+      "sha256": "0ccb4c6ebe2e4b0797b12153a333c62acb39105338a903a3741b4f341871fcf7"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/PlayerStateReference.cs",
+      "sha256": "f7396a43e145e0f2dfb0111c7e41183b8bf17f65213ed3e0c0c0635f59875f32"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/PlayerStateTests.cs",
+      "sha256": "dc537043b9b3c885e72303fb555ed1f3f2880040af8750ca052fac409c2b2a04"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/README.md",
+      "sha256": "f3b682b0c0211f769d2f4d916ebe7f92eb3f4ebe78f6832fe525f2d8531d5347"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/ROSTER-EVIDENCE.md",
+      "sha256": "c249d250547cae4a045bc5f88510d3c846ed443397da066babf4a59e9318dc66"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/RosterProbe.cs",
+      "sha256": "39f56f1ba54b9285f85c7a37be6f2296a079deb99bea0f5c1461a3446d9c0f98"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/RosterReference.cs",
+      "sha256": "927e3ce5f5264c4b32d1cfdfd2071f8fb8f897ca368f8f67ad59d2fbf4cd4c5b"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/Run-AimBasisCheck.ps1",
+      "sha256": "03bfb934efcd1ada8515ab6849f8933aa274dedee5f7d0d2b413077cb6e8a3c8"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/Run-AmmoCounterCheck.ps1",
+      "sha256": "5e3255d2b9b4178fa5d9d013fb4d54ab2d59fd58d124c3ac13f43bf0ab72e9c4"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/Run-CameraPitchCheck.ps1",
+      "sha256": "0d0ca0981b4c94053fd600cf5633169c514784b54244b24d537abcd429afce18"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/Run-CameraPoseCheck.ps1",
+      "sha256": "f09d2895707dbbe1cb8b102fde1252927a1fa51881df5db533d889b2a6c07dcd"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/Run-CameraYawCheck.ps1",
+      "sha256": "55b2ba4589621d4acbca0850dcbd1530878a9bf7ddbd69a79f2109a24f522333"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/Run-CoreTests.ps1",
+      "sha256": "47f60d22e78d9ea706253ef280bad501da2c3eb4466119a2613c507959fbb096"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/Run-ProcessMap.ps1",
+      "sha256": "8d30bc743057e4203a69fc9a3385584a58982f20816a3eb4c97d42d0a4387818"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/TEAM-POLICY-EVIDENCE.md",
+      "sha256": "c9faa7dcf873554a6c6a3d3c6f7363255d80d4e5ec62881883334dc7e594915e"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/TRANSFORM-EVIDENCE.md",
+      "sha256": "13718e4b42c7d74c10940e0e9aaffa2da8eddf1822a7acbfc224fce4e0e706a1"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/TeamPolicyProbe.cs",
+      "sha256": "43e107122a8f46f1c32373ecbe06f90e556af42288468f7f3ac83e487b80d588"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/TeamPolicyReference.cs",
+      "sha256": "b4c087b65ca01f87eae7a137f2e8064769bb690e7a462a4dfa834dbc8b1cbb81"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/TeamPolicyTests.cs",
+      "sha256": "871c6c3e0962b28add1dedafeb772ed1c9027160a620615c0080768148bf0626"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/Test-AimBasisCheck.ps1",
+      "sha256": "b27db80f398694065540634d34db3f167beb3572596e57e56d87851694a59bd3"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/Test-AmmoCounterCheck.ps1",
+      "sha256": "e3818e69901ebb647551204f4cc36e33d88bcd194978437798b099b8facb9fa3"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/Test-CameraPoseCheck.ps1",
+      "sha256": "c75f040f69873d4216722fbfa8e5e7f4362d52b32372919348ada535c9d5f524"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WEAPON-AMMO-EVIDENCE.md",
+      "sha256": "99450ab0b289a92aed2fdc3a4a50e121b79584873393c5d3d6eedc2b0a345b2e"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WEAPON-CONTEXT-EVIDENCE.md",
+      "sha256": "a45282ec4901c108eb51294d1760d99d702f2c838da00d31a9100622b6b203dc"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WEAPON-FIRING-EVIDENCE.md",
+      "sha256": "a8b68f788624b6bd2bab35fedb793b316e95cdf6c0db070e9a94a909690d7ec7"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WeaponAmmoProbe.cs",
+      "sha256": "9bb5f44f57d6499c2b0897ce9b732db464e0915ae23b9f1f30da568da7fe2a7d"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WeaponAmmoReference.cs",
+      "sha256": "742089ac8b748c23f03b9981f98bc7b30a3b68a9afa0f3fab3f6d4f0b7972750"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WeaponAmmoTests.cs",
+      "sha256": "ffc2c25b755bae4fefacdc7c7a3e67111cc1536d99f5d63a51ff2f7c6729a178"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WeaponContextProbe.cs",
+      "sha256": "b51a24f50cbe8e6a498a4c7f7da1c132c7c4c22b31a07cb366c6d19682d488d0"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WeaponContextReference.cs",
+      "sha256": "58bdf041f7b2e71fc14134db0550b58b2817c85ae24961810487e8f3457a6f49"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WeaponContextTests.cs",
+      "sha256": "a4207b914b460cd221af03daec6a523b2bc4205902ead6c402a06909e18c7947"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WeaponFiringProbe.cs",
+      "sha256": "981c113ea56960dd995338ac13b8a03483fd9edecffcce43db38b009631f8187"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WeaponFiringReference.cs",
+      "sha256": "6f8c6e95a50817b9e1bc1ac1cb3d35cf95cf4759af77751f442487375adc183c"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/WeaponFiringTests.cs",
+      "sha256": "58cafe3c622bb70dbf78a9ae4b4c67ccca0a99b287aeae0c84da2b8684d1c700"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/ZONE-PROTECTION-EVIDENCE.md",
+      "sha256": "444db285c94689ef8dfce3696840ec48ceefd960e891337f4e579bc33d3a1d77"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/ZoneProtectionProbe.cs",
+      "sha256": "009b2230a2bc78dcf606f34e03547754b8e6a1a3114d148347d8ae4b1f847adf"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/ZoneProtectionReference.cs",
+      "sha256": "44d2b83342721207b8d9df36331561e498a096b22d19fee193f6eb4d7ee73d12"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/ZoneProtectionTests.cs",
+      "sha256": "1eddb439aefa58391b834525c935a761c90bedc5c30cbebba4d438c44b32ad85"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/aim-state-reference.json",
+      "sha256": "57e2ecc65b2bdd4014d3fed6ff956c43ad96aa7ffc5c6c3563b74f94d8370673"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/combat-state-reference.json",
+      "sha256": "4d588596f18c518084c867de212b0061245b4a53d9761d8057ddf482b10fe2d6"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/game-layout.json",
+      "sha256": "a0e9c7f9e664ac47b935ede7ed6eb65a0ef08febdcf884de540c91c4b1956b2b"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/manifest.json",
+      "sha256": "caa992332b68848cc61f869dbf008c79dc80cb9738778f3575cacd35aec9e6a9"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/match-damage-reference.json",
+      "sha256": "cf24410eeb6bcf499c50d107f4712e2ad76dcd54d1a60f97e9d9b79f7291b15b"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/object-reference.json",
+      "sha256": "862d68619c4cd54f34e67e6d4341fa42ccdadaa861c7b441cdfce53957e5e9d0"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/player-state-reference.json",
+      "sha256": "d5daf2b567fc09a7a78ce0b3643dac2dfff118b3e4561909f209eda98b8c2d9b"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/player-state-research.json",
+      "sha256": "cdf6e47136ae814477a4e46aa3980f36c7eeca100f87284db82f72bf7395d1a5"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/roster-reference.json",
+      "sha256": "183885eee3b3a5407f1ecfedcb7deeaf4c591722275624daef411773bc395945"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/team-policy-reference.json",
+      "sha256": "e961b44f5944ba63501a0d0b1b04e45751b8d7b6d34d3aaf6258b95b9667d96b"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/transform-reference.json",
+      "sha256": "642957daba7a6df5cccc080927bce8a66dfb89b1b7615953b5cbb622535156d6"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/weapon-ammo-reference.json",
+      "sha256": "d3af48c22add02ed680c0b093b7af3f9d46e35588b0d5a2e0a420caf0606de38"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/weapon-context-reference.json",
+      "sha256": "06a7444e34da51865f6d833f6c3f8e719479703ce68868da258d02d449306102"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/weapon-firing-reference.json",
+      "sha256": "b2ff27cc2d91378afa49a4c689afb293ab873916f1276c66af52d0d0695fa9dc"
+    },
+    {
+      "path": "downloads/bluestacks-process-map/zone-protection-reference.json",
+      "sha256": "0f712a84f02fe7028a00a9e305325c4aa083658ccb1802f03ee59b68ac17b78d"
+    }
+  ]
+}

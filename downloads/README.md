@@ -1,3 +1,9 @@
+## Owned hit-registration laboratory
+
+[Source and Windows instructions](hit-registration-lab/README.md) · [Standalone source + portable .NET 8 app ZIP](hit-registration-lab.zip) · [Feasibility and V48 audit](hit-registration-lab/FEASIBILITY.md) · [Validation](hit-registration-lab/validation.json)
+
+Independent local game/server with geometric or all-validated-hits-as-headshots policies. 86 automated checks and three separate-process HTTP experiments passed on Linux. Windows run and Free Fire MAX/server compatibility are unverified. No commercial-game adapter or writes. ZIP SHA-256: `39fc45ab3ef1bf125fb2101e7746935bb2742fa3fe22c34d681b52f48e55ec3f`.
+
 ## Single-capture Player.MainCameraTransform reader
 
 [Source and instructions](player-camera-readonly/README.md) ·

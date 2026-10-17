@@ -1,0 +1,90 @@
+PASS: analytic sphere entry distance
+PASS: range limit
+PASS: tangent contact
+PASS: origin inside volume
+PASS: geometric miss
+PASS: invalid ray bounds rejected
+PASS: nearest collider wins over head behind it
+PASS: known quaternion rotates forward to right
+PASS: invalid quaternion rejected
+PASS: ballistic zero-gravity time oracle
+PASS: gravity trajectory intersects independently placed falling target
+PASS: Geometric server collision/classification Head
+PASS: Geometric reports client claim discrepancy Head
+PASS: Geometric server collision/classification Chest
+PASS: Geometric reports client claim discrepancy Chest
+PASS: Geometric server collision/classification Shoulder
+PASS: Geometric reports client claim discrepancy Shoulder
+PASS: Geometric server collision/classification Stomach
+PASS: Geometric reports client claim discrepancy Stomach
+PASS: Geometric server collision/classification Arm
+PASS: Geometric reports client claim discrepancy Arm
+PASS: Geometric server collision/classification Leg
+PASS: Geometric reports client claim discrepancy Leg
+PASS: replayed sequence rejected
+PASS: conversion does not create a hit from miss
+PASS: nonfinite direction rejected
+PASS: zero direction rejected
+PASS: unissued session rejected
+PASS: AllValidatedHitsAreHeadshots server collision/classification Head
+PASS: AllValidatedHitsAreHeadshots reports client claim discrepancy Head
+PASS: AllValidatedHitsAreHeadshots server collision/classification Chest
+PASS: AllValidatedHitsAreHeadshots reports client claim discrepancy Chest
+PASS: AllValidatedHitsAreHeadshots server collision/classification Shoulder
+PASS: AllValidatedHitsAreHeadshots reports client claim discrepancy Shoulder
+PASS: AllValidatedHitsAreHeadshots server collision/classification Stomach
+PASS: AllValidatedHitsAreHeadshots reports client claim discrepancy Stomach
+PASS: AllValidatedHitsAreHeadshots server collision/classification Arm
+PASS: AllValidatedHitsAreHeadshots reports client claim discrepancy Arm
+PASS: AllValidatedHitsAreHeadshots server collision/classification Leg
+PASS: AllValidatedHitsAreHeadshots reports client claim discrepancy Leg
+PASS: replayed sequence rejected
+PASS: conversion does not create a hit from miss
+PASS: nonfinite direction rejected
+PASS: zero direction rejected
+PASS: unissued session rejected
+PASS: conversion cannot bypass wall
+PASS: transformed skeleton center used by server
+PASS: HTTP readiness request
+PASS: controlled game page served
+PASS: HTTP Geometric Wall=False Head
+PASS: HTTP Geometric Wall=False Chest
+PASS: HTTP Geometric Wall=False Shoulder
+PASS: HTTP Geometric Wall=False Stomach
+PASS: HTTP Geometric Wall=False Arm
+PASS: HTTP Geometric Wall=False Leg
+PASS: HTTP replay rejected
+PASS: malformed JSON rejected without server crash
+PASS: oversized request rejected
+PASS: server healthy after invalid input
+PASS: client writes six event experiment report
+MEASURE Policy=Geometric Wall=False Samples=6 RttMedianMs=59.824 RttMaxMs=102.498 InjectedServerDelayMs=10
+PASS: HTTP readiness request
+PASS: controlled game page served
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=False Head
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=False Chest
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=False Shoulder
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=False Stomach
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=False Arm
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=False Leg
+PASS: HTTP replay rejected
+PASS: malformed JSON rejected without server crash
+PASS: oversized request rejected
+PASS: server healthy after invalid input
+PASS: client writes six event experiment report
+MEASURE Policy=AllValidatedHitsAreHeadshots Wall=False Samples=6 RttMedianMs=56.356 RttMaxMs=63.501 InjectedServerDelayMs=10
+PASS: HTTP readiness request
+PASS: controlled game page served
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=True Head
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=True Chest
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=True Shoulder
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=True Stomach
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=True Arm
+PASS: HTTP AllValidatedHitsAreHeadshots Wall=True Leg
+PASS: HTTP replay rejected
+PASS: malformed JSON rejected without server crash
+PASS: oversized request rejected
+PASS: server healthy after invalid input
+PASS: client writes six event experiment report
+MEASURE Policy=AllValidatedHitsAreHeadshots Wall=True Samples=6 RttMedianMs=56.051 RttMaxMs=59.884 InjectedServerDelayMs=10
+TESTS=PASS Checks=86 Scope=OWNED_LOCAL_LAB WindowsExecution=NOT_TESTED FreeFireServerAcceptance=NOT_TESTED
