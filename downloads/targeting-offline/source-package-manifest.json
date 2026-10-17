@@ -1,0 +1,249 @@
+{
+  "scope": "OFFLINE_SOURCE_ONLY_LIVE_BINDING_UNBOUND",
+  "uploaded_zip_sha256": "1009161b6ad2ec55907ab8b9e019badc620a1eee2be031e037672d39f55ed421",
+  "mapping_reference_commit": "9d90f1c4bd28136240ced93a35be85d626f648c9",
+  "uploaded_precompiled_binaries_included": false,
+  "assertions_executed": 579,
+  "files": [
+    {
+      "name": "bluestacks-process-map/AimBasisCheck.ps1",
+      "bytes": 13543,
+      "sha256": "1ec0e989feac0df2d16e72e8a363e62499729b254c6a0acd650dffc0c884e10f"
+    },
+    {
+      "name": "bluestacks-process-map/AimStateProbe.cs",
+      "bytes": 27784,
+      "sha256": "e6644bf28ca61bb09d063b311efa72e3714a67964ca7e8d5ff6d56d822d739fb"
+    },
+    {
+      "name": "bluestacks-process-map/AimStateReference.cs",
+      "bytes": 13099,
+      "sha256": "3d8beb5bce7e2e16c073dfbc32a1c74d7b1fef49d4113ab5763ab4ecd1983c64"
+    },
+    {
+      "name": "bluestacks-process-map/CameraPoseCheck.ps1",
+      "bytes": 6523,
+      "sha256": "af12695d77057bfe3a3c277a3763c2753248c002e7a0e75c69c71ac2f6764781"
+    },
+    {
+      "name": "bluestacks-process-map/CombatStateProbe.cs",
+      "bytes": 13296,
+      "sha256": "f5427ded3bf0cdeb956b7a29d58eedacb27cb6ddd1a5dd2d886771929528fc0a"
+    },
+    {
+      "name": "bluestacks-process-map/CombatStateReference.cs",
+      "bytes": 26888,
+      "sha256": "b74c8c0a2d20314e76e78656897edac58562d83b8ab65c6b25720e2a3ab8e251"
+    },
+    {
+      "name": "bluestacks-process-map/GameLayoutProbe.cs",
+      "bytes": 10383,
+      "sha256": "141da2ecc36d9a36481a29b7e567cf0067ae10f39e31c7120e2300e483988c45"
+    },
+    {
+      "name": "bluestacks-process-map/GameLayoutReference.cs",
+      "bytes": 12028,
+      "sha256": "6c32ded45ab71f01b66378e46c89594a6028f677a641c44bb13e6df6f6d359c9"
+    },
+    {
+      "name": "bluestacks-process-map/GuestProcessMap.cs",
+      "bytes": 27321,
+      "sha256": "9315af3b246704d8dc79a98d02809c223a0a061427574315d82be1a1215a9d0f"
+    },
+    {
+      "name": "bluestacks-process-map/HeadCacheProbe.cs",
+      "bytes": 8807,
+      "sha256": "4fb26d17b878c5cf26c0e007aac2c650f89eed0b83a2b87e1266250a8fa43707"
+    },
+    {
+      "name": "bluestacks-process-map/MatchDamageProbe.cs",
+      "bytes": 10406,
+      "sha256": "44761c5c703d1557450804323f734faec284af9185e00a55a740255709fdfb82"
+    },
+    {
+      "name": "bluestacks-process-map/MatchDamageReference.cs",
+      "bytes": 7133,
+      "sha256": "e89e616707ae0e1dcdb4ab39b7ea8b2fea3828921d1e6fda92514df1f7e7850f"
+    },
+    {
+      "name": "bluestacks-process-map/ModuleProbe.cs",
+      "bytes": 10319,
+      "sha256": "d3402347fa54c424cc0cdcc20f382974548d3b0814262ca8a2ecbc7789fa3777"
+    },
+    {
+      "name": "bluestacks-process-map/ModuleReference.cs",
+      "bytes": 3767,
+      "sha256": "51c5e75cd461cd901499dcbac835fda8029b5b20881f5ce33d0e0d55e47ee0b8"
+    },
+    {
+      "name": "bluestacks-process-map/NativeTransformProbe.cs",
+      "bytes": 13258,
+      "sha256": "29baaa5637252096c3f0233c172d2025a68c2d2ee533af7ef770e4a04dc982ee"
+    },
+    {
+      "name": "bluestacks-process-map/NativeTransformReference.cs",
+      "bytes": 14225,
+      "sha256": "9442c1af9cb5374a10a9fc6eedcbecb371492f3a3e60b4231fdc829eee79e53b"
+    },
+    {
+      "name": "bluestacks-process-map/ObjectReference.cs",
+      "bytes": 45743,
+      "sha256": "ee9d25a1f06725cb8f33dd8dd29b596bffe86125c217a86b98b97d59b3991b7f"
+    },
+    {
+      "name": "bluestacks-process-map/OtherHeadProbe.cs",
+      "bytes": 13175,
+      "sha256": "4858a35800cdd9cbaaeef1c5d34d2018f843657b5363e5a4fee7e6aaaa42feda"
+    },
+    {
+      "name": "bluestacks-process-map/PlayerObjectProbe.cs",
+      "bytes": 23953,
+      "sha256": "5fb792859057fe762e6ac33711bf13350480f21e1832cededb0f8a2e4452d948"
+    },
+    {
+      "name": "bluestacks-process-map/PlayerStateProbe.cs",
+      "bytes": 23074,
+      "sha256": "dafdb31752b87ac7ae1c48c0afa0dccf825dd0883e911638fca94f560ab34edc"
+    },
+    {
+      "name": "bluestacks-process-map/PlayerStateReference.cs",
+      "bytes": 7231,
+      "sha256": "f7396a43e145e0f2dfb0111c7e41183b8bf17f65213ed3e0c0c0635f59875f32"
+    },
+    {
+      "name": "bluestacks-process-map/RosterProbe.cs",
+      "bytes": 11386,
+      "sha256": "39f56f1ba54b9285f85c7a37be6f2296a079deb99bea0f5c1461a3446d9c0f98"
+    },
+    {
+      "name": "bluestacks-process-map/RosterReference.cs",
+      "bytes": 3118,
+      "sha256": "927e3ce5f5264c4b32d1cfdfd2071f8fb8f897ca368f8f67ad59d2fbf4cd4c5b"
+    },
+    {
+      "name": "bluestacks-process-map/TeamPolicyProbe.cs",
+      "bytes": 19685,
+      "sha256": "43e107122a8f46f1c32373ecbe06f90e556af42288468f7f3ac83e487b80d588"
+    },
+    {
+      "name": "bluestacks-process-map/TeamPolicyReference.cs",
+      "bytes": 24198,
+      "sha256": "b4c087b65ca01f87eae7a137f2e8064769bb690e7a462a4dfa834dbc8b1cbb81"
+    },
+    {
+      "name": "bluestacks-process-map/WeaponAmmoProbe.cs",
+      "bytes": 4294,
+      "sha256": "9bb5f44f57d6499c2b0897ce9b732db464e0915ae23b9f1f30da568da7fe2a7d"
+    },
+    {
+      "name": "bluestacks-process-map/WeaponAmmoReference.cs",
+      "bytes": 6641,
+      "sha256": "742089ac8b748c23f03b9981f98bc7b30a3b68a9afa0f3fab3f6d4f0b7972750"
+    },
+    {
+      "name": "bluestacks-process-map/WeaponContextProbe.cs",
+      "bytes": 13597,
+      "sha256": "b51a24f50cbe8e6a498a4c7f7da1c132c7c4c22b31a07cb366c6d19682d488d0"
+    },
+    {
+      "name": "bluestacks-process-map/WeaponContextReference.cs",
+      "bytes": 89678,
+      "sha256": "58bdf041f7b2e71fc14134db0550b58b2817c85ae24961810487e8f3457a6f49"
+    },
+    {
+      "name": "bluestacks-process-map/WeaponFiringProbe.cs",
+      "bytes": 6554,
+      "sha256": "981c113ea56960dd995338ac13b8a03483fd9edecffcce43db38b009631f8187"
+    },
+    {
+      "name": "bluestacks-process-map/WeaponFiringReference.cs",
+      "bytes": 15020,
+      "sha256": "6f8c6e95a50817b9e1bc1ac1cb3d35cf95cf4759af77751f442487375adc183c"
+    },
+    {
+      "name": "bluestacks-process-map/ZoneProtectionProbe.cs",
+      "bytes": 13334,
+      "sha256": "009b2230a2bc78dcf606f34e03547754b8e6a1a3114d148347d8ae4b1f847adf"
+    },
+    {
+      "name": "bluestacks-process-map/ZoneProtectionReference.cs",
+      "bytes": 13076,
+      "sha256": "44d2b83342721207b8d9df36331561e498a096b22d19fee193f6eb4d7ee73d12"
+    },
+    {
+      "name": "targeting-offline/AdvancedController.cs",
+      "bytes": 10005,
+      "sha256": "53650d8f24e5bc25aeaf59d82e7bc8781c3013c50a5bec3730f1899ccb94877f"
+    },
+    {
+      "name": "targeting-offline/AdvancedTests.cs",
+      "bytes": 14224,
+      "sha256": "3b9f59249a1bc47a50d91f8c71a74c312489f998d1784fa34385b8018bf7c251"
+    },
+    {
+      "name": "targeting-offline/AimCoordinator.cs",
+      "bytes": 4171,
+      "sha256": "b6af31ef928177adf50241bc44cd16f8d9bcd2c3e446b0413f74958f3e625461"
+    },
+    {
+      "name": "targeting-offline/Assess-V52Binding.ps1",
+      "bytes": 2006,
+      "sha256": "b9cca4af291d63dd1b7e9c8e3873d2ec886db5e9f3d380c837fd1850cd3f683b"
+    },
+    {
+      "name": "targeting-offline/INTEGRATION.md",
+      "bytes": 3714,
+      "sha256": "82edbdd8545749f1a0156fad4182d1afa66cff89370b331a6ccd7bb8a098b8ae"
+    },
+    {
+      "name": "targeting-offline/MeshLineOfSight.cs",
+      "bytes": 7167,
+      "sha256": "e7db94f777727fb57215a760b2f5a36ce85222d76db6fdc0c3076b816a744b96"
+    },
+    {
+      "name": "targeting-offline/README.md",
+      "bytes": 4827,
+      "sha256": "db80eb234324fdd96c1690dda62784b0d34a9c5e983f71bbbc2f8e6eb1e92d53"
+    },
+    {
+      "name": "targeting-offline/Run-OfflineChecks.ps1",
+      "bytes": 1471,
+      "sha256": "692954372b512d2b4011112db4e80b5c014b991a3f8e3259cad25fd672ca347e"
+    },
+    {
+      "name": "targeting-offline/SimulationDemo.cs",
+      "bytes": 2554,
+      "sha256": "a08c477e8747ada80d3b8c97f76bc3f330fccc9f8f9acebb7cf083fde98aa48e"
+    },
+    {
+      "name": "targeting-offline/Targeting.cs",
+      "bytes": 7603,
+      "sha256": "4f8f49314efea728e9ce1a544adc3285d92d2e9faf3570b09f66865029a8d116"
+    },
+    {
+      "name": "targeting-offline/TargetingTests.cs",
+      "bytes": 3597,
+      "sha256": "2b4792ff5361ac3780e4c8981811f74d8ef81f3c4e5a54a448c398201883bf7f"
+    },
+    {
+      "name": "targeting-offline/TiltedGeometryTests.cs",
+      "bytes": 2184,
+      "sha256": "1052f523520a4e33c49e25b0a4c8c52de550d3b6ce13b6a3ccfd91db0b57a877"
+    },
+    {
+      "name": "targeting-offline/UPSTREAM-README.md",
+      "bytes": 5078,
+      "sha256": "ae98c13ee718a2102cb41afb6b9787b171919f652f078015268fddd3b66b8b44"
+    },
+    {
+      "name": "targeting-offline/v52-binding-assessment.json",
+      "bytes": 971,
+      "sha256": "4a61d3a0e18a38cdce17245a8e5cbde7d1e9b7af3b1832566e83ff31b0e5b864"
+    },
+    {
+      "name": "targeting-offline/validation.txt",
+      "bytes": 10099,
+      "sha256": "418f48daac40b71dc8b6012dce2d4afd34bc5b8cd638688d47c716175eddd1b0"
+    }
+  ]
+}

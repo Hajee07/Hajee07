@@ -1,0 +1,288 @@
+V52SourceCompile=PASS Scope=SOURCE_COMPATIBILITY_ONLY LiveBinding=UNBOUND
+PASS verified target accepted
+PASS wall blocks target
+PASS incomplete geometry fails closed
+PASS LOS snapshot mismatch
+PASS unknown life rejected
+PASS unknown hostility rejected
+PASS stale snapshot rejected
+PASS future snapshot rejected
+PASS disabled controller
+PASS replay rejected
+PASS outside angle rejected
+PASS outside distance rejected
+PASS duplicate identity rejected
+PASS deterministic tie break
+PASS distance tie break
+PASS nonfinite coordinate rejected
+PASS obstacle beyond target ignored
+PASS parallel segment outside wall clear
+PASS unit direction output
+PASS next frame updates automatically
+TOTAL 20 passed; synthetic geometry only; live integration NOT_TESTED
+PASS mesh blocks ray
+PASS mesh ray misses
+PASS mesh beyond endpoint ignored
+PASS two-sided triangle
+PASS complete empty mesh
+PASS incomplete mesh unknown
+PASS mesh rejects stale sequence
+PASS coplanar uncertainty
+PASS triangle work ceiling
+PASS BVH node ceiling
+PASS BVH prunes unrelated triangles
+PASS degenerate triangle rejected
+PASS mesh array defensive copy
+PASS advanced verified target
+PASS unknown camera rejected
+PASS unknown head rejected
+PASS unknown attackability rejected
+PASS unknown identity rejected
+PASS duplicate advanced identities
+PASS unknown LOS rejected
+PASS ray ceiling fails closed
+PASS LOS exception contained
+PASS post-LOS deadline enforced
+PASS post-LOS stale observation rejected
+PASS clock regression rejected
+PASS first observation confirmation
+PASS second observation confirms
+PASS advanced replay rejection
+PASS replay resets acquisition
+PASS disable resets acquisition
+PASS initial held target
+PASS hysteresis prevents small switch
+PASS large improvement switches target
+PASS held target LOS revalidated
+PASS angular rate limit
+PASS smoothed direction normalized
+PASS antiparallel direction stable
+PASS bound simulator receives command
+PASS command carries expiry and observation identity
+PASS disable revokes command
+PASS commit-time context rejection
+PASS authority time included in deadline
+PASS adapter rejection revokes
+PASS adapter fault contained
+PASS adapter fault remains latched
+PASS explicit adapter recovery
+PASS revocation failure reported
+PASS host rejects expiry at actual application
+PASS clock exception contained
+PASS clock regression between updates
+PASS session change requires new controller
+PASS future advanced observation rejected
+PASS stale advanced observation rejected
+PASS held target life revalidated
+PASS confirmation interrupted by unknown LOS
+PASS interrupted confirmation must restart
+PASS frame array defensive copy
+PASS empty target set
+PASS ray budget cannot exceed candidate budget
+PASS analytic rectangle oracle 0
+PASS analytic rectangle oracle 1
+PASS analytic rectangle oracle 2
+PASS analytic rectangle oracle 3
+PASS analytic rectangle oracle 4
+PASS analytic rectangle oracle 5
+PASS analytic rectangle oracle 6
+PASS analytic rectangle oracle 7
+PASS analytic rectangle oracle 8
+PASS analytic rectangle oracle 9
+PASS analytic rectangle oracle 10
+PASS analytic rectangle oracle 11
+PASS analytic rectangle oracle 12
+PASS analytic rectangle oracle 13
+PASS analytic rectangle oracle 14
+PASS analytic rectangle oracle 15
+PASS analytic rectangle oracle 16
+PASS analytic rectangle oracle 17
+PASS analytic rectangle oracle 18
+PASS analytic rectangle oracle 19
+PASS analytic rectangle oracle 20
+PASS analytic rectangle oracle 21
+PASS analytic rectangle oracle 22
+PASS analytic rectangle oracle 23
+PASS analytic rectangle oracle 24
+PASS analytic rectangle oracle 25
+PASS analytic rectangle oracle 26
+PASS analytic rectangle oracle 27
+PASS analytic rectangle oracle 28
+PASS analytic rectangle oracle 29
+PASS analytic rectangle oracle 30
+PASS analytic rectangle oracle 31
+PASS analytic rectangle oracle 32
+PASS analytic rectangle oracle 33
+PASS analytic rectangle oracle 34
+PASS analytic rectangle oracle 35
+PASS analytic rectangle oracle 36
+PASS analytic rectangle oracle 37
+PASS analytic rectangle oracle 38
+PASS analytic rectangle oracle 39
+PASS analytic rectangle oracle 40
+PASS analytic rectangle oracle 41
+PASS analytic rectangle oracle 42
+PASS analytic rectangle oracle 43
+PASS analytic rectangle oracle 44
+PASS analytic rectangle oracle 45
+PASS analytic rectangle oracle 46
+PASS analytic rectangle oracle 47
+PASS analytic rectangle oracle 48
+PASS analytic rectangle oracle 49
+PASS analytic rectangle oracle 50
+PASS analytic rectangle oracle 51
+PASS analytic rectangle oracle 52
+PASS analytic rectangle oracle 53
+PASS analytic rectangle oracle 54
+PASS analytic rectangle oracle 55
+PASS analytic rectangle oracle 56
+PASS analytic rectangle oracle 57
+PASS analytic rectangle oracle 58
+PASS analytic rectangle oracle 59
+PASS analytic rectangle oracle 60
+PASS analytic rectangle oracle 61
+PASS analytic rectangle oracle 62
+PASS analytic rectangle oracle 63
+PASS analytic rectangle oracle 64
+PASS analytic rectangle oracle 65
+PASS analytic rectangle oracle 66
+PASS analytic rectangle oracle 67
+PASS analytic rectangle oracle 68
+PASS analytic rectangle oracle 69
+PASS analytic rectangle oracle 70
+PASS analytic rectangle oracle 71
+PASS analytic rectangle oracle 72
+PASS analytic rectangle oracle 73
+PASS analytic rectangle oracle 74
+PASS analytic rectangle oracle 75
+PASS analytic rectangle oracle 76
+PASS analytic rectangle oracle 77
+PASS analytic rectangle oracle 78
+PASS analytic rectangle oracle 79
+PASS analytic rectangle oracle 80
+PASS analytic rectangle oracle 81
+PASS analytic rectangle oracle 82
+PASS analytic rectangle oracle 83
+PASS analytic rectangle oracle 84
+PASS analytic rectangle oracle 85
+PASS analytic rectangle oracle 86
+PASS analytic rectangle oracle 87
+PASS analytic rectangle oracle 88
+PASS analytic rectangle oracle 89
+PASS analytic rectangle oracle 90
+PASS analytic rectangle oracle 91
+PASS analytic rectangle oracle 92
+PASS analytic rectangle oracle 93
+PASS analytic rectangle oracle 94
+PASS analytic rectangle oracle 95
+PASS analytic rectangle oracle 96
+PASS analytic rectangle oracle 97
+PASS analytic rectangle oracle 98
+PASS analytic rectangle oracle 99
+PASS analytic rectangle oracle 100
+PASS analytic rectangle oracle 101
+PASS analytic rectangle oracle 102
+PASS analytic rectangle oracle 103
+PASS analytic rectangle oracle 104
+PASS analytic rectangle oracle 105
+PASS analytic rectangle oracle 106
+PASS analytic rectangle oracle 107
+PASS analytic rectangle oracle 108
+PASS analytic rectangle oracle 109
+PASS analytic rectangle oracle 110
+PASS analytic rectangle oracle 111
+PASS analytic rectangle oracle 112
+PASS analytic rectangle oracle 113
+PASS analytic rectangle oracle 114
+PASS analytic rectangle oracle 115
+PASS analytic rectangle oracle 116
+PASS analytic rectangle oracle 117
+PASS analytic rectangle oracle 118
+PASS analytic rectangle oracle 119
+PASS analytic rectangle oracle 120
+PASS analytic rectangle oracle 121
+PASS analytic rectangle oracle 122
+PASS analytic rectangle oracle 123
+PASS analytic rectangle oracle 124
+PASS analytic rectangle oracle 125
+PASS analytic rectangle oracle 126
+PASS analytic rectangle oracle 127
+PASS analytic rectangle oracle 128
+PASS analytic rectangle oracle 129
+PASS analytic rectangle oracle 130
+PASS analytic rectangle oracle 131
+PASS analytic rectangle oracle 132
+PASS analytic rectangle oracle 133
+PASS analytic rectangle oracle 134
+PASS analytic rectangle oracle 135
+PASS analytic rectangle oracle 136
+PASS analytic rectangle oracle 137
+PASS analytic rectangle oracle 138
+PASS analytic rectangle oracle 139
+PASS analytic rectangle oracle 140
+PASS analytic rectangle oracle 141
+PASS analytic rectangle oracle 142
+PASS analytic rectangle oracle 143
+PASS analytic rectangle oracle 144
+PASS analytic rectangle oracle 145
+PASS analytic rectangle oracle 146
+PASS analytic rectangle oracle 147
+PASS analytic rectangle oracle 148
+PASS analytic rectangle oracle 149
+PASS analytic rectangle oracle 150
+PASS analytic rectangle oracle 151
+PASS analytic rectangle oracle 152
+PASS analytic rectangle oracle 153
+PASS analytic rectangle oracle 154
+PASS analytic rectangle oracle 155
+PASS analytic rectangle oracle 156
+PASS analytic rectangle oracle 157
+PASS analytic rectangle oracle 158
+PASS analytic rectangle oracle 159
+PASS analytic rectangle oracle 160
+PASS analytic rectangle oracle 161
+PASS analytic rectangle oracle 162
+PASS analytic rectangle oracle 163
+PASS analytic rectangle oracle 164
+PASS analytic rectangle oracle 165
+PASS analytic rectangle oracle 166
+PASS analytic rectangle oracle 167
+PASS analytic rectangle oracle 168
+PASS analytic rectangle oracle 169
+PASS analytic rectangle oracle 170
+PASS analytic rectangle oracle 171
+PASS analytic rectangle oracle 172
+PASS analytic rectangle oracle 173
+PASS analytic rectangle oracle 174
+PASS analytic rectangle oracle 175
+PASS analytic rectangle oracle 176
+PASS analytic rectangle oracle 177
+PASS analytic rectangle oracle 178
+PASS analytic rectangle oracle 179
+PASS analytic rectangle oracle 180
+PASS analytic rectangle oracle 181
+PASS analytic rectangle oracle 182
+PASS analytic rectangle oracle 183
+PASS analytic rectangle oracle 184
+PASS analytic rectangle oracle 185
+PASS analytic rectangle oracle 186
+PASS analytic rectangle oracle 187
+PASS analytic rectangle oracle 188
+PASS analytic rectangle oracle 189
+PASS analytic rectangle oracle 190
+PASS analytic rectangle oracle 191
+PASS analytic rectangle oracle 192
+PASS analytic rectangle oracle 193
+PASS analytic rectangle oracle 194
+PASS analytic rectangle oracle 195
+PASS analytic rectangle oracle 196
+PASS analytic rectangle oracle 197
+PASS analytic rectangle oracle 198
+PASS analytic rectangle oracle 199
+ADVANCED TOTAL 259 assertions passed; synthetic only; live game integration NOT_TESTED
+TILTED TOTAL 300 assertions passed; independent synthetic rectangle coordinates, rotated and translated
+Frame 1: Acquiring; command=cleared
+Frame 2: Applied; command=simulated-target
+Frame 3: NoVisibleTarget; command=cleared
+SIMULATION PASS: acquire -> apply -> obstruction revokes -> disabled. Live game integration NOT_TESTED.
+OfflineChecks=PASS Assertions=579 GameCalls=NONE AimWrites=NONE LiveIntegration=NOT_TESTED

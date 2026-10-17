@@ -1,3 +1,5 @@
+The uploaded advanced targeting sources are now [reviewed as a separate offline module](targeting-offline/README.md): V52 source compile compatibility, 579 synthetic assertions and a source-rebuilt simulation passed. Live geometry, target proofs and game output remain unbound.
+
 The [physics-query follow-up](bluestacks-visibility-source-audit/README.md#follow-up-camera-mode-delegate-and-real-raycast-callers) identifies registered Player raycast call sites and distinguishes them from verified selected-head LOS. This remains offline source evidence; Windows runner V52 is unchanged.
 
 An [offline visibility source audit](bluestacks-visibility-source-audit/README.md) now documents model visibility versus unverified target-head LOS. The Windows diagnostic runner remains V52; this source-only step needs no fresh Windows capture.

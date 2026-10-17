@@ -1206,3 +1206,20 @@ The getter has a query/virtual-dispatch path and must not be substituted for a
 cached read-only boolean. No engine method was invoked and no runtime code or
 budgets were changed. V52 remains the latest Windows diagnostic. Full source,
 input hashes, parameter metadata and evidence appear in physics-callers.json.
+
+## Uploaded advanced targeting source review
+
+All 16 supplied manifest entries matched the uploaded V49-Targeting-Advanced.zip.
+The four runtime sources were reviewed, copied unchanged to targeting-offline,
+and compiled together with current V52 runtime C# sources in C# 5 with warnings
+as errors. Supplied 20 baseline + 259 advanced assertions and 300 new independent
+rotated/translated rectangle geometry cases passed. The source-rebuilt simulation
+acquired, applied a simulation command, revoked on obstruction and disabled.
+Uploaded DLL/EXE were not loaded or executed; no precompiled binaries are imported.
+
+A report-only binding assessment parsed the accepted V52 log but retained Unknown
+for active camera, coherent frame, target lifetime, complete combat eligibility
+and authoritative LOS; its output adapter is Unbound and LiveBindingReady=False.
+Removing PluginUnload evidence caused rejection. No optimistic proofs, live
+Frame/geometry adapter or game actuator were added. V52 runtime code and native
+plugin remain unchanged. This is source/offline validation, not live aim operation.
