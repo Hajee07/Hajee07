@@ -1,0 +1,116 @@
+{
+  "config": {
+    "policy": "Geometric",
+    "wall": false,
+    "delayMs": 0
+  },
+  "metrics": {
+    "shots": 6,
+    "accepted": 6,
+    "geometricAgreementWithAnalyticCenter": 6,
+    "serverPolicyAgreement": 6,
+    "claimDisagreements": 5,
+    "outcomes": {
+      "SERVER_VALIDATED": 6
+    },
+    "rttMedianMs": 46.388400000000004,
+    "rttP95Ms": 116.9947,
+    "sampleCount": 6
+  },
+  "scope": "OWNED_LOCAL_LAB_ONLY",
+  "utc": "2026-10-17T20:42:49.7841624+00:00",
+  "rows": [
+    {
+      "aimedAt": "Head",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": true,
+        "reason": "SERVER_VALIDATED",
+        "geometricRegion": "Head",
+        "awardedRegion": "Head",
+        "clientClaim": "Head",
+        "claimMatchesGeometry": true,
+        "damage": 100,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 116.9947
+    },
+    {
+      "aimedAt": "Chest",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": true,
+        "reason": "SERVER_VALIDATED",
+        "geometricRegion": "Chest",
+        "awardedRegion": "Chest",
+        "clientClaim": "Head",
+        "claimMatchesGeometry": false,
+        "damage": 25,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 45.6441
+    },
+    {
+      "aimedAt": "Shoulder",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": true,
+        "reason": "SERVER_VALIDATED",
+        "geometricRegion": "Shoulder",
+        "awardedRegion": "Shoulder",
+        "clientClaim": "Head",
+        "claimMatchesGeometry": false,
+        "damage": 25,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 47.1327
+    },
+    {
+      "aimedAt": "Stomach",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": true,
+        "reason": "SERVER_VALIDATED",
+        "geometricRegion": "Stomach",
+        "awardedRegion": "Stomach",
+        "clientClaim": "Head",
+        "claimMatchesGeometry": false,
+        "damage": 25,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 44.2386
+    },
+    {
+      "aimedAt": "Arm",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": true,
+        "reason": "SERVER_VALIDATED",
+        "geometricRegion": "Arm",
+        "awardedRegion": "Arm",
+        "clientClaim": "Head",
+        "claimMatchesGeometry": false,
+        "damage": 25,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 44.1476
+    },
+    {
+      "aimedAt": "Leg",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": true,
+        "reason": "SERVER_VALIDATED",
+        "geometricRegion": "Leg",
+        "awardedRegion": "Leg",
+        "clientClaim": "Head",
+        "claimMatchesGeometry": false,
+        "damage": 25,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 47.7443
+    }
+  ],
+  "latencyMeaning": "HTTP round trip including server processing; not one-way network latency",
+  "freeFireServerAcceptance": "NOT_TESTED"
+}

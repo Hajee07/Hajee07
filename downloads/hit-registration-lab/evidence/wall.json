@@ -1,0 +1,116 @@
+{
+  "config": {
+    "policy": "AllValidatedHitsAreHeadshots",
+    "wall": true,
+    "delayMs": 0
+  },
+  "metrics": {
+    "shots": 6,
+    "accepted": 0,
+    "geometricAgreementWithAnalyticCenter": 0,
+    "serverPolicyAgreement": 0,
+    "claimDisagreements": 0,
+    "outcomes": {
+      "OCCLUDED": 6
+    },
+    "rttMedianMs": 46.14105,
+    "rttP95Ms": 154.2306,
+    "sampleCount": 6
+  },
+  "scope": "OWNED_LOCAL_LAB_ONLY",
+  "utc": "2026-10-17T20:42:52.0274656+00:00",
+  "rows": [
+    {
+      "aimedAt": "Head",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": false,
+        "reason": "OCCLUDED",
+        "geometricRegion": null,
+        "awardedRegion": null,
+        "clientClaim": "Head",
+        "claimMatchesGeometry": null,
+        "damage": 0,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 154.2306
+    },
+    {
+      "aimedAt": "Chest",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": false,
+        "reason": "OCCLUDED",
+        "geometricRegion": null,
+        "awardedRegion": null,
+        "clientClaim": "Head",
+        "claimMatchesGeometry": null,
+        "damage": 0,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 44.6098
+    },
+    {
+      "aimedAt": "Shoulder",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": false,
+        "reason": "OCCLUDED",
+        "geometricRegion": null,
+        "awardedRegion": null,
+        "clientClaim": "Head",
+        "claimMatchesGeometry": null,
+        "damage": 0,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 47.6723
+    },
+    {
+      "aimedAt": "Stomach",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": false,
+        "reason": "OCCLUDED",
+        "geometricRegion": null,
+        "awardedRegion": null,
+        "clientClaim": "Head",
+        "claimMatchesGeometry": null,
+        "damage": 0,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 44.2919
+    },
+    {
+      "aimedAt": "Arm",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": false,
+        "reason": "OCCLUDED",
+        "geometricRegion": null,
+        "awardedRegion": null,
+        "clientClaim": "Head",
+        "claimMatchesGeometry": null,
+        "damage": 0,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 47.7692
+    },
+    {
+      "aimedAt": "Leg",
+      "clientClaim": "Head",
+      "receipt": {
+        "accepted": false,
+        "reason": "OCCLUDED",
+        "geometricRegion": null,
+        "awardedRegion": null,
+        "clientClaim": "Head",
+        "claimMatchesGeometry": null,
+        "damage": 0,
+        "sceneRevision": "owned-static-v1"
+      },
+      "rttMs": 43.8484
+    }
+  ],
+  "latencyMeaning": "HTTP round trip including server processing; not one-way network latency",
+  "freeFireServerAcceptance": "NOT_TESTED"
+}
