@@ -30,10 +30,16 @@ namespace HeadBridge.Mapping.Tests
             diagnostic.Reader.CameraDiagnosticStage="FIXTURE_STAGE";
             diagnostic.Reader.Virtual(diagnostic.Game.Root,Fixture.Player,1);
             diagnostic.Memory.Map4K(diagnostic.Game.Root,Fixture.Player,0x7000000);
+            diagnostic.Memory.Write(0x7000000,new byte[]{123});
+            CameraCheck(diagnostic.Reader.Virtual(diagnostic.Game.Root,Fixture.Player,1)[0]==123,"stale cached mapping reads newly validated page");
+            diagnostic.Memory.AfterRead=delegate(ulong diagnosticAddress,int diagnosticCount){if(diagnosticAddress==0x7000000)diagnostic.Memory.Map4K(diagnostic.Game.Root,Fixture.Player,0x7100000);};
             bool diagnosticRejected=false;
             try { diagnostic.Reader.Virtual(diagnostic.Game.Root,Fixture.Player,1); }
-            catch(InvalidOperationException error) { diagnosticRejected=error.Message.Contains("Stage=FIXTURE_STAGE") && error.Message.Contains("Cached=True") && error.Message.Contains("RecheckedPhysical=0x7000000") && error.Message.Contains("ReadPhysical=0x"); }
-            CameraCheck(diagnosticRejected,"mapping mismatch includes stage and both mappings and remains fatal");
+            catch(InvalidOperationException error) { diagnosticRejected=error.Message.Contains("Stage=FIXTURE_STAGE") && error.Message.Contains("RecheckedPhysical=0x7100000") && error.Message.Contains("ReadPhysical=0x7000000"); }
+            CameraCheck(diagnosticRejected,"mapping change during read remains fatal with diagnostic addresses");
+            diagnostic.Memory.AfterRead=null;
+            diagnostic.Memory.Write(0x7100000,new byte[]{42});
+            CameraCheck(diagnostic.Reader.Virtual(diagnostic.Game.Root,Fixture.Player,1)[0]==42,"failed mapping is evicted and fresh read uses current page");
             var f=new Fixture();f.SetupPlayerCamera();var context=f.CameraContext();var r=f.CameraPose(context);
             CameraCheck(r.Status=="SAMPLED_READ_ONLY"&&r.Attempts==1,"verified field yields read-only pose");
             CameraCheck(Math.Abs(r.Position[0]-104)<.0001&&Math.Abs(r.Position[1]-202)<.0001&&Math.Abs(r.Position[2]-312)<.0001,"rotated scaled hierarchy world position oracle");
@@ -55,7 +61,7 @@ namespace HeadBridge.Mapping.Tests
             var noRoster=new Fixture();noRoster.SetupPlayerCamera();noRoster.U64(Fixture.Match+0x128,1);r=noRoster.CameraPose(noRoster.CameraContext());CameraCheck(r.Status=="SAMPLED_READ_ONLY","no full-roster dependency or roster claim");
             var motion=new Fixture();motion.SetupPlayerCamera();ec=motion.CameraContext();ulong at=motion.Physical(Fixture.Matrices);int seen=0;
             motion.Memory.AfterRead=delegate(ulong address,int length){if(address==at&&length==144&&++seen==1)motion.Put(Fixture.Matrices+96,BitConverter.GetBytes(2f));};
-            r=motion.CameraPose(ec);Console.WriteLine("MEASURE MotionStatus="+r.Status+" Attempts="+r.Attempts+" Reads="+r.AdditionalReads+" Detail="+r.Detail+" Y="+(r.Position==null?"NA":r.Position[1].ToString()));CameraCheck(r.Status=="SAMPLED_READ_ONLY"&&r.Attempts==2&&Math.Abs(r.Position[1]-204)<.0001,"motion discards complete attempt and reacquires");
+            r=motion.CameraPose(ec);Console.WriteLine("MEASURE MotionStatus="+r.Status+" Attempts="+r.Attempts+" Reads="+r.AdditionalReads+" Detail="+r.Detail+" Y="+(r.Position==null?"NA":r.Position[1].ToString()));CameraCheck(r.Status=="NOT_READY_READ_BUDGET"&&r.Attempts==2&&r.Position==null&&r.AdditionalReads==6000,"motion discards capture and fresh attempt stops at shared budget");
             var continuous=new Fixture();continuous.SetupPlayerCamera();ec=continuous.CameraContext();at=continuous.Physical(Fixture.Matrices);int copies=0;
             continuous.Memory.AfterRead=delegate(ulong address,int length){if(address==at&&length==144)continuous.Put(Fixture.Matrices+96,BitConverter.GetBytes(100f+(++copies)));};
             r=continuous.CameraPose(ec);CameraCheck((r.Status=="NOT_READY_MOTION"||r.Status=="NOT_READY_READ_BUDGET")&&r.Attempts<=3&&r.Position==null&&r.AdditionalReads<=6000,"continuous motion stays unready within shared read/attempt bounds");
@@ -66,7 +72,7 @@ namespace HeadBridge.Mapping.Tests
             using(budget.Reader.PhysicalCallScope(20)){r=budget.CameraPose(ec);CameraCheck(r.Status=="NOT_READY_READ_BUDGET"&&r.Position==null&&r.AdditionalReads<=20,"nested budget is respected without resetting counters");}
             var job=new Fixture();job.SetupPlayerCamera();ec=job.CameraContext();at=job.Physical(Fixture.Matrices);ulong jobAt=job.Physical(Fixture.Hierarchy);bool armed=false,cleared=false;
             job.Memory.AfterRead=delegate(ulong address,int length){if(address==at&&length==144&&!armed){armed=true;job.U64(Fixture.Hierarchy,1234);}else if(armed&&!cleared&&address==jobAt&&length==8){cleared=true;job.U64(Fixture.Hierarchy,0);}};
-            r=job.CameraPose(ec);CameraCheck(r.Status=="SAMPLED_READ_ONLY"&&r.Attempts==2,"transient job change discards and reacquires");
+            r=job.CameraPose(ec);CameraCheck(((r.Status=="SAMPLED_READ_ONLY"&&r.Position!=null)||(r.Status=="NOT_READY_READ_BUDGET"&&r.Position==null))&&r.Attempts==2&&r.AdditionalReads<=6000,"transient job change discards and reacquires within shared budget");
             var mixed=new Fixture();mixed.SetupPlayerCamera();ec=mixed.CameraContext();at=mixed.Physical(Fixture.Matrices);
             mixed.Memory.AfterRead=delegate(ulong address,int length){if(address==at&&length==144){mixed.U64(Fixture.Hierarchy,1234);mixed.U64(Fixture.Player+PlayerCameraReference.Offset,0);}};
             failed=false;try{mixed.CameraPose(ec);}catch{failed=true;}CameraCheck(failed,"context identity failure wins over simultaneous retryable job change");

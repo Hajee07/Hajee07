@@ -1,1 +1,1 @@
-25 assertions PASS including cached remap diagnostic rejection. Compiler compatibility: 4 cases PASS. No mapping mismatch is suppressed or retried.
+27 assertions PASS. Stale cache uses newly validated page; change during read rejected; cache eviction verified. Motion retry stops at 6000-read cap without coordinates. Live v3 pending.

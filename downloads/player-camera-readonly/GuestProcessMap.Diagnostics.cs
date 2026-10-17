@@ -189,9 +189,13 @@ namespace HeadBridge.Mapping
                 MappingKey key = new MappingKey { Root = root & AddressMask, Page = current & ~4095UL };
                 ulong page;
                 bool cached = translations.TryGetValue(key, out page);
+                // Resolve before touching data; a cached page is never read without validation.
                 ulong physical;
-                if (cached) { physical = page | (current & 4095UL); TranslationCacheHits++; }
-                else { physical = Translate(root, current); page = physical & ~4095UL; }
+                try { physical = Translate(root, current); }
+                catch { translations.Remove(key); throw; }
+                if (cached && page == (physical & ~4095UL)) TranslationCacheHits++;
+                else { cached = false; translations.Remove(key); }
+                page = physical & ~4095UL;
                 byte[] data;
                 try
                 {

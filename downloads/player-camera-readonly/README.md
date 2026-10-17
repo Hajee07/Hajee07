@@ -103,4 +103,4 @@ accuracy or validate active rendering.
 
 PowerShell compatibility fix: compiler options are supplied only when Add-Type exposes that parameter. Both parameter surfaces are covered by Test-CompilerCompatibility.ps1. Live Windows capture remains unverified.
 
-Probe version 2 adds failure stage, cache-hit status, virtual address, length, and before/after physical mappings. GuestProcessMap.Diagnostics.cs differs from the pinned baseline mapper only in the mismatch exception diagnostics. The baseline archive remains intact; compilation selects this manifest-verified diagnostic source. Mismatch rejection and cache eviction are unchanged. 25 camera assertions pass including simulated cached-page remapping. Live cause remains unverified.
+Probe version 3 resolves live mappings before and after every data read. Cached translations cannot select an unvalidated data page. Changes during reads remain fatal and evict the cache entry. Local-context failures now carry LOCAL_CONTEXT. Offline: 27 assertions pass. Additional validation can exhaust existing retry budgets; no stale coordinates are returned. Live Windows validation is pending.

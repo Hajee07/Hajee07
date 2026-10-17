@@ -5,10 +5,10 @@
 [Package validation](player-camera-readonly-validation.json)
 
 Separate read-only source integration; no eight-stage prompts or saved captures.
-25 camera checks and 1028 inherited checks pass offline. Original V52 baseline
+27 camera checks and 1028 inherited checks pass offline. Original V52 baseline
 bytes preserved. Actual rendered camera, LOS, shot direction and live aim output
 remain unverified; this new Windows reader path still needs a user capture.
-ZIP SHA-256: `d9ae68beeb9840ebcc8068dc0e8bd72873af0dfc375c3aed1ca0779f586fde3d`.
+ZIP SHA-256: `2bf2571df872d590118d75c77b1e8612efe4a56cdbb114c9130b965778d72249`.
 
 ## Uploaded Phoenix DLL reference review
 

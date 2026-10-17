@@ -76,7 +76,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
 }
 if(!$RuntimeDirectory){$RuntimeDirectory=Join-Path $PSScriptRoot 'baseline';if(!(Test-Path -LiteralPath $RuntimeDirectory)){$RuntimeDirectory=Join-Path $PSScriptRoot '..\bluestacks-process-map'}}
 $runtimeRoot=(Resolve-Path -LiteralPath $RuntimeDirectory).Path
-Record 'PlayerCameraProbeVersion=2 BaseRunner=52 ReadOnly=1'
+Record 'PlayerCameraProbeVersion=3 BaseRunner=52 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'

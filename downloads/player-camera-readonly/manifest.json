@@ -10,13 +10,13 @@
     },
     {
       "name": "GuestProcessMap.Diagnostics.cs",
-      "bytes": 27753,
-      "sha256": "b11a0a72b9eebd654692d27396fa2d5f73a43f862172416ad676a4c0597ac868"
+      "bytes": 27981,
+      "sha256": "8fc5f06d029bb61b7e834347b80f9aaf25f6c22d8aa345440e077564c6c1b712"
     },
     {
       "name": "PlayerCameraProbe.cs",
-      "bytes": 13266,
-      "sha256": "d5f78e2c9bb2dd72e09bc65476a721170e2c2cfaccc99dd81dec4045c0189605"
+      "bytes": 13317,
+      "sha256": "067f55ab1fea1e16a81a17f453a87c18d001daf63b7255c4f7d08877938277b8"
     },
     {
       "name": "PlayerCameraReference.cs",
@@ -25,13 +25,13 @@
     },
     {
       "name": "PlayerCameraTests.cs",
-      "bytes": 9795,
-      "sha256": "d40ad58732c72441fdaacee567cb1d9bc27349990a17ce7b1cee0a622af7cf0e"
+      "bytes": 10593,
+      "sha256": "bd0060660458513640eb7aa9b76e795775bcb76e27ba6a7c086dc561fb625426"
     },
     {
       "name": "README.md",
-      "bytes": 6515,
-      "sha256": "e2c4a3d13bd2a07d229087ec36a2a0067ca0bde3d5669c6994280528970ca805"
+      "bytes": 6433,
+      "sha256": "adb76b3acaa99eafe07f6cfbaf1b457810f86bd8b3909ceecf56ffc6c05f9bc9"
     },
     {
       "name": "Run-Checks.ps1",
@@ -41,7 +41,7 @@
     {
       "name": "Run-PlayerCamera.ps1",
       "bytes": 26866,
-      "sha256": "f14563ad8b97a0ed8fb2bd394478f7322b5ec3988bf2040fff15d5a7ce115087"
+      "sha256": "6a92614adcd245ed6e611f60d389b94264fc70b055a110ff815982a3a3f34625"
     },
     {
       "name": "Test-CompilerCompatibility.ps1",
@@ -70,8 +70,8 @@
     },
     {
       "name": "evidence/mapping-diagnostics.txt",
-      "bytes": 148,
-      "sha256": "c0036bc63d0feb02a60b335b040ba65c100133ed19bb5b1aee2b4c3bd5314bea"
+      "bytes": 187,
+      "sha256": "017c4338432c3d75b1e0a879c708444312348d475e97cdeb22fe2fb5f5a39dfc"
     },
     {
       "name": "evidence/rendering.txt",

@@ -39,6 +39,7 @@ namespace HeadBridge.Mapping
         }
         public PlayerObjectResult VerifyPlayerCameraContext(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,Action<string> progress)
         {
+            CameraDiagnosticStage="LOCAL_CONTEXT";
             CameraVerifiedInputs(module,layout);Recheck(kernel,game);ObjectAnchors(this,game,module);
             var reads=new ObjectReads(this,game.Root,true);var result=CameraLocalContext(reads,module,layout,progress);
             result.Observations=reads.Recheck();Recheck(kernel,game);ObjectAnchors(this,game,module);return result;
