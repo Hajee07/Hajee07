@@ -121,7 +121,7 @@ namespace HeadBridge.Mapping
         private PlayerStateObservation ReadPlayerState(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,
             PlayerObjectResult core,MatchPlayerObservation member,int index,bool combat=false,bool zone=false,bool weapon=false,bool firing=false,bool ammo=false,bool aimState=false)
         {
-            ObjectReads reads=new ObjectReads(this,game.Root);
+            ObjectReads reads=new ObjectReads(this,game.Root,aimState);
             PlayerStateObservation sample=new PlayerStateObservation { RosterIndex=index,Player=member.Address,Class=member.Class,IsLocal=member.IsLocal };
             ulong facade=RootClass(reads,module,layout,ObjectReference.FacadeCell,12418,null);
             ulong statics=reads.Pointer(facade+0xb8,"state facade statics");
@@ -234,7 +234,7 @@ namespace HeadBridge.Mapping
                 for(int i=0;i<core.MatchPlayers.Length && selected.Count<2;i++)if(!core.MatchPlayers[i].IsLocal)selected.Add(i);
             }
             if(selected.Count==0){result.StopReason="NO_VERIFIED_OBJECTS";return result;}
-            ObjectReads schema=new ObjectReads(this,game.Root);List<PlayerStateObservation> samples=new List<PlayerStateObservation>();
+            ObjectReads schema=new ObjectReads(this,game.Root,aimState);List<PlayerStateObservation> samples=new List<PlayerStateObservation>();
             result.StopReason="SELECTED_OBJECTS_EXHAUSTED";
             using(PhysicalCallScope(allowance))
             {

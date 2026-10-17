@@ -1117,3 +1117,17 @@ V48 native camera capture passed, 4743 phase reads / 24035 total, all cleanup
 PASS. Its game getter metadata guard was 0, patch guard 1; no hotfix branch was
 inferred. V49 adds typed registered controller/camera field inventory without
 forcing initialization; live results and actual getter selection remain pending.
+
+## V49 live results / V50 preparation
+
+V49 stable live run (HostPID=20196, GuestPID=2986) passed the module/layout,
+local head sample and complete 16-player roster. AimState stopped at
+READ_LIMIT_REACHED, AdditionalPhysicalReads=5786, Sampled=0. No camera-controller
+link was accepted. Total calls 23503, plugin unload/cleanup/session release passed.
+Earlier failures included moving head samples and changing roster entry hashes;
+no comparison has been disabled to accept them.
+
+V50 coalesces only aim-state final observation transport requests while comparing
+all original observed bytes, retaining limits and conservative mismatch rejection.
+The full synthetic controller chain drops from 5572 to 4752 physical calls.
+Live V50 camera identity remains unverified; no functions invoked or writes added.

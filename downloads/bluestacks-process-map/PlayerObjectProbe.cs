@@ -58,7 +58,9 @@ namespace HeadBridge.Mapping
             private readonly List<ulong> addresses = new List<ulong>();
             private readonly List<byte[]> snapshots = new List<byte[]>();
             private int bytes;
-            internal ObjectReads(Reader reader, ulong root) { this.reader = reader; this.root = root; }
+            private readonly bool batchFinal;
+            internal ObjectReads(Reader reader, ulong root, bool batchFinal=false)
+            { this.reader = reader; this.root = root; this.batchFinal=batchFinal; }
             internal static void User(ulong value, int alignment, string label)
             {
                 if (value < 0x10000 || value >= 0x0000800000000000UL || value % (ulong)alignment != 0)
@@ -91,9 +93,43 @@ namespace HeadBridge.Mapping
                 if (pointer == 0) throw new InvalidOperationException("Object not ready: " + label + " is null. Leave the spawned character in Training Ground.");
                 User(pointer, 8, label); return pointer;
             }
+            // Coalesce final transport requests only. Every originally observed byte
+            // is still compared with its own snapshot; gap bytes are never evidence.
+            // Merging stays within one page; an existing cross-page range stays
+            // separate. Requests retain the existing maximum of 4096 bytes.
+            private int RecheckBatched()
+            {
+                List<int> order=new List<int>();for(int i=0;i<addresses.Count;i++)order.Add(i);
+                order.Sort(delegate(int a,int b){return addresses[a].CompareTo(addresses[b]);});
+                int cursor=0;
+                while(cursor<order.Count)
+                {
+                    int first=cursor;ulong start=addresses[order[cursor]],end=start+(ulong)snapshots[order[cursor]].Length;
+                    cursor++;
+                    while(cursor<order.Count)
+                    {
+                        int next=order[cursor];ulong at=addresses[next],finish=at+(ulong)snapshots[next].Length;
+                        ulong combined=finish>end?finish:end;
+                        if((start>>12)!=((combined-1)>>12) || combined-start>4096 || (at>end && at-end>64))break;
+                        end=combined;cursor++;
+                    }
+                    byte[] actual=reader.Virtual(root,start,checked((int)(end-start)));
+                    for(int j=first;j<cursor;j++)
+                    {
+                        int index=order[j],offset=checked((int)(addresses[index]-start));byte[] before=snapshots[index];
+                        bool same=true;for(int k=0;k<before.Length;k++)if(before[k]!=actual[offset+k]){same=false;break;}
+                        if(same)continue;
+                        byte[] changed=new byte[before.Length];Array.Copy(actual,offset,changed,0,changed.Length);
+                        string key=addresses[index].ToString("x")+":"+before.Length;
+                        throw new ObjectObservationChangedException(addresses[index],before,changed,true,labels[key]);
+                    }
+                }
+                return addresses.Count;
+            }
             internal int Recheck() { return RecheckNativeHierarchy(0); }
             internal int RecheckNativeHierarchy(ulong hierarchy)
             {
+                if(batchFinal && hierarchy==0)return RecheckBatched();
                 ObjectObservationChangedException jobChange=null;
                 for (int i=addresses.Count-1;i>=0;i--)
                 {

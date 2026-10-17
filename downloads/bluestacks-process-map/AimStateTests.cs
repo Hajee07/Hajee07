@@ -71,8 +71,38 @@ namespace HeadBridge.Mapping.Tests
         { Fixture f=new Fixture();f.SetupNative();f.SetupRoster();f.SetupAim();return f; }
         private static PlayerStateObservation AimSample(Fixture f)
         { PlayerStateResult r=f.Aim(f.Run());if(r.Sampled!=1)throw new Exception("Aim sample failed "+r.StopReason+" "+r.Detail+(r.Samples.Length>0?" "+r.Samples[0].Detail:""));return r.Samples[0]; }
+        private static object BatchReads(Fixture f,bool batch)
+        {
+            Type t=typeof(Reader).GetNestedType("ObjectReads",System.Reflection.BindingFlags.NonPublic);
+            return Activator.CreateInstance(t,System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic,null,new object[]{f.Reader,f.Game.Root,batch},null);
+        }
+        private static object BatchCall(object reads,string name,params object[] args)
+        { return reads.GetType().GetMethod(name,System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(reads,args); }
+        private static void RunSnapshotBatchTests()
+        {
+            Fixture f=new Fixture();ulong at=Fixture.Player+0x800;f.Put(at,new byte[128]);object r=BatchReads(f,true);
+            BatchCall(r,"Read",at,8,"Batch.First");BatchCall(r,"Read",at+16,8,"Batch.Second");BatchCall(r,"Read",at+4,8,"Batch.Overlap");
+            int calls=0;ulong physical=f.Physical(at);f.Memory.AfterRead=delegate(ulong a,int n){if(a==physical && n==24)calls++;};
+            Check((int)BatchCall(r,"Recheck")==3 && calls==1,"batch final recheck merges nearby overlapping observations while retaining all three proofs");
+            f.Put(at+12,new byte[]{1});Check((int)BatchCall(r,"Recheck")==3,"unobserved gap bytes are not promoted to snapshot evidence");
+            f.Put(at+17,new byte[]{1});bool rejected=false;
+            try{BatchCall(r,"Recheck");}catch(System.Reflection.TargetInvocationException error){rejected=error.InnerException.Message.Contains("Field=Batch.Second") && error.InnerException.Message.Contains("FirstChangedOffset=1");}
+            Check(rejected,"batch recheck rejects changed observed bytes with original range and label");
+            Fixture page=new Fixture();ulong edge=Fixture.Player+0xff8;page.Put(edge,new byte[16]);object pr=BatchReads(page,true);
+            BatchCall(pr,"Read",edge,8,"Page.Left");BatchCall(pr,"Read",edge+8,8,"Page.Right");int parts=0;ulong left=page.Physical(edge),right=page.Physical(edge+8);
+            page.Memory.AfterRead=delegate(ulong a,int n){if((a==left || a==right) && n==8)parts++;};
+            Check((int)BatchCall(pr,"Recheck")==2 && parts==2,"batch requests never merge observations across page boundaries");
+            Fixture legacy=new Fixture();legacy.Put(at,new byte[32]);object lr=BatchReads(legacy,false);BatchCall(lr,"Read",at,8,"Legacy.First");BatchCall(lr,"Read",at+16,8,"Legacy.Second");
+            int oldReads=0;ulong oldAt=legacy.Physical(at);legacy.Memory.AfterRead=delegate(ulong a,int n){if((a==oldAt || a==oldAt+16) && n==8)oldReads++;};
+            Check((int)BatchCall(lr,"Recheck")==2 && oldReads==2,"non-aim probes retain their original individual rechecks");
+            Fixture during=new Fixture();during.Put(at,new byte[32]);object dr=BatchReads(during,true);BatchCall(dr,"Read",at,8,"During.First");BatchCall(dr,"Read",at+16,8,"During.Second");
+            during.Put(at,new byte[]{1});bool freshRead=false;
+            try{BatchCall(dr,"Read",at,8,"During.First");}catch(System.Reflection.TargetInvocationException error){freshRead=error.InnerException.Message.Contains("Field=During.First");}
+            Check(freshRead,"batch option does not cache initial reads or hide changes on repeated access");
+        }
         private static void RunAimStateTests()
         {
+            RunSnapshotBatchTests();
             float[][] values={new float[]{0,0,0,1},new float[]{0,0,0,-1},new float[]{0,1,0,0},new float[]{1,0,0,0},new float[]{0,0,1,0}};
             float[][] expected={new float[]{0,0,1},new float[]{0,0,1},new float[]{0,0,-1},new float[]{0,0,-1},new float[]{0,0,1}};
             for(int i=0;i<values.Length;i++){float[] v=values[i],a=Reader.PositiveZBasis(v[0],v[1],v[2],v[3]);Check(a[0]==expected[i][0] && a[1]==expected[i][1] && a[2]==expected[i][2],"positive-Z basis identity/sign/half-turn case "+i);}

@@ -194,3 +194,6 @@ try {
     Remove-Variable -Scope Global -Name aimHarnessRoot,aimHarnessCount,aimHarnessCancel,aimHarnessFail,aimHarnessYaw,aimHarnessPitch,aimHarnessPrompts -ErrorAction SilentlyContinue
 }
 Write-Host "AIM_COMPARISON_WITH_RUNNER_TOTAL=$script:aimChecks"
+
+$version50=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=50') })
+Check-AimComparison ((ConvertFrom-AimBasisReport $version50).Version -eq 50) 'V50 comparison input remains supported'

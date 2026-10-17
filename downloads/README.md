@@ -1,3 +1,5 @@
+V50 reduces aim-state final recheck transport calls while preserving every observed-byte comparison and existing budgets. Offline full-chain fixture: 5572 → 4752 reads. Live Windows verification pending; aim integration remains incomplete. See [batching evidence](bluestacks-process-map/AIM-RECHECK-BATCHING-EVIDENCE.md).
+
 V49 adds registered camera-controller/camera field inventory and native-reference
 comparison. Getter invocation and actual game-camera selection remain unverified.
 See [inventory evidence](bluestacks-process-map/CAMERA-CONTROLLER-INVENTORY-EVIDENCE.md).
