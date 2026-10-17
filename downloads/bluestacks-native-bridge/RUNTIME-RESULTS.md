@@ -1242,3 +1242,5 @@ e68 is an interface reference with no concrete Player layout. Cache world-space,
 head ownership, pooled lifetime/generation and freshness remain unverified.
 No live probe, resolver, physics query or aim write was added. V52 and the offline
 module remain unchanged; this is exact source-contract evidence only.
+
+Offline object-ID resolver audit identifies the 60-byte internal-call dispatch wrapper only. Native implementation and collider-to-Player association remain unverified; no runtime changes or new live test results. See `../bluestacks-visibility-source-audit/object-id-resolver.json`.

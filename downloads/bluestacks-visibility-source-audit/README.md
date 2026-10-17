@@ -186,3 +186,26 @@ Capstone check verified 19 conditional targets within the helper window and the
 collider payload load/resolver call. Uninterpreted offset markers and unknown
 trigger mapping remained explicit. Regeneration was byte-identical; a wrong ELF
 was rejected. These are source checks, not live LOS or aim integration tests.
+
+## Object-ID resolver wrapper audit
+
+[Reproducible inspector](Audit-ObjectIdResolver.py) and
+[exact source evidence](object-id-resolver.json) cover the 60-byte
+`UnityEngine.Object.FindObjectFromInstanceID` wrapper at `0x9ff122c`.
+It reads a cached function pointer from RVA `0xafb9a00`. When zero, it
+looks up `UnityEngine.Object::FindObjectFromInstanceID(System.Int32)`
+through the call at `0x9ff124c`, stores the returned pointer, then
+restores the Int32 argument and tail-dispatches through X1.
+
+This is an engine dispatch wrapper, not the native resolver implementation.
+The cache store describes source behavior; this inspector performs no live
+reads, writes, or function calls. No live pointer value, native implementation,
+thread/lifetime contract, collider-to-Player association or head LOS is verified.
+Do not treat the cached function pointer as a Player pointer or call it merely
+because the wrapper has been identified.
+
+Validation: all 15 instructions independently disassembled with Capstone;
+conditional branch, lookup call, cached-cell load/store and tail dispatch checked.
+Regeneration was byte-identical and an incorrect ELF was rejected. Runtime V52
+is unchanged. Reproduce with `python3 Audit-ObjectIdResolver.py libil2cpp.so
+global-metadata.dat report.json` using the pinned inputs.

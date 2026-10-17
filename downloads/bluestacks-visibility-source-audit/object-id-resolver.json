@@ -1,0 +1,29 @@
+{
+  "audit_version": 1,
+  "scope": "OFFLINE WRAPPER ONLY",
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "method_index": 318208,
+  "registration_slot_rva": 183898896,
+  "wrapper_rva": 167711276,
+  "wrapper_bytes": 60,
+  "source_hex": "fe0f1ef8f44f01a9547e0090810245f9f303002ac10000b5c0cdfbd000d02791538e0d94e10300aa800205f9e003132af44f41a9fe0742f820001fd6",
+  "internal_call_name": "UnityEngine.Object::FindObjectFromInstanceID(System.Int32)",
+  "internal_call_name_rva": 26917364,
+  "cached_function_cell_rva": 184261120,
+  "lookup_call_rva": 167711308,
+  "lookup_target_rva": 171264920,
+  "tail_dispatch_rva": 167711332,
+  "behavior": [
+    "Loads a cached engine function pointer into X1.",
+    "If the cache is zero, resolves the named internal call and stores its pointer.",
+    "Preserves the Int32 argument and tail-dispatches through X1."
+  ],
+  "native_implementation": "NOT_RESOLVED",
+  "live_cached_pointer": "NOT_CAPTURED",
+  "lifetime_and_thread_rules": "UNVERIFIED",
+  "collider_to_player_association": "UNVERIFIED",
+  "functions_invoked": false,
+  "memory_writes": false,
+  "head_los_verified": false
+}
