@@ -12,3 +12,5 @@ Add-Type @options
 & (Join-Path $PSScriptRoot 'Test-AmmoCounterCheck.ps1')
 
 & (Join-Path $PSScriptRoot 'Test-AimBasisCheck.ps1')
+
+& (Join-Path $PSScriptRoot 'Test-CameraPoseCheck.ps1')

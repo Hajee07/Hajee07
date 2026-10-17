@@ -1092,3 +1092,11 @@ V45 live original-native camera position sampling and final checks passed,
 4550 phase reads / 24881 total, all cleanup PASS. V46 adds source-checked
 native camera rotation using the same TRS snapshot; live V46 validation remains
 pending. Actual game camera, LOS/eligibility and aim updates remain unverified.
+
+
+## Accepted V46 / V47 preparation
+
+V46 original-native camera position/rotation and source snapshot checks passed,
+4688 phase reads / 26298 total, all cleanup PASS. V47 adds a manual native-pose
+comparison experiment; its eight live captures are pending. Actual game getter,
+managed-wrapper identity, LOS/eligibility and aim writes remain unverified.

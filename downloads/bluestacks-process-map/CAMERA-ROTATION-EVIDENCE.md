@@ -1,6 +1,7 @@
 # V46 original native camera world rotation
 
-Live V46 Windows verification is pending. Run `Run-ProcessMap.ps1 -ProbeAimState`
+Live V46 source/rotation sampling and cleanup passed. See
+CAMERA-POSE-COMPARISON-EVIDENCE.md for the accepted result and V47 experiment. Run `Run-ProcessMap.ps1 -ProbeAimState`
 with Free Fire running and camera steady. V46 adds a `CameraWorldRotation` row
 for the same native selector Transform intermediate as V45's position sample.
 No game calls, synchronization, memory writes or control automation are added.

@@ -1,3 +1,12 @@
+## V47 controlled native camera pose experiment
+
+Run `Run-CameraPoseCheck.ps1` for eight READY prompts: baseline/right/restore/left,
+then baseline/up/restore/down. Hold the camera still during each capture. No
+controls are automated. This compares the native camera pose, preserves raw
+source reports and checks camera identity across all captures. Live V47 results
+and actual game camera getter identity remain pending.
+See [instructions and evidence](CAMERA-POSE-COMPARISON-EVIDENCE.md).
+
 ## V46 camera world rotation diagnostic
 
 Run `Run-ProcessMap.ps1 -ProbeAimState` with Free Fire running and camera steady.

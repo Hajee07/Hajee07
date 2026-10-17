@@ -1,3 +1,8 @@
+V47 adds a manual eight-capture native camera pose experiment with source report
+validation, identity checks and yaw/pitch comparison. The native probe remains
+read-only; game-camera identity, LOS and aim updates remain unverified. See
+[pose experiment](bluestacks-process-map/CAMERA-POSE-COMPARISON-EVIDENCE.md).
+
 V46 adds source-checked original native camera world rotation and its mathematical
 positive-Z basis, without game calls, synchronization or writes. Live V46 and
 actual game-camera verification are pending. See
