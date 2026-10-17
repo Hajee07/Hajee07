@@ -262,3 +262,27 @@ an incorrect ELF was rejected. Runtime V52 remains unchanged.
 
 Reproduce: `python3 Audit-AttackableInterface.py libil2cpp.so global-metadata.dat report.json`
 with the pinned inputs and sibling parser. No new Windows capture is required.
+
+## Streamer visibility original paths
+
+[Inspector](Audit-StreamerVisibility.py) and [report](streamer-visibility.json)
+record 12 name-matched declarations (one interface) and three manually inspected
+source windows. Name matches are not proof of runtime interface implementation.
+
+`Player.IsStreamerVisible` original path reads a static-storage byte at `+0x1ebb`.
+When zero it returns true. Otherwise it passes raw argument 4 to
+`Player.IsPartialVisible`, whose original path loads Player `+0xad0` and
+branches to the previously identified `GCommon.BitArray.HasFlag` helper.
+`AttackableEntity.IsStreamerVisible` original path also returns true.
+Hotfix-selected paths can replace these original paths and remain unevaluated.
+
+Thus these methods cannot currently serve as authoritative head LOS. The live
+static flag, bit meaning/freshness, concrete dispatch and collision semantics
+remain unknown. No runtime flag was read, method invoked or memory written.
+No aim adapter or Windows runner changes are included.
+
+Validation: three registration addresses and all inspected source instructions
+checked, key policy operands asserted, direct B/BL targets independently decoded
+from ARM64 words, reproducible byte-identical report, and incorrect ELF rejected.
+Reproduce using Capstone 5.0.3 and pinned inputs:
+`python3 Audit-StreamerVisibility.py libil2cpp.so global-metadata.dat report.json`.

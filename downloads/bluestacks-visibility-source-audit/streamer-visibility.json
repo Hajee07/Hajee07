@@ -1,0 +1,603 @@
+{
+  "audit_version": 1,
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "scope": "OFFLINE POLICY SOURCE ONLY",
+  "named_declarations": [
+    {
+      "index": 210410,
+      "owner": "COW.GamePlay.Player",
+      "slot": 71,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 215820,
+      "owner": "COW.GamePlay.AttackableBaseLevelObject",
+      "slot": 121,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 215837,
+      "owner": "COW.GamePlay.OGKFEMJNCGM",
+      "slot": 4,
+      "interface": true,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 215868,
+      "owner": "COW.GamePlay.AttackableEntity",
+      "slot": 71,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 230409,
+      "owner": "COW.GamePlay.LevelHitAndExplodeGiftBox",
+      "slot": 93,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 232671,
+      "owner": "COW.GamePlay.LevelObjectSpawned",
+      "slot": 94,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 232893,
+      "owner": "COW.GamePlay.LevelObjectWukongIllusion",
+      "slot": 94,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 233156,
+      "owner": "COW.GamePlay.LevelPocketRevivePoint",
+      "slot": 93,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 238764,
+      "owner": "COW.GamePlay.LevelDynamicColliderAttackScript",
+      "slot": 8,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 245288,
+      "owner": "COW.GamePlay.NetworkAIWolf",
+      "slot": 71,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 245306,
+      "owner": "COW.GamePlay.NetworkAIWolfAlpha",
+      "slot": 71,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    },
+    {
+      "index": 255199,
+      "owner": "COW.GamePlay.UGCAimAssistEntity",
+      "slot": 33,
+      "interface": false,
+      "scope": "NAME MATCH ONLY; INTERFACE IMPLEMENTATION/VIRTUAL OVERRIDE NOT PROVEN"
+    }
+  ],
+  "windows": [
+    {
+      "index": 210410,
+      "owner": "COW.GamePlay.Player",
+      "name": "IsStreamerVisible",
+      "rva": 116627496,
+      "window_bytes": 188,
+      "registration_slot_rva": 179478264,
+      "source_hex": "fe0f1ef8f44f01a974030290889e5d39f30300aac800003720c001d000d442f9e56cd09428008052889e1d39407f83524000a072e1031faa6fc4639460010036407f83524000a072e1031faa97c46394400300b4e10313aaf44f41a9e2031faafe0742f83ec1531434c001d094d642f9800240f908e040b9680000352c6dd094800240f9085c40f969d7835208696938c8000034e00313aaf44f41a981008052fe0742f806000014f44f41a920008052fe0742f8c0035fd6666dd094",
+      "scope": "MANUALLY INSPECTED SOURCE WINDOW; NOT GENERAL FUNCTION BOUND RECOVERY",
+      "instructions": [
+        {
+          "rva": 116627496,
+          "mnemonic": "str",
+          "operands": "x30, [sp, #-0x20]!"
+        },
+        {
+          "rva": 116627500,
+          "mnemonic": "stp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": 116627504,
+          "mnemonic": "adrp",
+          "operands": "x20, #0xafa5000"
+        },
+        {
+          "rva": 116627508,
+          "mnemonic": "ldrb",
+          "operands": "w8, [x20, #0x767]"
+        },
+        {
+          "rva": 116627512,
+          "mnemonic": "mov",
+          "operands": "x19, x0"
+        },
+        {
+          "rva": 116627516,
+          "mnemonic": "tbnz",
+          "operands": "w8, #0, #0x6f39854"
+        },
+        {
+          "rva": 116627520,
+          "mnemonic": "adrp",
+          "operands": "x0, #0xa73f000"
+        },
+        {
+          "rva": 116627524,
+          "mnemonic": "ldr",
+          "operands": "x0, [x0, #0x5a8]"
+        },
+        {
+          "rva": 116627528,
+          "mnemonic": "bl",
+          "operands": "#0xa354bdc"
+        },
+        {
+          "rva": 116627532,
+          "mnemonic": "mov",
+          "operands": "w8, #1"
+        },
+        {
+          "rva": 116627536,
+          "mnemonic": "strb",
+          "operands": "w8, [x20, #0x767]"
+        },
+        {
+          "rva": 116627540,
+          "mnemonic": "mov",
+          "operands": "w0, #0x1bfa"
+        },
+        {
+          "rva": 116627544,
+          "mnemonic": "movk",
+          "operands": "w0, #2, lsl #16"
+        },
+        {
+          "rva": 116627548,
+          "mnemonic": "mov",
+          "operands": "x1, xzr"
+        },
+        {
+          "rva": 116627552,
+          "mnemonic": "bl",
+          "operands": "#0x882aa1c"
+        },
+        {
+          "rva": 116627556,
+          "mnemonic": "tbz",
+          "operands": "w0, #0, #0x6f39890"
+        },
+        {
+          "rva": 116627560,
+          "mnemonic": "mov",
+          "operands": "w0, #0x1bfa"
+        },
+        {
+          "rva": 116627564,
+          "mnemonic": "movk",
+          "operands": "w0, #2, lsl #16"
+        },
+        {
+          "rva": 116627568,
+          "mnemonic": "mov",
+          "operands": "x1, xzr"
+        },
+        {
+          "rva": 116627572,
+          "mnemonic": "bl",
+          "operands": "#0x882aad0"
+        },
+        {
+          "rva": 116627576,
+          "mnemonic": "cbz",
+          "operands": "x0, #0x6f398e0"
+        },
+        {
+          "rva": 116627580,
+          "mnemonic": "mov",
+          "operands": "x1, x19"
+        },
+        {
+          "rva": 116627584,
+          "mnemonic": "ldp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": 116627588,
+          "mnemonic": "mov",
+          "operands": "x2, xzr"
+        },
+        {
+          "rva": 116627592,
+          "mnemonic": "ldr",
+          "operands": "x30, [sp], #0x20"
+        },
+        {
+          "rva": 116627596,
+          "mnemonic": "b",
+          "operands": "#0x8429d84"
+        },
+        {
+          "rva": 116627600,
+          "mnemonic": "adrp",
+          "operands": "x20, #0xa73f000"
+        },
+        {
+          "rva": 116627604,
+          "mnemonic": "ldr",
+          "operands": "x20, [x20, #0x5a8]"
+        },
+        {
+          "rva": 116627608,
+          "mnemonic": "ldr",
+          "operands": "x0, [x20]"
+        },
+        {
+          "rva": 116627612,
+          "mnemonic": "ldr",
+          "operands": "w8, [x0, #0xe0]"
+        },
+        {
+          "rva": 116627616,
+          "mnemonic": "cbnz",
+          "operands": "w8, #0x6f398ac"
+        },
+        {
+          "rva": 116627620,
+          "mnemonic": "bl",
+          "operands": "#0xa354d54"
+        },
+        {
+          "rva": 116627624,
+          "mnemonic": "ldr",
+          "operands": "x0, [x20]"
+        },
+        {
+          "rva": 116627628,
+          "mnemonic": "ldr",
+          "operands": "x8, [x0, #0xb8]"
+        },
+        {
+          "rva": 116627632,
+          "mnemonic": "mov",
+          "operands": "w9, #0x1ebb"
+        },
+        {
+          "rva": 116627636,
+          "mnemonic": "ldrb",
+          "operands": "w8, [x8, x9]"
+        },
+        {
+          "rva": 116627640,
+          "mnemonic": "cbz",
+          "operands": "w8, #0x6f398d0"
+        },
+        {
+          "rva": 116627644,
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "rva": 116627648,
+          "mnemonic": "ldp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": 116627652,
+          "mnemonic": "mov",
+          "operands": "w1, #4"
+        },
+        {
+          "rva": 116627656,
+          "mnemonic": "ldr",
+          "operands": "x30, [sp], #0x20"
+        },
+        {
+          "rva": 116627660,
+          "mnemonic": "b",
+          "operands": "#0x6f398e4"
+        },
+        {
+          "rva": 116627664,
+          "mnemonic": "ldp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": 116627668,
+          "mnemonic": "mov",
+          "operands": "w0, #1"
+        },
+        {
+          "rva": 116627672,
+          "mnemonic": "ldr",
+          "operands": "x30, [sp], #0x20"
+        },
+        {
+          "rva": 116627676,
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "rva": 116627680,
+          "mnemonic": "bl",
+          "operands": "#0xa354e78"
+        }
+      ]
+    },
+    {
+      "index": 210411,
+      "owner": "COW.GamePlay.Player",
+      "name": "IsPartialVisible",
+      "rva": 116627684,
+      "window_bytes": 104,
+      "registration_slot_rva": 179478272,
+      "source_hex": "fe0f1ef8f44f01a9f303012af40300aa60638052e1031faa48c463946001003660638052e1031faa71c46394c00100b4e10314aae203132af44f41a9e3031faafe0742f82df65314806a45f9c00000b4e103132af44f41a9e2031faafe0742f830fe4c144c6dd094",
+      "scope": "MANUALLY INSPECTED SOURCE WINDOW; NOT GENERAL FUNCTION BOUND RECOVERY",
+      "instructions": [
+        {
+          "rva": 116627684,
+          "mnemonic": "str",
+          "operands": "x30, [sp, #-0x20]!"
+        },
+        {
+          "rva": 116627688,
+          "mnemonic": "stp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": 116627692,
+          "mnemonic": "mov",
+          "operands": "w19, w1"
+        },
+        {
+          "rva": 116627696,
+          "mnemonic": "mov",
+          "operands": "x20, x0"
+        },
+        {
+          "rva": 116627700,
+          "mnemonic": "mov",
+          "operands": "w0, #0x31b"
+        },
+        {
+          "rva": 116627704,
+          "mnemonic": "mov",
+          "operands": "x1, xzr"
+        },
+        {
+          "rva": 116627708,
+          "mnemonic": "bl",
+          "operands": "#0x882aa1c"
+        },
+        {
+          "rva": 116627712,
+          "mnemonic": "tbz",
+          "operands": "w0, #0, #0x6f3992c"
+        },
+        {
+          "rva": 116627716,
+          "mnemonic": "mov",
+          "operands": "w0, #0x31b"
+        },
+        {
+          "rva": 116627720,
+          "mnemonic": "mov",
+          "operands": "x1, xzr"
+        },
+        {
+          "rva": 116627724,
+          "mnemonic": "bl",
+          "operands": "#0x882aad0"
+        },
+        {
+          "rva": 116627728,
+          "mnemonic": "cbz",
+          "operands": "x0, #0x6f39948"
+        },
+        {
+          "rva": 116627732,
+          "mnemonic": "mov",
+          "operands": "x1, x20"
+        },
+        {
+          "rva": 116627736,
+          "mnemonic": "mov",
+          "operands": "w2, w19"
+        },
+        {
+          "rva": 116627740,
+          "mnemonic": "ldp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": 116627744,
+          "mnemonic": "mov",
+          "operands": "x3, xzr"
+        },
+        {
+          "rva": 116627748,
+          "mnemonic": "ldr",
+          "operands": "x30, [sp], #0x20"
+        },
+        {
+          "rva": 116627752,
+          "mnemonic": "b",
+          "operands": "#0x84371dc"
+        },
+        {
+          "rva": 116627756,
+          "mnemonic": "ldr",
+          "operands": "x0, [x20, #0xad0]"
+        },
+        {
+          "rva": 116627760,
+          "mnemonic": "cbz",
+          "operands": "x0, #0x6f39948"
+        },
+        {
+          "rva": 116627764,
+          "mnemonic": "mov",
+          "operands": "w1, w19"
+        },
+        {
+          "rva": 116627768,
+          "mnemonic": "ldp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": 116627772,
+          "mnemonic": "mov",
+          "operands": "x2, xzr"
+        },
+        {
+          "rva": 116627776,
+          "mnemonic": "ldr",
+          "operands": "x30, [sp], #0x20"
+        },
+        {
+          "rva": 116627780,
+          "mnemonic": "b",
+          "operands": "#0x8279204"
+        },
+        {
+          "rva": 116627784,
+          "mnemonic": "bl",
+          "operands": "#0xa354e78"
+        }
+      ]
+    },
+    {
+      "index": 215868,
+      "owner": "COW.GamePlay.AttackableEntity",
+      "name": "IsStreamerVisible",
+      "rva": 118970460,
+      "window_bytes": 72,
+      "registration_slot_rva": 179521928,
+      "source_hex": "fe4fbfa9f30300aac0688452e1031faa6cd45a9420010036c0688452e1031faa95d45a94000100b4e10313aae2031faafe4fc1a83dd14a1420008052fe4fc1a8c0035fd6767dc794",
+      "scope": "MANUALLY INSPECTED SOURCE WINDOW; NOT GENERAL FUNCTION BOUND RECOVERY",
+      "instructions": [
+        {
+          "rva": 118970460,
+          "mnemonic": "stp",
+          "operands": "x30, x19, [sp, #-0x10]!"
+        },
+        {
+          "rva": 118970464,
+          "mnemonic": "mov",
+          "operands": "x19, x0"
+        },
+        {
+          "rva": 118970468,
+          "mnemonic": "mov",
+          "operands": "w0, #0x2346"
+        },
+        {
+          "rva": 118970472,
+          "mnemonic": "mov",
+          "operands": "x1, xzr"
+        },
+        {
+          "rva": 118970476,
+          "mnemonic": "bl",
+          "operands": "#0x882aa1c"
+        },
+        {
+          "rva": 118970480,
+          "mnemonic": "tbz",
+          "operands": "w0, #0, #0x7175894"
+        },
+        {
+          "rva": 118970484,
+          "mnemonic": "mov",
+          "operands": "w0, #0x2346"
+        },
+        {
+          "rva": 118970488,
+          "mnemonic": "mov",
+          "operands": "x1, xzr"
+        },
+        {
+          "rva": 118970492,
+          "mnemonic": "bl",
+          "operands": "#0x882aad0"
+        },
+        {
+          "rva": 118970496,
+          "mnemonic": "cbz",
+          "operands": "x0, #0x71758a0"
+        },
+        {
+          "rva": 118970500,
+          "mnemonic": "mov",
+          "operands": "x1, x19"
+        },
+        {
+          "rva": 118970504,
+          "mnemonic": "mov",
+          "operands": "x2, xzr"
+        },
+        {
+          "rva": 118970508,
+          "mnemonic": "ldp",
+          "operands": "x30, x19, [sp], #0x10"
+        },
+        {
+          "rva": 118970512,
+          "mnemonic": "b",
+          "operands": "#0x8429d84"
+        },
+        {
+          "rva": 118970516,
+          "mnemonic": "mov",
+          "operands": "w0, #1"
+        },
+        {
+          "rva": 118970520,
+          "mnemonic": "ldp",
+          "operands": "x30, x19, [sp], #0x10"
+        },
+        {
+          "rva": 118970524,
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "rva": 118970528,
+          "mnemonic": "bl",
+          "operands": "#0xa354e78"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    "Player original path reads a static byte at static-storage +0x1ebb; zero returns true.",
+    "When the static byte is nonzero, Player tail-calls IsPartialVisible with raw argument 4.",
+    "IsPartialVisible original path loads Player +0xad0 and tail-calls the previously identified BitArray.HasFlag helper.",
+    "AttackableEntity original path returns true; a selected hotfix can replace that path.",
+    "These inspected paths do not establish a fresh head-to-camera collision ray or authoritative LOS.",
+    "Twelve name matches include one interface; name matches alone do not prove concrete dispatch or override ownership."
+  ],
+  "unverified": [
+    "live static flag",
+    "meaning/freshness of bit 4",
+    "hotfix selection",
+    "concrete runtime dispatch",
+    "head LOS"
+  ],
+  "functions_invoked": false,
+  "memory_writes": false,
+  "head_los_verified": false
+}
