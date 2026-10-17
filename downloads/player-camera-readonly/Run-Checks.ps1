@@ -2,8 +2,8 @@
 param([string]$RuntimeDirectory,[string]$KernelElfPath)
 $ErrorActionPreference='Stop'
 if(!$RuntimeDirectory){$RuntimeDirectory=Join-Path $PSScriptRoot 'baseline';if(!(Test-Path $RuntimeDirectory)){$RuntimeDirectory=Join-Path $PSScriptRoot '..\bluestacks-process-map'}}
-$files=@(Get-ChildItem -LiteralPath $RuntimeDirectory -Filter '*.cs'|Select-Object -ExpandProperty FullName)
-$files+=@('PlayerCameraReference.cs','PlayerCameraProbe.cs','PlayerCameraTests.cs'|ForEach-Object {Join-Path $PSScriptRoot $_})
+$files=@(Get-ChildItem -LiteralPath $RuntimeDirectory -Filter '*.cs'|Where-Object Name -ne 'GuestProcessMap.cs'|Select-Object -ExpandProperty FullName)
+$files+=@('GuestProcessMap.Diagnostics.cs','PlayerCameraReference.cs','PlayerCameraProbe.cs','PlayerCameraTests.cs'|ForEach-Object {Join-Path $PSScriptRoot $_})
 # BEGIN COMPATIBLE COMPILE
 $compileArguments = @{ Path = $files; ErrorAction = 'Stop' }
 if ((Get-Command Add-Type).Parameters.ContainsKey('CompilerOptions')) {

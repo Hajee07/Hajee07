@@ -1,15 +1,16 @@
 {
-  "package_sha256": "9a9411888c388ad63394d5c8c6d957490fed1ac577940c98c18fdaf1e802ce14",
-  "extracted_extension_manifest_files": 15,
+  "package_sha256": "d9ae68beeb9840ebcc8068dc0e8bd72873af0dfc375c3aed1ca0779f586fde3d",
+  "extracted_extension_manifest_files": 17,
   "unchanged_baseline_files": 124,
-  "extracted_camera_assertions": 24,
+  "extracted_camera_assertions": 25,
   "inherited_suite_pass_lines": 1028,
   "actual_renderer_cases": 2,
   "runner_syntax": "PASS",
   "authored_integrity_block": "PASS",
   "modified_reference_fixture": "REJECTED",
-  "windows_live_execution": "NOT_RUN",
+  "windows_live_execution": "V1_COMPILER_PASS_POSE_MAPPING_MISMATCH_V2_PENDING",
   "game_functions_invoked": false,
   "aim_writes": false,
-  "compiler_compatibility_cases": 4
+  "compiler_compatibility_cases": 4,
+  "diagnostic_mapping_fixture": "PASS"
 }

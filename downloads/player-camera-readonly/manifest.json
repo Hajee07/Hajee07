@@ -9,9 +9,14 @@
       "sha256": "2aa91ed418aa76499110fb44c7022ef25512c8a5cde006daeb95188a0c4354d4"
     },
     {
+      "name": "GuestProcessMap.Diagnostics.cs",
+      "bytes": 27753,
+      "sha256": "b11a0a72b9eebd654692d27396fa2d5f73a43f862172416ad676a4c0597ac868"
+    },
+    {
       "name": "PlayerCameraProbe.cs",
-      "bytes": 12756,
-      "sha256": "eee97a596c16f4f5731de460579bf468638bb5404b6e0085aa4c70821e23a826"
+      "bytes": 13266,
+      "sha256": "d5f78e2c9bb2dd72e09bc65476a721170e2c2cfaccc99dd81dec4045c0189605"
     },
     {
       "name": "PlayerCameraReference.cs",
@@ -20,23 +25,23 @@
     },
     {
       "name": "PlayerCameraTests.cs",
-      "bytes": 8983,
-      "sha256": "34e965f3d84e80466a45f3e925da82faac794d9e9f6d1ec3d3ee2b9b41a14be5"
+      "bytes": 9795,
+      "sha256": "d40ad58732c72441fdaacee567cb1d9bc27349990a17ce7b1cee0a622af7cf0e"
     },
     {
       "name": "README.md",
-      "bytes": 6032,
-      "sha256": "72d9c7860bdc8676760dbefe7e99563a026177229ceef22997a1b8afc305c3c9"
+      "bytes": 6515,
+      "sha256": "e2c4a3d13bd2a07d229087ec36a2a0067ca0bde3d5669c6994280528970ca805"
     },
     {
       "name": "Run-Checks.ps1",
-      "bytes": 1298,
-      "sha256": "ab1ae42736726a08185c69d7ab496e89b60d2256149264eb151eeec18ad80487"
+      "bytes": 1374,
+      "sha256": "37f90b7f0170f522d6d1cfcb6115a9df5784b7cdcc1afc1d26cf6fcd628f6c58"
     },
     {
       "name": "Run-PlayerCamera.ps1",
-      "bytes": 26786,
-      "sha256": "9cc12e765b31288dda24bb278a9e95f706dd0574f8dd462acec09b39e1af489a"
+      "bytes": 26866,
+      "sha256": "f14563ad8b97a0ed8fb2bd394478f7322b5ec3988bf2040fff15d5a7ce115087"
     },
     {
       "name": "Test-CompilerCompatibility.ps1",
@@ -62,6 +67,11 @@
       "name": "evidence/full-checks.txt",
       "bytes": 74520,
       "sha256": "7dfedc702e7c7c41c2777a52a5563ad937315516b650521c14f73cfd7814026e"
+    },
+    {
+      "name": "evidence/mapping-diagnostics.txt",
+      "bytes": 148,
+      "sha256": "c0036bc63d0feb02a60b335b040ba65c100133ed19bb5b1aee2b4c3bd5314bea"
     },
     {
       "name": "evidence/rendering.txt",

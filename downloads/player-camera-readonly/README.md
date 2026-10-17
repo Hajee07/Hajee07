@@ -102,3 +102,5 @@ transport, not uploaded binaries or a live game. They cannot measure headshot
 accuracy or validate active rendering.
 
 PowerShell compatibility fix: compiler options are supplied only when Add-Type exposes that parameter. Both parameter surfaces are covered by Test-CompilerCompatibility.ps1. Live Windows capture remains unverified.
+
+Probe version 2 adds failure stage, cache-hit status, virtual address, length, and before/after physical mappings. GuestProcessMap.Diagnostics.cs differs from the pinned baseline mapper only in the mismatch exception diagnostics. The baseline archive remains intact; compilation selects this manifest-verified diagnostic source. Mismatch rejection and cache eviction are unchanged. 25 camera assertions pass including simulated cached-page remapping. Live cause remains unverified.

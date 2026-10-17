@@ -26,6 +26,14 @@ namespace HeadBridge.Mapping.Tests
         {var f=new Fixture();f.SetupPlayerCamera();var context=f.CameraContext();change(f);bool rejected=false;try{f.CameraPose(context);}catch{rejected=true;}CameraCheck(rejected,name);}
         public static void RunPlayerCameraChecks()
         {
+            var diagnostic=new Fixture();diagnostic.SetupPlayerCamera();
+            diagnostic.Reader.CameraDiagnosticStage="FIXTURE_STAGE";
+            diagnostic.Reader.Virtual(diagnostic.Game.Root,Fixture.Player,1);
+            diagnostic.Memory.Map4K(diagnostic.Game.Root,Fixture.Player,0x7000000);
+            bool diagnosticRejected=false;
+            try { diagnostic.Reader.Virtual(diagnostic.Game.Root,Fixture.Player,1); }
+            catch(InvalidOperationException error) { diagnosticRejected=error.Message.Contains("Stage=FIXTURE_STAGE") && error.Message.Contains("Cached=True") && error.Message.Contains("RecheckedPhysical=0x7000000") && error.Message.Contains("ReadPhysical=0x"); }
+            CameraCheck(diagnosticRejected,"mapping mismatch includes stage and both mappings and remains fatal");
             var f=new Fixture();f.SetupPlayerCamera();var context=f.CameraContext();var r=f.CameraPose(context);
             CameraCheck(r.Status=="SAMPLED_READ_ONLY"&&r.Attempts==1,"verified field yields read-only pose");
             CameraCheck(Math.Abs(r.Position[0]-104)<.0001&&Math.Abs(r.Position[1]-202)<.0001&&Math.Abs(r.Position[2]-312)<.0001,"rotated scaled hierarchy world position oracle");

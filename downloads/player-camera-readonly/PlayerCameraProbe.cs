@@ -78,26 +78,34 @@ namespace HeadBridge.Mapping
             catch(NativeHeadJobChangedException){context.Recheck();throw;}
             return count+context.Recheck();
         }
+        public string CameraDiagnosticStage = "PREFLIGHT";
         private PlayerCameraPoseResult PlayerCameraAttempt(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult objects,Action<string> progress)
         {
+            CameraDiagnosticStage="CONTEXT_START";
             Recheck(kernel,game);var reads=new ObjectReads(this,game.Root,true);var result=new PlayerCameraPoseResult();
             ObjectAnchors(this,game,module);var contextNow=CameraLocalContext(reads,module,layout,progress);
             Expect(contextNow.CurrentGame==objects.CurrentGame && contextNow.Match==objects.Match && contextNow.LocalPlayer==objects.LocalPlayer,"camera original local context unchanged");
             // CameraLocalContext already verifies this Player family in this same observation set.
             ulong klass=reads.Pointer(objects.LocalPlayer,"camera player class");
             for(int depth=0;;depth++){ObjectClassProfile profile=ReadObjectClass(reads,klass,layout,progress);if(profile.Index==31824)break;Expect(depth<15,"camera Player ancestry bound");klass=reads.Pointer(klass+0x58,"camera player parent");}
+            CameraDiagnosticStage="FIELD_SCHEMA";
             PlayerCameraSchema(reads,module,layout,klass);
+            CameraDiagnosticStage="CAMERA_FIELD";
             ulong managed=reads.Value(objects.LocalPlayer+PlayerCameraReference.Offset,"Player.MainCameraTransform");result.ManagedTransform=managed;
             if(managed==0){result.Status="NOT_READY_CAMERA_FIELD_NULL";result.Observations=reads.Recheck();Recheck(kernel,game);return result;}
+            CameraDiagnosticStage="TRANSFORM_CLASS";
             ObjectFamily(reads,managed,64,PlayerCameraReference.TransformTypeIndex,0,layout,progress);
+            CameraDiagnosticStage="NATIVE_ANCHORS";
             NativeAnchors(reads,module.LoadBias,NativeTransformReference.Il2CppAnchors);
             ulong bias=0;ulong[] cells={0xafb9e00,0xafb9e10},targets={0x45ea4c,0x45ec64};
             for(int i=0;i<2;i++){ulong target=reads.Value(module.LoadBias+cells[i],"Camera.PositionIcall"+i);if(target==0)continue;ObjectReads.User(target,4,"camera position function");Expect(target>targets[i],"camera Unity bias subtraction");ulong value=target-targets[i];ObjectReads.User(value,4096,"camera Unity bias");Expect((value&4095)==0 && (bias==0||bias==value),"camera consistent Unity bindings");bias=value;}
             if(bias==0){result.Status="NOT_READY_UNITY_BINDING";result.Observations=reads.Recheck();Recheck(kernel,game);return result;}
             Expect(EqualBytes(reads.Read(bias,64),Hex(NativeTransformReference.HeaderHex)) && EqualBytes(reads.Read(bias+64,NativeTransformReference.ProgramsHex.Length/2),Hex(NativeTransformReference.ProgramsHex)) && EqualBytes(reads.Read(bias+0x308,24),Hex(NativeTransformReference.NoteHex)),"camera Unity ELF identity");
             NativeAnchors(reads,bias,NativeTransformReference.UnityAnchors);NativeAnchors(reads,bias,NativeTransformReference.CameraRotationAnchors);
+            CameraDiagnosticStage="NATIVE_POINTER";
             result.UnityLoadBias=bias;ulong native=reads.Value(managed+0x10,"CameraTransform.CachedNative");result.NativeTransform=native;
             if(native==0){result.Status="NOT_READY_NATIVE_NULL";result.Observations=reads.Recheck();Recheck(kernel,game);return result;}
+            CameraDiagnosticStage="HIERARCHY";
             ObjectReads.User(native,8,"native player camera transform");var tree=new ObjectReads(this,game.Root);ulong hierarchy=tree.Pointer(native+0x38,"camera hierarchy");int index=unchecked((int)tree.Word(native+0x40,"camera hierarchy index"));
             if(tree.Value(hierarchy,"Hierarchy.JobHandle")!=0||tree.Word(hierarchy+8,"Hierarchy.JobTag")!=0){result.Status="NOT_READY_JOB_PENDING";result.Observations=reads.Recheck()+tree.Recheck();Recheck(kernel,game);return result;}
             uint capacity=tree.Word(hierarchy+0x10,"camera hierarchy capacity");Expect(capacity>0 && capacity<=65536,"camera hierarchy capacity bound");
@@ -109,11 +117,13 @@ namespace HeadBridge.Mapping
                 int parent=unchecked((int)tree.Word(checked(parents+(ulong)index*4)));expected=tree.Value(current+0x90,"camera parent transform");
                 if(parent==-1){Expect(expected==0,"camera root parent backlink");break;}Expect(parent>=0 && (uint)parent<capacity && expected!=0,"camera parent link");index=parent;
             }
+            CameraDiagnosticStage="CAPTURE";
             PlayerCameraRecheck(reads,tree,hierarchy);List<NativeTrsChunk> chunks=NativeChunks(chain);
             Dictionary<int,byte[]> first=NativeCapture(game,matrices,chunks,false),second=NativeCapture(game,matrices,chunks,true);
             foreach(int node in chain)if(!EqualBytes(first[node],second[node])){PlayerCameraRecheck(reads,tree,hierarchy);throw new NativeHeadMotionException("PLAYER_CAMERA_TRS_CHANGED Index="+node);}
             float[] position=null,rotation=null;
             foreach(int node in chain){byte[] trs=second[node];float[] q=NativeVector(trs,16,4);NativeVector(trs,32,3);position=position==null?NativeVector(trs,0,3):NativeParentPosition(position,trs);rotation=rotation==null?q:CameraParentRotation(rotation,trs);CameraQuaternionNorm(rotation);for(int axis=0;axis<3;axis++)Expect(!float.IsNaN(position[axis])&&!float.IsInfinity(position[axis])&&Math.Abs(position[axis])<=10000000,"bounded player camera position");}
+            CameraDiagnosticStage="FINAL_RECHECK";
             result.Observations=PlayerCameraRecheck(reads,tree,hierarchy)+chain.Count;Recheck(kernel,game);
             result.Position=Array.ConvertAll(position,delegate(float x){return (double)x;});result.Rotation=Array.ConvertAll(rotation,delegate(float x){return (double)x;});result.ParentCount=chain.Count-1;result.Status="SAMPLED_READ_ONLY";return result;
         }

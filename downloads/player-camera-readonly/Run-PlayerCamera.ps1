@@ -76,7 +76,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
 }
 if(!$RuntimeDirectory){$RuntimeDirectory=Join-Path $PSScriptRoot 'baseline';if(!(Test-Path -LiteralPath $RuntimeDirectory)){$RuntimeDirectory=Join-Path $PSScriptRoot '..\bluestacks-process-map'}}
 $runtimeRoot=(Resolve-Path -LiteralPath $RuntimeDirectory).Path
-Record 'PlayerCameraProbeVersion=1 BaseRunner=52 ReadOnly=1'
+Record 'PlayerCameraProbeVersion=2 BaseRunner=52 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -86,7 +86,7 @@ try {
     $manifest = Get-Content -LiteralPath (Join-Path $runtimeRoot 'manifest.json') -Raw | ConvertFrom-Json
     if((Get-FileHash -LiteralPath (Join-Path $runtimeRoot 'manifest.json') -Algorithm SHA256).Hash -ine '03a3d4fc4b719d1481f67a5eaea901e34db5f1a87ebd710ce160e01c171b854a'){throw 'Expected immutable V52 baseline manifest.'}
     $extension=Get-Content -LiteralPath (Join-Path $PSScriptRoot 'manifest.json') -Raw|ConvertFrom-Json
-    foreach($name in @('Run-PlayerCamera.ps1','PlayerCameraReference.cs','PlayerCameraProbe.cs')){
+    foreach($name in @('Run-PlayerCamera.ps1','PlayerCameraReference.cs','PlayerCameraProbe.cs','GuestProcessMap.Diagnostics.cs')){
         $entry=@($extension.files|Where-Object name -CEQ $name)
         if($entry.Count -ne 1 -or (Get-FileHash -LiteralPath (Join-Path $PSScriptRoot $name) -Algorithm SHA256).Hash -ine $entry[0].sha256){throw "Player-camera source integrity mismatch: $name"}
     }
@@ -190,7 +190,7 @@ try {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
     # BEGIN COMPATIBLE COMPILE
-    $compileArguments = @{ Path = @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath, $damagePath, $damageReferencePath, $weaponPath, $weaponReferencePath, $firingPath, $firingReferencePath, $ammoPath, $ammoReferencePath, $aimStatePath, $aimStateReferencePath, (Join-Path $PSScriptRoot 'PlayerCameraProbe.cs'), (Join-Path $PSScriptRoot 'PlayerCameraReference.cs')); ErrorAction = 'Stop' }
+    $compileArguments = @{ Path = @((Join-Path $PSScriptRoot 'GuestProcessMap.Diagnostics.cs'), $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath, $damagePath, $damageReferencePath, $weaponPath, $weaponReferencePath, $firingPath, $firingReferencePath, $ammoPath, $ammoReferencePath, $aimStatePath, $aimStateReferencePath, (Join-Path $PSScriptRoot 'PlayerCameraProbe.cs'), (Join-Path $PSScriptRoot 'PlayerCameraReference.cs')); ErrorAction = 'Stop' }
     if ((Get-Command Add-Type).Parameters.ContainsKey('CompilerOptions')) {
         $compileArguments.CompilerOptions = @('/langversion:5')
     }

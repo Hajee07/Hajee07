@@ -1,0 +1,1 @@
+25 assertions PASS including cached remap diagnostic rejection. Compiler compatibility: 4 cases PASS. No mapping mismatch is suppressed or retried.
