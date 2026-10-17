@@ -209,3 +209,30 @@ conditional branch, lookup call, cached-cell load/store and tail dispatch checke
 Regeneration was byte-identical and an incorrect ELF was rejected. Runtime V52
 is unchanged. Reproduce with `python3 Audit-ObjectIdResolver.py libil2cpp.so
 global-metadata.dat report.json` using the pinned inputs.
+
+## Hit-association helper control flow
+
+[Inspector](Audit-HitAssociation.py) and [source report](hit-association.json)
+cover the previously pinned 512-byte window at `0x6f99220` (method 210965).
+The original path loads a reference from its input at `+0x18`, performs Unity
+Object null comparisons, calls external helpers and prepares interface dispatch.
+A `BLR X8` at `0x6f99400` supplies a boolean used to retain the candidate or
+return zero. This does not establish which concrete object is the player or
+which collider belongs to its head. The selected hotfix path tail-branches
+outside this window and remains unevaluated.
+
+This source includes metadata/class initialization and indirect calls; treating
+it as a pure pointer chain would omit behavior. No dynamic method target,
+current hotfix selection, object lifetime, target/head ownership or LOS semantics
+has been validated. No game function was invoked and no runtime code changed.
+
+Validation: 128 instructions decoded, 19 direct call targets independently
+recomputed from ARM64 instruction words, two Object operator registrations
+checked, and the indirect dispatch encoding verified. Conditional targets stay
+inside the inspected window; this is not a general function-boundary proof.
+Regeneration was byte-identical and an incorrect ELF was rejected.
+
+Reproduce with Capstone 5.0.3 available to Python:
+`python3 Audit-HitAssociation.py libil2cpp.so global-metadata.dat report.json`.
+The sibling pinned hit-query report is a required input. Windows remains V52;
+this source inspection does not require another Windows run.
