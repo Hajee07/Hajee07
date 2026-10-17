@@ -1,0 +1,8 @@
+PASS: resume captures only third report and preserves seed
+PASS: changed live identity rejected
+PASS: incomplete seeds rejected before capture
+PASS: changed live match rejected
+PASS: changed live native rejected
+PASS: preserved hashed seed copy survives later failures
+PASS: seed changed during live capture rejected by hash
+PASS: failed live capture cannot complete comparison

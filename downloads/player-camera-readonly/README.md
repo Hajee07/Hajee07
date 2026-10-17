@@ -106,3 +106,15 @@ PowerShell compatibility fix: compiler options are supplied only when Add-Type e
 Probe version 3 resolves live mappings before and after every data read. Cached translations cannot select an unvalidated data page. Changes during reads remain fatal and evict the cache entry. Local-context failures now carry LOCAL_CONTEXT. Offline: 27 assertions pass. Additional validation can exhaust existing retry budgets; no stale coordinates are returned. Live Windows validation is pending.
 
 Run-CameraComparison.ps1 guides three fresh captures: initial, manually turn right, then manually tilt up. It compares full quaternion angular changes only, including q/-q equivalence. It does not infer turn direction or certify rendered-camera correspondence. Stay stationary and stop turning before typing READY. Share the resulting JSON and, if available, a recording of the three on-screen views. Same process/player/managed transform required. Failed or invalid captures stop the helper.
+
+## Resume only a failed third comparison capture
+
+Run-CameraComparison.ps1 now accepts `-InitialReport` and `-RightTurnReport` together. It validates both saved reports, rejects duplicate paths and incompatible identities, copies both into a unique `camera-seed-*` directory, and records their SHA-256 values in seed.json. Only one fresh capture is requested. The original reports are not modified. Seed hashes are checked again before comparison.
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Run-CameraComparison.ps1 `
+  -InitialReport 'C:\path\initial-report.txt' `
+  -RightTurnReport 'C:\path\right-turn-report.txt'
+```
+
+Only type READY if still at the prior UP-tilt view with the same stationary player/match. Do not tilt up a second time. If the game/player/match/camera changed or the prior view is no longer reproducible, cancel and run without these two parameters for a new three-capture experiment. Missing saved reports also require a fresh run. Process, current game, match, player, managed transform and native transform identities must match across all reports. A new attempt has its own original read budget; no limit is raised. Another failed capture leaves the saved pair intact and produces no completed comparison. Live Windows resume remains pending; successful comparisons still report OBSERVATIONS_ONLY and do not certify rendered-camera or shot direction semantics.

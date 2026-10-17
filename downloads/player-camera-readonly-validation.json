@@ -1,6 +1,6 @@
 {
-  "package_sha256": "fd43862f447ad80e2684d388d7aa760267d0fba3b8a7c72b29754a876e54bbfb",
-  "extracted_extension_manifest_files": 21,
+  "package_sha256": "ee1b59782a389be63d319a3e5d9254f4638a14c1b07635d928d7225624a3b4ff",
+  "extracted_extension_manifest_files": 23,
   "unchanged_baseline_files": 124,
   "extracted_camera_assertions": 27,
   "inherited_suite_pass_lines": 1028,
@@ -8,9 +8,14 @@
   "runner_syntax": "PASS",
   "authored_integrity_block": "PASS",
   "modified_reference_fixture": "REJECTED",
-  "windows_live_execution": "V2_STALE_CACHE_OBSERVED_V3_PENDING",
+  "windows_live_execution": "V3_TWO_COMPARISON_CAPTURES_PASS_THIRD_BUDGET_EXHAUSTED",
   "game_functions_invoked": false,
   "aim_writes": false,
   "compiler_compatibility_cases": 4,
-  "diagnostic_mapping_fixture": "PASS"
+  "diagnostic_mapping_fixture": "PASS",
+  "resume_mock_cases": 8,
+  "comparison_parser_cases": 5,
+  "resume_seed_integrity": "COPIED_HASHED_RECHECKED",
+  "windows_resume_execution": "NOT_RUN",
+  "identity_scope": "HOST_GUEST_GAME_MATCH_PLAYER_MANAGED_AND_NATIVE_TRANSFORM"
 }

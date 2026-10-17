@@ -10,8 +10,8 @@
     },
     {
       "name": "Compare-CameraCaptures.ps1",
-      "bytes": 2524,
-      "sha256": "f38e1b1ae6ddbd26e334467ca7cdf31ccd0a1f37fd2e108b4d09fa63cd41b959"
+      "bytes": 2812,
+      "sha256": "f184f48886f7a6e288d3c6156dbb4fe793629cd259ec558e48ab18e4dda478b0"
     },
     {
       "name": "GuestProcessMap.Diagnostics.cs",
@@ -35,13 +35,13 @@
     },
     {
       "name": "README.md",
-      "bytes": 6927,
-      "sha256": "ecd889d00ed5ed3912b6bd43fc981a017e630d707b16dfeec68aa050f225ed93"
+      "bytes": 8345,
+      "sha256": "b46debded03822cd03391528ce7ef62a3a85f46a6f7c5905b65bf18c792bf2a2"
     },
     {
       "name": "Run-CameraComparison.ps1",
-      "bytes": 1507,
-      "sha256": "fdcdcd83dd4b1951f8fcec453f1b4c043a07e6abb0509b884dc7dd79d3b180a9"
+      "bytes": 3446,
+      "sha256": "f7fa629f6126377f84fd7fe17f3e1bcf01af513faec8057ac80aae59f75ac780"
     },
     {
       "name": "Run-Checks.ps1",
@@ -57,6 +57,11 @@
       "name": "Test-CameraComparison.ps1",
       "bytes": 1882,
       "sha256": "1861c33bb3fe3b4f0432b4227d67b4991f0b8070037906991696d2445cdd27f9"
+    },
+    {
+      "name": "Test-CameraResume.ps1",
+      "bytes": 4402,
+      "sha256": "6403afeaa3351575dc8e9f218eb3b409542eb99b651e135d9782f548510de459"
     },
     {
       "name": "Test-CompilerCompatibility.ps1",
@@ -90,13 +95,18 @@
     },
     {
       "name": "evidence/mapping-diagnostics.txt",
-      "bytes": 187,
-      "sha256": "017c4338432c3d75b1e0a879c708444312348d475e97cdeb22fe2fb5f5a39dfc"
+      "bytes": 245,
+      "sha256": "b7d051ad4843f6dc0bbb57688cb6ddba979d1519bc1633007f25f069ae28eecc"
     },
     {
       "name": "evidence/rendering.txt",
       "bytes": 72,
       "sha256": "4030aa7f8e764f57482ad2d88f1aac2c7507b49921a7e59e0572226dd7778596"
+    },
+    {
+      "name": "evidence/resume-tests.txt",
+      "bytes": 378,
+      "sha256": "34471938af0d10b77778a941858fea5c655347b73adfa1fc50a00fe689bb8c27"
     },
     {
       "name": "evidence/validation.json",

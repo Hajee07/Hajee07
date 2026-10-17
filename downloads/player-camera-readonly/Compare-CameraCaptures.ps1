@@ -13,6 +13,8 @@ function Read-CameraCapture([string]$Path) {
     }
     $hostId=(One '^Preflight=PASS .* HostPID=(\d+) ').Groups[1].Value
     $guestId=(One '^GameIdentity=PASS GuestPID=(\d+) ').Groups[1].Value
+    $context=One '^LocalPlayerObjects=PASS CurrentGame=(0x[0-9a-f]+) Match=(0x[0-9a-f]+) Player=(0x[0-9a-f]+) '
+    $native=(One '^PlayerCameraPose Status=SAMPLED_READ_ONLY .* NativeTransform=(0x[0-9a-f]+)').Groups[1].Value
     $player=(One '^LocalPlayerObjects=PASS .* Player=(0x[0-9a-f]+) ').Groups[1].Value
     $transform=(One '^PlayerCameraPose Status=SAMPLED_READ_ONLY .* ManagedTransform=(0x[0-9a-f]+) ').Groups[1].Value
     $rotation=One '^PlayerCameraWorldRotation X=(\S+) Y=(\S+) Z=(\S+) W=(\S+) '
@@ -20,7 +22,7 @@ function Read-CameraCapture([string]$Path) {
     $norm=0.0
     foreach($v in $q){if([double]::IsNaN($v)-or[double]::IsInfinity($v)){throw 'Nonfinite rotation'};$norm+=$v*$v}
     if([Math]::Abs($norm-1.0)-gt 0.02){throw 'Rotation norm outside tolerance'}
-    [pscustomobject]@{Path=$Path;Identity="$hostId/$guestId/$player/$transform";Quaternion=$q;NormSquared=$norm}
+    [pscustomobject]@{Path=$Path;Identity="$hostId/$guestId/$($context.Groups[1].Value)/$($context.Groups[2].Value)/$player/$transform/$native";Quaternion=$q;NormSquared=$norm}
 }
 function Compare-CameraCaptures([string[]]$Paths) {
     if($Paths.Count-ne 3){throw 'Exactly three fresh captures required'}

@@ -1,1 +1,1 @@
-27 assertions PASS. Stale cache uses newly validated page; change during read rejected; cache eviction verified. Motion retry stops at 6000-read cap without coordinates. Live v3 pending.
+27 camera assertions previously passed. User V3 Windows logs reported two successful comparison captures; third capture hit global 30000-read budget after a VMA scan retry. Resume Windows execution pending. No mapping/read-budget guard relaxed.
