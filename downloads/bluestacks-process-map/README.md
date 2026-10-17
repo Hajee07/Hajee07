@@ -1,10 +1,19 @@
+## V48 game camera getter entry gates
+
+Run `Run-ProcessMap.ps1 -ProbeAimState` once with the camera steady. V48 audits
+the game getter and IFix metadata guards plus slot 0x21bc0, with final byte
+rechecks. This is an entry-gate observation; active hotfix semantics, managed
+camera identity, Unity null/fallback selection and actual game camera are not
+established. Live V48 verification is pending. No calls or writes are added.
+See [entry-gate evidence](GAME-CAMERA-ENTRY-GATES-EVIDENCE.md).
+
 ## V47 controlled native camera pose experiment
 
 Run `Run-CameraPoseCheck.ps1` for eight READY prompts: baseline/right/restore/left,
 then baseline/up/restore/down. Hold the camera still during each capture. No
 controls are automated. This compares the native camera pose, preserves raw
-source reports and checks camera identity across all captures. Live V47 results
-and actual game camera getter identity remain pending.
+source reports and checks camera identity across all captures. V47 manual comparison passed;
+actual game camera getter identity remains pending.
 See [instructions and evidence](CAMERA-POSE-COMPARISON-EVIDENCE.md).
 
 ## V46 camera world rotation diagnostic

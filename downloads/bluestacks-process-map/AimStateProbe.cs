@@ -191,6 +191,19 @@ namespace HeadBridge.Mapping
             }
             sample.CameraPositionStatus="NOT_READY_PARENT_LIMIT";
         }
+        private static void ReadGameCameraEntryGate(ObjectReads reads,ModuleResult module,PlayerStateObservation sample,ulong wrappers,ulong length)
+        {
+            byte getter=reads.Byte(module.LoadBias+AimStateReference.GameCameraGetterInitCell,"GameCamera.GetterMetadataInit");
+            byte patch=reads.Byte(module.LoadBias+AimStateReference.CameraPatchInitCell,"GameCamera.PatchMetadataInit");
+            sample.GameCameraGetterInitRaw=getter;sample.GameCameraPatchInitRaw=patch;
+            sample.GameCameraGateStatus="NOT_READY_GETTER_METADATA_INITIALIZATION";if((getter&1)==0)return;
+            sample.GameCameraGateStatus="NOT_READY_PATCH_METADATA_INITIALIZATION";if((patch&1)==0)return;
+            bool present=HotfixEntry(reads,wrappers,length,AimStateReference.GameCameraGetterGate);
+            sample.GameCameraHotfixSlotPresent=present;
+            sample.GameCameraGateStatus=present?"HOTFIX_ENTRY_BRANCH_PRESENT":"ORIGINAL_ENTRY_BRANCH_GATES_CLEAR";
+            // This does not resolve a managed camera, evaluate Unity object null
+            // semantics, invoke an active hotfix, initialize classes or choose fallback.
+        }
         private static void ReadAimState(ObjectReads reads,ModuleResult module,GameLayoutResult layout,PlayerStateObservation sample,ulong playerBase,ulong wrappers,ulong length)
         {
             Expect(sample.IsLocal,"aim snapshot is local only");sample.AimRotationStatus="UNVERIFIED_AIM_GETTER_HOTFIX_ACTIVE";
@@ -217,6 +230,7 @@ namespace HeadBridge.Mapping
             ReadCameraUnityCode(reads,sample,camera,transform);
             ReadNativeCameraCandidate(reads,sample);
             ReadCameraPosition(reads,sample);
+            ReadGameCameraEntryGate(reads,module,sample,wrappers,length);
             sample.AimRotationStatus="ORIGINAL_LOCAL_GET_AIM_ROTATION_SAMPLED";
         }
         public PlayerStateResult SampleAimState(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)

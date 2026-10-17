@@ -1,4 +1,10 @@
 {
+  "camera_getter_entry_gates": {
+    "getter_init_cell": 184178458,
+    "patch_init_cell": 184223677,
+    "slot": 138176,
+    "scope": "Entry gates only; managed camera, hotfix function, class constructors and fallback not evaluated"
+  },
   "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
   "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
   "method": {
@@ -217,6 +223,21 @@
       "name": "get_transform_icall_name",
       "rva": 26917100,
       "hex": "556e697479456e67696e652e436f6d706f6e656e743a3a6765745f7472616e73666f726d282900"
+    },
+    {
+      "name": "CameraCheckPatch_0",
+      "rva": 142780956,
+      "hex": "fe57bea9f44f01a9353c01d0740301f0a8f65e3994ce45f9f303002ac8000037600301f000cc45f966a86c9428008052a8f61e39800240f908e040b968000035"
+    },
+    {
+      "name": "CameraCheckPatch_64",
+      "rva": 142781020,
+      "hex": "bea86c94800240f9085c40f9080140f9e80200b4091940b93f01136b0d02005409e040b9c9000035b4a86c94880240f9085d40f9080140f9a80100b4091940b9"
+    },
+    {
+      "name": "CameraCheckPatch_128",
+      "rva": 142781084,
+      "hex": "3f01136b6901005408cd338b081140f91f0100f1e0079f1a02000014e0031f2af44f41a9fe57c2a8c0035fd6eca86c94eda86c94"
     }
   ],
   "return_descriptor": 182039152,

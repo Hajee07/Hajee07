@@ -69,6 +69,8 @@ Reject-Pose $badNorm 'reported native quaternion norm must match raw components'
 $sign=@(New-PoseFixture | ForEach-Object { if ($_ -match '^CameraWorldRotation ') { $_ -replace ' W=1 ',' W=-1 ' } else { $_ } })
 $signed=ConvertFrom-CameraPoseReport $sign
 Check-Pose ($signed.AimCameraDifferenceDegrees -lt 0.00001 -and $signed.CameraQuaternion[3] -eq -1) 'q and minus-q compare as the same orientation while raw quaternion remains unchanged'
+$v48=@($valid | ForEach-Object { $_.Replace('ProcessMapVersion=47','ProcessMapVersion=48') })
+Check-Pose ((ConvertFrom-CameraPoseReport $v48).Version -eq 48) 'native pose parser retains V48 report compatibility without asserting game camera identity'
 $fractional=ConvertFrom-CameraPoseReport (New-PoseFixture 1.25 0 -DifferentAim)
 Check-Pose ([Math]::Abs($fractional.AimCameraDifferenceDegrees-1.25) -lt 0.000001) 'subdegree-sensitive angle metric uses floating-point Math overloads without integer rounding'
 $quarter=ConvertFrom-CameraPoseReport (New-PoseFixture 90 90)

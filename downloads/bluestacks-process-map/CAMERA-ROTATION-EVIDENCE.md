@@ -59,7 +59,8 @@ Sequential rechecks are not atomic and cannot exclude every ABA change.
 
 - A fresh Windows V46 capture is required to establish live source, hierarchy,
   position/rotation and cleanup checks for this version.
-- Controlled camera movement/rotation correlation is still pending.
+- V47 manual rotation correlation passed; independent translation and scene-change
+  experiments remain pending.
 - The actual game camera getter's hotfix/fallback path and managed wrapper
   identity remain unverified. Original Unity Camera.main selection alone does
   not establish that this is the game's rendered/aiming camera.

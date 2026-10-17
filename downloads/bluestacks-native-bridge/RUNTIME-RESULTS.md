@@ -1100,3 +1100,12 @@ V46 original-native camera position/rotation and source snapshot checks passed,
 4688 phase reads / 26298 total, all cleanup PASS. V47 adds a manual native-pose
 comparison experiment; its eight live captures are pending. Actual game getter,
 managed-wrapper identity, LOS/eligibility and aim writes remain unverified.
+
+
+## Accepted V47 / V48 preparation
+
+V47's full eight-stage native pose comparison passed and was independently
+recomputed from the uploaded reports. All cleanup passed. V48 adds only a
+read-only game getter entry-gate audit; its live results are pending. It does
+not establish managed camera identity, full hotfix/fallback semantics or aim
+integration.

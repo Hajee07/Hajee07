@@ -31,6 +31,9 @@ namespace HeadBridge.Mapping {
             new GameLayoutCheck("get_main_icall_name",0x1966d4bUL,"556e697479456e67696e652e43616d6572613a3a6765745f6d61696e282900"),
             new GameLayoutCheck("get_transform_0",0x9fe7aa8UL,"fe0f1ef8f44f01a9947e00d0813643f9f30300aac10000b520cefb9000b0239134b40d94e10300aa803603f9e00313aaf44f41a9fe0742f820001fd6"),
             new GameLayoutCheck("get_transform_icall_name",0x19ab8ecUL,"556e697479456e67696e652e436f6d706f6e656e743a3a6765745f7472616e73666f726d282900"),
+            new GameLayoutCheck("CameraCheckPatch_0",0x882aa1cUL,"fe57bea9f44f01a9353c01d0740301f0a8f65e3994ce45f9f303002ac8000037600301f000cc45f966a86c9428008052a8f61e39800240f908e040b968000035"),
+            new GameLayoutCheck("CameraCheckPatch_64",0x882aa5cUL,"bea86c94800240f9085c40f9080140f9e80200b4091940b93f01136b0d02005409e040b9c9000035b4a86c94880240f9085d40f9080140f9a80100b4091940b9"),
+            new GameLayoutCheck("CameraCheckPatch_128",0x882aa9cUL,"3f01136b6901005408cd338b081140f91f0100f1e0079f1a02000014e0031f2af44f41a9fe57c2a8c0035fd6eca86c94eda86c94"),
         };
         internal const ulong CameraMainCell=0xafb7380UL, ComponentTransformCell=0xafb9668UL;
         internal static readonly StateMethod[] CameraMethods={
@@ -38,5 +41,7 @@ namespace HeadBridge.Mapping {
             new StateMethod(31183028UL,0xaf5b3d8UL,0x9fa01d8UL,"3b76ee007e9f00005970000000000008ffffffffffffffffffffffff9901000696080010ffff0000"),
             new StateMethod(31291548UL,0xaf608a0UL,0x9fe7aa8UL,"83b523004da000006acd000000000008ffffffffffffffffffffffff320c000686080010ffff0000"),
         };
+        internal const ulong GameCameraGetterInitCell=0xafa571aUL, CameraPatchInitCell=0xafb07bdUL;
+        internal const int GameCameraGetterGate=0x21bc0;
     }
 }

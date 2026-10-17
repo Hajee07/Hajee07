@@ -1,3 +1,8 @@
+V48 adds a read-only game camera getter entry-gate audit. One `-ProbeAimState`
+capture reports metadata guards and IFix slot presence; full managed camera and
+fallback selection remain unverified. See
+[entry-gate evidence](bluestacks-process-map/GAME-CAMERA-ENTRY-GATES-EVIDENCE.md).
+
 V47 adds a manual eight-capture native camera pose experiment with source report
 validation, identity checks and yaw/pitch comparison. The native probe remains
 read-only; game-camera identity, LOS and aim updates remain unverified. See

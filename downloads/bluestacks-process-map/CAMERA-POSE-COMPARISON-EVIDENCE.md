@@ -1,6 +1,7 @@
 # V47 controlled native camera pose comparison
 
-Live V47 eight-stage validation is pending. This is a manual experiment, not
+Live V47 eight-stage manual comparison passed. See
+GAME-CAMERA-ENTRY-GATES-EVIDENCE.md for the accepted result and V48 scope. This is a manual experiment, not
 camera-control automation or aim integration. Existing native probe logic,
 read/time limits and cleanup are unchanged; the core runner reports V47.
 
