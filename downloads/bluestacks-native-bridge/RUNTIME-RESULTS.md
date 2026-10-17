@@ -1223,3 +1223,22 @@ and authoritative LOS; its output adapter is Unbound and LiveBindingReady=False.
 Removing PluginUnload evidence caused rejection. No optimistic proofs, live
 Frame/geometry adapter or game actuator were added. V52 runtime code and native
 plugin remain unchanged. This is source/offline validation, not live aim operation.
+
+## Offline hit-query/cache contract
+
+The follow-up records six source windows, three Player cache registrations and
+three declared type layouts. Physics.Raycast accepts origin/direction/out-hit,
+maxDistance and layerMask. Raw zero trigger forwarding is verified, but enum
+numeric decoding and live global physics policy remain explicitly unverified.
+A fixed-width Int32 interpretation of the compact-looking default storage failed;
+no enum name/value association was forced to make that check pass.
+
+RaycastHit.m_Collider is Int32 storage and requires object-ID resolution; it is
+not a Player address. Several on-disk RaycastHit offset words are uninterpreted
+markers, retained without conversion to runtime offsets. The property body alone
+establishes its payload load at +0x28; no live field-table agreement is claimed. Object.FindObjectFromInstanceID identity/prefix is recorded,
+not invoked or fully evaluated. Player fields e50/e58 reference a custom cache;
+e68 is an interface reference with no concrete Player layout. Cache world-space,
+head ownership, pooled lifetime/generation and freshness remain unverified.
+No live probe, resolver, physics query or aim write was added. V52 and the offline
+module remain unchanged; this is exact source-contract evidence only.

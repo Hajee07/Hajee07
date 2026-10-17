@@ -1,0 +1,853 @@
+{
+  "audit_version": 1,
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "physics_module_rva": 175282520,
+  "scope": "OFFLINE QUERY AND LAYOUT CONTRACT ONLY",
+  "object_id_resolver_identity": {
+    "index": 318208,
+    "owner": "UnityEngine.Object",
+    "name": "FindObjectFromInstanceID",
+    "rva": 167711276,
+    "registration_slot_rva": 183898896,
+    "source_prefix_hex": "fe0f1ef8f44f01a9547e0090810245f9f303002ac10000b5c0cdfbd000d02791",
+    "scope": "IDENTITY AND PREFIX ONLY; IMPLEMENTATION NOT FULLY EVALUATED"
+  },
+  "methods": [
+    {
+      "index": 332884,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168067580,
+      "registration_slot_rva": 183941752,
+      "return_descriptor": {
+        "rva": 182019280,
+        "bits": 2147614720,
+        "kind": 2,
+        "data": 37476,
+        "type_name": null
+      },
+      "parameters": [
+        {
+          "name": "origin",
+          "descriptor": {
+            "rva": 182051808,
+            "bits": 2148597760,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          }
+        },
+        {
+          "name": "direction",
+          "descriptor": {
+            "rva": 182051808,
+            "bits": 2148597760,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          }
+        },
+        {
+          "name": "hitInfo",
+          "descriptor": {
+            "rva": 182039408,
+            "bits": 537985026,
+            "kind": 17,
+            "data": 43049,
+            "type_name": "UnityEngine.RaycastHit"
+          }
+        },
+        {
+          "name": "maxDistance",
+          "descriptor": {
+            "rva": 182042176,
+            "bits": 2148270080,
+            "kind": 12,
+            "data": 37579,
+            "type_name": null
+          }
+        },
+        {
+          "name": "layerMask",
+          "descriptor": {
+            "rva": 182031024,
+            "bits": 2148007936,
+            "kind": 8,
+            "data": 37537,
+            "type_name": null
+          }
+        }
+      ],
+      "source_hex": "ffc301d1ee0b00fdedb3016debab026de9a3036dfe2700f9f65705a9f44f06a9967b00f0b53700d0c89a7739b57e43f9f303012ac81ca64ef40300aaa91ca54e8a1ca44e6b1ca34e4c1ca24e2d1ca14e0e1ca04ec8000037a03700d0007c43f960320c9428008052c89a3739a00240f908e040b948000035b8320c9407fdff97e00b00b9e0230091c01dae4ea11dad4e821dac4e631dab4e441daa4e251da94ee10314aa061da84ee203132ae3031f2aa8feff97f44f46a9f65745a9fe2740f9e9a3436debab426dedb3416dee0b40fd00000012ffc30191c0035fd6",
+      "window_bytes": 220,
+      "source_bound": "PINNED INSPECTED WINDOW; NOT A GENERAL FUNCTION-SIZE ALGORITHM",
+      "metadata_record_hex": "2d564b0026a800000b630000000000089b300400ffffffffffffffff2600000696000000ffff0500"
+    },
+    {
+      "index": 210965,
+      "owner": "COW.GamePlay.Player",
+      "name": "JGIEOGCGFEP",
+      "rva": 117019168,
+      "registration_slot_rva": 179482704,
+      "return_descriptor": {
+        "rva": 182429872,
+        "bits": 1179648,
+        "kind": 18,
+        "data": 31910,
+        "type_name": "COW.GamePlay.OGKFEMJNCGM"
+      },
+      "parameters": [
+        {
+          "name": "FGNEDKANDJM",
+          "descriptor": {
+            "rva": 182020576,
+            "bits": 1183760,
+            "kind": 18,
+            "data": 34264,
+            "type_name": "COW.GamePlay.CGKJLKPMGDJ"
+          }
+        }
+      ],
+      "source_hex": "fe57bea9f44f01a975000290a8ea6239f30301aaf40300aae8010037e0c001d0005c42f966eece9460c501d0009043f963eece94e0c001d0009042f960eece9400bd0190003446f95deece9428008052a8ea2239204f8952e1031faae845629460010036204f8952e1031faa11466294600c00b4e10314aae20313aaf44f41a9e3031faafe57c2a81a885614b30000b5e00314aaac2dfe97f30300aa600a00b415bd0190b53646f9740e40f9a00240f908e040b9480000359feece94e00314aae1031faae2031faa5e4bc194f4031faae0080037600e40f9200900b4e8c001d0085d42f9010140f9cbd06e94a80240f9f30300aa09e140b969000035e00308aa8deece94e00313aae1031faae2031faab146c194a0060036330700b4e00313aae1031faa28fd2e94a80240f9f30300aa09e140b969000035e00308aa7eeece94e00313aae1031faae2031faaa246c194c0040036530500b468c501d0089143f9e00313aa010140f9abd06e94e00300b4e8c001d0089142f9150040f9f40300aa130140f9e00315aaecf1ce94a85e4279280100b4a95a40f9292100912a815ff85f0113eb20010054080500f12941009161ffff5482008052e00314aae10313aa12f2ce9405000014280140b908110011a8d2288b00e10491080440a9e00314aa00013fd640000037f4031faae00314aaf44f41a9fe57c2a8c0035fd697eece94",
+      "window_bytes": 512,
+      "source_bound": "PINNED INSPECTED WINDOW; NOT A GENERAL FUNCTION-SIZE ALGORITHM",
+      "metadata_record_hex": "089e5800507c00001cb3000000000008bdf10100ffffffff794a00001638030681000000ffff0100"
+    },
+    {
+      "index": 333307,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Raycast",
+      "rva": 168066380,
+      "registration_slot_rva": 183945136,
+      "return_descriptor": {
+        "rva": 182019280,
+        "bits": 2147614720,
+        "kind": 2,
+        "data": 37476,
+        "type_name": null
+      },
+      "parameters": [
+        {
+          "name": "origin",
+          "descriptor": {
+            "rva": 182051808,
+            "bits": 2148597760,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          }
+        },
+        {
+          "name": "direction",
+          "descriptor": {
+            "rva": 182051808,
+            "bits": 2148597760,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          }
+        },
+        {
+          "name": "hitInfo",
+          "descriptor": {
+            "rva": 182039408,
+            "bits": 537985026,
+            "kind": 17,
+            "data": 43049,
+            "type_name": "UnityEngine.RaycastHit"
+          }
+        },
+        {
+          "name": "maxDistance",
+          "descriptor": {
+            "rva": 182042480,
+            "bits": 2148274192,
+            "kind": 12,
+            "data": 37579,
+            "type_name": null
+          }
+        },
+        {
+          "name": "layerMask",
+          "descriptor": {
+            "rva": 182031408,
+            "bits": 2148012048,
+            "kind": 8,
+            "data": 37537,
+            "type_name": null
+          }
+        },
+        {
+          "name": "queryTriggerInteraction",
+          "descriptor": {
+            "rva": 182469584,
+            "bits": 2148601872,
+            "kind": 17,
+            "data": 43043,
+            "type_name": "UnityEngine.QueryTriggerInteraction"
+          }
+        }
+      ],
+      "source_hex": "ff8302d1ef3b026ded33036deb2b046de923056dfe3300f9f85f07a9f65708a9f44f09a90b1ca04e00e4006f20c0813c200000ad377a0090e8524339f303032a",
+      "window_bytes": 64,
+      "source_bound": "PARTIAL 64-BYTE PREFIX ONLY; BODY NOT FULLY EVALUATED",
+      "metadata_record_hex": "2d564b0033a800000b6300000000000859340400ffffffffffffffffcd01000686000000ffff0600"
+    },
+    {
+      "index": 333045,
+      "owner": "UnityEngine.RaycastHit",
+      "name": "get_collider",
+      "rva": 168097444,
+      "registration_slot_rva": 183943040,
+      "return_descriptor": {
+        "rva": 182179120,
+        "bits": 1179648,
+        "kind": 18,
+        "data": 43051,
+        "type_name": "UnityEngine.Collider"
+      },
+      "parameters": [],
+      "source_hex": "fe57bea9f44f01a9757b0090543700d0a8227f39943646f9f30300aa28010037404300d0001440f944150c94403700d0003446f941150c9428008052a8223f39800240f9732a40b908e040b94800003598150c94e003132ae1031faacb86fe97000200b4484300d0081540f9090040f9080140f92bc144390ac144397f010a6b62000054e0031faa06000014296540f9290d0a8b29815ff83f0108eb00009f9af44f41a9fe57c2a8c0035fd600400091d4ffff17",
+      "window_bytes": 180,
+      "source_bound": "PINNED INSPECTED WINDOW; NOT A GENERAL FUNCTION-SIZE ALGORITHM",
+      "metadata_record_hex": "82d0f30029a800004473000000000008ffffffffffffffffffffffffc700000686080000ffff0000"
+    },
+    {
+      "index": 333046,
+      "owner": "UnityEngine.RaycastHit",
+      "name": "get_point",
+      "rva": 168097624,
+      "registration_slot_rva": 183943048,
+      "return_descriptor": {
+        "rva": 182051808,
+        "bits": 2148597760,
+        "kind": 17,
+        "data": 40979,
+        "type_name": "UnityEngine.Vector3"
+      },
+      "parameters": [],
+      "source_hex": "0004402d020840bdc0035fd60004422d021840bdc0035fd6",
+      "window_bytes": 24,
+      "source_bound": "PINNED INSPECTED WINDOW; NOT A GENERAL FUNCTION-SIZE ALGORITHM",
+      "metadata_record_hex": "8fd0f30029a80000f119010000000008ffffffffffffffffffffffffc800000686080000ffff0000"
+    },
+    {
+      "index": 333047,
+      "owner": "UnityEngine.RaycastHit",
+      "name": "get_normal",
+      "rva": 168097648,
+      "registration_slot_rva": 183943056,
+      "return_descriptor": {
+        "rva": 182051808,
+        "bits": 2148597760,
+        "kind": 17,
+        "data": 40979,
+        "type_name": "UnityEngine.Vector3"
+      },
+      "parameters": [],
+      "source_hex": "0084412d021440bdc0035fd60084432d022440bdc0035fd6",
+      "window_bytes": 24,
+      "source_bound": "PINNED INSPECTED WINDOW; NOT A GENERAL FUNCTION-SIZE ALGORITHM",
+      "metadata_record_hex": "bd86ee0029a80000f119010000000008ffffffffffffffffffffffffc900000686080000ffff0000"
+    }
+  ],
+  "player_cache_fields": [
+    {
+      "owner": 31824,
+      "local": 670,
+      "name": "FDMIEDDNCEC",
+      "registration_word": 3664,
+      "source_offset_candidate": 3664,
+      "offset_status": "SOURCE_REGISTRATION_ONLY",
+      "live_offset_verified": false,
+      "offset_registration_rva": 27160636,
+      "descriptor": {
+        "rva": 182020512,
+        "bits": 1179649,
+        "kind": 18,
+        "data": 34264,
+        "type_name": "COW.GamePlay.CGKJLKPMGDJ"
+      },
+      "metadata_record_hex": "dab55900fe640000b8d80304"
+    },
+    {
+      "owner": 31824,
+      "local": 671,
+      "name": "PKIOAMDCOPB",
+      "registration_word": 3672,
+      "source_offset_candidate": 3672,
+      "offset_status": "SOURCE_REGISTRATION_ONLY",
+      "live_offset_verified": false,
+      "offset_registration_rva": 27160640,
+      "descriptor": {
+        "rva": 182020512,
+        "bits": 1179649,
+        "kind": 18,
+        "data": 34264,
+        "type_name": "COW.GamePlay.CGKJLKPMGDJ"
+      },
+      "metadata_record_hex": "e6b55900fe640000b9d80304"
+    },
+    {
+      "owner": 31824,
+      "local": 675,
+      "name": "<JMPDDMAMFML>k__BackingField",
+      "registration_word": 3688,
+      "source_offset_candidate": 3688,
+      "offset_status": "SOURCE_REGISTRATION_ONLY",
+      "live_offset_verified": false,
+      "offset_registration_rva": 27160656,
+      "descriptor": {
+        "rva": 182429888,
+        "bits": 1179649,
+        "kind": 18,
+        "data": 31910,
+        "type_name": "COW.GamePlay.OGKFEMJNCGM"
+      },
+      "metadata_record_hex": "2bb659001db30000bdd80304"
+    }
+  ],
+  "layouts": [
+    {
+      "index": 34264,
+      "name": "COW.GamePlay.CGKJLKPMGDJ",
+      "type_attributes": 1048577,
+      "interface_flag": false,
+      "source_instance_size": 152,
+      "source_native_size": 4294967295,
+      "parent_descriptor": {
+        "rva": 182436384,
+        "bits": 1179648,
+        "kind": 18,
+        "data": 36213,
+        "type_name": "GCommon.ObjectPoolCallbackBase"
+      },
+      "type_record_hex": "bb806000c6f75700fd640000ffffffffcfb40000fd640000ffffffff010010007e1e0400eab70300fffffffffffffffffffffffffffffffffa8b0900e0720000090000001200000000000a0000000100080c0000d9850002",
+      "fields": [
+        {
+          "owner": 34264,
+          "local": 0,
+          "name": "NOBLHPEGOIK",
+          "registration_word": 0,
+          "source_offset_candidate": 0,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229388,
+          "descriptor": {
+            "rva": 174270928,
+            "bits": 1376273,
+            "kind": 21,
+            "data": 0,
+            "type_name": null
+          },
+          "metadata_record_hex": "df8060007c4200007f1e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 1,
+          "name": "JHAINOBIFMA",
+          "registration_word": 24,
+          "source_offset_candidate": 24,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229392,
+          "descriptor": {
+            "rva": 182027536,
+            "bits": 1179654,
+            "kind": 18,
+            "data": 41050,
+            "type_name": "UnityEngine.GameObject"
+          },
+          "metadata_record_hex": "eb8060004f8f0000801e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 2,
+          "name": "JINDNOFABKB",
+          "registration_word": 32,
+          "source_offset_candidate": 32,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229396,
+          "descriptor": {
+            "rva": 182179184,
+            "bits": 1179654,
+            "kind": 18,
+            "data": 43051,
+            "type_name": "UnityEngine.Collider"
+          },
+          "metadata_record_hex": "f780600048730000811e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 3,
+          "name": "HPCOJHGFEEG",
+          "registration_word": 40,
+          "source_offset_candidate": 40,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229400,
+          "descriptor": {
+            "rva": 182051872,
+            "bits": 2148597766,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          },
+          "metadata_record_hex": "03816000f5190100821e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 4,
+          "name": "DOJDNHCGFGK",
+          "registration_word": 52,
+          "source_offset_candidate": 52,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229404,
+          "descriptor": {
+            "rva": 182051872,
+            "bits": 2148597766,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          },
+          "metadata_record_hex": "02c40800f5190100831e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 5,
+          "name": "HLDECMJFKJK",
+          "registration_word": 64,
+          "source_offset_candidate": 64,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229408,
+          "descriptor": {
+            "rva": 182051872,
+            "bits": 2148597766,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          },
+          "metadata_record_hex": "0f816000f5190100841e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 6,
+          "name": "EKPLMDDKOGB",
+          "registration_word": 76,
+          "source_offset_candidate": 76,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229412,
+          "descriptor": {
+            "rva": 182051872,
+            "bits": 2148597766,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          },
+          "metadata_record_hex": "e3f70800f5190100851e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 7,
+          "name": "OLGEMBBDBID",
+          "registration_word": 88,
+          "source_offset_candidate": 88,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229416,
+          "descriptor": {
+            "rva": 182031104,
+            "bits": 2148007942,
+            "kind": 8,
+            "data": 37537,
+            "type_name": null
+          },
+          "metadata_record_hex": "22b90800ad9b0000861e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 8,
+          "name": "CFIPDNFBKHK",
+          "registration_word": 92,
+          "source_offset_candidate": 92,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229420,
+          "descriptor": {
+            "rva": 182042240,
+            "bits": 2148270086,
+            "kind": 12,
+            "data": 37579,
+            "type_name": null
+          },
+          "metadata_record_hex": "dbf85a00c1c50000871e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 9,
+          "name": "GABPHAKNADH",
+          "registration_word": 96,
+          "source_offset_candidate": 96,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229424,
+          "descriptor": {
+            "rva": 182031104,
+            "bits": 2148007942,
+            "kind": 8,
+            "data": 37537,
+            "type_name": null
+          },
+          "metadata_record_hex": "1b816000ad9b0000881e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 10,
+          "name": "DKPDBLLJEAA",
+          "registration_word": 100,
+          "source_offset_candidate": 100,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229428,
+          "descriptor": {
+            "rva": 182367936,
+            "bits": 2148597766,
+            "kind": 17,
+            "data": 34263,
+            "type_name": "COW.GamePlay.LKOOALMKJND"
+          },
+          "metadata_record_hex": "2781600079a30000891e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 11,
+          "name": "DIDOKHNBBAD",
+          "registration_word": 104,
+          "source_offset_candidate": 104,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229432,
+          "descriptor": {
+            "rva": 182455856,
+            "bits": 1179654,
+            "kind": 18,
+            "data": 43048,
+            "type_name": "UnityEngine.PhysicMaterial"
+          },
+          "metadata_record_hex": "33816000b1b900008a1e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 12,
+          "name": "EFMBNPNFGHM",
+          "registration_word": 112,
+          "source_offset_candidate": 112,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229436,
+          "descriptor": {
+            "rva": 182019344,
+            "bits": 2147614726,
+            "kind": 2,
+            "data": 37476,
+            "type_name": null
+          },
+          "metadata_record_hex": "3f8160000f6300008b1e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 13,
+          "name": "CEOKOILBODN",
+          "registration_word": 113,
+          "source_offset_candidate": 113,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229440,
+          "descriptor": {
+            "rva": 182019344,
+            "bits": 2147614726,
+            "kind": 2,
+            "data": 37476,
+            "type_name": null
+          },
+          "metadata_record_hex": "4b8160000f6300008c1e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 14,
+          "name": "ONMKMEGMHOL",
+          "registration_word": 116,
+          "source_offset_candidate": 116,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229444,
+          "descriptor": {
+            "rva": 182051872,
+            "bits": 2148597766,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          },
+          "metadata_record_hex": "57816000f51901008d1e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 15,
+          "name": "CLOLKHNMNEK",
+          "registration_word": 128,
+          "source_offset_candidate": 128,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229448,
+          "descriptor": {
+            "rva": 182030880,
+            "bits": 2147876870,
+            "kind": 6,
+            "data": 37536,
+            "type_name": null
+          },
+          "metadata_record_hex": "53dc08009e9b00008e1e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 16,
+          "name": "MGBCGEBLKJB",
+          "registration_word": 136,
+          "source_offset_candidate": 136,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229452,
+          "descriptor": {
+            "rva": 174108208,
+            "bits": 1376262,
+            "kind": 21,
+            "data": 0,
+            "type_name": null
+          },
+          "metadata_record_hex": "f4885f00022700008f1e0404"
+        },
+        {
+          "owner": 34264,
+          "local": 17,
+          "name": "ANJGNHKHOKO",
+          "registration_word": 144,
+          "source_offset_candidate": 144,
+          "offset_status": "SOURCE_REGISTRATION_ONLY",
+          "live_offset_verified": false,
+          "offset_registration_rva": 27229456,
+          "descriptor": {
+            "rva": 182043248,
+            "bits": 917510,
+            "kind": 14,
+            "data": 37434,
+            "type_name": null
+          },
+          "metadata_record_hex": "63816000aec80000901e0404"
+        }
+      ]
+    },
+    {
+      "index": 43049,
+      "name": "UnityEngine.RaycastHit",
+      "type_attributes": 1048841,
+      "interface_flag": false,
+      "source_instance_size": 60,
+      "source_native_size": 44,
+      "parent_descriptor": {
+        "rva": 182839456,
+        "bits": 1179648,
+        "kind": 18,
+        "data": 37744,
+        "type_name": "System.ValueType"
+      },
+      "type_record_hex": "95e1f3009b64ee002dbe0000ffffffffbb1901002dbe0000ffffffff09011000ff3b0700f5140500ffffffff2c620000ffffffffffffffff58860b00ffffffff06000600060000000000040000000000110c000011000002",
+      "fields": [
+        {
+          "owner": 43049,
+          "local": 0,
+          "name": "m_Point",
+          "registration_word": 2172748193,
+          "source_offset_candidate": null,
+          "offset_status": "UNINTERPRETED_REGISTRATION_MARKER",
+          "live_offset_verified": false,
+          "offset_registration_rva": 28046032,
+          "descriptor": {
+            "rva": 182051840,
+            "bits": 2148597763,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          },
+          "metadata_record_hex": "e4fd3d00f319010050000004"
+        },
+        {
+          "owner": 43049,
+          "local": 1,
+          "name": "m_Normal",
+          "registration_word": 2172748197,
+          "source_offset_candidate": null,
+          "offset_status": "UNINTERPRETED_REGISTRATION_MARKER",
+          "live_offset_verified": false,
+          "offset_registration_rva": 28046036,
+          "descriptor": {
+            "rva": 182051840,
+            "bits": 2148597763,
+            "kind": 17,
+            "data": 40979,
+            "type_name": "UnityEngine.Vector3"
+          },
+          "metadata_record_hex": "2387ee00f319010051000004"
+        },
+        {
+          "owner": 43049,
+          "local": 2,
+          "name": "m_FaceID",
+          "registration_word": 2172748177,
+          "source_offset_candidate": null,
+          "offset_status": "UNINTERPRETED_REGISTRATION_MARKER",
+          "live_offset_verified": false,
+          "offset_registration_rva": 28046040,
+          "descriptor": {
+            "rva": 182050080,
+            "bits": 2148073475,
+            "kind": 9,
+            "data": 37607,
+            "type_name": null
+          },
+          "metadata_record_hex": "aee1f3009d17010052000004"
+        },
+        {
+          "owner": 43049,
+          "local": 3,
+          "name": "m_Distance",
+          "registration_word": 2172748177,
+          "source_offset_candidate": null,
+          "offset_status": "UNINTERPRETED_REGISTRATION_MARKER",
+          "live_offset_verified": false,
+          "offset_registration_rva": 28046044,
+          "descriptor": {
+            "rva": 182042208,
+            "bits": 2148270083,
+            "kind": 12,
+            "data": 37579,
+            "type_name": null
+          },
+          "metadata_record_hex": "7ff21e00bfc5000053000004"
+        },
+        {
+          "owner": 43049,
+          "local": 4,
+          "name": "m_UV",
+          "registration_word": 2172748177,
+          "source_offset_candidate": null,
+          "offset_status": "UNINTERPRETED_REGISTRATION_MARKER",
+          "live_offset_verified": false,
+          "offset_registration_rva": 28046048,
+          "descriptor": {
+            "rva": 182051424,
+            "bits": 2148597763,
+            "kind": 17,
+            "data": 40982,
+            "type_name": "UnityEngine.Vector2"
+          },
+          "metadata_record_hex": "ab14eb00d719010054000004"
+        },
+        {
+          "owner": 43049,
+          "local": 5,
+          "name": "m_Collider",
+          "registration_word": 2172748181,
+          "source_offset_candidate": null,
+          "offset_status": "UNINTERPRETED_REGISTRATION_MARKER",
+          "live_offset_verified": false,
+          "offset_registration_rva": 28046052,
+          "descriptor": {
+            "rva": 182031056,
+            "bits": 2148007939,
+            "kind": 8,
+            "data": 37537,
+            "type_name": null
+          },
+          "metadata_record_hex": "012c0000aa9b000055000004"
+        }
+      ]
+    },
+    {
+      "index": 31910,
+      "name": "COW.GamePlay.OGKFEMJNCGM",
+      "type_attributes": 160,
+      "interface_flag": true,
+      "source_instance_size": 0,
+      "source_native_size": 4294967295,
+      "parent_descriptor": null,
+      "type_record_hex": "e39b5a00c6f757001cb30000ffffffffffffffff1cb30000ffffffffa0000000ffffffff194b0300ffffffff2b310000ffffffffffffffffffffffffffffffff16000700000000000000000000000000000c0000a77c0002",
+      "fields": []
+    }
+  ],
+  "findings": [
+    "Raycast takes origin, direction, output hitInfo, maxDistance and layerMask, not a player/head identity.",
+    "RaycastHit.m_Collider is Int32 storage; it must not be interpreted as a managed Player address.",
+    "Several RaycastHit field registration words are encoded/uninterpreted markers; they are preserved and not promoted to runtime offsets.",
+    "The Player cached attackable reference is declared as an interface, not a concrete object layout.",
+    "This overload forwards raw trigger value zero; the enum default-data encoding and current live global trigger setting were not established.",
+    "The custom hit-data cache contains GameObject/Collider references and Vector3 values, but freshness, coordinate semantics, hit ownership and head association remain unverified.",
+    "No live object-ID resolver, collision snapshot, engine query, target association or aim adapter is supplied."
+  ],
+  "collider_source_load": {
+    "rva": 168097512,
+    "payload_offset": 40,
+    "word_hex": "732a40b9",
+    "scope": "PROPERTY BODY LOAD ONLY; FIELD REGISTRATION MARKERS NOT DECODED"
+  },
+  "trigger_policy": {
+    "enum_type": 43043,
+    "default_storage": [
+      {
+        "name": "UseGlobal",
+        "default_record": [
+          474089,
+          39848,
+          3453285
+        ],
+        "metadata_data_offset": 38346557,
+        "raw_prefix_hex": "0002040002040600",
+        "numeric_value": "UNVERIFIED"
+      },
+      {
+        "name": "Ignore",
+        "default_record": [
+          474090,
+          39848,
+          3453286
+        ],
+        "metadata_data_offset": 38346558,
+        "raw_prefix_hex": "0204000204060000",
+        "numeric_value": "UNVERIFIED"
+      },
+      {
+        "name": "Collide",
+        "default_record": [
+          474091,
+          39848,
+          3453287
+        ],
+        "metadata_data_offset": 38346559,
+        "raw_prefix_hex": "0400020406000080",
+        "numeric_value": "UNVERIFIED"
+      }
+    ],
+    "constant_decoding_status": "UNVERIFIED_DEFAULT_DATA_ENCODING",
+    "forwarded_raw_value": 0,
+    "mode": "UNVERIFIED_RAW_ZERO",
+    "live_global_setting": "NOT_CAPTURED"
+  },
+  "runtime_cache_verified": false,
+  "head_los_verified": false,
+  "functions_invoked": false,
+  "aim_writes": false
+}

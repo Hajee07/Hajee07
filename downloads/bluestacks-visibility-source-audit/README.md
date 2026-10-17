@@ -114,3 +114,75 @@ B/BL target decodings matched independent Capstone 5.0.3 decoding. The five prim
 source windows matched the pinned ELF, both player-identity parameter types were
 checked, and all three primary raycast transfers lay within their recorded
 windows. A wrong ELF input was rejected. No live LOS test was performed.
+
+## Follow-up: hit-query contract and cached reference layouts
+
+`Build-HitQueryContract.py` generates `hit-query-contract.json` from the exact
+pinned ELF and metadata inputs. It records six inspected source windows, the
+three Player cache-field registrations, and three type layouts. This is source
+reference preparation, not a new live probe or a completed game binding.
+
+The five-argument query signature is `origin`, `direction`, output `hitInfo`,
+`maxDistance`, `layerMask`, returning a Boolean. It does not take a selected
+player or head identity. The wrapper passes a raw zero trigger argument to the
+six-argument PhysicsScene overload. That overload is represented by its method
+identity/signature and a **partial 64-byte prefix**, not a fully evaluated body.
+The current global physics setting is not captured.
+
+A first attempt to interpret trigger enum default storage as fixed-width Int32
+failed. The report therefore retains the raw default records/prefixes and
+`UNVERIFIED_DEFAULT_DATA_ENCODING`; it does not force a numeric enum mapping or
+claim `UseGlobal` was established. Raw zero forwarding is verified separately
+from interpretation of those metadata values. Earlier informal speculation
+about the enum label is not part of the verified result.
+
+`RaycastHit.m_Collider` is an **Int32 ID**, not a managed Player pointer. Its
+property body loads a 32-bit value at payload offset `0x28`. Its on-disk field
+registration contains an uninterpreted marker, so no agreement with a decoded
+runtime field offset is claimed. The markers are retained with a null source
+offset candidate and `live_offset_verified=false`; they must not be used as
+addresses. The collider
+property calls the registered `Object.FindObjectFromInstanceID` resolver and
+checks the resolved object type. The resolver identity and prefix are recorded;
+its implementation, lifetime rules and a read-only resolver binding remain
+unestablished. No resolver or game function was invoked.
+
+| Registered Player field | Declared type | What this establishes |
+| --- | --- | --- |
+| `FDMIEDDNCEC` at `0xe50` | `CGKJLKPMGDJ` | Typed cache field registration only |
+| `PKIOAMDCOPB` at `0xe58` | `CGKJLKPMGDJ` | Another field of that declared cache type |
+| `<JMPDDMAMFML>k__BackingField` at `0xe68` | `OGKFEMJNCGM` interface | Reference contract, not a concrete Player layout |
+
+The custom cache type declares GameObject/Collider references and Vector3 fields;
+its declared parent is ObjectPoolCallbackBase. Coordinate meaning, cache age,
+lease/generation, dynamic target identity and head association have not been
+validated. Its vectors must not be renamed head positions merely because their
+storage type is Vector3. The interface declaration has no concrete instance
+layout to follow as a Player object.
+
+The target-resolution helper at RVA `0x6f99220` is recorded using an explicitly
+inspected 512-byte window. Its next metadata-order method does not provide a
+valid function bound, so that larger range is not read or presented as its body.
+All its conditional branch targets were independently checked to lie inside the
+chosen window. Other source windows can include associated adjustor thunks;
+none is a general-purpose function-boundary recovery claim.
+
+Reproduce with the pinned inputs and the sibling parser:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 Build-HitQueryContract.py \
+  /path/to/libil2cpp.so /path/to/global-metadata.dat /tmp/hit-query-contract.json
+```
+
+Remaining requirements are an authoritative query/scene policy or complete
+matching geometry, verified object-ID/target association, correct head/camera
+coordinates, freshness/lifetime checks and the actual output adapter. The
+existing offline targeting module cannot supply those by assigning Proof.Yes.
+The Windows runner remains V52; no new Windows capture is required for this
+source-only contract extraction.
+
+Validation: all six recorded windows matched the pinned ELF bytes. An independent
+Capstone check verified 19 conditional targets within the helper window and the
+collider payload load/resolver call. Uninterpreted offset markers and unknown
+trigger mapping remained explicit. Regeneration was byte-identical; a wrong ELF
+was rejected. These are source checks, not live LOS or aim integration tests.

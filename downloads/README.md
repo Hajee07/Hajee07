@@ -1,3 +1,5 @@
+The [hit-query/cache contract](bluestacks-visibility-source-audit/README.md#follow-up-hit-query-contract-and-cached-reference-layouts) now records the exact query signature, collider-ID distinction and declared cache/interface layouts. These source references do not establish live head LOS or a game adapter.
+
 The uploaded advanced targeting sources are now [reviewed as a separate offline module](targeting-offline/README.md): V52 source compile compatibility, 579 synthetic assertions and a source-rebuilt simulation passed. Live geometry, target proofs and game output remain unbound.
 
 The [physics-query follow-up](bluestacks-visibility-source-audit/README.md#follow-up-camera-mode-delegate-and-real-raycast-callers) identifies registered Player raycast call sites and distinguishes them from verified selected-head LOS. This remains offline source evidence; Windows runner V52 is unchanged.
