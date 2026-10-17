@@ -100,3 +100,5 @@ baseline parser. See reference.json and evidence files for measured fixture
 results, exact counts and validation scope. Tests use an owned synthetic memory
 transport, not uploaded binaries or a live game. They cannot measure headshot
 accuracy or validate active rendering.
+
+PowerShell compatibility fix: compiler options are supplied only when Add-Type exposes that parameter. Both parameter surfaces are covered by Test-CompilerCompatibility.ps1. Live Windows capture remains unverified.

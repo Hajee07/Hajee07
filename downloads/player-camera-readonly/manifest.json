@@ -25,18 +25,23 @@
     },
     {
       "name": "README.md",
-      "bytes": 5816,
-      "sha256": "97d58a062a9c2d359974d30be5b3c9261143c83e892576b13305c170d724e71a"
+      "bytes": 6032,
+      "sha256": "72d9c7860bdc8676760dbefe7e99563a026177229ceef22997a1b8afc305c3c9"
     },
     {
       "name": "Run-Checks.ps1",
-      "bytes": 1083,
-      "sha256": "39a8ba952d3d791e1b54bf6eb7b5987555dc44ec79739291a6a09c7efd6b884d"
+      "bytes": 1298,
+      "sha256": "ab1ae42736726a08185c69d7ab496e89b60d2256149264eb151eeec18ad80487"
     },
     {
       "name": "Run-PlayerCamera.ps1",
-      "bytes": 26562,
-      "sha256": "4605015719ed1792f8d023ebe92f2c80ed24dc980d6409ff97079c8a8344d0bc"
+      "bytes": 26786,
+      "sha256": "9cc12e765b31288dda24bb278a9e95f706dd0574f8dd462acec09b39e1af489a"
+    },
+    {
+      "name": "Test-CompilerCompatibility.ps1",
+      "bytes": 1534,
+      "sha256": "9549b4f457e1195815d0174064e4d9347c90942f0b390423b2e577c6ddceee33"
     },
     {
       "name": "Test-Rendering.ps1",
@@ -47,6 +52,11 @@
       "name": "evidence/checks.txt",
       "bytes": 1583,
       "sha256": "b0907e06726745b915da5b42c9b9f05662771d825f9bcac6c55873bd837a51f9"
+    },
+    {
+      "name": "evidence/compiler-compatibility.txt",
+      "bytes": 172,
+      "sha256": "446dd3641e2da964b5ef7ddb9ea88802edf1176a471da8eeca01b48e5cb8cd87"
     },
     {
       "name": "evidence/full-checks.txt",

@@ -189,7 +189,13 @@ try {
         (Get-FileHash -LiteralPath $aimStateReferencePath -Algorithm SHA256).Hash -ine $manifest.aim_state_reference_sha256) {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
-    Add-Type -Path @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath, $damagePath, $damageReferencePath, $weaponPath, $weaponReferencePath, $firingPath, $firingReferencePath, $ammoPath, $ammoReferencePath, $aimStatePath, $aimStateReferencePath, (Join-Path $PSScriptRoot 'PlayerCameraProbe.cs'), (Join-Path $PSScriptRoot 'PlayerCameraReference.cs')) -CompilerOptions '/langversion:5' -ErrorAction Stop
+    # BEGIN COMPATIBLE COMPILE
+    $compileArguments = @{ Path = @($sourcePath, $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath, $damagePath, $damageReferencePath, $weaponPath, $weaponReferencePath, $firingPath, $firingReferencePath, $ammoPath, $ammoReferencePath, $aimStatePath, $aimStateReferencePath, (Join-Path $PSScriptRoot 'PlayerCameraProbe.cs'), (Join-Path $PSScriptRoot 'PlayerCameraReference.cs')); ErrorAction = 'Stop' }
+    if ((Get-Command Add-Type).Parameters.ContainsKey('CompilerOptions')) {
+        $compileArguments.CompilerOptions = @('/langversion:5')
+    }
+    Add-Type @compileArguments
+    # END COMPATIBLE COMPILE
     $classId = (Get-Item -LiteralPath 'Registry::HKEY_CLASSES_ROOT\VirtualBox.VirtualBoxClient\CLSID').GetValue('')
     $server = [Environment]::ExpandEnvironmentVariables([string](Get-Item -LiteralPath "Registry::HKEY_CLASSES_ROOT\CLSID\$classId\InprocServer32").GetValue(''))
     if ([IO.Path]::GetFileName($server.Trim().Trim('"')) -ine 'BstkC.dll') { throw 'COM client is not the verified BlueStacks server.' }

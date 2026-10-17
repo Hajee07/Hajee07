@@ -4,7 +4,13 @@ $ErrorActionPreference='Stop'
 if(!$RuntimeDirectory){$RuntimeDirectory=Join-Path $PSScriptRoot 'baseline';if(!(Test-Path $RuntimeDirectory)){$RuntimeDirectory=Join-Path $PSScriptRoot '..\bluestacks-process-map'}}
 $files=@(Get-ChildItem -LiteralPath $RuntimeDirectory -Filter '*.cs'|Select-Object -ExpandProperty FullName)
 $files+=@('PlayerCameraReference.cs','PlayerCameraProbe.cs','PlayerCameraTests.cs'|ForEach-Object {Join-Path $PSScriptRoot $_})
-Add-Type -Path $files -CompilerOptions @('/langversion:5','/warnaserror+')
+# BEGIN COMPATIBLE COMPILE
+$compileArguments = @{ Path = $files; ErrorAction = 'Stop' }
+if ((Get-Command Add-Type).Parameters.ContainsKey('CompilerOptions')) {
+    $compileArguments.CompilerOptions = @('/langversion:5','/warnaserror+')
+}
+Add-Type @compileArguments
+# END COMPATIBLE COMPILE
 [HeadBridge.Mapping.Tests.PlayerObjectTests]::RunPlayerCameraChecks()
 
 if($KernelElfPath){

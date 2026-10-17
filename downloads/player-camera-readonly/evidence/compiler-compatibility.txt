@@ -1,0 +1,3 @@
+PASS: runner and checks compile blocks with and without CompilerOptions (4 cases).
+24 camera assertions PASS; actual renderer 2 cases PASS.
+Windows live execution pending.
