@@ -1,0 +1,10 @@
+{
+  "static_inspection": "PASS",
+  "repeat_report": "BYTE_IDENTICAL",
+  "independent_pe_headers": 2,
+  "selected_il_methods": 4,
+  "pinned_field_constants_matched": 10,
+  "modified_offset_fixture": "REJECTED",
+  "assemblies_loaded": false,
+  "native_functions_invoked": false
+}

@@ -1,3 +1,10 @@
+## Uploaded Phoenix DLL reference review
+
+[Static inspection and pinned field crosscheck](phoenix-reference-review/README.md).
+Managed MainCameraTransform reference constants match the pinned game inputs;
+neither DLL was loaded. Restarted processes require the capture helper's -Fresh
+mode. Export names do not establish a live output adapter contract.
+
 ## Interrupted V52 camera capture completion
 
 [Capture helper and assessment](camera-capture-completion/README.md) ·
@@ -5,9 +12,9 @@
 
 Preserves six valid saved pose reports and requests the two remaining manual
 stages. Same context required; native V52 validations and budgets unchanged.
-54 existing pose checks and 17 helper checks passed offline; Windows launch and
+54 existing pose checks and 20 helper checks passed offline; Windows launch and
 live aim binding are not validated by those checks.
-ZIP SHA-256: `c74436a10182d64927a2c3c1069fb9050f53a3d46f2c95292c1d9ddaf50504f8`.
+ZIP SHA-256: `dc4168bd42d10365acf6ec5d9aa439fa5b25ba00adfd5f0f1d9ec15da199b20d`.
 
 ## Integration review source package (owned simulation)
 

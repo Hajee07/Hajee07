@@ -95,6 +95,20 @@ try{
     try{& $runner -SourceDirectory $work -SeedFile $seed -JournalPath $journal}catch{$bad=$true}
     $r=Get-Content $journal -Raw|ConvertFrom-Json
     Expect-Completion ($bad -and $global:completionFixtureCalls -eq 2 -and $r.Accepted -eq 6 -and $r.Attempts.Count -eq 2) 'two rejected attempts stop with preserved partial journal'
+    $global:completionFixtureNames=@($names)
+    $global:completionFixtureBodies=@($names|ForEach-Object {(Get-Content (Join-Path $work $_) -Raw).Replace('HostPID=100','HostPID=777')})
+    $global:completionFixtureMode='NoPoseOnce';$global:completionFixtureQueue=@(0,0,0,0,0,0,0,0,0);$global:completionFixtureCalls=0;$global:completionFixtureSuccess=0
+    $journal=Join-Path $work 'fresh.json'
+    & $runner -SourceDirectory $work -Fresh -JournalPath $journal
+    $r=Get-Content $journal -Raw|ConvertFrom-Json
+    Expect-Completion ($r.Accepted -eq 8 -and $r.Attempts.Count -eq 9 -and $r.Comparison.Samples[0].HostPid -eq '777') 'fresh mode imports no old PID and retries unavailable initial capture'
+    Expect-Completion (($r.Reports.Stage -join ',') -eq '1,2,3,4,5,6,7,8' -and @($r.Reports|Where-Object TimingScope -ne 'HOST_WALL_CLOCK_INTERVAL_NOT_MONOTONIC_SYNC').Count -eq 0) 'fresh stages are newly captured, ordered and labelled'
+    $global:completionFixtureBodies[1]=$global:completionFixtureBodies[1].Replace('HostPID=777','HostPID=778')
+    $global:completionFixtureMode='';$global:completionFixtureQueue=@(0,0);$global:completionFixtureCalls=0;$global:completionFixtureSuccess=0
+    $journal=Join-Path $work 'fresh-context.json';$bad=$false
+    try{& $runner -SourceDirectory $work -Fresh -JournalPath $journal}catch{$bad=$true}
+    $r=Get-Content $journal -Raw|ConvertFrom-Json
+    Expect-Completion ($bad -and $r.Accepted -eq 1 -and $null -eq $r.Comparison) 'fresh experiment still rejects process change mid-capture'
     Remove-Item Function:\powershell.exe;Remove-Item Function:\Read-Host
     $global:LASTEXITCODE=0
     Add-Content (Join-Path $work 'CameraPoseCheck.ps1') '# tampered helper'

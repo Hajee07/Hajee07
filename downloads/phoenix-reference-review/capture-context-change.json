@@ -1,0 +1,14 @@
+{
+  "source_sha256": "7fd7767ce3fc27c84967779ff1bd60316b9398098068c3255ae4ae102b254f6a",
+  "error": "Capture context changed: HostPid",
+  "seed_host_pid": 23976,
+  "current_host_pid": 6896,
+  "current_guest_pid": 2974,
+  "decision": "REJECT_MIXED_CONTEXT; START_FRESH",
+  "pose_sample_reported": true,
+  "reported_aim_reads": 5181,
+  "reported_total_reads": 27311,
+  "cleanup": "PASS",
+  "active_camera": "UNVERIFIED",
+  "live_binding_ready": false
+}

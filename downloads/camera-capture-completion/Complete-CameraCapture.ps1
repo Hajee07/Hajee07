@@ -1,10 +1,11 @@
-[CmdletBinding()]
+[CmdletBinding(DefaultParameterSetName='Seeded')]
 param(
     [Parameter(Mandatory=$true)][string]$SourceDirectory,
-    [Parameter(Mandatory=$true)][string]$SeedFile,
+    [Parameter(Mandatory=$true,ParameterSetName='Seeded')][string]$SeedFile,
+    [Parameter(Mandatory=$true,ParameterSetName='Fresh')][switch]$Fresh,
     [string]$JournalPath,
-    [switch]$ReviewOnly,
-    [string[]]$AdditionalReportNames
+    [Parameter(ParameterSetName='Seeded')][switch]$ReviewOnly,
+    [Parameter(ParameterSetName='Seeded')][string[]]$AdditionalReportNames
 )
 Set-StrictMode -Version 2
 $ErrorActionPreference='Stop'
@@ -18,10 +19,12 @@ $pins=@{
 foreach($name in $pins.Keys){if((Get-FileHash -LiteralPath (Join-Path $source $name) -Algorithm SHA256).Hash -ine $pins[$name]){throw "Pinned V52 source mismatch: $name"}}
 . (Join-Path $source 'AimBasisCheck.ps1')
 . (Join-Path $source 'CameraPoseCheck.ps1')
-$seedInfo=Get-Item -LiteralPath $SeedFile
-if($seedInfo.PSIsContainer -or $seedInfo.Length -gt 65536){throw 'Seed size/type invalid.'}
-$seed=Get-Content -LiteralPath $SeedFile -Raw | ConvertFrom-Json
-if($seed.Schema -ne 1 -or @($seed.ReportNames).Count -ne 6){throw 'Exactly six ordered seed reports required.'}
+if(!$Fresh){
+    $seedInfo=Get-Item -LiteralPath $SeedFile
+    if($seedInfo.PSIsContainer -or $seedInfo.Length -gt 65536){throw 'Seed size/type invalid.'}
+    $seed=Get-Content -LiteralPath $SeedFile -Raw | ConvertFrom-Json
+    if($seed.Schema -ne 1 -or @($seed.ReportNames).Count -ne 6){throw 'Exactly six ordered seed reports required.'}
+}
 if($ReviewOnly -and $AdditionalReportNames){throw 'ReviewOnly cannot add captures.'}
 if($AdditionalReportNames -and @($AdditionalReportNames).Count -ne 2){throw 'Exactly two additional reports required in offline completion mode.'}
 if(!$JournalPath){$JournalPath=Join-Path $source ('camera-completion-'+[guid]::NewGuid().ToString('N')+'.json')}
@@ -29,7 +32,7 @@ if(Test-Path -LiteralPath $JournalPath){throw 'Journal already exists; use a new
 $script:completionSamples=@();$script:completionRecords=@();$script:completionSeen=@();$script:completionAttempts=@()
 function Save-Completion {
     param([string]$Status,[object]$Comparison=$null)
-    $record=[pscustomobject]@{Schema=1;Status=$Status;Scope='SAVED_REPORT_CORRELATION_ONLY';Accepted=$script:completionSamples.Count;
+    $record=[pscustomobject]@{Schema=1;Status=$Status;Mode=$(if($Fresh){'FRESH_NO_IMPORT'}else{'SIX_SAVED_REPORTS'});Scope='SAVED_REPORT_CORRELATION_ONLY';Accepted=$script:completionSamples.Count;
         Reports=$script:completionRecords;Attempts=$script:completionAttempts;Comparison=$Comparison;
         ActualGameCamera='UNVERIFIED';ShotDirection='UNVERIFIED';LineOfSight='UNVERIFIED';AimWrites='NONE';LiveBindingReady=$false}
     # Publish a complete document via a sibling temporary file.
@@ -69,17 +72,32 @@ function Add-CompletionReport {
         CaptureStartUtc=$CaptureStart;CaptureEndUtc=$CaptureEnd;TimingScope=$(if($CaptureStart){'HOST_WALL_CLOCK_INTERVAL_NOT_MONOTONIC_SYNC'}else{'IMPORTED_REPORT_CAPTURE_INTERVAL_UNKNOWN'})})
 }
 try {
-    foreach($name in @($seed.ReportNames)){Add-CompletionReport $name ($script:completionSamples.Count+1) $null $null}
-    Save-Completion 'INCOMPLETE_SIX_VALIDATED'
-    Write-Host "SeedReports=VALIDATED Count=6 Journal=$JournalPath"
+    if($Fresh){
+        Save-Completion 'INCOMPLETE_FRESH_START'
+        Write-Host "FreshCapture=STARTED ImportedReports=0 Journal=$JournalPath"
+    }else{
+        foreach($name in @($seed.ReportNames)){Add-CompletionReport $name ($script:completionSamples.Count+1) $null $null}
+        Save-Completion 'INCOMPLETE_SIX_VALIDATED'
+        Write-Host "SeedReports=VALIDATED Count=6 Journal=$JournalPath"
+    }
     if($ReviewOnly){return}
     if($AdditionalReportNames){
         foreach($name in $AdditionalReportNames){Add-CompletionReport $name ($script:completionSamples.Count+1) $null $null;Save-Completion 'INCOMPLETE'}
     }else{
-        foreach($stage in 7..8){
+        $instructions=@(
+            'BASELINE: fixed landmark at screen centre, camera roughly level; remember centre/height',
+            'RIGHT: turn camera right; landmark moves LEFT',
+            'RESTORE: same landmark to stage-1 centre/height',
+            'LEFT: turn camera left; landmark moves RIGHT',
+            'BASELINE: same landmark back to original centre/height; remember this pitch baseline',
+            'UP: tilt camera up; landmark moves DOWN; keep horizontal heading',
+            'RESTORE: same landmark to stage-5 centre/height; keep character position',
+            'DOWN: tilt camera down; landmark moves UP; keep horizontal heading'
+        )
+        foreach($stage in ($script:completionSamples.Count+1)..8){
             $accepted=$false
             for($attempt=1;$attempt -le 2;$attempt++){
-                $instruction=if($stage -eq 7){'RESTORE camera to stage-5 landmark centre/height'}else{'DOWN: tilt camera down; landmark moves UP'}
+                $instruction=$instructions[$stage-1]
                 $answer=Read-Host "Stage $stage attempt $attempt/2: $instruction. Same Training session; no character movement/fire/ADS. Stop camera, then READY"
                 if($answer.Trim() -cne 'READY'){throw 'Capture cancelled.'}
                 $start=[DateTime]::UtcNow.ToString('o')
@@ -114,7 +132,7 @@ try {
     Write-Host "CameraPoseComparison=$($comparison.Status) Scope=MANUAL_CORRELATION_ONLY"
     Write-Host "ComparisonResultFile=$JournalPath"
 } catch {
-    if($script:completionSamples.Count){Save-Completion ('INCOMPLETE_REJECTED: '+$_.Exception.Message)}
+    Save-Completion ('INCOMPLETE_REJECTED: '+$_.Exception.Message)
     Write-Host "PartialJournal=$JournalPath"
     throw
 }

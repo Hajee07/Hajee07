@@ -68,5 +68,8 @@ PASS-COMPLETION: unavailable report never enters accepted reports
 PASS-COMPLETION: zero samples twice stop at retry bound
 PASS-COMPLETION: failed cleanup is not classified as retryable collection churn
 PASS-COMPLETION: two rejected attempts stop with preserved partial journal
+PASS-COMPLETION: fresh mode imports no old PID and retries unavailable initial capture
+PASS-COMPLETION: fresh stages are newly captured, ordered and labelled
+PASS-COMPLETION: fresh experiment still rejects process change mid-capture
 PASS-COMPLETION: helper modification rejected before dot-sourcing
-CompletionTests=PASS Assertions=17 NativeProcessesInvoked=NONE LiveTest=NOT_RUN
+CompletionTests=PASS Assertions=20 NativeProcessesInvoked=NONE LiveTest=NOT_RUN

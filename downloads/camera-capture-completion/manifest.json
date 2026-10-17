@@ -3,18 +3,18 @@
   "files": [
     {
       "name": "Complete-CameraCapture.ps1",
-      "bytes": 9013,
-      "sha256": "d800e82a92c3323abe398c461089575dd28018dc15f80e0952dfe7297a2f7992"
+      "bytes": 10063,
+      "sha256": "20709fcc476dc12b5cfdd87873ca2eabbb04841c1c005a946fcd35ac224a6535"
     },
     {
       "name": "README.md",
-      "bytes": 5135,
-      "sha256": "b14809307405522c398377c7eb96260ed7a071fb197b6fd8bf186b0ba17f0d35"
+      "bytes": 5474,
+      "sha256": "7c8f9cda93efdf1287e1ba9743964dba3f5a1ebc6a99d69fa4677d8391b8b2cc"
     },
     {
       "name": "Test-Completion.ps1",
-      "bytes": 9639,
-      "sha256": "70f1fde9138155acb7987a8cd52faaf1e55a1cc6cf4df301a8d9fa87808efb6c"
+      "bytes": 11172,
+      "sha256": "b7e18c4f5f381d037cf884c5e2c1054c70fff4ff30803ecb48fc6de0714f91d5"
     },
     {
       "name": "interrupted-assessment.json",
@@ -33,13 +33,13 @@
     },
     {
       "name": "test-summary.txt",
-      "bytes": 5044,
-      "sha256": "b7bf752726e6664854cf1dbaa3c3c056a0567057d90b23c60b8d7fd160bd8f67"
+      "bytes": 5277,
+      "sha256": "63c22cc18dc59252a865faad7d6e726d0f4263ccc2c8f89294e4a64e11371f00"
     },
     {
       "name": "validation.json",
-      "bytes": 378,
-      "sha256": "c44b085de0f25ddc1d026910a0a13e8bd92b683facfe360986ddcce13d022dd3"
+      "bytes": 491,
+      "sha256": "3a0dddc82d95d448ed6ee1b646054f60ade635d4b012a117ffbb088984b77042"
     }
   ]
 }
