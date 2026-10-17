@@ -197,3 +197,6 @@ Write-Host "AIM_COMPARISON_WITH_RUNNER_TOTAL=$script:aimChecks"
 
 $version50=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=50') })
 Check-AimComparison ((ConvertFrom-AimBasisReport $version50).Version -eq 50) 'V50 comparison input remains supported'
+
+$version51=@($fixture | ForEach-Object { $_.Replace('ProcessMapVersion=38','ProcessMapVersion=51') })
+Check-AimComparison ((ConvertFrom-AimBasisReport $version51).Version -eq 51) 'V51 comparison input remains supported'

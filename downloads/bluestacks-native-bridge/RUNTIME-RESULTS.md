@@ -1131,3 +1131,18 @@ V50 coalesces only aim-state final observation transport requests while comparin
 all original observed bytes, retaining limits and conservative mismatch rejection.
 The full synthetic controller chain drops from 5572 to 4752 physical calls.
 Live V50 camera identity remains unverified; no functions invoked or writes added.
+
+## V50 live sample / V51 reporting correction
+
+HostPID=9352, GuestPID=3012: module/layout checks passed; local head was
+NOT_READY_MOTION after three discarded captures. Roster attempt 1 changed;
+attempt 2 verified 12 players including local. AimStateSamples reported
+AdditionalPhysicalReads=4920, Attempted=1, Sampled=1. The original Unity native
+selector row completed. Report printing then failed because `$culture` was not
+initialized outside the successful local-head branch. Camera position/rotation,
+getter gates, controller inventory and final semantic rows were not emitted.
+PluginUnload=PASS, HandlerCleanup=PASS, SharedSession=RELEASED. Total reads 26613.
+
+V51 moves invariant-format initialization before the head-status branch. No
+native code, read budget or validation changes. Actual camera/controller results
+remain pending a fresh complete live report. No aim integration or accuracy claim.

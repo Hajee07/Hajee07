@@ -112,7 +112,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
     if ($value -notmatch '^0x[0-9a-fA-F]{1,16}$') { throw "Unexpected register representation for CPU$Cpu.$Name" }
     [Convert]::ToUInt64($value.Substring(2), 16)
 }
-Record 'ProcessMapVersion=50 ReadOnly=1'
+Record 'ProcessMapVersion=51 ReadOnly=1'
 Record "PlayerStateMode=$($ProbePlayerState.IsPresent)"
 Record "TeamPolicyMode=$($ProbeTeamPolicy.IsPresent)"
 Record "CombatStateMode=$($ProbeCombatState.IsPresent) RequestedRosterIndex=$CombatRosterIndex"
@@ -351,8 +351,8 @@ try {
     $reader.Recheck($kernel, $game)
     Record "LocalPlayerObjects=PASS CurrentGame=0x$($objects.CurrentGame.ToString('x')) Match=0x$($objects.Match.ToString('x')) Player=0x$($objects.LocalPlayer.ToString('x')) Class=$($objects.PlayerClass) Observations=$($objects.Observations) OriginalPathHotfixSlots=INACTIVE"
     Record "ManagedHeadTransform=$($objects.HeadStatus) Source=$($objects.HeadSource) Model=0x$($objects.HeadModel.ToString('x')) CacheEntries=$($objects.HeadCacheEntries) Provider=0x$($objects.HeadProvider.ToString('x')) Transform=0x$($objects.HeadTransform.ToString('x'))"
+    $culture = [Globalization.CultureInfo]::InvariantCulture
     if ($objects.HeadWorldStatus -ceq 'SAMPLED_READ_ONLY') {
-        $culture = [Globalization.CultureInfo]::InvariantCulture
         Record "LocalHeadWorldPosition=SAMPLED_READ_ONLY X=$($objects.HeadWorldX.ToString('R', $culture)) Y=$($objects.HeadWorldY.ToString('R', $culture)) Z=$($objects.HeadWorldZ.ToString('R', $culture)) Attempts=$($objects.HeadSampleAttempts) CaptureChunks=$($objects.HeadCaptureChunks) ParentCount=$($objects.HeadParentCount) HierarchyCapacity=$($objects.HeadHierarchyCapacity) Observations=$($objects.HeadWorldObservations) NativeTransform=0x$($objects.NativeHeadTransform.ToString('x')) UnityLoadBias=0x$($objects.UnityLoadBias.ToString('x'))"
     } else {
         Record "LocalHeadWorldPosition=$($objects.HeadWorldStatus) Attempts=$($objects.HeadSampleAttempts) Detail=$($objects.HeadWorldError)"

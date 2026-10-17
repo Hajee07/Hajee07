@@ -1,3 +1,5 @@
+V51 fixes camera report formatting when the local head sample is unavailable. V50 completed the live aim-state sample at 4920 reads but its report stopped before pose/controller output; those results remain unverified.
+
 V50 reduces aim-state final recheck transport calls while preserving every observed-byte comparison and existing budgets. Offline full-chain fixture: 5572 → 4752 reads. Live Windows verification pending; aim integration remains incomplete. See [batching evidence](bluestacks-process-map/AIM-RECHECK-BATCHING-EVIDENCE.md).
 
 V49 adds registered camera-controller/camera field inventory and native-reference

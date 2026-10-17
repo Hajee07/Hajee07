@@ -1,3 +1,18 @@
+## V51 independent camera report formatting
+
+V50 live sampling completed (AdditionalPhysicalReads=4920, Sampled=1), but report
+rendering stopped before camera pose/controller rows because `$culture` was only
+initialized after a successful local-head sample. The head sample was moving.
+The accepted partial log does not establish camera pose or controller linkage.
+
+V51 initializes invariant formatting before the head-status branch, so an
+unavailable head sample cannot leave camera reporting without its formatter.
+This is a reporting-only correction; native reader code, budgets, checks, and
+read-only behavior remain V50. The regression test executes the actual report
+statements under strict mode and fr-FR after moving, budget-limited and successful
+head results, and checks nullable camera components remain NA. Live V51 output
+is still required to establish the camera-controller result.
+
 ## V50 aim-state final recheck batching
 
 V49 live verification reached the unchanged inner read allowance even after a

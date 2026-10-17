@@ -124,3 +124,6 @@ Write-Host "CAMERA_POSE_COMPARISON_TOTAL=$script:poseChecks"
 
 $v50=@($valid | ForEach-Object { $_.Replace('ProcessMapVersion=47','ProcessMapVersion=50') })
 Check-Pose ((ConvertFrom-CameraPoseReport $v50).Version -eq 50) 'native pose parser supports V50 without asserting game camera identity'
+
+$v51=@($valid | ForEach-Object { $_.Replace('ProcessMapVersion=47','ProcessMapVersion=51') })
+Check-Pose ((ConvertFrom-CameraPoseReport $v51).Version -eq 51) 'native pose parser supports V51 without asserting game camera identity'
