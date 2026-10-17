@@ -1184,3 +1184,25 @@ verifies five source windows and distinguishes stored model visibility, camera
 mode policy and range checks from verified target-head LOS. It does not alter
 V52 runtime code or introduce a Windows V53 probe. See the sibling
 bluestacks-visibility-source-audit directory for evidence and reproduction.
+
+## Offline physics-query follow-up
+
+The camera-mode facade and its full 900-byte original delegate window both take
+a BEADLMGGGGL player identity argument. They do not supply a verified camera/head
+ray interface. The original delegate can return true with its +0x19 gate clear;
+nested policy/helper semantics remain unresolved.
+
+The independent source-only query inventory resolves 53 raycast-named bindings
+from the exact Unity PhysicsModule (508 method entries), with 150 direct B/BL
+transfer candidates in executable loads. Nearest CSharp registration is explicitly
+not claimed as ownership; cross-image gaps, aliases and literal/data words can
+produce misleading associations. Three transfers additionally occur within the
+inspected registered Player.UpdateAiming, get_HasAgainstEntities and
+HasAgainstEntitesWithSpawnObjectCrossHair windows, all to the registered
+five-argument Physics.Raycast overload at RVA 0xa0481fc.
+
+This identifies actual source query paths, not selected-head LOS semantics.
+The getter has a query/virtual-dispatch path and must not be substituted for a
+cached read-only boolean. No engine method was invoked and no runtime code or
+budgets were changed. V52 remains the latest Windows diagnostic. Full source,
+input hashes, parameter metadata and evidence appear in physics-callers.json.

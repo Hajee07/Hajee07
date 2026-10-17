@@ -1,0 +1,2465 @@
+{
+  "audit_version": 1,
+  "elf_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "physics_module": {
+    "rva": 175282520,
+    "method_count": 508,
+    "table_rva": 183941456
+  },
+  "physics_raycast_methods": [
+    {
+      "index": 332878,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168064904,
+      "argument_count": 5,
+      "registration_slot_rva": 183941704
+    },
+    {
+      "index": 332879,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168065584,
+      "argument_count": 4,
+      "registration_slot_rva": 183941712
+    },
+    {
+      "index": 332880,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168065780,
+      "argument_count": 3,
+      "registration_slot_rva": 183941720
+    },
+    {
+      "index": 332881,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168065980,
+      "argument_count": 2,
+      "registration_slot_rva": 183941728
+    },
+    {
+      "index": 332882,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168066164,
+      "argument_count": 6,
+      "registration_slot_rva": 183941736
+    },
+    {
+      "index": 332883,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastExtraMask",
+      "rva": 168066872,
+      "argument_count": 6,
+      "registration_slot_rva": 183941744
+    },
+    {
+      "index": 332884,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168067580,
+      "argument_count": 5,
+      "registration_slot_rva": 183941752
+    },
+    {
+      "index": 332885,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168067800,
+      "argument_count": 4,
+      "registration_slot_rva": 183941760
+    },
+    {
+      "index": 332886,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168068000,
+      "argument_count": 3,
+      "registration_slot_rva": 183941768
+    },
+    {
+      "index": 332887,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168068200,
+      "argument_count": 4,
+      "registration_slot_rva": 183941776
+    },
+    {
+      "index": 332888,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168068352,
+      "argument_count": 3,
+      "registration_slot_rva": 183941784
+    },
+    {
+      "index": 332889,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168068508,
+      "argument_count": 2,
+      "registration_slot_rva": 183941792
+    },
+    {
+      "index": 332890,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168068644,
+      "argument_count": 1,
+      "registration_slot_rva": 183941800
+    },
+    {
+      "index": 332891,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168068780,
+      "argument_count": 5,
+      "registration_slot_rva": 183941808
+    },
+    {
+      "index": 332892,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168068956,
+      "argument_count": 4,
+      "registration_slot_rva": 183941816
+    },
+    {
+      "index": 332893,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168069140,
+      "argument_count": 3,
+      "registration_slot_rva": 183941824
+    },
+    {
+      "index": 332894,
+      "owner": "UnityEngine.Physics",
+      "name": "Raycast",
+      "rva": 168069300,
+      "argument_count": 2,
+      "registration_slot_rva": 183941832
+    },
+    {
+      "index": 332902,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastAll",
+      "rva": 168071244,
+      "argument_count": 5,
+      "registration_slot_rva": 183941896
+    },
+    {
+      "index": 332903,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "rva": 168071520,
+      "argument_count": 5,
+      "registration_slot_rva": 183941904
+    },
+    {
+      "index": 332904,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastExtraMaskAll",
+      "rva": 168072068,
+      "argument_count": 5,
+      "registration_slot_rva": 183941912
+    },
+    {
+      "index": 332905,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastExtraMaskAll",
+      "rva": 168072344,
+      "argument_count": 5,
+      "registration_slot_rva": 183941920
+    },
+    {
+      "index": 332906,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastExtraMaskAllNonAlloc",
+      "rva": 168072892,
+      "argument_count": 6,
+      "registration_slot_rva": 183941928
+    },
+    {
+      "index": 332907,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastExtraMaskAllNonAlloc",
+      "rva": 168073208,
+      "argument_count": 6,
+      "registration_slot_rva": 183941936
+    },
+    {
+      "index": 332908,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "rva": 168073708,
+      "argument_count": 4,
+      "registration_slot_rva": 183941944
+    },
+    {
+      "index": 332909,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "rva": 168073884,
+      "argument_count": 3,
+      "registration_slot_rva": 183941952
+    },
+    {
+      "index": 332910,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "rva": 168074056,
+      "argument_count": 2,
+      "registration_slot_rva": 183941960
+    },
+    {
+      "index": 332911,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "rva": 168074220,
+      "argument_count": 4,
+      "registration_slot_rva": 183941968
+    },
+    {
+      "index": 332912,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "rva": 168074400,
+      "argument_count": 3,
+      "registration_slot_rva": 183941976
+    },
+    {
+      "index": 332913,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "rva": 168074576,
+      "argument_count": 2,
+      "registration_slot_rva": 183941984
+    },
+    {
+      "index": 332914,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastAll",
+      "rva": 168074740,
+      "argument_count": 1,
+      "registration_slot_rva": 183941992
+    },
+    {
+      "index": 332915,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "rva": 168074896,
+      "argument_count": 5,
+      "registration_slot_rva": 183942000
+    },
+    {
+      "index": 332916,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "rva": 168075664,
+      "argument_count": 4,
+      "registration_slot_rva": 183942008
+    },
+    {
+      "index": 332917,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "rva": 168075816,
+      "argument_count": 3,
+      "registration_slot_rva": 183942016
+    },
+    {
+      "index": 332918,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "rva": 168075972,
+      "argument_count": 2,
+      "registration_slot_rva": 183942024
+    },
+    {
+      "index": 332919,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "rva": 168076112,
+      "argument_count": 6,
+      "registration_slot_rva": 183942032
+    },
+    {
+      "index": 332920,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "rva": 168076324,
+      "argument_count": 5,
+      "registration_slot_rva": 183942040
+    },
+    {
+      "index": 332921,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "rva": 168076540,
+      "argument_count": 4,
+      "registration_slot_rva": 183942048
+    },
+    {
+      "index": 332922,
+      "owner": "UnityEngine.Physics",
+      "name": "RaycastNonAlloc",
+      "rva": 168076736,
+      "argument_count": 3,
+      "registration_slot_rva": 183942056
+    },
+    {
+      "index": 332995,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastAll_Injected",
+      "rva": 168071412,
+      "argument_count": 5,
+      "registration_slot_rva": 183942640
+    },
+    {
+      "index": 332996,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastExtraMaskAll_Injected",
+      "rva": 168072236,
+      "argument_count": 5,
+      "registration_slot_rva": 183942648
+    },
+    {
+      "index": 332997,
+      "owner": "UnityEngine.Physics",
+      "name": "Internal_RaycastExtraMaskAllNonAlloc_Injected",
+      "rva": 168073084,
+      "argument_count": 6,
+      "registration_slot_rva": 183942656
+    },
+    {
+      "index": 333305,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Raycast",
+      "rva": 168065120,
+      "argument_count": 5,
+      "registration_slot_rva": 183945120
+    },
+    {
+      "index": 333306,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastTest",
+      "rva": 168115316,
+      "argument_count": 5,
+      "registration_slot_rva": 183945128
+    },
+    {
+      "index": 333307,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Raycast",
+      "rva": 168066380,
+      "argument_count": 6,
+      "registration_slot_rva": 183945136
+    },
+    {
+      "index": 333308,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_Raycast",
+      "rva": 168115556,
+      "argument_count": 6,
+      "registration_slot_rva": 183945144
+    },
+    {
+      "index": 333309,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "RaycastExtraMask",
+      "rva": 168067088,
+      "argument_count": 6,
+      "registration_slot_rva": 183945152
+    },
+    {
+      "index": 333310,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastExtraMask",
+      "rva": 168115812,
+      "argument_count": 6,
+      "registration_slot_rva": 183945160
+    },
+    {
+      "index": 333311,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Raycast",
+      "rva": 168075068,
+      "argument_count": 6,
+      "registration_slot_rva": 183945168
+    },
+    {
+      "index": 333312,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastNonAlloc",
+      "rva": 168116068,
+      "argument_count": 6,
+      "registration_slot_rva": 183945176
+    },
+    {
+      "index": 333329,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastTest_Injected",
+      "rva": 168115448,
+      "argument_count": 5,
+      "registration_slot_rva": 183945312
+    },
+    {
+      "index": 333330,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_Raycast_Injected",
+      "rva": 168115688,
+      "argument_count": 6,
+      "registration_slot_rva": 183945320
+    },
+    {
+      "index": 333331,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastExtraMask_Injected",
+      "rva": 168115944,
+      "argument_count": 6,
+      "registration_slot_rva": 183945328
+    },
+    {
+      "index": 333332,
+      "owner": "UnityEngine.PhysicsScene",
+      "name": "Internal_RaycastNonAlloc_Injected",
+      "rva": 168116196,
+      "argument_count": 6,
+      "registration_slot_rva": 183945336
+    }
+  ],
+  "direct_transfer_candidates": [
+    {
+      "callsite_rva": 53771440,
+      "target_rva": 168066380,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": []
+    },
+    {
+      "callsite_rva": 53771632,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": []
+    },
+    {
+      "callsite_rva": 53772792,
+      "target_rva": 168068956,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": []
+    },
+    {
+      "callsite_rva": 53772936,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": []
+    },
+    {
+      "callsite_rva": 53773116,
+      "target_rva": 168075664,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": []
+    },
+    {
+      "callsite_rva": 53773600,
+      "target_rva": 168074400,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": []
+    },
+    {
+      "callsite_rva": 53781364,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": []
+    },
+    {
+      "callsite_rva": 53781504,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": []
+    },
+    {
+      "callsite_rva": 53781692,
+      "target_rva": 168075664,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": []
+    },
+    {
+      "callsite_rva": 53782600,
+      "target_rva": 168074400,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": []
+    },
+    {
+      "callsite_rva": 53952172,
+      "target_rva": 168069300,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 126,
+          "owner": "CameraMove",
+          "name": "Update",
+          "rva": 53951848
+        }
+      ]
+    },
+    {
+      "callsite_rva": 53985888,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 246,
+          "owner": "FFWSTrophyCup",
+          "name": "CalculateTargetPos",
+          "rva": 53985464
+        }
+      ]
+    },
+    {
+      "callsite_rva": 53991044,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 251,
+          "owner": "FFWSTrophyCup",
+          "name": "PlayLocalPlayePosBooyahAnim",
+          "rva": 53990556
+        }
+      ]
+    },
+    {
+      "callsite_rva": 56498172,
+      "target_rva": 168068956,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 54464,
+          "owner": "COW.UISA_SYSMainController",
+          "name": "RaycastPlayerSummary3DUI",
+          "rva": 56497612
+        }
+      ]
+    },
+    {
+      "callsite_rva": 57853948,
+      "target_rva": 168074400,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 58261,
+          "owner": "COW.UIHudAdminAbuseGamePlayBuffController",
+          "name": "RaycastForClickedItemInternal",
+          "rva": 57852688
+        }
+      ]
+    },
+    {
+      "callsite_rva": 58301600,
+      "target_rva": 168069300,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 59426,
+          "owner": "COW.UIAvatarInputHandler",
+          "name": "CheckIsTouchAvatar",
+          "rva": 58301240
+        }
+      ]
+    },
+    {
+      "callsite_rva": 58537684,
+      "target_rva": 168069300,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 60188,
+          "owner": "COW.UIPetAvatar",
+          "name": "DoPetLobbyClick",
+          "rva": 58537384
+        }
+      ]
+    },
+    {
+      "callsite_rva": 58538796,
+      "target_rva": 168069300,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 60189,
+          "owner": "COW.UIPetAvatar",
+          "name": "DoPetViewClick",
+          "rva": 58538468
+        }
+      ]
+    },
+    {
+      "callsite_rva": 61990700,
+      "target_rva": 168069300,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 70174,
+          "owner": "COW.UIHDPetInputHandler",
+          "name": "IsTargetArea",
+          "rva": 61990252
+        }
+      ]
+    },
+    {
+      "callsite_rva": 62006784,
+      "target_rva": 168069300,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 70217,
+          "owner": "COW.UIHDStandLobbyInputHandler",
+          "name": "CheckIsTouchAvatar",
+          "rva": 62006320
+        }
+      ]
+    },
+    {
+      "callsite_rva": 62012676,
+      "target_rva": 168069300,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 70231,
+          "owner": "COW.UIHDStandLobbyItem",
+          "name": "CheckIsTouchSelf",
+          "rva": 62012228
+        }
+      ]
+    },
+    {
+      "callsite_rva": 72123092,
+      "target_rva": 168068956,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 96362,
+          "owner": "COW.UISparkPetInputHandler",
+          "name": "IsRaycastHitSelf",
+          "rva": 72122752
+        }
+      ]
+    },
+    {
+      "callsite_rva": 72288880,
+      "target_rva": 168068956,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 96579,
+          "owner": "COW.UISparkPetRaycastDragHandler",
+          "name": "IsRaycastHitSparkPet",
+          "rva": 72288452
+        }
+      ]
+    },
+    {
+      "callsite_rva": 74982912,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 103971,
+          "owner": "COW.UIBigMapController",
+          "name": "UpdateMapThrowerPosition",
+          "rva": 74981580
+        }
+      ]
+    },
+    {
+      "callsite_rva": 81648308,
+      "target_rva": 168074400,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 121489,
+          "owner": "COW.UIHudFlagBattleHypeProcessBarController",
+          "name": "CheckPos",
+          "rva": 81647900
+        }
+      ]
+    },
+    {
+      "callsite_rva": 81739628,
+      "target_rva": 168074400,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 121754,
+          "owner": "COW.UIHudFourSymbolsHypeProcessBarController",
+          "name": "CheckPos",
+          "rva": 81739220
+        }
+      ]
+    },
+    {
+      "callsite_rva": 82609308,
+      "target_rva": 168074400,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 123780,
+          "owner": "COW.UIHudInventoryTagController",
+          "name": "CheckPos",
+          "rva": 82608944
+        }
+      ]
+    },
+    {
+      "callsite_rva": 83395084,
+      "target_rva": 168074400,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 125773,
+          "owner": "COW.UIHudMovingJoystickController",
+          "name": "CheckInSpeedUpCoillder",
+          "rva": 83394456
+        }
+      ]
+    },
+    {
+      "callsite_rva": 84146272,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 1555,
+          "owner": "TrikeMotorcycleController",
+          "name": "WheelAlign",
+          "rva": 84145800
+        }
+      ]
+    },
+    {
+      "callsite_rva": 94165392,
+      "target_rva": 168069300,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 1922,
+          "owner": "EmoteAvatarTouchHandler",
+          "name": "CheckTouchAvatar",
+          "rva": 94164284
+        }
+      ]
+    },
+    {
+      "callsite_rva": 104082724,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 178277,
+          "owner": "COW.UIModelUGCDebugger",
+          "name": "BuildUGCDebugStartReq",
+          "rva": 104081204
+        }
+      ]
+    },
+    {
+      "callsite_rva": 106204540,
+      "target_rva": 168074400,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 183282,
+          "owner": "COW.UIUnBlockOtherHudScript",
+          "name": "Raycast",
+          "rva": 106203660
+        }
+      ]
+    },
+    {
+      "callsite_rva": 110821908,
+      "target_rva": 168074400,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 195188,
+          "owner": "COW.UIHudTakeTurnsShopItemViewExt",
+          "name": "CheckPos",
+          "rva": 110821552
+        }
+      ]
+    },
+    {
+      "callsite_rva": 112179632,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 198932,
+          "owner": "COW.Graphics.SceneEditEnvironmentPlaneAO",
+          "name": "ValidPlaneAO",
+          "rva": 112177432
+        }
+      ]
+    },
+    {
+      "callsite_rva": 113864552,
+      "target_rva": 168066872,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 202860,
+          "owner": "COW.Gameplay.UGC.UGCProjectileTrajectory",
+          "name": "UpdateProjectileTrajectory",
+          "rva": 113862944
+        }
+      ]
+    },
+    {
+      "callsite_rva": 115555500,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 2680,
+          "owner": "RCC_WheelCollider",
+          "name": "WheelAlign",
+          "rva": 115555084
+        }
+      ]
+    },
+    {
+      "callsite_rva": 115558660,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 2678,
+          "owner": "RCC_WheelCollider",
+          "name": "FixWheelOverlap",
+          "rva": 115557908
+        }
+      ]
+    },
+    {
+      "callsite_rva": 116902380,
+      "target_rva": 168065584,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 210676,
+          "owner": "COW.GamePlay.Player",
+          "name": "IsGroundedByRayCastHit",
+          "rva": 116901952
+        }
+      ]
+    },
+    {
+      "callsite_rva": 117016264,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 210743,
+          "owner": "COW.GamePlay.Player",
+          "name": "UpdateAiming",
+          "rva": 117011764
+        }
+      ]
+    },
+    {
+      "callsite_rva": 117278120,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 211220,
+          "owner": "COW.GamePlay.Player",
+          "name": "get_HasAgainstEntities",
+          "rva": 117277488
+        }
+      ]
+    },
+    {
+      "callsite_rva": 117279016,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 211221,
+          "owner": "COW.GamePlay.Player",
+          "name": "HasAgainstEntitesWithSpawnObjectCrossHair",
+          "rva": 117278376
+        }
+      ]
+    },
+    {
+      "callsite_rva": 117473552,
+      "target_rva": 168066164,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 211789,
+          "owner": "COW.GamePlay.Player",
+          "name": "RaycastCheckForItemMark",
+          "rva": 117472264
+        }
+      ]
+    },
+    {
+      "callsite_rva": 117475496,
+      "target_rva": 168066164,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 211790,
+          "owner": "COW.GamePlay.Player",
+          "name": "RaycastCheckForItemMark",
+          "rva": 117474140
+        }
+      ]
+    },
+    {
+      "callsite_rva": 117476532,
+      "target_rva": 168068780,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 211791,
+          "owner": "COW.GamePlay.Player",
+          "name": "RaycastCheckForItemMarkWithScreenPos",
+          "rva": 117475868
+        }
+      ]
+    },
+    {
+      "callsite_rva": 117477684,
+      "target_rva": 168068780,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 211792,
+          "owner": "COW.GamePlay.Player",
+          "name": "RaycastCheckForItemMarkWithScreenPos",
+          "rva": 117477032
+        }
+      ]
+    },
+    {
+      "callsite_rva": 119174448,
+      "target_rva": 168067800,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 216590,
+          "owner": "COW.GamePlay.FreeViewCamera",
+          "name": "JBHDNNMLDPE",
+          "rva": 119174148
+        }
+      ]
+    },
+    {
+      "callsite_rva": 121505856,
+      "target_rva": 168065584,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 222364,
+          "owner": "COW.GamePlay.EFGIAMIPDAE",
+          "name": "EOLPKEECBGG",
+          "rva": 121504880
+        }
+      ]
+    },
+    {
+      "callsite_rva": 121919180,
+      "target_rva": 168065584,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 224348,
+          "owner": "COW.GamePlay.EBHNLEHDFEM",
+          "name": "BJBHFGKPJOD",
+          "rva": 121917020
+        }
+      ]
+    },
+    {
+      "callsite_rva": 122605992,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 226667,
+          "owner": "COW.GamePlay.ECDBGGPCDIA",
+          "name": "DOOJMMNCLJB",
+          "rva": 122604968
+        }
+      ]
+    },
+    {
+      "callsite_rva": 122689548,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 226915,
+          "owner": "COW.GamePlay.AutoFireWeapon",
+          "name": "DDKKIIHJGKN",
+          "rva": 122688864
+        }
+      ]
+    },
+    {
+      "callsite_rva": 122816084,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 227394,
+          "owner": "COW.GamePlay.MountableAnimal",
+          "name": "COAANABFMFJ",
+          "rva": 122815576
+        }
+      ]
+    },
+    {
+      "callsite_rva": 127494064,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 239614,
+          "owner": "COW.GamePlay.FOMLLGKJKAC",
+          "name": "EMDCLGMKCJK",
+          "rva": 127493384
+        }
+      ]
+    },
+    {
+      "callsite_rva": 128961508,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 242063,
+          "owner": "COW.GamePlay.LBGMLLGCHPD",
+          "name": "ENKPHDGCPKO",
+          "rva": 128960280
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129351600,
+      "target_rva": 168076324,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243714,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "FFLLOGJDGOJ",
+          "rva": 129351104
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129352996,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243719,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "FFLLOGJDGOJ",
+          "rva": 129352612
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129354576,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243717,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "LBIKIHBPLKC",
+          "rva": 129353928
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129356356,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243718,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "LBIKIHBPLKC",
+          "rva": 129356008
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129358920,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243756,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "FFLLOGJDGOJ",
+          "rva": 129358260
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129367152,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243736,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "CHLGOCDDPOH",
+          "rva": 129366236
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129370036,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243737,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "EMCOACPIACM",
+          "rva": 129369072
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129371168,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243737,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "EMCOACPIACM",
+          "rva": 129369072
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129371504,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243737,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "EMCOACPIACM",
+          "rva": 129369072
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129374208,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243738,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "HLFKDMECEGL",
+          "rva": 129373248
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129375336,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243738,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "HLFKDMECEGL",
+          "rva": 129373248
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129375736,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243738,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "HLFKDMECEGL",
+          "rva": 129373248
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129381028,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243742,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "MBBKGFBIILF",
+          "rva": 129379976
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129385512,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243743,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "AKMKJGCHDHF",
+          "rva": 129384876
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129387716,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243745,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "IGCEMBKDNDE",
+          "rva": 129386596
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129389992,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243750,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "MANOMBDMMJN",
+          "rva": 129388820
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129391064,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243750,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "MANOMBDMMJN",
+          "rva": 129388820
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129392520,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243749,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "KLDJBHGGBEB",
+          "rva": 129391352
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129393344,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243749,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "KLDJBHGGBEB",
+          "rva": 129391352
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129395160,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243746,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "LNLAINGENHO",
+          "rva": 129394188
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129397436,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243747,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "HGIGPNPOEGJ",
+          "rva": 129396276
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129398676,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243747,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "HGIGPNPOEGJ",
+          "rva": 129396276
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129401096,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243757,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "KPNFKMEGFMK",
+          "rva": 129400476
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129406424,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243763,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "KIPDDJOHACD",
+          "rva": 129405676
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129411700,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 243772,
+          "owner": "COW.GamePlay.IPBGFJNGLOH",
+          "name": "JKDACJJKHCD",
+          "rva": 129411288
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129756608,
+      "target_rva": 168065584,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 244976,
+          "owner": "COW.GamePlay.NetworkAIPawn",
+          "name": "FixPosition",
+          "rva": 129755532
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129928076,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 2745,
+          "owner": "RMCRealisticMotorcycleController",
+          "name": "WheelAlign",
+          "rva": 129927516
+        }
+      ]
+    },
+    {
+      "callsite_rva": 129929344,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 2745,
+          "owner": "RMCRealisticMotorcycleController",
+          "name": "WheelAlign",
+          "rva": 129927516
+        }
+      ]
+    },
+    {
+      "callsite_rva": 130025508,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 37799,
+          "owner": "COW.CheckBoxOffsetCrossHairTrigger",
+          "name": "HasAgainstEntities",
+          "rva": 130024916
+        }
+      ]
+    },
+    {
+      "callsite_rva": 130026288,
+      "target_rva": 168065584,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 37799,
+          "owner": "COW.CheckBoxOffsetCrossHairTrigger",
+          "name": "HasAgainstEntities",
+          "rva": 130024916
+        }
+      ]
+    },
+    {
+      "callsite_rva": 130028064,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 37808,
+          "owner": "COW.CheckBoxOutRoomCrossHairTrigger",
+          "name": "HasAgainstEntities",
+          "rva": 130027616
+        }
+      ]
+    },
+    {
+      "callsite_rva": 130099724,
+      "target_rva": 168076324,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 245604,
+          "owner": "OBELAJFMHFH",
+          "name": "ECKBHGBKPNO",
+          "rva": 130099164
+        }
+      ]
+    },
+    {
+      "callsite_rva": 130121992,
+      "target_rva": 168076324,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 245692,
+          "owner": "COW.GamePlay.PhysicalCCT",
+          "name": "DJCKGJIIEMD",
+          "rva": 130121704
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131407088,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 250432,
+          "owner": "COW.GamePlay.SafeZoneCandidate",
+          "name": "FixPositionToGround",
+          "rva": 131406664
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131407408,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 250432,
+          "owner": "COW.GamePlay.SafeZoneCandidate",
+          "name": "FixPositionToGround",
+          "rva": 131406664
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131407728,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 250432,
+          "owner": "COW.GamePlay.SafeZoneCandidate",
+          "name": "FixPositionToGround",
+          "rva": 131406664
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131492256,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 250859,
+          "owner": "COW.GamePlay.SceneEditAgent",
+          "name": "set_CameraProjection",
+          "rva": 131491776
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131493108,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 251034,
+          "owner": "COW.GamePlay.SceneEditAgent",
+          "name": "set_CameraSwitch",
+          "rva": 131492508
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131505080,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 251018,
+          "owner": "COW.GamePlay.SceneEditAgent",
+          "name": "MMEJOGJLHDL",
+          "rva": 131502848
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131507700,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 251019,
+          "owner": "COW.GamePlay.SceneEditAgent",
+          "name": "NEPBNLJNAAL",
+          "rva": 131506816
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131519448,
+      "target_rva": 168068956,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 250906,
+          "owner": "COW.GamePlay.SceneEditAgent",
+          "name": "CheckHitObj",
+          "rva": 131519000
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131532596,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 250935,
+          "owner": "COW.GamePlay.SceneEditAgent",
+          "name": "FOIECPKGEAG",
+          "rva": 131532192
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131532912,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 250935,
+          "owner": "COW.GamePlay.SceneEditAgent",
+          "name": "FOIECPKGEAG",
+          "rva": 131532192
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131570844,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 251037,
+          "owner": "COW.GamePlay.SceneEditAgent",
+          "name": "SetAgentHeightOrSizeRatio",
+          "rva": 131569904
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131918452,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 252353,
+          "owner": "COW.GamePlay.SceneEditObjectBase",
+          "name": "INLFJKINCHH",
+          "rva": 131917372
+        }
+      ]
+    },
+    {
+      "callsite_rva": 131923276,
+      "target_rva": 168068956,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 252363,
+          "owner": "COW.GamePlay.SceneEditObjectBase",
+          "name": "KJPJODPJEAC",
+          "rva": 131922908
+        }
+      ]
+    },
+    {
+      "callsite_rva": 132037108,
+      "target_rva": 168068956,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 252715,
+          "owner": "COW.GamePlay.SceneEditPaintTool",
+          "name": "CheckTouch",
+          "rva": 132036544
+        }
+      ]
+    },
+    {
+      "callsite_rva": 133130300,
+      "target_rva": 168068956,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 255129,
+          "owner": "COW.GamePlay.FLNCICPBGPO",
+          "name": "HFKKNNPOLDK",
+          "rva": 133129644
+        }
+      ]
+    },
+    {
+      "callsite_rva": 133143852,
+      "target_rva": 168074400,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 255147,
+          "owner": "COW.GamePlay.JIKJEPHGPIN",
+          "name": "EBEKJMMCIJC",
+          "rva": 133142632
+        }
+      ]
+    },
+    {
+      "callsite_rva": 133936116,
+      "target_rva": 168068780,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 257431,
+          "owner": "COW.GamePlay.VerticleBulletController",
+          "name": "GCGCNMIJLLI",
+          "rva": 133935668
+        }
+      ]
+    },
+    {
+      "callsite_rva": 135784756,
+      "target_rva": 168072344,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 263029,
+          "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+          "name": "UGCAPICameraMultiRaycast",
+          "rva": 135783684
+        }
+      ]
+    },
+    {
+      "callsite_rva": 135786984,
+      "target_rva": 168066872,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 263030,
+          "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+          "name": "UGCAPICameraSingleRaycast",
+          "rva": 135785916
+        }
+      ]
+    },
+    {
+      "callsite_rva": 135911112,
+      "target_rva": 168073208,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 263242,
+          "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+          "name": "UGCAPIMultiRaycast",
+          "rva": 135910368
+        }
+      ]
+    },
+    {
+      "callsite_rva": 135911204,
+      "target_rva": 168072344,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 263242,
+          "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+          "name": "UGCAPIMultiRaycast",
+          "rva": 135910368
+        }
+      ]
+    },
+    {
+      "callsite_rva": 135970656,
+      "target_rva": 168066872,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 263359,
+          "owner": "COW.GamePlay.UGCRuntime.UGCUserAPI",
+          "name": "UGCAPISingleRaycast",
+          "rva": 135970036
+        }
+      ]
+    },
+    {
+      "callsite_rva": 136517268,
+      "target_rva": 168076324,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 265156,
+          "owner": "GCommon.AlignNormalV2",
+          "name": "UpdateImp",
+          "rva": 136516712
+        }
+      ]
+    },
+    {
+      "callsite_rva": 136538180,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 265215,
+          "owner": "GCommon.FootPrint",
+          "name": "UpdateImp",
+          "rva": 136537792
+        }
+      ]
+    },
+    {
+      "callsite_rva": 143016268,
+      "target_rva": 168067580,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 3418,
+          "owner": "AlignNormal",
+          "name": "UpdateImp",
+          "rva": 143015384
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168065076,
+      "target_rva": 168065120,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168065744,
+      "target_rva": 168065120,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168065940,
+      "target_rva": 168065120,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168066132,
+      "target_rva": 168065120,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168066340,
+      "target_rva": 168066380,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168067048,
+      "target_rva": 168067088,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168067756,
+      "target_rva": 168066380,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168067964,
+      "target_rva": 168066380,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168068164,
+      "target_rva": 168066380,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168068324,
+      "target_rva": 168065120,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168068476,
+      "target_rva": 168065120,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168068620,
+      "target_rva": 168065120,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168068756,
+      "target_rva": 168065120,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168068920,
+      "target_rva": 168066380,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168069136,
+      "target_rva": 168066164,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168069268,
+      "target_rva": 168066380,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168069420,
+      "target_rva": 168066380,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168072028,
+      "target_rva": 168071244,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168072852,
+      "target_rva": 168072068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168073668,
+      "target_rva": 168072892,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168073880,
+      "target_rva": 168071520,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168074052,
+      "target_rva": 168071520,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168074216,
+      "target_rva": 168071520,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168074396,
+      "target_rva": 168071520,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168074572,
+      "target_rva": 168071520,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168074736,
+      "target_rva": 168071520,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168074892,
+      "target_rva": 168071520,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168075036,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168075792,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168075944,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168076092,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168076288,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168076500,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168076704,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168076900,
+      "target_rva": 168075068,
+      "kind": "BL",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168115444,
+      "target_rva": 168065120,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168115684,
+      "target_rva": 168066380,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168115940,
+      "target_rva": 168067088,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    },
+    {
+      "callsite_rva": 168116192,
+      "target_rva": 168075068,
+      "kind": "B",
+      "nearest_registered_csharp_methods": [
+        {
+          "index": 46673,
+          "owner": "COW.GameSettingData",
+          "name": ".cctor",
+          "rva": 144016012
+        }
+      ]
+    }
+  ],
+  "primary_source_windows": [
+    {
+      "index": 34931,
+      "owner": "COW.GameFacade",
+      "name": "CheckVisibleByCameraMode",
+      "rva": 119270516,
+      "window_end_rva": 119270736,
+      "window_bytes": 220,
+      "source_hex": "ff0302d1fe3300f9f44f07a954ef019088da5c39f30300aac800003700ac01b0006040f9d157c6942800805288da1c3920818752e1031faa5caf59942002003620818752e1031faa85af5994680a40f96002c03de82b00f9e013803de00300b4e013c03de82b40f9e1830091e2031faae00b803de81b00f948ed49941200001408ac01b0086140f9000140f908e040b9480000351358c69480fdff97200100b4680a40f96002c03de1030091e2031faae80b00f9e003803d47d000940200001420008052f44f47a9fe3340f900000012ff030291c0035fd64b58c694",
+      "parameters": [
+        {
+          "name": "playerID",
+          "kind": 17,
+          "type_name": "COW.GamePlay.BEADLMGGGGL"
+        }
+      ],
+      "direct_raycast_transfers_in_window": [],
+      "scope": "PINNED SOURCE WINDOW TO NEXT METADATA-ORDER METHOD; NOT A GENERAL FUNCTION-SIZE ALGORITHM"
+    },
+    {
+      "index": 217009,
+      "owner": "COW.GamePlay.ICCMOIAKHOE",
+      "name": "CKHGHGPDGGO",
+      "rva": 119483976,
+      "window_end_rva": 119484876,
+      "window_bytes": 900,
+      "source_hex": "ffc305d1fd9300f9fe6713a9f85f14a9f65715a9f44f16a9b5ed0190a89e6639f40301aaf30300aa4802003760aa01b000d043f95887c59460aa01b0006040f95587c59420aa01f0003446f95287c59460aa01b000f444f94f87c59460aa01b000ec47f94c87c59428008052a89e263980398052e1031faad7de58944002003680398052e1031faa00df5894880a40f98002c03de88b00f9e043803d201700b4e043c03de88b40f9e2830391e10313aae3031faae03b803de87b00f9bafd48949f00001468664039e808003478aa01b08002c03d880a40f9186340f9e043803de88b00f9000340f908e040b9480000358787c594e8830291e0031faa8e4fff9769aa01b0e02bc03de85b40f929d143f9e033803de86b00f9200140f908e040b9480000357a87c594e043c03de88b40f9e133c03de96b40f9e0030291e1830191e2031faae023803de84b00f9e11b803de93b00f9810d2994f503002ae0031faa2549ff97880a40f98002c03de85b00f9e02b803d601000b4e02bc03de85b40f9e103019122008052e3031faae013803de82b00f94d5e009437aa01f0f73646f9f60300aae80240f909e140b969000035e00308aa5687c594e00316aae1031faae2031faa7adfb79420010036b60d00b4e00316aae1031faad872f59719000012040000142000805255000014f9031f2a880a40f98002c03d000340f9e88b00f9e043803d08e040b9480000354087c594e8030391e0031faa474fff97e033c03de86b40f9e143c03de98b40f9e0830091e1030091e2031faae003803de80b00f9e10b803de91b00f99b55ff97f403002ae0031faa7e3cff9700050036e80240f9b502000a09e140b969000035e00308aa2787c594e00316aae1031faae2031faa4bdfb794a003003668aa019008f544f9f703002a000140f91237a194200700b468aa019008ed47f9b502170a010140f9790e68941f0000f1e8079f1ae00100b4160600b4f70300aae00316aae1031faab502080ab6f2f497e10300aae00317aae2031faa421cb497b500003715000012f40000360f00001475000036686e40390d000014f5031f2a54010037000340f908e040b948000035fd86c594e0031faae73bff970800190a0801152a88010034687240391f010071e0179f1af44f56a9f65755a9f85f54a9fe6753a9fd9340f900000012ffc30591c0035fd6e00313aa09000094a000003768a2413968000035e0031f2af2ffff1768764039eeffff172c87c594",
+      "parameters": [
+        {
+          "name": "IAJIPBONEDG",
+          "kind": 17,
+          "type_name": "COW.GamePlay.BEADLMGGGGL"
+        }
+      ],
+      "direct_raycast_transfers_in_window": [],
+      "scope": "PINNED SOURCE WINDOW TO NEXT METADATA-ORDER METHOD; NOT A GENERAL FUNCTION-SIZE ALGORITHM"
+    },
+    {
+      "index": 210743,
+      "owner": "COW.GamePlay.Player",
+      "name": "UpdateAiming",
+      "rva": 117011764,
+      "window_end_rva": 117019680,
+      "window_bytes": 7916,
+      "source_hex": "ffc304d1ef3b096ded330a6deb2b0b6de9230c6dfd7b0da9fc6f0ea9fa670fa9f85f10a9f65711a9f44f12a9740002d088b26039f603012a291ca14e0d1ca04ef30300aa280a003700c10190000443f996f5ce9440bd0190004846f993f5ce9460c501f0006444f990f5ce94e0c001d0006442f98df5ce9480c50190008c43f98af5ce9440bd0190006040f987f5ce9480c50190009043f984f5ce9420bd01f0002047f981f5ce9440bd019000d442f97ef5ce94c0bd01f0000044f97bf5ce9440bd019000e442f978f5ce9440be01d0000847f975f5ce9400bd01d0003446f972f5ce9420bd01f0007c43f96ff5ce9480c50190009443f96cf5ce9480c50190009843f969f5ce9480c50190009c43f966f5ce9480c5019000a043f963f5ce9480c5019000a443f960f5ce9440bd0190005444f95df5ce9480c101d000a846f95af5ce9480c101d000b846f957f5ce9480c101d000bc46f954f5ce9480c101d000c046f951f5ce9440bd01b0009840f94ef5ce9480c50190008440f94bf5ce942800805288b2203900e4006fc04f8952e1031faae0c3873ce00303adff2f00f9d24c629480010036c04f8952e1031faafb4c629460d300b4c2020012e10313aaa01dad4e211da94ee3031faa7e60569474050014600240f913f9ce94680240f9e00313aae1031faa098953a920013fd680ad0037e00313aa82a0fd9780000037e00313aa0dfffd97c0ac003648be01d0080947f9684e4ebd000140f908e040b9480000357ff5ce94a84dfdb0a039281e08d143bde0031faa011da84e93744b9440000036f6aa0036688a793908010035f6000037604e4ebda84dfdb0017942bda039201e0020211ec4a9005475a23991e00315aae1031faa7f8a39396d4e0ebd7f3607f9f2f4ce94602a47f9600000b4e1031faae2082f94e00313aa4693ff9700a800b4c8bd01f0080144f9090040f9f40300aa080140f92bc144390ac144397f010a6be3a60054296540f9290d0a8b29815ff83f0108eb41a600541dbd01d0bd3746f977f641f9a00340f908e040b9480000354bf5ce94e00317aae1031faae2031faa0a52c194c0a4003777f641f997c800b4e00240f9c3f8ce94e80240f9e00317aae1031faa098953a920013fd680a30037e00313aa3d6dfe97a80340f9f70300aa09e140b969000035e00308aa34f5ce94e00317aae1031faae2031faaf351c194e0a10037e00313aa306dfe9780c500b4f70300aa000040f9aaf8ce94e80240f9e00317aae1031faa098953a920013fd660a00037e00313aa25060094e0000034d6000036e00313aa206dfe9780c300b4e1031faa181c089460f641f900c300b4e1031faa9179c194b6ff01906b1646bd6c1a46bd6e1e46bdc88a4c396f2246bd4a1ca24ee103062dc800003500bd01f0003c40f9acf4ce9428008052c88a0c3908bd01f0083d40f9601dab4e811dac4ec21dae4e080140f9e31daf4ee0031faa085d40f90415492d065140bdba18c194e00313aa0e1ca04e2b1ca14e4c1ca24efa6cfe97c0be00b4008040bde33740bd800240f9c109201e6128211ee13700bde13340bd6209201e8009201e4a29201e2f28221e6bf8ce94880240f9e00314aa091d42f9012142f920013fd6800240f9e03300bd63f8ce94880240f9e00314aa093548f9013948f920013fd6680240f9f603002ae00308aa5af8ce94680240f9e00313aa09954df901994df920013fd6400900b4600240f952f8ce94680240f9e00313aa09954df901994df920013fd660b900b408a040b91f11007180010054600240f947f8ce94680240f9e00313aa09954df901994df920013fd600b800b408a040b91f15007181060054e00313aab39ffd9720060036e00313aae1031faa0c40c194c0b600b4e1031faa2f79c194b7ff0190e88243394c1ca24ee03700bde12f00bdc800003500bd01f0003c40f94df4ce9428008052e882033908bd01f0083d40f9e00313aa080140f9085d40f90f29432d0b2140bd8d3fff97e00313aae1031faa0e1ca04ef23fc19480b300b460092e1e01102c1e0008211e42092e1e8a29201ee02f40bd4208211ee3092e1e6108211e0f28221ee03740bde1031faa0028211ee03700bd7e7ac1940e1ca04e2b1ca14e4c1ca24e800240f909f8ce94880240f9e00314aa093d48f9014148f920013fd66001003657bd0190f7e642f9e00240f908e040b9680000357cf4ce94e00240f9085c40f9083940b91601162a28bd01f0082147f9000140f908e040b94800003572f4ce94e0031f2ae1031faaca9766946001003657bd0190f7e642f9e00240f908e040b96800003568f4ce94e00240f9085c40f9082940b91601162ae00313aae8fdfd97c0010036e00313aaae01fe97200100b408c10190080543f9090040f9080140f92bc144390ac144397f010a6ba2000054e8031faa08000014f7031f2a08000014296540f9290d0a8b29815ff83f0108eb08009f9a1f0100f1f7079f1ae00313aa7a7cfe975abd01905a6340f9e803002aea021f321f010072400340f95711971a09e040b9490000353ff4ce94e0031faaf8ba0894880240f9e9021e321f0000723711971ae00308aab8f7ce94880240f9e00314aa093d48f9014148f920013fd6e8c001d0086542f98b0240f91f000072090140f96ac14439e8021d320811971a2cc144395f010c6bea031faac30000546a6540f94a0d0c8b4a815ff85f0109eb8a029f9a69724eb90b011c325f0100f117018b1aff02096bef2f00bd4022005478e23991e00318aae1031faa7f3e07f9a0f3ce945cbd01909c5744f9800340f908e040b9480000350ff4ce9421008052e003172aecfdff970002003688c50190088d43f9000140f94cf4ce9488c5019008a143f9e10313aae3031faaf90300aa020140f9f50e9694e00318aae10319aa793e07f987f3ce94800340f908e040b948000035f8f3ce9441008052e003172ad5fdff97a0060036190340f9f90300b49bc501907b8f43f9600340f933f4ce9488c5019008a543f9e10313aae3031faafa0300aa020140f9dc0e9694e00319aae1031aaae2031faabbc0ba94600300b47a0340f9f90300aae1031aaadff3ce94c09b00b4000300f97b0340f9e00319aae1031baad9f3ce94ef2f40bdfa0300aa200200b5b400001488c50190088d43f9000140f915f4ce9488c5019008a543f9e10313aae3031faafa0300aa020140f9be0e969403000014ef2f40bdfa031faa1a0300f9e00318aae1031aaa4df3ce945abd01905a6340f9800340f908e040b948000035bcf3ce9481008052e003172a99fdff97a0060036190340f9f90300b49bc501907b8f43f9600340f9f7f3ce9488c50190089543f9e10313aae3031faafa0300aa020140f9a00e9694e00319aae1031aaae2031faa7fc0ba94600300b47a0340f9f90300aae1031aaaa3f3ce94409400b4000300f97b0340f9e00319aae1031baa9df3ce94ef2f40bdfa0300aa200200b57800001488c50190088d43f9000140f9d9f3ce9488c50190089543f9e10313aae3031faafa0300aa020140f9820e969403000014ef2f40bdfa031faa1a0300f9e00318aae1031aaa11f3ce945abd01905a6340f9800340f908e040b94800003580f3ce9401018052e003172a5dfdff97a0060036190340f9f90300b49bc501907b8f43f9600340f9bbf3ce9488c50190089943f9e10313aae3031faafa0300aa020140f9640e9694e00319aae1031aaae2031faa43c0ba94600300b47a0340f9f90300aae1031aaa67f3ce94c08c00b4000300f97b0340f9e00319aae1031baa61f3ce94ef2f40bdfa0300aa200200b53c00001488c50190088d43f9000140f99df3ce9488c50190089943f9e10313aae3031faafa0300aa020140f9460e969403000014ef2f40bdfa031faa1a0300f9e00318aae1031aaad5f2ce943abd01f05a6340f9800340f908e040b94800003544f3ce9401028052e003172a21fdff97e0060036190340f9390400b47bc501f07b8f43f9600340f97ff3ce9468c501f0089d43f9e10313aae3031faafa0300aa020140f9280e9694e00319aae1031aaae2031faa07c0ba94a00300b47a0340f9f90300aae1031aaa2bf3ce94408500b4000300f97b0340f9e00319aae1031baa25f3ce94ef2f40bdfa0300aa600200b5e00319aae1031baa17f4ce9468c501f0088d43f9000140f95ff3ce9468c501f0089d43f9e10313aae3031faafa0300aa020140f9080e969403000014ef2f40bdfa031faa1a0300f9e00318aae1031aaa97f2ce943abd01f05a6340f977720eb9e00313aae1031faa77423991693ec1943bbd01f07be742f9783e47f9f90300aa680340f909e140b969000035e00308aafcf2ce94e603462de11daf4e421daa4ec31dae4e641dab4e851dac4ee003162ae10317aae20319aae30318aae4031faa08162f9420010036e00313aae1031faa1f040094e10300aa603607f9e00315aa73f2ce940a000014e80240f9a87c00b4e03740bd0a5500bd00bd092de80240f9087c00b40e2d082d0c4900bd400340f908e040b948000035daf2ce94e0031faa93b90894a0010036e00313aacd9dfd9740010036600240f953f6ce94680240f9e00313aaa01dad4e211da94e098d4df901914df920013fd6a10240f9610200b4e00313aa0ff8ff9700020037a80240f9c80100b43cbd01f09c5744f9090140f9880340f92bc144390ac144397f010a6bc3000054296540f9290d0a8b29815ff83f0108eb601100547f4e05b9400340f908e040b948000035b2f2ce94e0031faa2ce00894a80340f9f80300aa09e140b969000035e00308aaaaf2ce94e00318aae1031faae2031faace4ac194602f0036400340f908e040b948000035a1f2ce94e0031faa1be00894c07300b4e1031faacfe10794202e0035400340f94f1daa4ecd1dae4e08e040b94800003595f2ce94e0031faa0fe00894407200b4e1031faae0d10794a80340f9f80300aa09e140b969000035e00308aa8af2ce94e00318aae1031faae2031faaae4ac1943abd01f05a6340f9ae1dad4eea1daf4ee02a0036400340f908e040b9480000357df2ce94e0031faaf7df0894406f00b4e1031faac8d10794e06e00b4f80300aa000040f9f5f5ce94080340f9e00318aae1031faa098953a920013fd63abd01f05a6340f9ae1dad4eea1daf4e00280037615245bd605645bd98ff01f0084b4339e087042d60ae42fde00f00fdc800003500bd01d0006c42f901f2ce9428008052084b033908bd01d0086d42f929bd01f0080140f9296140f9085d40f9200140f90a01402d09e040b90e0540fde01700bd4900003550f2ce94e0031faacadf0894a06900b4e1031faa9bd10794406900b4e1031faa9d3dc194e06800b4e287442de31740bde00f40fde1031faa21082a1e4208231e00dc2e2e2128221e0128211e00040c5e0e28211e3277c194a84dfd90e18b042d013d44bd0a1ca04ec021211e6e1ca34e2d190054e02740bd6a5205bd6e5e05bd605605bde02b40bd605a05bdff000014e00313aa4f1daa4eee2b00bdc863fe97006500b4082040b91f0500712b0200546a6645bde00313aac163fe97206400b4002040bde00313aa00d8215e4019201e606205bdba63fe97406300b488c101b008a946f9010140f9feaba9947f6605b9607245bd0820201e8d000054604245bd0028291e604205bde00313aa1131fe97806100b4186040b9e0031faaadde26943abd01f05a6340f9ee2b40bd1f03006bea1daf4ee11b0054b80240f9386000b4090340f9880340f92bc144390ac144397f010a6b635f0054296540f9290d0a8b29815ff83f0108ebc15e0054000340f975f5ce94080340f9e00318aa09d547f901d947f920013fd6a80340f9f90300aa09e140b969000035e00308aae9f1ce94e00319aae1031faae2031faa0d4ac1943abd01f05a6340f9ee2b40bdea1daf4e80170036f95b00b4e00319aae1031faa5776c19499ff01f028534339091ca04e2a1ca14e4e1ca24ec800003500bd01d0006c40f975f1ce94280080522853033908bd01d0086d40f9e03740bdce392f1e000140f92939201ee02f40bd08e040b94d39201e48000035c6f1ce94600340f92009291ea1092d1e0028211e08e040b9c1092e1e2a28201e68000035bdf1ce94600340f9085c40f9e1031faa4ac1211e005140b943082f9428bd01d0087d43f9f903002a080140f909e140b969000035e00308aaaff1ce94e03740bde12f40bde0830191e21daf4e231da94ea41dad4ec51dae4e461daa4ee103192ae2031faaea1daf4ecdbec2943abd01f05a6340f9ee2b40bd600f0036e0830191e1031faaf0dbc294605300b468c501d0086544f9010140f9dc4f6d94a80340f9fa0300aa09e140b969000035e00308aa91f1ce94e0031aaae1031faae2031faab549c194f9031faa604100365a5100b4e0031aaae1031faa2b002f94a80340f9fa0300aa09e140b969000035e00308aa81f1ce94e0031aaae1031faae2031faaa549c194f9031faa603f00365a4f00b468c501f0089143f9e0031aaa010140f9add36e94e00000b4090040f9880340f92bc144390ac144397f010a6b223d0054f9031faaec010014625645bde52740bd605245bd635a45bd645e45bda208221ee52b40bd4009201e0028221ec409241ea308231e6028201e8028201e00c0201e02102e1e0078221e0020211ee103271ecc0000546736d294a84dfd9001dd4abd0028201e0108211ee08b442d6a5205bd2a18291ee00313aa605605bd606645bd625a05bd6e5e05bd4029201e606605bde862fe97004900b488c101b008bd46f9401daa4e010140f9e7aba994e00313aae062fe97004800b4082040b93abd01f05a6340f9ae1dad4e1f7d0071ea1daf4eeb0100546a6645bde00313aad562fe97a04600b488c101b008b946f9010140f968aca9944039201e606605bd3abd01f05a6340f9ae1dad4eea1daf4e607245bd0820201e8d000054604645bd0028291e604605bd600240f9a4f4ce94680240f9e00313aa09954df901994df920013fd6c00100b4600240f99cf4ce94680240f9e00313aa09954df901994df920013fd6a04200b408a040b91f0d0071a1000054390080520e000014f9031f2a0c000014600240f98df4ce94680240f9e00313aa09954df901994df920013fd6c04000b408a040b91f250071f9179f1a3cbd01f09cd742f9800340f908e040b968000035fdf0ce94800340f9085c40f908315f39c8030034800240f978f4ce94880240f9e00314aa091d43f9012143f920013fd6f8031f2ab90f00351f0c0071600f0054682a47f97f823939683d00b4a00340f9180d40f909e040b949000035e6f0ce94e00318aae1031faae2031faa0a49c19400010036e80240f9e83b00b40c35452d0f3140bd0d000014f8031f2a67000014e33740bdc862a8520001271ec109201e6209201e8009201e6c28211ee12f40bd0f282a1e4d28211e602e47f9c03900b4e1031faa4b042f94800340f908e040b948000035c8f0ce94e00313aaa5f9ff9798ff01f0086f4339091ca04e2a1ca14e4b1ca24ec800003500bd01d0006c40f95ff0ce9428008052086f03391dbd01d0bd6f40f9ec3700bd8e39291eef37052da00340f9ac392a1eed392b1e08e040b948000035b0f0ce94c0092e1e81092c1e0028211ea1092d1e2028201e0fc0211ee021281ead000054c8192f1e8c192f1ead192f1e0f00001498ff01d0088f7f39c800003500bd01d0003c40f940f0ce9428008052088f3f3908bd01d0083d40f9080140f9085d40f90831402d0d0940bde00313aae1031faa78623991f63bc194680340f9793e47f9fa0300aa09e140b969000035e00308aa8bf0ce94e63340bd201da94e411daa4e621dab4e031da84e841dac4ea51dad4ee003162ae10318aae2031aaae30319aae4031faa96132f94e0000036e00313aaed1b00bdec2700bde83300bd2b020094600c0036f8031f2a3abd01f05a6340f998000037688679391f01186bc00400547886393936bd01f0d65644f9c00240f908e040b96800003569f0ce94c00240f9e80240f9c82c00b4095c40f9201d40f9602c00b40189452d002940bde103182ae2031faa2e0c0594400340f908e040b9480000355af0ce94e0031faad2a00894e02a00b4c80240f9f50300aa000040f9085d40f9161d40f9d2f3ce94a80240f941888052e00315aae20316aa098d5da920013fd6e00313aa4c68fe97002900b408c04239680000342800805268823939800240f9c3f3ce94880240f9e00314aa09ad47f901b147f920013fd62001003648bd0190089940f9000140f92da0aa94e02600b4e1031faa913c2d94600000363400805208000014400340f908e040b9480000352ef0ce94e0031faa0fe80894f403002a532500b4600240f9a9f3ce94680240f98202001221008052e00313aa092d45f9033145f920013fd6f44f52a9f65751a9f85f50a9fa674fa9fc6f4ea9fd7b4da9e9234c6deb2b4b6ded334a6def3b496dffc30491c0035fd6080340f9682200b496ff01f00e21452dc95243390d3140bdc900003500bd01d0006c40f9adefce9428008052c8520339a00340f9cc39291e0e392a1ea8392b1e08e040b968000034280080520300001400f0ce94c852433980092c1ec1092e1e0c28211e0809281ec800003500bd01d0006c40f999efce9428008052c8520339a00340f98829281e08e040b948000035f0efce94800340f90ec1211e08e040b968000035ebefce94800340f9085c40f900d147bdc021201ee9000054e00313aae767fe97601c00b408c04239e80100356affff1709e040b989000035ddefce94880340f9085d40f9c95a885208696938c8000035a84dfd90001d4abdc1d5af7e2020201ecdfdff54080340f9281a00b40839452dc95243390c3140bdc900003500bd01d0006c40f96cefce9428008052c8520339e03740bda00340f90f39201ee02f40bd08e040b9cd39201ee02b40bd8839201e48000035beefce94e0092f1ea1092d1ea84dfd900028211e018948bd0209281e0028221e00c0211e0020211e6a000054f9031f2a0b000014080340f9081600b4000d40f9c01500b468c501f0088540f9e2031faa010140f9d23dc19419000052612e47f9762a47f9e00317aa612a07f92eefce94e00318aae10316aa762e07f92aefce9428008052e00313aae1031faa68823939cd000094e10300aa603607f9e00315aa21efce94683647f9692a47f91f0100f1e8179f1a291200b429a9092d2b5500bde90240f9a91100b4e13340bde02740bd3803080a2101082de01b40bd204900bd11ffff17296540f9290d0a8b29815ff83f0108eb19009f9aa00340f908e040b9480000357defce94e00319aae10318aae2031faaa147c1943abd01f05a6340f9ee2b40bdea1daf4e00ca073628bd01f0084946f9000140f908e040b9480000356eefce94e0031faa7c022f94e02f00f9e80240f9280d00b4a94dfd90201d4abde42b40bd0109452d033140bd0e5d40bd8408201e6509201e8009201ee00313aae1031faa8928211eaa28221e0d28231ebe3ac194680340f9783e47f9f90300aa09e140b969000035e00308aa53efce94e03340bde32b40bde1630191411daa4e06382e1e201da94ea21dad4e641dab4e851dac4ee003162ae20319aae30318aae4031faa5d122f9460070036e82f40f9480800b4e00240f9000800b4011140f9010c02f8c8eece94e82f40f9680700b4e90240f90a3140b90b1540f9ea5300b9eb2700f9a90600b4ea5340b9eb2740f92a3100b92b1500f9e90240f90a3d40b90b4143f8ea4300b9eb1f00f9690500b4ea4340b9eb1f40f92a3d00b92b4103f8e00240f9a00400b4005c40bd015d40bd0028211e005c00bd003140fd003000fd010d40f9018c01f8a7eece94e82f40f9480300b4e00240f9000300b4013540f9018c06f8a0eece94e02f40f9600200b4e1031faacd022f94e00313aae1031faa41000094e10300aa603607f9e00315aa04000014e00315aae1031faabf0200f991eece943abd01d05a6340f9ee2b40bdea1daf4eddfdff1749efce94e00319aae1031aaaf6efce94fe0f1ef8f44f01a97400029088ba7439f30300aac800003700bd0190003446f996eece942800805288ba3439a04d8952e1031faa2146629440010036a04d8952e1031faa4a466294800300b4e10313aaf44f41a9e2031faafe0742f8ad58521408bd0190083546f9748a4ef9000140f908e040b948000035deeece94e00314aae1031faae2031faa0247c194e0000036608a4ef9200100b4f44f41a9e1031faafe0742f8bbb61514f44f41a9e0031f2afe0742f8c0035fd617efce94fe57bea9f44f01a975000290a8ea6239f30301aaf40300aae8010037e0c001d0005c42f966eece9460c501d0009043f963eece94e0c001d0009042f960eece9400bd0190003446f95deece9428008052a8ea2239204f8952e1031faae845629460010036204f8952e1031faa11466294600c00b4e10314aae20313aaf44f41a9e3031faafe57c2a81a885614b30000b5e00314aaac2dfe97f30300aa600a00b415bd0190b53646f9740e40f9a00240f908e040b9480000359feece94e00314aae1031faae2031faa5e4bc194f4031faae0080037600e40f9200900b4e8c001d0085d42f9010140f9cbd06e94a80240f9f30300aa09e140b969000035e00308aa8deece94e00313aae1031faae2031faab146c194a0060036330700b4e00313aae1031faa28fd2e94a80240f9f30300aa09e140b969000035e00308aa7eeece94e00313aae1031faae2031faaa246c194c0040036530500b468c501d0089143f9e00313aa010140f9abd06e94e00300b4e8c001d0089142f9150040f9f40300aa130140f9e00315aaecf1ce94a85e4279280100b4a95a40f9292100912a815ff85f0113eb20010054080500f12941009161ffff5482008052e00314aae10313aa12f2ce9405000014280140b908110011a8d2288b00e10491080440a9e00314aa00013fd640000037f4031faae00314aaf44f41a9fe57c2a8c0035fd697eece94",
+      "parameters": [
+        {
+          "name": "KGPEEBFGDDP",
+          "kind": 12,
+          "type_name": null
+        },
+        {
+          "name": "NDDGOGCHGEK",
+          "kind": 12,
+          "type_name": null
+        },
+        {
+          "name": "KBDDKODDBLB",
+          "kind": 2,
+          "type_name": null
+        }
+      ],
+      "direct_raycast_transfers_in_window": [
+        {
+          "callsite_rva": 117016264,
+          "target_rva": 168067580,
+          "kind": "BL",
+          "nearest_registered_csharp_methods": [
+            {
+              "index": 210743,
+              "owner": "COW.GamePlay.Player",
+              "name": "UpdateAiming",
+              "rva": 117011764
+            }
+          ]
+        }
+      ],
+      "scope": "PINNED SOURCE WINDOW TO NEXT METADATA-ORDER METHOD; NOT A GENERAL FUNCTION-SIZE ALGORITHM"
+    },
+    {
+      "index": 211220,
+      "owner": "COW.GamePlay.Player",
+      "name": "get_HasAgainstEntities",
+      "rva": 117277488,
+      "window_end_rva": 117278376,
+      "window_bytes": 888,
+      "source_hex": "ff8302d1ef3b036ded33046deb2b056de923066dfe3b00f9f65708a9f44f09a974fe01b0889e6539f30300aae801003720bb01f000e442f91df2cd9400bb01d0006c40f91af2cd9400bb01b0003446f917f2cd9420bb01d0007c43f914f2cd9428008052889e2539e026915200e4006f2000a072e1031faae0c3813ce00300ad9b49619440010036e02691522000a072e1031faac3496194e01600b4e10313aae2031faa6c46519417000014e00313aa2a75fd9760020037e00313aa0675fd9700020037e00313aafc90fe97a001003615bb01b0b53646f9748a4ef9a00240f908e040b9480000354ff2cd94e00314aae1031faae2031faa734ac0948001003620008052f44f49a9f65748a9fe3b40f9e923466deb2b456ded33446def3b436d00000012ff830291c0035fd6e00313aafffeff97a80240f9f40300aa09e140b969000035e00308aa37f2cd94e00314aae1031faae2031faa5b4ac09480100036e00313aae1031faac1074a9496fd01f0c88243390a1ca04ee10b0f2dc800003500bb01d0003c40f9c9f1cd9428008052c882033914bb01d0943e40f9a94bfd9095fd01f0aa864339880240f9297942bd085d40f90839432d0f2140bdea000035e00314aabaf1cd94880240f929008052a9860339085d40f935bb01f0b5e642f90cad442d0d2d40bd0809291ea00240f9ce09291eef09291e09e040b96900003509f2cd94a00240f9e07b40bd085c40f9e1031faa4829281e09282e1e000940b9e07f40bd0a282f1e8b082e9428bb01d0087d43f9f503002a080140f909e140b969000035e00308aaf7f1cd94884bfdf0066d4ebde0030091001da84e211da94e421daa4e831dac4e641dab4ea51dad4ee103152ae2031faa15bfc194e803271ea0040036c8824339c800003500bb01d0003c40f986f1cd9428008052c8820339880240f9e0030091e1031faa085d40f90929432d0b2140bd62dcc19414bb01d0946e40f92009201e4109211e0028211e800240f96109221e2928201e08e040b948000035d0f1cd9420c1201e01102e1e0020211e05010054800240f908e040b948000035c8f1cd9420c1221ea536d1940840621ee00313aa85feff97c00200b4f40300aa000040f940f5cd94880240f9e00314aa001da84e09855ba920013fd6e00313aa7afeff97600100b4f30300aa000040f935f5cd94680240f9e00313aa09855aa920013fd667ffff17e0031f2a65ffff17f5f1cd94",
+      "parameters": [],
+      "direct_raycast_transfers_in_window": [
+        {
+          "callsite_rva": 117278120,
+          "target_rva": 168067580,
+          "kind": "BL",
+          "nearest_registered_csharp_methods": [
+            {
+              "index": 211220,
+              "owner": "COW.GamePlay.Player",
+              "name": "get_HasAgainstEntities",
+              "rva": 117277488
+            }
+          ]
+        }
+      ],
+      "scope": "PINNED SOURCE WINDOW TO NEXT METADATA-ORDER METHOD; NOT A GENERAL FUNCTION-SIZE ALGORITHM"
+    },
+    {
+      "index": 211221,
+      "owner": "COW.GamePlay.Player",
+      "name": "HasAgainstEntitesWithSpawnObjectCrossHair",
+      "rva": 117278376,
+      "window_end_rva": 117279240,
+      "window_bytes": 864,
+      "source_hex": "ff8302d1ef3b036ded33046deb2b056de923066dfe3b00f9f65708a9f44f09a975fe01b0a8a26539f30301aaf40300aae801003720bb01f000e442f93ef1cd9400bb01d0006c40f93bf1cd9400bb01b0003446f938f1cd9420bb01d0007c43f935f1cd9428008052a8a2253900cb835200e4006f4000a072e1031faae0c3813ce00300adbc4861946001003600cb83524000a072e1031faae4486194001600b4e10314aae20313aae3031faa0843519417000014e00314aa4a74fd9760020037e00314aa2674fd9700020037e00314aa1c90fe97a001003615bb01b0b53646f9948a4ef9a00240f908e040b9480000356ff1cd94e00314aae1031faae2031faa9349c0948001003620008052f44f49a9f65748a9fe3b40f9e923466deb2b456ded33446def3b436d00000012ff830291c0035fd6a00240f908e040b9480000355bf1cd94e00313aae1031faae2031faa7f49c09400100036331000b4e00313aae1031faaa73cc094a00f00b4e1031faaca75c09496fd01f0c88243390a1ca04ee10b0f2dc800003500bb01d0003c40f9e9f0cd9428008052c882033914bb01d0943e40f9a94bfd9095fd01f0aa864339880240f9297942bd085d40f90839432d0f2140bdea000035e00314aadaf0cd94880240f929008052a9860339085d40f935bb01f0b5e642f90cad442d0d2d40bd0809291ea00240f9ce09291eef09291e09e040b96900003529f1cd94a00240f9e07b40bd085c40f9e1031faa4829281e09282e1e000940b9e07f40bd0a282f1eab072e9428bb01d0087d43f9f503002a080140f909e140b969000035e00308aa17f1cd94884bfdf0066d4ebde0030091001da84e211da94e421daa4e831dac4e641dab4ea51dad4ee103152ae2031faa35bec194e803271ea0040036c8824339c800003500bb01d0003c40f9a6f0cd9428008052c8820339880240f9e0030091e1031faa085d40f90929432d0b2140bd82dbc19414bb01d0946e40f92009201e4109211e0028211e800240f96109221e2928201e08e040b948000035f0f0cd9420c1201e01102e1e0020211e05010054800240f908e040b948000035e8f0cd9420c1221ec535d1940840621e600240f964f4cd94680240f9e00313aa001da84e09855ba920013fd6600240f95df4cd94680240f9e00313aa09855aa920013fd66fffff17e0031f2a6dffff171df1cd94",
+      "parameters": [
+        {
+          "name": "NPAOJCLNIEK",
+          "kind": 18,
+          "type_name": "SpawnObjectCrossHairTrigger"
+        }
+      ],
+      "direct_raycast_transfers_in_window": [
+        {
+          "callsite_rva": 117279016,
+          "target_rva": 168067580,
+          "kind": "BL",
+          "nearest_registered_csharp_methods": [
+            {
+              "index": 211221,
+              "owner": "COW.GamePlay.Player",
+              "name": "HasAgainstEntitesWithSpawnObjectCrossHair",
+              "rva": 117278376
+            }
+          ]
+        }
+      ],
+      "scope": "PINNED SOURCE WINDOW TO NEXT METADATA-ORDER METHOD; NOT A GENERAL FUNCTION-SIZE ALGORITHM"
+    }
+  ],
+  "scope": "OFFLINE DIRECT B/BL CANDIDATES ONLY; NEAREST REGISTERED METHOD IS NOT PROVEN OWNERSHIP OR LOS SEMANTICS",
+  "functions_invoked": false,
+  "live_memory_access": false,
+  "aim_writes": false,
+  "limitations": [
+    "Executable-load scanning can include literal/data words, and nearest CSharp registration can belong to another image or shared/generic method.",
+    "Primary windows establish only byte/registration context for these pinned cases; aliases, indirect calls and nested implementations remain unresolved.",
+    "No cached head-LOS result, query policy, closest target association, live scene validity or working aim control is established."
+  ]
+}

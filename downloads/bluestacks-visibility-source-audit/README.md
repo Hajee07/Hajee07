@@ -56,3 +56,61 @@ the unrelated full runtime suite was not repeated for this source-only addition.
 
 The JSON includes metadata records, source hex, call targets, input hashes and
 scope limitations. No APK, metadata file, vendor DLL or full ELF is included.
+
+## Follow-up: camera-mode delegate and real raycast callers
+
+`Discover-PhysicsCalls.py` and `physics-callers.json` extend the source audit.
+They do not add a live reader or change the V52 Windows runner.
+
+The full pinned camera-mode delegate window is 900 bytes. Parameter metadata
+identifies its input, and the facade input, as `COW.GamePlay.BEADLMGGGGL` (player
+identity), not a ray, a head point or a `Bounds` value. The original delegate
+also has a `true` return when its +0x19 byte is zero. It combines other policy
+branches and nested helpers. Its result cannot be used as verified head LOS.
+No frustum-versus-LOS classification is inferred merely from the method name.
+
+The audit resolves the exact Unity PhysicsModule registration and 53
+`Physics`/`PhysicsScene` raycast-named bindings, then records direct B/BL transfer
+candidates to those bindings in reference executable loads. Literal/data words,
+indirect calls, aliases and cross-image gaps mean that these candidates and the
+nearest CSharp method names are not proven function ownership or LOS semantics.
+In particular, long gaps can associate foreign-image code with the last CSharp
+registration. The JSON explicitly keeps that uncertainty.
+
+Three call sites additionally lie inside inspected, exact registered Player
+source windows, rather than relying only on the nearest-name search:
+
+| Source window | Call-site RVA | Physics wrapper RVA |
+| --- | --- | --- |
+| `Player.UpdateAiming` | `0x6f986c8` | `0xa0481fc` |
+| `Player.get_HasAgainstEntities` | `0x6fd85a8` | `0xa0481fc` |
+| `Player.HasAgainstEntitesWithSpawnObjectCrossHair` | `0x6fd8928` | `0xa0481fc` |
+
+The target is the registered five-argument `UnityEngine.Physics.Raycast`
+overload. These are actual source references to a physics-query API, but they
+are not verified camera-to-selected-head LOS queries. One original getter branch builds
+a local hit buffer, calls the query and subsequently performs virtual dispatch;
+it is not simply a cached boolean field load. Virtual targets, query policy,
+closest-hit ownership and any side effects have not been fully established.
+Calling it is not part of this read-only probe.
+
+The follow-up therefore identifies concrete source paths to investigate and
+avoids turning model visibility or crosshair query results into head LOS.
+Runtime LOS and automatic aim remain unimplemented/unverified.
+
+Reproduce with the same pinned inputs and sibling parser:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 Discover-PhysicsCalls.py \
+  /path/to/libil2cpp.so /path/to/global-metadata.dat /tmp/physics-callers.json
+```
+
+No engine/native function invocation, DLL injection, memory write or live test is
+performed by either audit. The source windows are bounded evidence for this
+exact reference image, not a general function-boundary or disassembly algorithm.
+
+Follow-up validation: a repeated run produced byte-identical JSON; all 150 recorded
+B/BL target decodings matched independent Capstone 5.0.3 decoding. The five primary
+source windows matched the pinned ELF, both player-identity parameter types were
+checked, and all three primary raycast transfers lay within their recorded
+windows. A wrong ELF input was rejected. No live LOS test was performed.

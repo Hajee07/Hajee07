@@ -1,3 +1,5 @@
+The [physics-query follow-up](bluestacks-visibility-source-audit/README.md#follow-up-camera-mode-delegate-and-real-raycast-callers) identifies registered Player raycast call sites and distinguishes them from verified selected-head LOS. This remains offline source evidence; Windows runner V52 is unchanged.
+
 An [offline visibility source audit](bluestacks-visibility-source-audit/README.md) now documents model visibility versus unverified target-head LOS. The Windows diagnostic runner remains V52; this source-only step needs no fresh Windows capture.
 
 V52 adds source-verified Unity Object null-comparison data and metadata/class readiness gates for the registered camera reference. No functions invoked or writes added; actual game getter/camera selection remains unverified. See [null predicate evidence](bluestacks-process-map/CAMERA-NULL-PREDICATE-EVIDENCE.md).
