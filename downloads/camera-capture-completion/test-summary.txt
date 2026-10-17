@@ -1,0 +1,68 @@
+PASS: native camera parser retains source pose, position and identity
+PASS: matching camera/aim quaternions have a near-zero angle metric only
+PASS: duplicate native rotation record is rejected
+PASS: native pose refuses malformed/unverified report: NativeTransform=0x71001000
+PASS: native pose refuses malformed/unverified report: Owner=0x71002001
+PASS: native pose refuses malformed/unverified report: LoadBias=0x3200008
+PASS: native pose refuses malformed/unverified report: PredicateRawByte=0
+PASS: native pose refuses malformed/unverified report: PredicateRawByte=256
+PASS: native pose refuses malformed/unverified report: ParentCount=32
+PASS: native pose refuses malformed/unverified report: NativeTransform=0x71003000 X=NaN
+PASS: native pose refuses malformed/unverified report: ChangedBasisX=
+PASS: native pose refuses malformed/unverified report: NormalizedByProbe=True
+PASS: native pose refuses malformed/unverified report: FunctionsInvoked=True
+PASS: native pose refuses malformed/unverified report: Status=FAIL
+PASS: native pose refuses malformed/unverified report: CompleteSourceSelection=False
+PASS: native pose refuses malformed/unverified report: ProcessMapVersion=45
+PASS: native pose refuses malformed/unverified report: SharedSession=LOCKED
+PASS: native pose refuses malformed/unverified report: BuildId=0000000000000000
+PASS: native basis must agree with camera quaternion, independently of aim basis
+PASS: reported native quaternion norm must match raw components
+PASS: q and minus-q compare as the same orientation while raw quaternion remains unchanged
+PASS: native pose parser retains V48 report compatibility without asserting game camera identity
+PASS: native pose parser retains V49 compatibility with separate controller inventory scope
+PASS: subdegree-sensitive angle metric uses floating-point Math overloads without integer rounding
+PASS: four fractional quaternion components contribute to a double-precision norm
+PASS: eight native camera captures correlate both reported horizontal and vertical turns
+PASS: manual pose correlation retains all captures and does not assert game camera or aim integration
+PASS: native camera turn evidence does not substitute an unchanged player aim quaternion
+PASS: native pose comparison refuses changed Version
+PASS: native pose comparison refuses changed Machine
+PASS: native pose comparison refuses changed HostPid
+PASS: native pose comparison refuses changed Device
+PASS: native pose comparison refuses changed GuestPid
+PASS: native pose comparison refuses changed BuildId
+PASS: native pose comparison refuses changed LoadBias
+PASS: native pose comparison refuses changed Player
+PASS: native pose comparison refuses changed Match
+PASS: native pose comparison refuses changed CurrentGame
+PASS: native pose comparison refuses changed NativeCamera
+PASS: native pose comparison refuses changed NativeOwner
+PASS: native pose comparison refuses changed NativeTransform
+PASS: native pose comparison refuses changed UnityLoadBias
+PASS: unrestored native baseline cannot complete the experiment
+PASS: unchanged native pose never establishes turn correlation
+PASS: seven reports cannot complete the eight-capture experiment
+PASS: manual pose wrapper runs eight explicit stages and saves source reports, hashes and native comparisons
+PASS: pose wrapper stops on CANCEL without publishing another comparison
+PASS: pose wrapper stops on FAIL without publishing another comparison
+PASS: pose wrapper stops on STALE without publishing another comparison
+PASS: pose wrapper stops on BAD without publishing another comparison
+PASS: pose helper checksum mismatch prevents any child capture
+PASS: native pose parser supports V50 without asserting game camera identity
+PASS: native pose parser supports V51 without asserting game camera identity
+PASS: V52 comparison input remains supported
+PASS-COMPLETION: six captures remain incomplete, never promoted to eight
+PASS-COMPLETION: imported timestamps remain unknown
+PASS-COMPLETION: eight ordered synthetic reports yield correlation only
+PASS-COMPLETION: completion never enables live binding
+PASS-COMPLETION: existing journal is not overwritten
+PASS-COMPLETION: duplicate report rejected and partial evidence retained
+PASS-COMPLETION: process identity change rejects mixed captures
+PASS-COMPLETION: failed cleanup capture rejected
+PASS-COMPLETION: seed traversal rejected
+PASS-COMPLETION: one rejected manual attempt can retry without accepting failed data
+PASS-COMPLETION: manual-loop fixture completes only after eight strict samples
+PASS-COMPLETION: two rejected attempts stop with preserved partial journal
+PASS-COMPLETION: helper modification rejected before dot-sourcing
+CompletionTests=PASS Assertions=13 NativeProcessesInvoked=NONE LiveTest=NOT_RUN

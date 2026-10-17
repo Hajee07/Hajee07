@@ -1,0 +1,41 @@
+{
+  "scope": "USER_SUPPLIED_TRANSCRIPT_PARSED_OFFLINE; PARTIAL OBSERVATION ONLY",
+  "source_transcript_sha256": "3b27d134c82c3144330c5156aa7e4dee7b6dab59227ded3a8c74e1127b45c5ed",
+  "reports_in_transcript": 7,
+  "accepted_camera_reports": 6,
+  "rejected_stage": 7,
+  "rejected_reason": "roster removed count matches dictionary free count",
+  "stage8": "NOT_CAPTURED",
+  "full_comparison": "NOT_RUN_INCOMPLETE",
+  "yaw": {
+    "Status": "REPORTED_OPPOSITE_YAW_SIGNS_OBSERVED",
+    "ObservedYawSign": "REPORTED_RIGHT_POSITIVE_LEFT_NEGATIVE",
+    "Evidence": "MANUAL_CAMERA_TURN_CORRELATION_ONLY",
+    "Actions": [
+      "USER_REPORTED_LANDMARK_BASELINE",
+      "USER_REPORTED_RIGHT_TURN",
+      "USER_REPORTED_RESTORED_LANDMARK_BASELINE",
+      "USER_REPORTED_LEFT_TURN"
+    ],
+    "RightYawDelta": 29.220829275349317,
+    "RestoredBaselineYawError": 3.782496171989578,
+    "LeftYawDelta": -22.306291635088385,
+    "RightElevationDrift": -0.5795883494241814,
+    "RestoredBaselineElevationError": 1.969955827303516,
+    "LeftElevationDrift": 0.6976911236516021,
+    "CapturesWithRosterCounterChanges": 4,
+    "MembershipScope": "SELECTED_LOCAL_PLAYER_ONLY",
+    "VectorFlipped": false,
+    "CameraConvention": "UNVERIFIED",
+    "ShotDirection": "UNVERIFIED",
+    "LineOfSight": "UNVERIFIED",
+    "AimWrites": "NONE",
+    "AimIntegration": "INCOMPLETE"
+  },
+  "maximum_aim_camera_angle_degrees": 5.915117333884393e-06,
+  "head_status_stage6": "NOT_READY_MOTION",
+  "rendered_recording": "NOT_SUPPLIED",
+  "active_camera": "UNVERIFIED",
+  "live_binding_ready": false,
+  "aim_writes": "NONE"
+}

@@ -1,0 +1,40 @@
+{
+  "scope": "V52_CAPTURE_HELPER_ONLY_LIVE_BINDING_BLOCKED",
+  "files": [
+    {
+      "name": "Complete-CameraCapture.ps1",
+      "bytes": 7208,
+      "sha256": "dfb19dff89010dfa1a570d42fb1b2987de5449a19def974ad318ef61d708c1a0"
+    },
+    {
+      "name": "README.md",
+      "bytes": 4885,
+      "sha256": "bc8e78156c5f0320a385bf890833aac5a784ca39bde68004d9d0af926f6ef5cc"
+    },
+    {
+      "name": "Test-Completion.ps1",
+      "bytes": 7058,
+      "sha256": "a3c306c83f25a317795cf05560d53b3db43262399d1dc847cfd6cd2f71f01b34"
+    },
+    {
+      "name": "interrupted-assessment.json",
+      "bytes": 1589,
+      "sha256": "35a767d0c7905a061c805737304d356a32cdddfeb3c6bbe52786837fc404ca8d"
+    },
+    {
+      "name": "interrupted-seed.json",
+      "bytes": 515,
+      "sha256": "d98420f994ab2e8a9dc43affcd7e1caf9454481f96fadac8e75cf3299409e0b3"
+    },
+    {
+      "name": "test-summary.txt",
+      "bytes": 4758,
+      "sha256": "2e9f57a86dcbf570da38b7a0b0dbe67c259ade5ab4e440e0c62480abac39f148"
+    },
+    {
+      "name": "validation.json",
+      "bytes": 378,
+      "sha256": "9889eb3e98d8815e6894ba03f21f6dae93e87b52c5c1c154fd49f02cff700ff9"
+    }
+  ]
+}

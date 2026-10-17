@@ -1,3 +1,14 @@
+## Interrupted V52 camera capture completion
+
+[Capture helper and assessment](camera-capture-completion/README.md) ·
+[Download helper ZIP](camera-capture-completion.zip)
+
+Preserves six valid saved pose reports and requests the two remaining manual
+stages. Same context required; native V52 validations and budgets unchanged.
+54 existing pose checks and 13 helper checks passed offline; Windows launch and
+live aim binding are not validated by those checks.
+ZIP SHA-256: `97821a255c1ae2e1930acba34e12ddf35ec0c7e450b8ff2487c1242a05d1b4ab`.
+
 ## Integration review source package (owned simulation)
 
 [Guide and five-task evidence matrix](integration-review/README.md) ·
