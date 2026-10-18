@@ -20,3 +20,7 @@ Use the existing downloads/bluestacks-process-map/Recover-GameLayout.py from thi
 ## Remaining blocker
 
 A live read-only projection reader still needs a verified native implementation/data source for the exact build, including camera ownership and layout, validity/lifetime rules and frame timing. The current live report supplies pointer identity only. Reading function-cache slots as matrices, guessing offsets/FOV, or invoking unverified native functions would not close that gap. After that source is established, independently measured landmark pixels can be compared using camera-projection-validation. That checker does not itself supply live matrices.
+
+## Native registration follow-up
+
+See [NATIVE-SOURCE-FINDINGS.md](NATIVE-SOURCE-FINDINGS.md) and native-sources.json for the next static step: five exact named Unity registrations, their native entries and helper instruction windows. `audit_native_sources.py` reproduces those checks. Matrix update paths are observed; live cache validity and rendered projection remain unverified.
