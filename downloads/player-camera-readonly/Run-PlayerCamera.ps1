@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([string]$MachineName='Pie64',[ValidatePattern('^[A-Za-z0-9_.:-]+$')][string]$Device='127.0.0.1:5555',[string]$RuntimeDirectory)
+param([string]$MachineName='Pie64',[ValidatePattern('^[A-Za-z0-9_.:-]+$')][string]$Device='127.0.0.1:5555',[string]$RuntimeDirectory,[switch]$ProbeCameraIdentity)
 Set-StrictMode -Version 2
 $ErrorActionPreference = 'Stop'
 $lines = [Collections.Generic.List[string]]::new()
@@ -13,6 +13,9 @@ $failed = $false
 $stage = 'Preflight'
 $adb = $null
 function Record([string] $Text) { $lines.Add($Text); Write-Host $Text }
+# BEGIN IDENTITY PROOF
+function Identity-Proof([object]$Value){if($null-eq $Value){return 'UNVERIFIED'};return ([bool]$Value).ToString()}
+# END IDENTITY PROOF
 function Failure([string] $Stage, [Exception] $Exception) {
     while ($null -ne $Exception.InnerException) { $Exception = $Exception.InnerException }
     Record "$Stage=FAIL HRESULT=0x$($Exception.HResult.ToString('X8')) $($Exception.Message)"
@@ -76,7 +79,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
 }
 if(!$RuntimeDirectory){$RuntimeDirectory=Join-Path $PSScriptRoot 'baseline';if(!(Test-Path -LiteralPath $RuntimeDirectory)){$RuntimeDirectory=Join-Path $PSScriptRoot '..\bluestacks-process-map'}}
 $runtimeRoot=(Resolve-Path -LiteralPath $RuntimeDirectory).Path
-Record 'PlayerCameraProbeVersion=3 BaseRunner=52 ReadOnly=1'
+Record 'PlayerCameraProbeVersion=4 BaseRunner=52 ReadOnly=1'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -314,6 +317,23 @@ try {
     $stage='PlayerCameraContext'
     $objects=$reader.VerifyPlayerCameraContext($kernel,$game,$module,$layout,$progress)
     Record "LocalPlayerObjects=PASS CurrentGame=0x$($objects.CurrentGame.ToString('x')) Match=0x$($objects.Match.ToString('x')) Player=0x$($objects.LocalPlayer.ToString('x')) Class=$($objects.PlayerClass) Scope=ORIGINAL_LOCAL_CONTEXT_ONLY FullRoster=NOT_REQUESTED"
+    if($ProbeCameraIdentity){
+        $stage='CameraIdentity'
+        $identity=$reader.InspectPlayerCameraIdentity($kernel,$game,$module,$layout,$objects,$progress)
+        if((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId){throw 'Game PID changed during identity inventory.'}
+        $reader.Recheck($kernel,$game)
+        # BEGIN IDENTITY RENDER
+        Record "CameraIdentity Status=$($identity.Status) AdditionalReads=$($identity.AdditionalReads) Observations=$($identity.Observations)"
+        if($null-eq $identity.Sources){$failed=$true}else{
+            $source=$identity.Sources
+            Record "CameraIdentityPlayer ManagedTransform=0x$($identity.PlayerManagedTransform.ToString('x')) NativeTransform=0x$($identity.PlayerNativeTransform.ToString('x'))"
+            Record "CameraIdentityOriginalMain Selection=$($source.CameraSelectionStatus) UnityCode=$($source.CameraUnityCodeStatus) NativeCamera=0x$($source.SelectedNativeCamera.ToString('x')) NativeTransform=0x$($identity.OriginalMainNativeTransform.ToString('x')) TransformMatchesPlayer=$(Identity-Proof $identity.OriginalMainTransformMatchesPlayer)"
+            Record "CameraIdentityController Inventory=$($source.CameraControllerInventoryStatus) ManagedCamera=0x$($source.ControllerManagedCamera.ToString('x')) CachedNative=0x$($source.ControllerCachedNative.ToString('x')) MatchesOriginalMain=$(Identity-Proof $source.ControllerNativeMatchesSelection)"
+            Record "CameraIdentityGetter Gate=$($source.GameCameraGateStatus) GetterInit=$($source.GameCameraGetterInitRaw) PatchInit=$($source.GameCameraPatchInitRaw) HotfixSlot=$(Identity-Proof $source.GameCameraHotfixSlotPresent) NullPredicate=$($source.CameraNullPredicateStatus)"
+        }
+        # END IDENTITY RENDER
+        Record 'CameraIdentityLimits Projection=UNVERIFIED_NOT_READ FOV=UNVERIFIED_NOT_READ RenderFrame=UNVERIFIED GameGetterExecuted=False FunctionsInvoked=False AimWrites=NONE'
+    }else{
     $stage='PlayerCameraPose'
     $started=[DateTime]::UtcNow.ToString('o')
     $captureTimer=[Diagnostics.Stopwatch]::StartNew()
@@ -322,6 +342,7 @@ try {
     $finished=[DateTime]::UtcNow.ToString('o')
     if((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId){throw 'Game PID changed during camera sampling.'}
     $reader.Recheck($kernel,$game)
+    # BEGIN POSE RENDER
     Record "PlayerCameraPose Status=$($pose.Status) Attempts=$($pose.Attempts) AdditionalReads=$($pose.AdditionalReads) ManagedTransform=0x$($pose.ManagedTransform.ToString('x')) NativeTransform=0x$($pose.NativeTransform.ToString('x')) UnityLoadBias=0x$($pose.UnityLoadBias.ToString('x')) ParentCount=$($pose.ParentCount) Observations=$($pose.Observations)"
     Record "PlayerCameraCapture StartUtc=$started EndUtc=$finished DurationMs=$($captureTimer.ElapsedMilliseconds) TimingScope=METHOD_CALL_INTERVAL_ONLY_RENDER_SYNC_UNKNOWN"
     if($pose.Status -ceq 'SAMPLED_READ_ONLY'){
@@ -330,6 +351,8 @@ try {
         Record "PlayerCameraWorldPosition X=$($v[0]) Y=$($v[1]) Z=$($v[2]) Source=REGISTERED_PLAYER_MAIN_CAMERA_TRANSFORM"
         Record "PlayerCameraWorldRotation X=$($q[0]) Y=$($q[1]) Z=$($q[2]) W=$($q[3]) Normalized=False Source=VERIFIED_UNITY_TRANSFORM_MATH"
     }else{$failed=$true;Record "PlayerCameraDetail=$($pose.Detail)"}
+    # END POSE RENDER
+    }
     Record 'CameraSemantics ActualRenderedCamera=UNVERIFIED ShotDirection=UNVERIFIED LOS=UNVERIFIED GlobalAtomicFrame=NOT_ASSERTED FunctionsInvoked=False AimWrites=NONE'
 } catch { $failed = $true; Failure $stage $_.Exception }
 finally {

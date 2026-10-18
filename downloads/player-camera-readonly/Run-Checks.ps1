@@ -12,6 +12,7 @@ if ((Get-Command Add-Type).Parameters.ContainsKey('CompilerOptions')) {
 Add-Type @compileArguments
 # END COMPATIBLE COMPILE
 [HeadBridge.Mapping.Tests.PlayerObjectTests]::RunPlayerCameraChecks()
+[HeadBridge.Mapping.Tests.PlayerObjectTests]::RunPlayerCameraIdentityChecks()
 
 if($KernelElfPath){
     [HeadBridge.Mapping.Tests.Checks]::Run($KernelElfPath)

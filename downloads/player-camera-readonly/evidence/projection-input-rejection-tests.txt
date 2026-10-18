@@ -1,0 +1,3 @@
+PASS: modified IL2CPP rejected before output
+PASS: modified metadata rejected before output
+PASS: modified Unity ELF rejected before output

@@ -81,5 +81,51 @@ namespace HeadBridge.Mapping.Tests
             failed=false;try{transport.CameraPose(ec);}catch(Exception e){failed=e.Message.Contains("transport failure");}CameraCheck(failed,"transport failure is fatal without retry or stale pose");
             Console.WriteLine("PlayerCameraChecks=PASS Assertions="+cameraChecks+" LiveCamera=UNVERIFIED");
         }
+        private static Fixture IdentityFixture()
+        {
+            var f=new Fixture();f.SetupAim();f.SetupPlayerCamera();f.SetupControllerInventory();
+            f.U64(Fixture.Transform+0x10,Fixture.CameraTransform);return f;
+        }
+        private static PlayerCameraIdentityResult Identity(Fixture f)
+        {return f.Reader.InspectPlayerCameraIdentity(f.Kernel,f.Game,f.Module,f.Layout,f.CameraContext(),f.Progress.Add);}
+        public static void RunPlayerCameraIdentityChecks()
+        {
+            var f=IdentityFixture();var r=Identity(f);
+            Console.WriteLine("MEASURE IdentityStatus="+r.Status+" Reads="+r.AdditionalReads);
+            CameraCheck(r.Sources!=null && r.OriginalMainTransformMatchesPlayer==true && r.Sources.ControllerNativeMatchesSelection==true,"identity typed Player/main/controller links match");
+            CameraCheck(r.Status=="RECHECKED_IDENTITY_INVENTORY_ONLY"&&r.AdditionalReads<=6000,"identity stays within separate bounded phase");
+            f=IdentityFixture();f.U64(Fixture.Transform+0x10,Fixture.NativeHead);r=Identity(f);
+            CameraCheck(r.OriginalMainTransformMatchesPlayer==false,"identity different Player transform is reported, not forced equal");
+            f=IdentityFixture();f.U64(f.Module.LoadBias+AimStateReference.CameraMainCell,0);r=Identity(f);
+            CameraCheck(r.Sources!=null && r.OriginalMainTransformMatchesPlayer==null && r.OriginalMainNativeTransform==0,"identity unresolved native binding remains unknown");
+            f=IdentityFixture();f.U64(Fixture.Current+0xd8,0);r=Identity(f);
+            CameraCheck(r.Sources.CameraControllerInventoryStatus=="REGISTERED_MATCHGAME_MANAGER_FIELD_NULL","identity null controller field remains explicit");
+            f=IdentityFixture();f.Put(f.Module.LoadBias+AimStateReference.GameCameraGetterInitCell,new byte[]{0});r=Identity(f);
+            CameraCheck(r.Sources.GameCameraGateStatus=="NOT_READY_GETTER_METADATA_INITIALIZATION"&&r.Sources.ControllerNativeMatchesSelection==true,"identity uninitialized getter is not executed despite field match");
+            f=IdentityFixture();f.U64(Fixture.Array+0x20UL+(ulong)AimStateReference.GameCameraGetterGate*8UL,1);r=Identity(f);
+            CameraCheck(r.Sources.GameCameraGateStatus=="HOTFIX_ENTRY_BRANCH_PRESENT","identity active game-getter branch stays separate from native selector");
+            f=IdentityFixture();f.Put(Fixture.CameraCandidate+NativeTransformReference.CameraPredicateByteOffset,new byte[]{0});r=Identity(f);
+            CameraCheck(r.Sources.CameraSelectionComplete&&r.Sources.SelectedNativeCamera==0&&r.OriginalMainTransformMatchesPlayer==null,"identity false native predicate cannot select a camera");
+            f=IdentityFixture();f.U64(Fixture.CameraVtable+0xd0,Fixture.Unity+0x601234);r=Identity(f);
+            CameraCheck(r.Sources.CameraSelectionStatus=="UNVERIFIED_PREDICATE_OVERRIDE"&&r.OriginalMainTransformMatchesPlayer==null,"identity predicate override is not executed or assumed true");
+            f=IdentityFixture();f.U64(Fixture.InventoryCamera+0x10,Fixture.CameraCandidate+0x100);r=Identity(f);
+            CameraCheck(r.Sources.ControllerNativeMatchesSelection==false,"identity controller/native selector disagreement is preserved");
+            f=IdentityFixture();var core=f.CameraContext();bool rejected=false;
+            f.U64(Fixture.CameraCandidate+0x30,Fixture.CameraOwner+8);try{f.Reader.InspectPlayerCameraIdentity(f.Kernel,f.Game,f.Module,f.Layout,core,f.Progress.Add);}catch{rejected=true;}
+            CameraCheck(rejected,"identity wrong native Camera owner rejects snapshot");
+            f=IdentityFixture();core=f.CameraContext();rejected=false;
+            f.Put(f.Module.LoadBias+AimStateReference.Anchors[0].Address,new byte[]{0});try{f.Reader.InspectPlayerCameraIdentity(f.Kernel,f.Game,f.Module,f.Layout,core,f.Progress.Add);}catch{rejected=true;}
+            CameraCheck(rejected,"identity changed source anchor rejects snapshot");
+            f=IdentityFixture();core=f.CameraContext();f.U64(Fixture.Match+0xd8,Fixture.Player+0x1000);rejected=false;
+            try{f.Reader.InspectPlayerCameraIdentity(f.Kernel,f.Game,f.Module,f.Layout,core,f.Progress.Add);}catch{rejected=true;}
+            CameraCheck(rejected,"identity changed local player rejects snapshot");
+            f=IdentityFixture();core=f.CameraContext();using(f.Reader.PhysicalCallScope(20)){r=f.Reader.InspectPlayerCameraIdentity(f.Kernel,f.Game,f.Module,f.Layout,core,f.Progress.Add);}
+            CameraCheck(r.Status=="NOT_READY_READ_BUDGET"&&r.Sources==null&&r.PlayerNativeTransform==0&&r.AdditionalReads<=20,"identity budget discards all tentative source data");
+            f=IdentityFixture();core=f.CameraContext();ulong trigger=f.Physical(f.Module.LoadBias+AimStateReference.CameraMainCell);bool changed=false;
+            f.Memory.AfterRead=delegate(ulong address,int length){if(!changed&&address==trigger){changed=true;f.U64(Fixture.Transform+0x10,Fixture.NativeHead);}};
+            rejected=false;try{f.Reader.InspectPlayerCameraIdentity(f.Kernel,f.Game,f.Module,f.Layout,core,f.Progress.Add);}catch{rejected=true;}
+            CameraCheck(rejected,"identity final recheck rejects changed native link");
+            Console.WriteLine("PlayerCameraIdentityChecks=PASS Cases=15 ActualRenderedCamera=UNVERIFIED Projection=NOT_READ FunctionsInvoked=False");
+        }
     }
 }

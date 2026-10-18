@@ -9,6 +9,14 @@ namespace HeadBridge.Mapping
         public int Attempts,Observations,ParentCount,AdditionalReads;
         public double[] Position,Rotation;
     }
+    public sealed class PlayerCameraIdentityResult
+    {
+        public string Status="NOT_READY";
+        public PlayerStateObservation Sources;
+        public ulong PlayerManagedTransform,PlayerNativeTransform,OriginalMainNativeTransform;
+        public bool? OriginalMainTransformMatchesPlayer;
+        public int AdditionalReads,Observations;
+    }
     public sealed partial class Reader
     {
         private PlayerObjectResult CameraLocalContext(ObjectReads reads,ModuleResult module,GameLayoutResult layout,Action<string> progress)
@@ -127,6 +135,53 @@ namespace HeadBridge.Mapping
             CameraDiagnosticStage="FINAL_RECHECK";
             result.Observations=PlayerCameraRecheck(reads,tree,hierarchy)+chain.Count;Recheck(kernel,game);
             result.Position=Array.ConvertAll(position,delegate(float x){return (double)x;});result.Rotation=Array.ConvertAll(rotation,delegate(float x){return (double)x;});result.ParentCount=chain.Count-1;result.Status="SAMPLED_READ_ONLY";return result;
+        }
+        // Source-link inventory only; this does not execute the game getter or establish a rendered frame.
+        public PlayerCameraIdentityResult InspectPlayerCameraIdentity(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)
+        {
+            CameraVerifiedInputs(module,layout);int start=PhysicalCalls;
+            using(PhysicalCallScope(6000))
+            {
+                try
+                {
+                    CameraDiagnosticStage="CAMERA_IDENTITY";Recheck(kernel,game);
+                    var reads=new ObjectReads(this,game.Root,true);
+                    ObjectAnchors(this,game,module);NativeAnchors(reads,module.LoadBias,AimStateReference.Anchors);
+                    CombatSchema(reads,module,layout,AimStateReference.CameraMethods,AimStateReference.ControllerFields);
+                    var now=CameraLocalContext(reads,module,layout,progress);
+                    Expect(now.CurrentGame==core.CurrentGame && now.Match==core.Match && now.LocalPlayer==core.LocalPlayer,"identity original local context unchanged");
+                    ulong klass=reads.Pointer(core.LocalPlayer,"identity player class");
+                    for(int depth=0;;depth++){ObjectClassProfile profile=ReadObjectClass(reads,klass,layout,progress);if(profile.Index==31824)break;Expect(depth<15,"identity Player ancestry bound");klass=reads.Pointer(klass+0x58,"identity player parent");}
+                    PlayerCameraSchema(reads,module,layout,klass);
+                    var result=new PlayerCameraIdentityResult();
+                    result.PlayerManagedTransform=reads.Value(core.LocalPlayer+PlayerCameraReference.Offset,"Identity.PlayerMainCameraTransform");
+                    if(result.PlayerManagedTransform!=0){ObjectFamily(reads,result.PlayerManagedTransform,64,PlayerCameraReference.TransformTypeIndex,0,layout,progress);result.PlayerNativeTransform=reads.Value(result.PlayerManagedTransform+0x10,"Identity.PlayerCachedNative");if(result.PlayerNativeTransform!=0)ObjectReads.User(result.PlayerNativeTransform,8,"identity native Transform");}
+                    ulong hotfix=RootClass(reads,module,layout,ObjectReference.HotfixCell,37332,progress);
+                    ulong wrappers=reads.Pointer(reads.Pointer(hotfix+0xb8,"identity hotfix statics"),"identity wrappers"),length=reads.Value(wrappers+0x18);
+                    Expect(length<=1000000,"identity wrapper bound");
+                    var sample=new PlayerStateObservation();
+                    ulong camera=reads.Value(module.LoadBias+AimStateReference.CameraMainCell,"Identity.MainICall"),transform=reads.Value(module.LoadBias+AimStateReference.ComponentTransformCell,"Identity.TransformICall");
+                    if(camera!=0)ObjectReads.User(camera,4,"identity Camera.main icall");if(transform!=0)ObjectReads.User(transform,4,"identity Component.Transform icall");
+                    sample.CameraMainICall=camera;sample.ComponentTransformICall=transform;
+                    ReadCameraUnityCode(reads,sample,camera,transform);ReadNativeCameraCandidate(reads,sample);
+                    ReadGameCameraEntryGate(reads,module,sample,wrappers,length);
+                    ReadCameraControllerInventory(reads,module,layout,sample,core,wrappers,length);
+                    if(sample.CameraSelectionComplete && sample.SelectedNativeCamera!=0)
+                    {
+                        ulong owner=sample.SelectedNativeCameraOwner;byte[] header=reads.Read(owner+0x30,24,"Identity.SelectedCameraComponents");
+                        ulong entries=BitConverter.ToUInt64(header,0),count=BitConverter.ToUInt64(header,16);
+                        if(count>0 && count<=256)
+                        {
+                            ObjectReads.User(entries,16,"identity component table");ulong native=reads.Value(entries+8,"Identity.OriginalMainTransformIntermediate");
+                            if(native!=0 && native!=sample.SelectedNativeCamera){ObjectReads.User(native,8,"identity selected native Transform");Expect(reads.Value(native+0x30,"Identity.TransformOwner")==owner,"identity selected Transform owner backlink");result.OriginalMainNativeTransform=native;if(result.PlayerNativeTransform!=0)result.OriginalMainTransformMatchesPlayer=native==result.PlayerNativeTransform;}
+                        }
+                    }
+                    result.Observations=reads.Recheck();Recheck(kernel,game);
+                    // Publish no tentative source pointers on failed schema, context, memory or final rechecks.
+                    result.Sources=sample;result.Status="RECHECKED_IDENTITY_INVENTORY_ONLY";result.AdditionalReads=PhysicalCalls-start;return result;
+                }
+                catch(PhysicalScopeLimitException){return new PlayerCameraIdentityResult{Status="NOT_READY_READ_BUDGET",AdditionalReads=PhysicalCalls-start};}
+            }
         }
     }
 }

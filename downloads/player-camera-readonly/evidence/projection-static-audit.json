@@ -1,0 +1,259 @@
+{
+  "scope": "PINNED_STATIC_REGISTRATION_AND_NAME_INVENTORY_ONLY",
+  "il2cpp_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "metadata_sha256": "e6550955f005877d6daf94f4984892501ad86fe36d52cd1a1c94ceed0dd15aa3",
+  "unity_sha256": "1029519376944ff6310fcbbe84356976a839e080da67da716b3aae470f80dd77",
+  "camera_type_index": 40830,
+  "methods": [
+    {
+      "index": 315088,
+      "name": "get_nearClipPlane",
+      "parameter_count": 0,
+      "metadata_token": "0x6000150",
+      "pointer_slot_rva": "0xaf5b190",
+      "registered_method_rva": "0x9f9e810",
+      "code_prefix_hex": "fe0f1ef8f44f01a9d48000b0811641f9f30300aac10000b580cefbb000d01691"
+    },
+    {
+      "index": 315090,
+      "name": "get_farClipPlane",
+      "parameter_count": 0,
+      "metadata_token": "0x6000152",
+      "pointer_slot_rva": "0xaf5b1a0",
+      "registered_method_rva": "0x9f9e898",
+      "code_prefix_hex": "fe0f1ef8f44f01a9d48000b0811e41f9f30300aac10000b5c0cdfbf000a40291"
+    },
+    {
+      "index": 315092,
+      "name": "get_fieldOfView",
+      "parameter_count": 0,
+      "metadata_token": "0x6000154",
+      "pointer_slot_rva": "0xaf5b1b0",
+      "registered_method_rva": "0x9f9e920",
+      "code_prefix_hex": "fe0f1ef8f44f01a9d48000b0812641f9f30300aac10000b5e0cefbf000e80391"
+    },
+    {
+      "index": 315100,
+      "name": "get_orthographicSize",
+      "parameter_count": 0,
+      "metadata_token": "0x600015c",
+      "pointer_slot_rva": "0xaf5b1f0",
+      "registered_method_rva": "0x9f9eb38",
+      "code_prefix_hex": "fe0f1ef8f44f01a9d48000b0814641f9f30300aac10000b540cefb90009c3291"
+    },
+    {
+      "index": 315102,
+      "name": "get_orthographic",
+      "parameter_count": 0,
+      "metadata_token": "0x600015e",
+      "pointer_slot_rva": "0xaf5b200",
+      "registered_method_rva": "0x9f9ebc0",
+      "code_prefix_hex": "fe0f1ef8f44f01a9d48000b0814e41f9f30300aac10000b5c0cffbb000c01691"
+    },
+    {
+      "index": 315108,
+      "name": "get_aspect",
+      "parameter_count": 0,
+      "metadata_token": "0x6000164",
+      "pointer_slot_rva": "0xaf5b230",
+      "registered_method_rva": "0x9f9ed48",
+      "code_prefix_hex": "fe0f1ef8f44f01a9d48000b0816641f9f30300aac10000b520cefbb000703391"
+    },
+    {
+      "index": 315133,
+      "name": "get_pixelRect",
+      "parameter_count": 0,
+      "metadata_token": "0x600017d",
+      "pointer_slot_rva": "0xaf5b2f8",
+      "registered_method_rva": "0x9f9f600",
+      "code_prefix_hex": "ffc300d1fffb00a9f44f02a9d4800090881242f9f30300aaff0300f9c80000b5"
+    },
+    {
+      "index": 315134,
+      "name": "get_pixelWidth",
+      "parameter_count": 0,
+      "metadata_token": "0x600017e",
+      "pointer_slot_rva": "0xaf5b300",
+      "registered_method_rva": "0x9f9f69c",
+      "code_prefix_hex": "fe0f1ef8f44f01a9d480009081aa41f9f30300aac10000b500cefbd000d01e91"
+    },
+    {
+      "index": 315135,
+      "name": "get_pixelHeight",
+      "parameter_count": 0,
+      "metadata_token": "0x600017f",
+      "pointer_slot_rva": "0xaf5b308",
+      "registered_method_rva": "0x9f9f6d8",
+      "code_prefix_hex": "fe0f1ef8f44f01a9d480009081ae41f9f30300aac10000b500d0fb9000cc2491"
+    },
+    {
+      "index": 315141,
+      "name": "get_worldToCameraMatrix",
+      "parameter_count": 0,
+      "metadata_token": "0x6000185",
+      "pointer_slot_rva": "0xaf5b338",
+      "registered_method_rva": "0x9f9f880",
+      "code_prefix_hex": "ff8301d1fe5704a9f44f05a9d5800090f30308aaa81a42f9f40300aa00e4006f"
+    },
+    {
+      "index": 315143,
+      "name": "get_projectionMatrix",
+      "parameter_count": 0,
+      "metadata_token": "0x6000187",
+      "pointer_slot_rva": "0xaf5b348",
+      "registered_method_rva": "0x9f9f9b8",
+      "code_prefix_hex": "ff8301d1fe5704a9f44f05a9d5800090f30308aaa82242f9f40300aa00e4006f"
+    },
+    {
+      "index": 315146,
+      "name": "WorldToScreenPoint",
+      "parameter_count": 2,
+      "metadata_token": "0x600018a",
+      "pointer_slot_rva": "0xaf5b360",
+      "registered_method_rva": "0x9f9fb2c",
+      "code_prefix_hex": "ff0301d1fe5702a9f44f03a9d5800090a82a42f9f303012af40300aae007022d"
+    },
+    {
+      "index": 315150,
+      "name": "WorldToScreenPoint",
+      "parameter_count": 1,
+      "metadata_token": "0x600018e",
+      "pointer_slot_rva": "0xaf5b380",
+      "registered_method_rva": "0x9f9fe5c",
+      "code_prefix_hex": "4100805233ffff174100805264ffff174100805295ffff1741008052c6ffff17"
+    },
+    {
+      "index": 315187,
+      "name": "get_pixelRect_Injected",
+      "parameter_count": 1,
+      "metadata_token": "0x60001b3",
+      "pointer_slot_rva": "0xaf5b4a8",
+      "registered_method_rva": "0x9f9f658",
+      "code_prefix_hex": "fe57bea9f44f01a9d5800090a21242f9f30301aaf40300aac20000b520cffbf0"
+    },
+    {
+      "index": 315189,
+      "name": "get_worldToCameraMatrix_Injected",
+      "parameter_count": 1,
+      "metadata_token": "0x60001b5",
+      "pointer_slot_rva": "0xaf5b4b8",
+      "registered_method_rva": "0x9f9f8ec",
+      "code_prefix_hex": "fe57bea9f44f01a9d5800090a21a42f9f30301aaf40300aac20000b560cffbf0"
+    },
+    {
+      "index": 315191,
+      "name": "get_projectionMatrix_Injected",
+      "parameter_count": 1,
+      "metadata_token": "0x60001b7",
+      "pointer_slot_rva": "0xaf5b4c8",
+      "registered_method_rva": "0x9f9fa24",
+      "code_prefix_hex": "fe57bea9f44f01a9d5800090a22242f9f30301aaf40300aac20000b5e0cefbd0"
+    },
+    {
+      "index": 315193,
+      "name": "WorldToScreenPoint_Injected",
+      "parameter_count": 3,
+      "metadata_token": "0x60001b9",
+      "pointer_slot_rva": "0xaf5b4d8",
+      "registered_method_rva": "0x9f9fb9c",
+      "code_prefix_hex": "fe5fbda9f65701a9f44f02a9d7800090e42a42f9f30303aaf403022af50301aa"
+    }
+  ],
+  "native_name_strings": [
+    {
+      "name": "UnityEngine.Camera::WorldToScreenPoint_Injected",
+      "file_offset": "0x143db6",
+      "rva": "0x143db6"
+    },
+    {
+      "name": "UnityEngine.Camera::WorldToScreenPoint_Injected",
+      "file_offset": "0x143db6",
+      "rva": "0x143db6"
+    },
+    {
+      "name": "UnityEngine.Camera::get_aspect",
+      "file_offset": "0x138568",
+      "rva": "0x138568"
+    },
+    {
+      "name": "UnityEngine.Camera::get_farClipPlane",
+      "file_offset": "0x14a2f2",
+      "rva": "0x14a2f2"
+    },
+    {
+      "name": "UnityEngine.Camera::get_fieldOfView",
+      "file_offset": "0xfd182",
+      "rva": "0xfd182"
+    },
+    {
+      "name": "UnityEngine.Camera::get_nearClipPlane",
+      "file_offset": "0x10999e",
+      "rva": "0x10999e"
+    },
+    {
+      "name": "UnityEngine.Camera::get_orthographic",
+      "file_offset": "0xf1ce0",
+      "rva": "0xf1ce0"
+    },
+    {
+      "name": "UnityEngine.Camera::get_orthographicSize",
+      "file_offset": "0x1677ad",
+      "rva": "0x1677ad"
+    },
+    {
+      "name": "UnityEngine.Camera::get_orthographicSize",
+      "file_offset": "0x1677ad",
+      "rva": "0x1677ad"
+    },
+    {
+      "name": "UnityEngine.Camera::get_pixelHeight",
+      "file_offset": "0x161e2b",
+      "rva": "0x161e2b"
+    },
+    {
+      "name": "UnityEngine.Camera::get_pixelRect_Injected",
+      "file_offset": "0x161e00",
+      "rva": "0x161e00"
+    },
+    {
+      "name": "UnityEngine.Camera::get_pixelRect_Injected",
+      "file_offset": "0x161e00",
+      "rva": "0x161e00"
+    },
+    {
+      "name": "UnityEngine.Camera::get_pixelWidth",
+      "file_offset": "0x12003b",
+      "rva": "0x12003b"
+    },
+    {
+      "name": "UnityEngine.Camera::get_projectionMatrix_Injected",
+      "file_offset": "0xd49c3",
+      "rva": "0xd49c3"
+    },
+    {
+      "name": "UnityEngine.Camera::get_projectionMatrix_Injected",
+      "file_offset": "0xd49c3",
+      "rva": "0xd49c3"
+    },
+    {
+      "name": "UnityEngine.Camera::get_worldToCameraMatrix_Injected",
+      "file_offset": "0xfd1f7",
+      "rva": "0xfd1f7"
+    },
+    {
+      "name": "UnityEngine.Camera::get_worldToCameraMatrix_Injected",
+      "file_offset": "0xfd1f7",
+      "rva": "0xfd1f7"
+    }
+  ],
+  "projection_values_read": false,
+  "fov_values_read": false,
+  "native_field_layout_verified": false,
+  "functions_invoked": false,
+  "actual_rendered_camera": "UNVERIFIED",
+  "limitations": [
+    "A registered getter/name string does not establish a safe native data layout.",
+    "No getter, injected call, resolver or class initializer is executed.",
+    "No matrix is read from a guessed offset. Runtime binding and frame alignment are separate evidence gates."
+  ]
+}

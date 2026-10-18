@@ -2,10 +2,12 @@ $ErrorActionPreference='Stop'
 Set-StrictMode -Version 2
 $source=Get-Content -LiteralPath (Join-Path $PSScriptRoot 'Run-PlayerCamera.ps1') -Raw
 $start=$source.IndexOf('    Record "PlayerCameraPose Status=')
-$end=$source.IndexOf('} catch { $failed = $true; Failure',$start)
+$end=$source.IndexOf('    # END POSE RENDER',$start)
 if($start -lt 0 -or $end -le $start){throw 'Authored renderer markers changed'}
 # Execute only this package's actual rendering block, never the SDK preflight.
-$render=[scriptblock]::Create($source.Substring($start,$end-$start))
+$semantic=@($source -split "`n" | Where-Object {$_ -like "    Record 'CameraSemantics *"})
+if($semantic.Count-ne 1){throw 'Shared semantics renderer missing'}
+$render=[scriptblock]::Create($source.Substring($start,$end-$start)+"`n"+$semantic[0])
 $script:lines=[Collections.Generic.List[string]]::new()
 function Record([string]$line){$script:lines.Add($line)}
 $captureTimer=[pscustomobject]@{ElapsedMilliseconds=5};$started='start';$finished='end';$failed=$false

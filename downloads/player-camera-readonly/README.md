@@ -142,3 +142,28 @@ On success, the helper automatically creates the offline EvidenceZip, including 
 Upload **both** the EvidenceZip and the original recording. The script does not copy or attach video, so MediaStatus=NOT_ATTACHED / VisualEvidenceStatus=MISSING inside the metadata remains expected until separate media review. Typing RECORDING is a user assertion, not proof that a recording exists. RecordingJournalStatus remains USER_ASSERTED_RECORDING_NOT_FRAME_ALIGNED; ActualRenderedCamera stays UNVERIFIED. A new recording cannot validate the earlier unrecorded samples retroactively.
 
 `Test-RecordedCameraSession.ps1` exercises no-confirmation/no-capture, complete fresh session + hashed journal bundle, hash mismatch, interval mismatch, cancellation and capture failure using mocked child probes. Live Windows recording-mode execution is pending. Recording duration and probe success depend on the existing bounded reader; a VMA scan retry can still exhaust its unchanged limit.
+
+## V4 separate camera identity inventory
+
+Run `Run-PlayerCamera.ps1 -ProbeCameraIdentity` once in Training with the camera held still. No manual turns or recording are required for this mode. It uses the same pinned game build, VMM, kernel, module/layout identity and cleanup checks. It does not support a different game edition by inference.
+
+Instead of sampling camera pose, it checks the typed registered Player.MainCameraTransform field and cached native link, original Unity Camera.main selection using the already verified bounded tag/predicate source profile, the registered MatchGame/controller/managed-Camera/native link and the game getter's metadata/hotfix gates. It compares selected Camera's source-derived native Transform intermediate with the Player field's native Transform pointer. This is a rechecked source-link inventory, not a rendered-frame decision or proof the game invokes that getter.
+
+15 synthetic-memory cases pass, alongside the existing 27 pose checks. Cases cover matched/different links, unresolved cache, null controller, uninitialized getter, active hotfix branch, false predicate, unknown predicate override, controller disagreement, owner/schema/context changes, budget exhaustion and final pointer mutation. The identity fixture uses 4733 additional physical calls. The optional phase stays capped at 6000; existing global 30000 calls, timeout and cleanup remain. A scan retry can still consume the global budget. Tentative pointers are not returned on failed final checks or exhausted scope.
+
+Output explicitly distinguishes:
+
+- `CameraIdentityOriginalMain` — verified original selector inventory, not an assertion of the active render Camera.
+- `CameraIdentityController` — registered field/native link and equality/difference with that selector.
+- `CameraIdentityGetter` — raw initialization gates and branch availability. Getter metadata not initialized is not an error to fix by forcing initialization. Active getter/override branches are not invoked or guessed.
+- `CameraIdentityLimits` — projection/FOV NOT READ, rendered frame UNVERIFIED. `FunctionsInvoked=False` concerns game getters/icalls; host SDK/bridge read APIs still run normally.
+
+A `True` link comparison closes only that pointer-equality observation under final rechecks. It does not establish active render-stack selection, projection/FOV/viewport, render synchronization, muzzle/shot direction, LOS or aim output. Unknown is printed UNVERIFIED rather than rendered as False. Structural or memory errors fail the probe and still run cleanup. `NOT_READY_READ_BUDGET` emits no tentative source pointers.
+
+## Projection/FOV source audit
+
+`Audit-CameraProjection.py IL2CPP METADATA UNITY OUTPUT_JSON` verifies the three full input hashes and inventories the exact UnityEngine.Camera owner, CoreModule registration table, 17 registered methods and 17 native name strings. It covers FOV/aspect, clipping planes, orthographic properties, pixel bounds, projection/world-to-camera matrices and WorldToScreenPoint wrappers. `--runtime-directory` can select the pinned mapper tools when needed. No supplied binary is loaded or executed.
+
+The checked-in `evidence/projection-static-audit.json` is a static registration/name inventory only. It does not establish native camera field offsets or a safe matrix data layout. No runtime FOV/matrix values are read and no getter/resolver/initializer is called. Three altered-input cases are rejected before output. A native field/source profile and independently checked landmark reprojection are still required before implementing a live projection reader.
+
+The earlier successful visual review supports manual turn-direction correlation only. It does not authorize treating the Player field, Camera.main tag or controller field as render authority. Live Windows V4 identity execution is pending.
