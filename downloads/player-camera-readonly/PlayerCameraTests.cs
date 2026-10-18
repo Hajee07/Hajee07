@@ -127,5 +127,52 @@ namespace HeadBridge.Mapping.Tests
             CameraCheck(rejected,"identity final recheck rejects changed native link");
             Console.WriteLine("PlayerCameraIdentityChecks=PASS Cases=15 ActualRenderedCamera=UNVERIFIED Projection=NOT_READ FunctionsInvoked=False");
         }
+        private static Fixture ProjectionFixture()
+        {
+            var f=IdentityFixture();
+            foreach(GameLayoutCheck a in PlayerProjectionReference.Il2CppAnchors)f.Put(f.Module.LoadBias+a.Address,a.Expected(f.Module.LoadBias));
+            foreach(GameLayoutCheck a in PlayerProjectionReference.UnityAnchors)f.Put(Fixture.Unity+a.Address,a.Expected(Fixture.Unity));
+            f.U64(f.Module.LoadBias+PlayerProjectionReference.ViewCacheCell,Fixture.Unity+PlayerProjectionReference.ViewTarget);
+            f.U64(f.Module.LoadBias+PlayerProjectionReference.ProjectionCacheCell,Fixture.Unity+PlayerProjectionReference.ProjectionTarget);
+            f.Put(Fixture.CameraCandidate+PlayerProjectionReference.ViewDirtyOffset,new byte[]{0});f.Put(Fixture.CameraCandidate+PlayerProjectionReference.ProjectionDirtyOffset,new byte[]{0});
+            float[] view={1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1},projection={1,0,0,0,0,2,0,0,0,0,-1.1f,-0.2f,0,0,-1,0};
+            for(int i=0;i<16;i++){f.Put(Fixture.CameraCandidate+PlayerProjectionReference.ViewOffset+(ulong)i*4,BitConverter.GetBytes(view[i]));f.Put(Fixture.CameraCandidate+PlayerProjectionReference.ProjectionOffset+(ulong)i*4,BitConverter.GetBytes(projection[i]));}
+            return f;
+        }
+        private static PlayerCameraIdentityResult Projection(Fixture f)
+        {return f.Reader.SamplePlayerCameraProjection(f.Kernel,f.Game,f.Module,f.Layout,f.CameraContext(),f.Progress.Add);}
+        public static void RunPlayerProjectionChecks()
+        {
+            int start=cameraChecks;var f=ProjectionFixture();var r=Projection(f);
+            Console.WriteLine("MEASURE ProjectionStatus="+r.Status+" Projection="+(r.Projection==null?"NA":r.Projection.Status)+" Reads="+r.AdditionalReads);
+            CameraCheck(r.Projection!=null&&r.Projection.Status=="SAMPLED_CLEAN_CACHE_READ_ONLY"&&r.Projection.ViewNativeSequence.Length==16&&r.Projection.ProjectionNativeSequence.Length==16&&r.AdditionalReads<=9000,"projection bounded clean-cache raw sequence sample");
+            CameraCheck(r.Projection.ViewNativeSequence[0]==1&&Math.Abs(r.Projection.ProjectionNativeSequence[11]+0.2)<1e-6,"projection raw float sequence preserved without transpose");
+            foreach(ulong offset in new[]{PlayerProjectionReference.ViewDirtyOffset,PlayerProjectionReference.ProjectionDirtyOffset})
+            {f=ProjectionFixture();f.Put(Fixture.CameraCandidate+offset,new byte[]{1});r=Projection(f);CameraCheck(r.Projection.Status=="NOT_READY_DIRTY_CACHE"&&r.Projection.ViewNativeSequence==null,"projection dirty cache withheld offset "+offset);}
+            f=ProjectionFixture();f.U64(f.Module.LoadBias+PlayerProjectionReference.ViewCacheCell,0);r=Projection(f);
+            CameraCheck(r.Projection.Status=="NOT_READY_BINDING_UNINITIALIZED"&&r.Projection.ViewNativeSequence==null,"projection uninitialized target is not resolved or invoked");
+            f=ProjectionFixture();f.U64(f.Module.LoadBias+PlayerProjectionReference.ProjectionCacheCell,Fixture.Unity+0x600000);r=Projection(f);
+            CameraCheck(r.Projection.Status=="NOT_READY_BINDING_MISMATCH"&&r.Projection.ViewNativeSequence==null,"projection different function target withheld");
+            f=ProjectionFixture();f.Put(Fixture.Unity+PlayerProjectionReference.UnityAnchors[0].Address,new byte[]{0});bool rejected=false;try{Projection(f);}catch{rejected=true;}
+            CameraCheck(rejected,"projection changed code anchor rejected");
+            f=ProjectionFixture();f.U64(Fixture.Transform+0x10,Fixture.NativeHead);r=Projection(f);
+            CameraCheck(r.Projection.Status=="NOT_READY_SOURCE"&&r.Projection.ViewNativeSequence==null,"projection player/main Transform disagreement withheld");
+            f=ProjectionFixture();f.U64(Fixture.InventoryCamera+0x10,Fixture.CameraCandidate+0x100);r=Projection(f);
+            CameraCheck(r.Projection.Status=="NOT_READY_SOURCE"&&r.Projection.ViewNativeSequence==null,"projection controller/native disagreement withheld");
+            f=ProjectionFixture();f.Put(Fixture.CameraCandidate+PlayerProjectionReference.ProjectionOffset,BitConverter.GetBytes(float.NaN));r=Projection(f);
+            CameraCheck(r.Projection.Status=="NOT_READY_INVALID_MATRIX"&&r.Projection.ViewNativeSequence==null,"projection NaN matrix withheld");
+            f=ProjectionFixture();f.Put(Fixture.CameraCandidate+PlayerProjectionReference.ViewOffset,new byte[64]);r=Projection(f);
+            CameraCheck(r.Projection.Status=="NOT_READY_INVALID_MATRIX"&&r.Projection.ViewNativeSequence==null,"projection singular/zero matrix withheld");
+            foreach(int mutation in new[]{0,1,2})
+            {
+                f=ProjectionFixture();var core=f.CameraContext();ulong trigger=f.Physical(Fixture.CameraCandidate+PlayerProjectionReference.ViewOffset);bool changed=false;int kind=mutation;Fixture current=f;
+                f.Memory.AfterRead=delegate(ulong address,int length){if(address==trigger&&length==64&&!changed){changed=true;if(kind==0)current.Put(Fixture.CameraCandidate+PlayerProjectionReference.ViewOffset,BitConverter.GetBytes(2f));else if(kind==1)current.Put(Fixture.CameraCandidate+PlayerProjectionReference.ViewDirtyOffset,new byte[]{1});else current.U64(Fixture.Match+0xd8,Fixture.Player+0x1000);}};
+                r=f.Reader.SamplePlayerCameraProjection(f.Kernel,f.Game,f.Module,f.Layout,core,f.Progress.Add);
+                CameraCheck(changed&&r.Status=="NOT_READY_SOURCE_CHANGED"&&r.Projection==null&&r.Sources==null,"projection changed matrix/dirty/context suppresses tentative data case "+kind);
+            }
+            f=ProjectionFixture();var context=f.CameraContext();using(f.Reader.PhysicalCallScope(20)){r=f.Reader.SamplePlayerCameraProjection(f.Kernel,f.Game,f.Module,f.Layout,context,f.Progress.Add);}
+            CameraCheck(r.Status=="NOT_READY_READ_BUDGET"&&r.Sources==null&&r.Projection==null&&r.AdditionalReads<=20,"projection nested budget discards all tentative data");
+            Console.WriteLine("PlayerProjectionChecks=PASS Cases="+(cameraChecks-start)+" ActualRenderedCamera=UNVERIFIED FunctionsInvoked=False");
+        }
     }
 }

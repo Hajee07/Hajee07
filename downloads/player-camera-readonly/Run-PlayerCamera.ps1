@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([string]$MachineName='Pie64',[ValidatePattern('^[A-Za-z0-9_.:-]+$')][string]$Device='127.0.0.1:5555',[string]$RuntimeDirectory,[switch]$ProbeCameraIdentity)
+param([string]$MachineName='Pie64',[ValidatePattern('^[A-Za-z0-9_.:-]+$')][string]$Device='127.0.0.1:5555',[string]$RuntimeDirectory,[switch]$ProbeCameraIdentity,[switch]$ProbeProjection)
 Set-StrictMode -Version 2
 $ErrorActionPreference = 'Stop'
 $lines = [Collections.Generic.List[string]]::new()
@@ -79,7 +79,8 @@ function RegisterValue([int] $Cpu, [string] $Name) {
 }
 if(!$RuntimeDirectory){$RuntimeDirectory=Join-Path $PSScriptRoot 'baseline';if(!(Test-Path -LiteralPath $RuntimeDirectory)){$RuntimeDirectory=Join-Path $PSScriptRoot '..\bluestacks-process-map'}}
 $runtimeRoot=(Resolve-Path -LiteralPath $RuntimeDirectory).Path
-Record 'PlayerCameraProbeVersion=4 BaseRunner=52 ReadOnly=1'
+Record 'PlayerCameraProbeVersion=5 BaseRunner=52 ReadOnly=1'
+if($ProbeCameraIdentity -and $ProbeProjection){throw 'Choose either ProbeCameraIdentity or ProbeProjection.'}
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
         throw 'Use 64-bit Windows PowerShell on the BlueStacks PC.'
@@ -89,7 +90,7 @@ try {
     $manifest = Get-Content -LiteralPath (Join-Path $runtimeRoot 'manifest.json') -Raw | ConvertFrom-Json
     if((Get-FileHash -LiteralPath (Join-Path $runtimeRoot 'manifest.json') -Algorithm SHA256).Hash -ine '03a3d4fc4b719d1481f67a5eaea901e34db5f1a87ebd710ce160e01c171b854a'){throw 'Expected immutable V52 baseline manifest.'}
     $extension=Get-Content -LiteralPath (Join-Path $PSScriptRoot 'manifest.json') -Raw|ConvertFrom-Json
-    foreach($name in @('Run-PlayerCamera.ps1','PlayerCameraReference.cs','PlayerCameraProbe.cs','GuestProcessMap.Diagnostics.cs')){
+    foreach($name in @('Run-PlayerCamera.ps1','PlayerCameraReference.cs','PlayerProjectionReference.cs','PlayerCameraProbe.cs','GuestProcessMap.Diagnostics.cs')){
         $entry=@($extension.files|Where-Object name -CEQ $name)
         if($entry.Count -ne 1 -or (Get-FileHash -LiteralPath (Join-Path $PSScriptRoot $name) -Algorithm SHA256).Hash -ine $entry[0].sha256){throw "Player-camera source integrity mismatch: $name"}
     }
@@ -193,7 +194,7 @@ try {
         throw 'Package DLL or mapper source checksum mismatch.'
     }
     # BEGIN COMPATIBLE COMPILE
-    $compileArguments = @{ Path = @((Join-Path $PSScriptRoot 'GuestProcessMap.Diagnostics.cs'), $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath, $damagePath, $damageReferencePath, $weaponPath, $weaponReferencePath, $firingPath, $firingReferencePath, $ammoPath, $ammoReferencePath, $aimStatePath, $aimStateReferencePath, (Join-Path $PSScriptRoot 'PlayerCameraProbe.cs'), (Join-Path $PSScriptRoot 'PlayerCameraReference.cs')); ErrorAction = 'Stop' }
+    $compileArguments = @{ Path = @((Join-Path $PSScriptRoot 'GuestProcessMap.Diagnostics.cs'), $modulePath, $referencePath, $layoutPath, $layoutReferencePath, $objectPath, $objectReferencePath, $headCachePath, $nativeTransformPath, $nativeTransformReferencePath, $rosterPath, $rosterReferencePath, $otherHeadPath, $statePath, $stateReferencePath, $teamPath, $teamReferencePath, $combatPath, $combatReferencePath, $zonePath, $zoneReferencePath, $damagePath, $damageReferencePath, $weaponPath, $weaponReferencePath, $firingPath, $firingReferencePath, $ammoPath, $ammoReferencePath, $aimStatePath, $aimStateReferencePath, (Join-Path $PSScriptRoot 'PlayerCameraProbe.cs'), (Join-Path $PSScriptRoot 'PlayerCameraReference.cs'), (Join-Path $PSScriptRoot 'PlayerProjectionReference.cs')); ErrorAction = 'Stop' }
     if ((Get-Command Add-Type).Parameters.ContainsKey('CompilerOptions')) {
         $compileArguments.CompilerOptions = @('/langversion:5')
     }
@@ -317,9 +318,12 @@ try {
     $stage='PlayerCameraContext'
     $objects=$reader.VerifyPlayerCameraContext($kernel,$game,$module,$layout,$progress)
     Record "LocalPlayerObjects=PASS CurrentGame=0x$($objects.CurrentGame.ToString('x')) Match=0x$($objects.Match.ToString('x')) Player=0x$($objects.LocalPlayer.ToString('x')) Class=$($objects.PlayerClass) Scope=ORIGINAL_LOCAL_CONTEXT_ONLY FullRoster=NOT_REQUESTED"
-    if($ProbeCameraIdentity){
+    if($ProbeCameraIdentity -or $ProbeProjection){
         $stage='CameraIdentity'
-        $identity=$reader.InspectPlayerCameraIdentity($kernel,$game,$module,$layout,$objects,$progress)
+        $captureStart=[DateTime]::UtcNow.ToString('o')
+        if($ProbeProjection){$stage='CameraProjection';$identity=$reader.SamplePlayerCameraProjection($kernel,$game,$module,$layout,$objects,$progress)}
+        else{$identity=$reader.InspectPlayerCameraIdentity($kernel,$game,$module,$layout,$objects,$progress)}
+        $captureEnd=[DateTime]::UtcNow.ToString('o')
         if((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId){throw 'Game PID changed during identity inventory.'}
         $reader.Recheck($kernel,$game)
         # BEGIN IDENTITY RENDER
@@ -332,7 +336,26 @@ try {
             Record "CameraIdentityGetter Gate=$($source.GameCameraGateStatus) GetterInit=$($source.GameCameraGetterInitRaw) PatchInit=$($source.GameCameraPatchInitRaw) HotfixSlot=$(Identity-Proof $source.GameCameraHotfixSlotPresent) NullPredicate=$($source.CameraNullPredicateStatus)"
         }
         # END IDENTITY RENDER
-        Record 'CameraIdentityLimits Projection=UNVERIFIED_NOT_READ FOV=UNVERIFIED_NOT_READ RenderFrame=UNVERIFIED GameGetterExecuted=False FunctionsInvoked=False AimWrites=NONE'
+        if($ProbeProjection){
+            # BEGIN PROJECTION RENDER
+            Record "CameraProjectionCapture StartUtc=$captureStart EndUtc=$captureEnd TimingScope=METHOD_CALL_INTERVAL_ONLY"
+            if($null-eq $identity.Projection){$failed=$true;Record "CameraProjection Status=$($identity.Status) Values=WITHHELD"}
+            else{
+                $projection=$identity.Projection
+                $viewDirty=if($null-eq $projection.ViewDirty){'UNVERIFIED'}else{[string]$projection.ViewDirty}
+                $projectionDirty=if($null-eq $projection.ProjectionDirty){'UNVERIFIED'}else{[string]$projection.ProjectionDirty}
+                Record "CameraProjection Status=$($projection.Status) ViewDirty=$viewDirty ProjectionDirty=$projectionDirty Source=ORIGINAL_MAIN_NATIVE_CACHE"
+                if($projection.Status -ceq 'SAMPLED_CLEAN_CACHE_READ_ONLY'){
+                    $culture=[Globalization.CultureInfo]::InvariantCulture
+                    $viewValues=@($projection.ViewNativeSequence|ForEach-Object {$_.ToString('R',$culture)})
+                    $projectionValues=@($projection.ProjectionNativeSequence|ForEach-Object {$_.ToString('R',$culture)})
+                    Record ('CameraViewNativeSequence Values='+($viewValues -join ','))
+                    Record ('CameraProjectionNativeSequence Values='+($projectionValues -join ','))
+                }else{$failed=$true}
+            }
+            Record 'CameraProjectionLimits MatrixConvention=UNVERIFIED Viewport=UNVERIFIED FOV=NOT_READ ActualRenderedCamera=UNVERIFIED FrameSynchronization=UNVERIFIED AtomicSnapshot=NOT_ASSERTED FunctionsInvoked=False AimWrites=NONE'
+            # END PROJECTION RENDER
+        }else{Record 'CameraIdentityLimits Projection=UNVERIFIED_NOT_READ FOV=UNVERIFIED_NOT_READ RenderFrame=UNVERIFIED GameGetterExecuted=False FunctionsInvoked=False AimWrites=NONE'}
     }else{
     $stage='PlayerCameraPose'
     $started=[DateTime]::UtcNow.ToString('o')

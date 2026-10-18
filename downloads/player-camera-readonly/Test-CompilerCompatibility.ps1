@@ -14,7 +14,7 @@ foreach ($name in @('Run-PlayerCamera.ps1','Run-Checks.ps1')) {
             $files=@('one.cs','two.cs')
             $fixtureRoot = $PSScriptRoot
             & ([scriptblock]::Create($block.Replace('$PSScriptRoot', '$fixtureRoot')))
-            $expectedCount = if ($name -eq 'Run-Checks.ps1') { 2 } else { 33 }
+            $expectedCount = if ($name -eq 'Run-Checks.ps1') { 2 } else { 34 }
             if ($captured.Path.Count -ne $expectedCount) { throw "Source count changed: $($captured.Path.Count)" }
             if ($captured.ContainsKey('CompilerOptions') -ne $supported) { throw 'Compiler option selection failed' }
             if ($supported -and $captured.CompilerOptions[0] -ne '/langversion:5') { throw 'Language option missing' }

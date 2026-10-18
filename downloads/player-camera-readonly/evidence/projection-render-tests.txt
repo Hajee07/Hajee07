@@ -1,0 +1,15 @@
+PASS: projection renderer status=SAMPLED_CLEAN_CACHE_READ_ONLY
+PASS: projection renderer status=NOT_READY_DIRTY_CACHE
+PASS: projection renderer status=NOT_READY_BINDING_UNINITIALIZED
+PASS: projection renderer status=NOT_READY_INVALID_MATRIX
+PASS: projection renderer missing result suppresses values
+PASS: identity renderer nullable proof=True
+PASS: identity renderer nullable proof=False
+PASS: identity renderer nullable proof=UNVERIFIED
+PASS: identity budget renderer suppresses source pointers
+PlayerCameraRenderer=PASS Cases=2 Culture=fr-FR ActualCamera=UNVERIFIED
+PASS: Run-PlayerCamera.ps1 CompilerOptionsSupported=False Sources=34
+PASS: Run-PlayerCamera.ps1 CompilerOptionsSupported=True Sources=34
+PASS: Run-Checks.ps1 CompilerOptionsSupported=False Sources=2
+PASS: Run-Checks.ps1 CompilerOptionsSupported=True Sources=2
+PackagedRunnerSyntax=PASS

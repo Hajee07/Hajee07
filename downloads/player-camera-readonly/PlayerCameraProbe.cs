@@ -9,10 +9,17 @@ namespace HeadBridge.Mapping
         public int Attempts,Observations,ParentCount,AdditionalReads;
         public double[] Position,Rotation;
     }
+    public sealed class PlayerProjectionResult
+    {
+        public string Status="NOT_READY_SOURCE";
+        public double[] ViewNativeSequence,ProjectionNativeSequence;
+        public byte? ViewDirty,ProjectionDirty;
+    }
     public sealed class PlayerCameraIdentityResult
     {
         public string Status="NOT_READY";
         public PlayerStateObservation Sources;
+        public PlayerProjectionResult Projection;
         public ulong PlayerManagedTransform,PlayerNativeTransform,OriginalMainNativeTransform;
         public bool? OriginalMainTransformMatchesPlayer;
         public int AdditionalReads,Observations;
@@ -137,10 +144,55 @@ namespace HeadBridge.Mapping
             result.Position=Array.ConvertAll(position,delegate(float x){return (double)x;});result.Rotation=Array.ConvertAll(rotation,delegate(float x){return (double)x;});result.ParentCount=chain.Count-1;result.Status="SAMPLED_READ_ONLY";return result;
         }
         // Source-link inventory only; this does not execute the game getter or establish a rendered frame.
+        private static double[] ProjectionMatrixSequence(byte[] raw)
+        {
+            if(raw.Length!=64)return null;
+            var values=new double[16];var rank=new double[4,4];
+            for(int row=0;row<4;row++)
+            {
+                double scale=0;
+                for(int col=0;col<4;col++){double value=BitConverter.ToSingle(raw,(row*4+col)*4);if(double.IsNaN(value)||double.IsInfinity(value)||Math.Abs(value)>1e12)return null;values[row*4+col]=value;scale=Math.Max(scale,Math.Abs(value));}
+                if(scale==0)return null;for(int col=0;col<4;col++)rank[row,col]=values[row*4+col]/scale;
+            }
+            // Rank test is invariant to transposition; no row/column convention is inferred.
+            for(int col=0;col<4;col++)
+            {
+                int pivot=col;for(int row=col+1;row<4;row++)if(Math.Abs(rank[row,col])>Math.Abs(rank[pivot,col]))pivot=row;
+                if(Math.Abs(rank[pivot,col])<1e-12)return null;
+                for(int k=0;k<4;k++){double temp=rank[col,k];rank[col,k]=rank[pivot,k];rank[pivot,k]=temp;}
+                for(int row=col+1;row<4;row++){double factor=rank[row,col]/rank[col,col];for(int k=col;k<4;k++)rank[row,k]-=factor*rank[col,k];}
+            }
+            return values;
+        }
+        private static PlayerProjectionResult ReadPlayerProjectionCaches(ObjectReads reads,ModuleResult module,PlayerCameraIdentityResult identity,PlayerStateObservation sample)
+        {
+            var result=new PlayerProjectionResult();
+            if(sample.CameraUnityCodeStatus!="REGISTERED_ENTRIES_AND_CODE_VERIFIED" || !sample.CameraSelectionComplete || sample.SelectedNativeCamera==0 || identity.OriginalMainTransformMatchesPlayer!=true || sample.ControllerNativeMatchesSelection!=true)return result;
+            ulong bias=sample.CameraUnityLoadBias,native=sample.SelectedNativeCamera;
+            NativeAnchors(reads,module.LoadBias,PlayerProjectionReference.Il2CppAnchors);
+            NativeAnchors(reads,bias,PlayerProjectionReference.UnityAnchors);
+            ulong viewTarget=reads.Value(module.LoadBias+PlayerProjectionReference.ViewCacheCell,"Projection.ViewFunctionCache"),projectionTarget=reads.Value(module.LoadBias+PlayerProjectionReference.ProjectionCacheCell,"Projection.ProjectionFunctionCache");
+            if(viewTarget==0||projectionTarget==0){result.Status="NOT_READY_BINDING_UNINITIALIZED";return result;}
+            if(viewTarget!=bias+PlayerProjectionReference.ViewTarget||projectionTarget!=bias+PlayerProjectionReference.ProjectionTarget){result.Status="NOT_READY_BINDING_MISMATCH";return result;}
+            ObjectReads.User(native,8,"projection native Camera");
+            result.ViewDirty=reads.Byte(native+PlayerProjectionReference.ViewDirtyOffset,"Projection.ViewDirty");result.ProjectionDirty=reads.Byte(native+PlayerProjectionReference.ProjectionDirtyOffset,"Projection.ProjectionDirty");
+            if(result.ViewDirty!=0||result.ProjectionDirty!=0){result.Status="NOT_READY_DIRTY_CACHE";return result;}
+            byte[] view=reads.Read(native+PlayerProjectionReference.ViewOffset,64,"Projection.ViewSequence"),projection=reads.Read(native+PlayerProjectionReference.ProjectionOffset,64,"Projection.ProjectionSequence");
+            // Read back in reverse order, then recheck every identity, code, binding, flag and data observation before publication.
+            reads.Read(native+PlayerProjectionReference.ProjectionOffset,64,"Projection.ProjectionSequence");reads.Read(native+PlayerProjectionReference.ViewOffset,64,"Projection.ViewSequence");
+            reads.Byte(native+PlayerProjectionReference.ProjectionDirtyOffset,"Projection.ProjectionDirty");reads.Byte(native+PlayerProjectionReference.ViewDirtyOffset,"Projection.ViewDirty");
+            double[] v=ProjectionMatrixSequence(view),p=ProjectionMatrixSequence(projection);
+            if(v==null||p==null){result.Status="NOT_READY_INVALID_MATRIX";return result;}
+            result.ViewNativeSequence=v;result.ProjectionNativeSequence=p;result.Status="SAMPLED_CLEAN_CACHE_READ_ONLY";return result;
+        }
         public PlayerCameraIdentityResult InspectPlayerCameraIdentity(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)
+        {return InspectPlayerCameraInventory(kernel,game,module,layout,core,progress,false);}
+        public PlayerCameraIdentityResult SamplePlayerCameraProjection(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)
+        {return InspectPlayerCameraInventory(kernel,game,module,layout,core,progress,true);}
+        private PlayerCameraIdentityResult InspectPlayerCameraInventory(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress,bool projection)
         {
             CameraVerifiedInputs(module,layout);int start=PhysicalCalls;
-            using(PhysicalCallScope(6000))
+            using(PhysicalCallScope(projection?9000:6000))
             {
                 try
                 {
@@ -176,11 +228,13 @@ namespace HeadBridge.Mapping
                             if(native!=0 && native!=sample.SelectedNativeCamera){ObjectReads.User(native,8,"identity selected native Transform");Expect(reads.Value(native+0x30,"Identity.TransformOwner")==owner,"identity selected Transform owner backlink");result.OriginalMainNativeTransform=native;if(result.PlayerNativeTransform!=0)result.OriginalMainTransformMatchesPlayer=native==result.PlayerNativeTransform;}
                         }
                     }
+                    if(projection)result.Projection=ReadPlayerProjectionCaches(reads,module,result,sample);
                     result.Observations=reads.Recheck();Recheck(kernel,game);
                     // Publish no tentative source pointers on failed schema, context, memory or final rechecks.
-                    result.Sources=sample;result.Status="RECHECKED_IDENTITY_INVENTORY_ONLY";result.AdditionalReads=PhysicalCalls-start;return result;
+                    result.Sources=sample;result.Status=projection?"RECHECKED_CAMERA_CACHE_INVENTORY":"RECHECKED_IDENTITY_INVENTORY_ONLY";result.AdditionalReads=PhysicalCalls-start;return result;
                 }
                 catch(PhysicalScopeLimitException){return new PlayerCameraIdentityResult{Status="NOT_READY_READ_BUDGET",AdditionalReads=PhysicalCalls-start};}
+                catch(ObjectObservationChangedException){if(!projection)throw;return new PlayerCameraIdentityResult{Status="NOT_READY_SOURCE_CHANGED",AdditionalReads=PhysicalCalls-start};}
             }
         }
     }

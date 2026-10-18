@@ -1,5 +1,5 @@
 {
-  "scope": "PLAYER_FIELD_POSE_ONLY_LIVE_RENDER_AND_AIM_UNVERIFIED",
+  "scope": "PLAYER_POSE_SOURCE_IDENTITY_AND_OPTIONAL_CLEAN_NATIVE_PROJECTION_CACHE_RENDER_AND_AIM_UNVERIFIED",
   "baseline_version": 52,
   "baseline_archive_sha256": "9e4ce6fbebf42e5e8398cc1dc7deb6ff238aa7760a82cb3bc0ea712ee5ef3279",
   "files": [
@@ -12,6 +12,11 @@
       "name": "Audit-CameraProjection.py",
       "bytes": 3712,
       "sha256": "50a0bf41e3fcb312e70c4ccde9bef2fa7366a68cfa6a2f35a7cf8becfb5cdeb7"
+    },
+    {
+      "name": "Build-ProjectionReference.py",
+      "bytes": 3620,
+      "sha256": "0e24a6009e539df7cd32317062e2f3845d3dcfffcf2ab784c6ba8f5fa2a0769e"
     },
     {
       "name": "Build-Reference.py",
@@ -35,8 +40,8 @@
     },
     {
       "name": "PlayerCameraProbe.cs",
-      "bytes": 18598,
-      "sha256": "bd1823b4ed3840233773fbbc0499f398e0fcd9dd507f8637cc5d065b1f792ea4"
+      "bytes": 23933,
+      "sha256": "8c0eb7d5f26fe7490d4aee6f7c922dc78ed2b1d879116e9099191c3149d55bd1"
     },
     {
       "name": "PlayerCameraReference.cs",
@@ -45,13 +50,18 @@
     },
     {
       "name": "PlayerCameraTests.cs",
-      "bytes": 16001,
-      "sha256": "c6a0796da585729e82b7c4a5a7f15f0fd10382ae9e4cbf7a861713733aafcf0a"
+      "bytes": 22131,
+      "sha256": "87c86ebcbdc9a75566d201b1687ccd218a369dcc4d68654b53c481148d79cc76"
+    },
+    {
+      "name": "PlayerProjectionReference.cs",
+      "bytes": 4220,
+      "sha256": "308765b7c6f05685cd5799ca06b8626f44ec703069f5373bb9829b7e1072816e"
     },
     {
       "name": "README.md",
-      "bytes": 17044,
-      "sha256": "d0929be828036624263d6ae5b3273d51407d53459210d3a20a6ca2e53f5230f4"
+      "bytes": 20786,
+      "sha256": "45ddc236be47fb20617bab10d6c12e380d877622a3482b71e341f3629da9ea3d"
     },
     {
       "name": "Run-CameraComparison.ps1",
@@ -60,13 +70,13 @@
     },
     {
       "name": "Run-Checks.ps1",
-      "bytes": 1452,
-      "sha256": "565f0c83e56dafd80513ae00bd7bdda4316bb24299bfa2f78756e3a6eaea3f8e"
+      "bytes": 1557,
+      "sha256": "3a12ff19279898e0b0a829e33ea946a5a26b9a047b22bdf7b376966210e4d345"
     },
     {
       "name": "Run-PlayerCamera.ps1",
-      "bytes": 29063,
-      "sha256": "a1db8a805523db273c0d1aec751596f5adb7cc029109b40a41964e92c7d683f4"
+      "bytes": 31263,
+      "sha256": "04a7de006f862101dfc48d766373cb2b2cc66d99bded9be675dc5c99f4ad8dc4"
     },
     {
       "name": "Test-CameraComparison.ps1",
@@ -91,7 +101,12 @@
     {
       "name": "Test-CompilerCompatibility.ps1",
       "bytes": 1534,
-      "sha256": "9549b4f457e1195815d0174064e4d9347c90942f0b390423b2e577c6ddceee33"
+      "sha256": "f435cbf7463044d968ca7df5a6f52ad3cb59b868ad331b4cc1099a0b306ccd56"
+    },
+    {
+      "name": "Test-ProjectionRendering.ps1",
+      "bytes": 2789,
+      "sha256": "38f99dcc5abe8f79b8bbe4e463ac0e0d59484b4999f652d73147798d624ceaa6"
     },
     {
       "name": "Test-RecordedCameraSession.ps1",
@@ -139,9 +154,24 @@
       "sha256": "b7d051ad4843f6dc0bbb57688cb6ddba979d1519bc1633007f25f069ae28eecc"
     },
     {
+      "name": "evidence/projection-cache-source.json",
+      "bytes": 4105,
+      "sha256": "13bd735ecd5d17b26463453be32d9f093dc2949f07e17f30284d6a1fe960a904"
+    },
+    {
+      "name": "evidence/projection-checks.txt",
+      "bytes": 4511,
+      "sha256": "f2afd1862f30a1e4b1883e00d845249a0c0b6cac7a105ecfa66bf5482104589c"
+    },
+    {
       "name": "evidence/projection-input-rejection-tests.txt",
       "bytes": 140,
       "sha256": "f192e7b4128f6828e6fa6a600eeb2d92e1034f8c25fc2452498f2114431ece4b"
+    },
+    {
+      "name": "evidence/projection-render-tests.txt",
+      "bytes": 855,
+      "sha256": "90f74c0daecd236a64596fff979a9e89585e88023ba40e4d076e730af9185477"
     },
     {
       "name": "evidence/projection-static-audit.json",
@@ -178,5 +208,6 @@
       "bytes": 568,
       "sha256": "49d138c651b50edbaba3804c6879f45aa6c24c18148769422db98123a63445a2"
     }
-  ]
+  ],
+  "probe_version": 5
 }

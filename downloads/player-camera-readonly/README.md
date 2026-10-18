@@ -1,4 +1,4 @@
-# Single-capture Player.MainCameraTransform reader
+# Read-only player camera and projection-cache diagnostics
 
 This is a separate **read-only** source extension over the immutable V52 runtime.
 It samples the registered `COW.GamePlay.Player.MainCameraTransform` field directly,
@@ -166,4 +166,19 @@ A `True` link comparison closes only that pointer-equality observation under fin
 
 The checked-in `evidence/projection-static-audit.json` is a static registration/name inventory only. It does not establish native camera field offsets or a safe matrix data layout. No runtime FOV/matrix values are read and no getter/resolver/initializer is called. Three altered-input cases are rejected before output. A native field/source profile and independently checked landmark reprojection are still required before implementing a live projection reader.
 
-The earlier successful visual review supports manual turn-direction correlation only. It does not authorize treating the Player field, Camera.main tag or controller field as render authority. Live Windows V4 identity execution is pending.
+The earlier successful visual review supports manual turn-direction correlation only. It does not authorize treating the Player field, Camera.main tag or controller field as render authority. A user-supplied V4 Windows report completed the source-link identity inventory successfully; it did not verify render authority.
+
+
+## V5 optional live native projection-cache reader
+
+Use `Run-PlayerCamera.ps1 -ProbeProjection` in the pinned Free Fire Training scene, held stationary. Choose this switch or `-ProbeCameraIdentity`, not both. Default pose and the V4 identity mode remain available. This mode adds live guest-memory reads; it is no longer just an offline checker. Live Windows V5 execution is pending.
+
+The reader repeats the full local-player/main/controller identity inventory in the same observation set and requires both transform and controller links to match the original selected native Camera. It verifies new pinned IL2CPP/native registration, wrapper, managed-native extraction and complete matrix-helper code anchors. Both live injected-wrapper cache pointers must already equal the corresponding pinned Unity entry addresses. Null pointers return NOT_READY_BINDING_UNINITIALIZED; a different target returns NOT_READY_BINDING_MISMATCH. No resolver/getter/initializer is invoked to populate them. These wrapper caches might remain uninitialized even when the game renders normally; this reader will withhold values in that case.
+
+The native helpers' observed clean-cache branches return two 64-byte data sequences. Both dirty bytes must be zero. The reader samples those sequences, reads them again in reverse order, rechecks dirty flags, and finally rechecks every source/code/binding/data observation plus process identity. It rejects nonfinite, excessively large (>1e12 absolute), zero or numerically rank-deficient matrices. Rank rejection is conservative (row-scaled pivot threshold 1e-12), not proof of correct camera semantics. Changing data/context produces NOT_READY_SOURCE_CHANGED with no tentative pointers or matrix arrays; dirty or invalid data produces an unready status without arrays. Transport/schema failures fail the runner and still clean up.
+
+Success is `CameraProjection Status=SAMPLED_CLEAN_CACHE_READ_ONLY`. Exactly 16 invariant-culture float-derived numbers are printed per `CameraViewNativeSequence` / `CameraProjectionNativeSequence` line. They preserve native byte sequence order. They are **not** automatically transposed, assigned a graphics convention or fed into the offline screen-pixel checker. Source equality, clean flags, numerical checks and repeated reads do not establish an atomic frame, freshness age, actual render camera, GPU projection variant, coordinate convention, viewport, FOV, shot direction or LOS. Those remain explicitly UNVERIFIED/NOT_READ. FOV getter may have state-changing behavior, so it is not called or emulated here. No aim output is implemented.
+
+This added mode has a 9000-call phase cap; existing identity mode retains 6000 and the overall 30000-call/timeout limits remain. It does not automatically retry a changing sample or reuse a stale one. The synthetic fixture uses 5147 additional physical calls. Real reads differ; a module scan retry may exhaust the global limit. Fifteen synthetic-memory checks cover clean data, raw sequence preservation, both dirty flags, null/different bindings, code changes, identity disagreement, invalid matrices, data/dirty/context changes and budget suppression. Five tests exercise the actual PowerShell renderer including fr-FR culture and no-value failure output. These are host tests, not a Windows live success claim.
+
+`Build-ProjectionReference.py IL2CPP UNITY TRUSTED_MAPPER REFERENCE_CS EVIDENCE_JSON` reproduces the generated anchors from the full SHA256-pinned inputs. Original 124 V52 baseline files remain unchanged inside the ZIP. The source profile is pinned to Free Fire com.dts.freefireth v1.132.1 and does not imply Free Fire MAX support.
