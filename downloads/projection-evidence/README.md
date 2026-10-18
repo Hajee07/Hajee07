@@ -60,3 +60,11 @@ Recovery supports only the saved Schema 1 Width-metadata failure. It checks orig
 A new sibling folder/ZIP is created; original metadata is copied as original-evidence.json. Original source files are retained unchanged. Status becomes PENDING_LANDMARKS only if all saved-file checks pass. Render-frame alignment, camera authority and actual viewport remain unverified. If saved metadata cannot be recovered, retain/share the original evidence ZIP for diagnosis instead of editing it or forcing a success status.
 
 Seven host recovery/regression checks pass (valid recovery, ambiguous metadata, bad timing, unknown object, different failure, modified image, awaiter leakage suppression). The unchanged V6 package is still bundled. Windows saved-file recovery execution is pending.
+
+## V3 recovery: Windows PowerShell 5 JSON root arrays
+
+A subsequent user run stopped at the original evidence.json integrity check. The old expression wrapped a ConvertFrom-Json pipeline inside @(...). Windows PowerShell 5 can return the complete JSON root array as one pipeline item; this produced a nested manifest and compared a single digest with an array of digests. A host test using non-enumerated JSON arrays reproduces that misleading error. It does not prove the user's actual files are unchanged.
+
+Recovery now assigns decoded JSON first, explicitly enumerates and validates scalar manifest records, requires exactly one entry per critical file, and compares the actual SHA256 against that entry's scalar digest. A genuine mismatch still stops recovery and reports Expected and Actual hashes. Nothing is rehashed into the old manifest to make a mismatch pass. Original files remain untouched.
+
+Nine saved-file/awaiter checks pass under both current and emulated Windows PowerShell 5 root-array behavior. Added cases reject modified evidence.json bytes and duplicate manifest entries. Legacy-mode tests also reproduce the old nested-array comparison. The actual Windows 5 updated recovery run remains pending; no compatibility claim is based on PowerShell 7 alone.

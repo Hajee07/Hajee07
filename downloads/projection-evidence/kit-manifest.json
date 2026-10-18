@@ -20,15 +20,19 @@
     },
     {
       "name": "README.md",
-      "sha256": "d2de601a7881388c2a21a84350de8cdd97314ad401651ad1abf0293ef5d9b015"
+      "sha256": "fe9bce6f40675e58bbd20d2660d382ed1838ab489c6543c1e0cce2483d3f8c57"
     },
     {
       "name": "Recover-ProjectionEvidence.ps1",
-      "sha256": "06afc0d482ca499dff7de0c27d13ccfe5027068ad85a4d9e3c26e64ed69364bd"
+      "sha256": "6a8ddc955317e6dd186d2b3df00ec84b99bca586ff7fc793d80702493f4367a6"
     },
     {
       "name": "Test-CaptureOrchestration.ps1",
       "sha256": "9b0b1fffdbd91520a4b9c336329973388b51a215d3a4713ed9b8c16f8c466e27"
+    },
+    {
+      "name": "Test-LegacyJsonArrays.ps1",
+      "sha256": "0636728e6b2cb5cc891e0f8b9048dc489894f0bba7485883122e055eac24b25d"
     },
     {
       "name": "Test-ProjectionEvidence.ps1",
@@ -36,7 +40,7 @@
     },
     {
       "name": "Test-Recovery.ps1",
-      "sha256": "2ef5bed9e06069d4192a9a4949f96b9dfa7ffb4106d4b688cd2712d6b5f52806"
+      "sha256": "7a0577751aa9d5a15cf0f72b9a3ebb50d051020fdfe31ee66ba0ced48b9b4a42"
     },
     {
       "name": "landmarks-template.json",
@@ -56,16 +60,18 @@
     },
     {
       "name": "test-results.txt",
-      "sha256": "c44eab7285a08d276d0c5a8ac4f01f34a0270a38e8873fe8e7bfbf7c32c047c6"
+      "sha256": "18420bbf277e124e41f57cdd5640b9be106ed4ecf21f43172123554e42e95ad6"
     },
     {
       "name": "test-review-ui.js",
       "sha256": "bf75945c85499a3129e0c054170c513e2bff1adfa5e3d02c162cc47db02fcd07"
     }
   ],
-  "helper_version": 2,
-  "windows_saved_file_recovery_execution": "NOT_RUN",
-  "saved_recovery_and_awaiter_regression_checks": 7,
+  "helper_version": 3,
+  "windows_saved_file_recovery_execution": "USER_V2_INTEGRITY_GATE_FAILURE_V3_NOT_RUN",
+  "saved_recovery_and_awaiter_regression_checks": 9,
   "task_result_suppression": "EXPLICIT_VOID",
-  "recovery_scope": "HASH_CHECKED_SAVED_FILES_ONLY"
+  "recovery_scope": "HASH_CHECKED_SAVED_FILES_ONLY",
+  "json_array_compatibility": "MODERN_AND_EMULATED_WINDOWS_POWERSHELL_5_PASS",
+  "manifest_parse_scope": "VALIDATED_FLAT_SCALAR_FILE_RECORDS"
 }

@@ -22,3 +22,25 @@ PASS: mocked collector ready status=PENDING_LANDMARKS
 PASS: mocked collector pidchange status=INCOMPLETE_CAPTURE
 PASS: mocked collector resize status=INCOMPLETE_CAPTURE
 PASS: mocked collector notready status=INCOMPLETE_CAPTURE
+
+V3 recovery checks (modern and emulated legacy JSON):
+PASS: saved evidence recovery ready
+PASS: saved evidence recovery ambiguous
+PASS: saved evidence recovery timing
+PASS: saved evidence recovery unknownnoise
+PASS: saved evidence recovery otherfailure
+PASS: saved evidence recovery tampered
+PASS: saved evidence recovery tamperedmetadata
+PASS: saved evidence recovery manifestduplicate
+PASS: authored screenshot expression suppresses internal task return object
+PASS: legacy JSON root-array nesting reproduces misleading integrity comparison
+PASS: saved evidence recovery ready
+PASS: saved evidence recovery ambiguous
+PASS: saved evidence recovery timing
+PASS: saved evidence recovery unknownnoise
+PASS: saved evidence recovery otherfailure
+PASS: saved evidence recovery tampered
+PASS: saved evidence recovery tamperedmetadata
+PASS: saved evidence recovery manifestduplicate
+PASS: authored screenshot expression suppresses internal task return object
+PASS: full saved recovery and tamper rejection under emulated Windows PowerShell 5 JSON array semantics

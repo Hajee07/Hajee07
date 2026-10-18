@@ -4,10 +4,20 @@ Set-StrictMode -Version 2
 $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'ProjectionEvidence.ps1')
 $source=(Resolve-Path -LiteralPath $SourceDirectory).Path
-$manifest=@(Get-Content -LiteralPath (Join-Path $source 'files.json') -Raw|ConvertFrom-Json)
+# Assign decoded JSON before enumeration: Windows PowerShell 5 does not enumerate JSON root arrays like PowerShell 7.
+$decodedManifest=Get-Content -LiteralPath (Join-Path $source 'files.json') -Raw|ConvertFrom-Json
+$manifest=@(foreach($entry in $decodedManifest){
+    if($entry-is [array]-or $entry.Name-isnot [string]-or $entry.SHA256-isnot [string]){throw 'Manifest must contain scalar file records'}
+    $entry
+})
+Write-Host "ManifestEntries=$($manifest.Count) ParseScope=FLAT_FILE_RECORDS"
 foreach($name in @('evidence.json','view-before.png','view-after.png','projection-report.txt')){
     $entries=@($manifest|Where-Object {$_.Name-ceq $name})
-    if($entries.Count-ne 1-or $entries[0].SHA256-cnotmatch '^[0-9A-Fa-f]{64}$'-or (Get-FileHash -LiteralPath (Join-Path $source $name) -Algorithm SHA256).Hash-ine $entries[0].SHA256){throw "Original evidence integrity mismatch: $name"}
+    if($entries.Count-ne 1){throw "Manifest entry count mismatch: $name Count=$($entries.Count)"}
+    if($entries[0].SHA256-cnotmatch '^[0-9A-Fa-f]{64}$'){throw "Malformed manifest digest: $name"}
+    $actual=(Get-FileHash -LiteralPath (Join-Path $source $name) -Algorithm SHA256).Hash
+    if($actual-ine $entries[0].SHA256){throw "Original evidence integrity mismatch: $name Expected=$($entries[0].SHA256) Actual=$actual"}
+    Write-Host "SavedFileIntegrity=PASS Name=$name"
 }
 $originalHash=@($manifest|Where-Object {$_.Name-ceq 'evidence.json'})[0].SHA256
 $old=Get-Content -LiteralPath (Join-Path $source 'evidence.json') -Raw|ConvertFrom-Json

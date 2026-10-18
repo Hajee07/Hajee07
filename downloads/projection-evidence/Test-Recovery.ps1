@@ -14,11 +14,13 @@ function Fixture([string]$case){
  if($case-ceq 'otherfailure'){$config.Reason='V6 probe exit=1'}
  $config|ConvertTo-Json -Depth 10|Set-Content (Join-Path $source 'evidence.json')
  @(Get-ChildItem $source -File|ForEach-Object {[pscustomobject]@{Name=$_.Name;SHA256=(Get-FileHash $_.FullName -Algorithm SHA256).Hash}})|ConvertTo-Json|Set-Content (Join-Path $source 'files.json')
+ if($case-ceq 'tamperedmetadata'){Add-Content (Join-Path $source 'evidence.json') ' '}
+ if($case-ceq 'manifestduplicate'){$records=Get-Content (Join-Path $source 'files.json') -Raw|ConvertFrom-Json;$records=@($records)+@($records|Where-Object {$_.Name-ceq 'evidence.json'});$records|ConvertTo-Json|Set-Content (Join-Path $source 'files.json')}
  if($case-ceq 'tampered'){Add-Content (Join-Path $source 'view-before.png') 'changed'}
  return $source
 }
 try{
- foreach($case in @('ready','ambiguous','timing','unknownnoise','otherfailure','tampered')){
+ foreach($case in @('ready','ambiguous','timing','unknownnoise','otherfailure','tampered','tamperedmetadata','manifestduplicate')){
   $source=Fixture $case;$beforeHash=(Get-FileHash (Join-Path $source 'evidence.json') -Algorithm SHA256).Hash;$failed=$false
   try{& (Join-Path $PSScriptRoot 'Recover-ProjectionEvidence.ps1') -SourceDirectory $source|Out-Null}catch{$failed=$true}
   $dirs=@(Get-ChildItem $root -Directory|Where-Object {$_.Name-like ($case+'-recovered-*')})
