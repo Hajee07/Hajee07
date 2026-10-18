@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "scope": "BRACKETED_SCREENSHOT_EVIDENCE_COLLECTION_NOT_FRAME_SYNC",
+  "camera_package_sha256": "ba5cc2d65bf8a7a6cccb5e86f81b4ffe6bcc2b5b73b707752381274d6aedf12e",
+  "world_landmarks": "MISSING_USER_CONFIRMED",
+  "windows_capture_execution": "NOT_RUN",
+  "host_geometry_cases": 16,
+  "mocked_collector_cases": 4,
+  "review_ui_test_environment": "SIMULATED_DOM_NOT_REAL_BROWSER",
+  "actual_rendered_camera": "UNVERIFIED",
+  "aim_writes": "NONE",
+  "files": [
+    {
+      "name": "Capture-ProjectionEvidence.ps1",
+      "sha256": "641f34e0df3ba9f00731b5e0c2aaf548fae918735f0ebf25237f62bbd90cbb93"
+    },
+    {
+      "name": "ProjectionEvidence.ps1",
+      "sha256": "1ffbf2d1937dd565e709aaeeb7fc091ec87915aef62c70059520d5ab4ff50d23"
+    },
+    {
+      "name": "README.md",
+      "sha256": "539b2ba5530a8385d1f4355f5dcea17d1789874588894b07fee298c030cc1553"
+    },
+    {
+      "name": "Test-CaptureOrchestration.ps1",
+      "sha256": "9b0b1fffdbd91520a4b9c336329973388b51a215d3a4713ed9b8c16f8c466e27"
+    },
+    {
+      "name": "Test-ProjectionEvidence.ps1",
+      "sha256": "b9301550e266b64dfa1135bb7a3c9a40afc774dc5b57a48b03e9b440100c6bc3"
+    },
+    {
+      "name": "landmarks-template.json",
+      "sha256": "95ef18c8b054fa575349ac55caad23faa719ab8baa49d4e413a053c78af781d9"
+    },
+    {
+      "name": "projection-core.js",
+      "sha256": "99ccc5cf35e8ac32ce1cb96fb5786cdb65e528702f787b606e740e69b2778b85"
+    },
+    {
+      "name": "review-template.html",
+      "sha256": "6ffbc9df588144640b83d3b1f820b7a56826ee1f13ba63c10c2077c751586524"
+    },
+    {
+      "name": "test-core.js",
+      "sha256": "cfdba32abe1ab18d40e2dca571dbc84a8186cc3a0118a64dddd5fad5f3cf0ac4"
+    },
+    {
+      "name": "test-results.txt",
+      "sha256": "7551bcbd4f9239178742cf13a2a7338ca192742e83a6a9b2713893c1e2fb104d"
+    },
+    {
+      "name": "test-review-ui.js",
+      "sha256": "bf75945c85499a3129e0c054170c513e2bff1adfa5e3d02c162cc47db02fcd07"
+    }
+  ]
+}

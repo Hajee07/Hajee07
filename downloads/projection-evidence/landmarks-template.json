@@ -1,0 +1,9 @@
+{
+  "WorldCoordinateSource": "MISSING: fill only from independent scene/object evidence",
+  "Landmarks": [
+    {"Id": "landmark-1", "World": null},
+    {"Id": "landmark-2", "World": null},
+    {"Id": "landmark-3", "World": null},
+    {"Id": "landmark-4", "World": null}
+  ]
+}

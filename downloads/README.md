@@ -205,3 +205,9 @@ runtime layout. Its head-provider cache was null. V13 adds a bounded exact-name
 bone_Head lookup in the already populated model dictionary, with generic type,
 vtable/hotfix, String and node checks. 155 offline checks pass. No initialization
 or memory writes are used; live head Transform and world-position work is pending.
+
+### Viewport / landmark evidence capture
+
+[projection-evidence.zip](projection-evidence.zip) bundles the unchanged V6 camera reader with before/after ADB screenshot collection and a local viewport/landmark review page. Current scope is evidence capture first; independent world-coordinate landmarks are missing, so live screen accuracy remains pending. No automatic upload, game writes or render-frame synchronization claim.
+
+SHA256: `5427fa2f423f96b9f964b39ad5046a4f22833899181b5ea88eeb470fbac8d26f`.

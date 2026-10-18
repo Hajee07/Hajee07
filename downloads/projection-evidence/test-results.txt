@@ -1,0 +1,17 @@
+ProjectionCore=PASS Cases=16 LivePixels=NOT_TESTED
+ReviewUIHandlers=PASS CanvasScalingAndViewport=PASS LandmarkExport=PASS StaleResultSuppression=PASS Environment=SIMULATED_DOM_NOT_BROWSER
+PASS: ready report remains saved-data-only
+PASS: reject report duplicate
+PASS: reject report failure
+PASS: reject report notready
+PASS: reject report nan
+PASS: reject report short
+PASS: reject report backwards
+PASS: PNG big-endian screenshot dimensions
+PASS: invalid PNG header rejected
+PASS: PowerShell syntax Capture-ProjectionEvidence.ps1
+PASS: PowerShell syntax ProjectionEvidence.ps1
+PASS: mocked collector ready status=PENDING_LANDMARKS
+PASS: mocked collector pidchange status=INCOMPLETE_CAPTURE
+PASS: mocked collector resize status=INCOMPLETE_CAPTURE
+PASS: mocked collector notready status=INCOMPLETE_CAPTURE
