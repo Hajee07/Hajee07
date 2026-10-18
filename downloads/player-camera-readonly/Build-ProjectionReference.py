@@ -29,10 +29,11 @@ u_rows=[('view_registration',0x468cec,20),('projection_registration',0x468d14,20
 need(u.bytes(0xfd1f7,u_rows[2][2])==b'UnityEngine.Camera::get_worldToCameraMatrix_Injected\0')
 need(u.bytes(0xd49c3,u_rows[3][2])==b'UnityEngine.Camera::get_projectionMatrix_Injected\0')
 ia,ua=anchors(il,il_rows),anchors(u,u_rows)
+da=anchors(u,[('rigid_inverse',0x696884,0x230),('scale_matrix',0xc0eae8,0x54),('multiply_in_place',0xc0e700,0x34),('multiply',0x53a844,0x68),('component_lookup',0x52aeac,0x44),('affine_constant',0x188120,8),('rigid_c0',0x185040,16),('rigid_c1',0x182650,16),('rigid_c2',0x185bc0,16),('rigid_sign',0x1847a0,16),('rigid_c3',0x185840,16),('rigid_c4',0x17ed30,16),('rigid_c5',0x185850,16),('rigid_c6',0x183140,16),('rigid_c7',0x185050,16),('rigid_c8',0x17e9b0,16)])
 cs=['// Generated from pinned ELFs; cached native sequence is not render authority.','namespace HeadBridge.Mapping { internal static class PlayerProjectionReference {', 'internal const ulong ViewCacheCell=0xafb7430UL, ProjectionCacheCell=0xafb7440UL;', 'internal const ulong ViewTarget=0x41cb48UL, ProjectionTarget=0x41cd5cUL;', 'internal const ulong ViewOffset=0x80UL, ProjectionOffset=0xc0UL, ViewDirtyOffset=0x516UL, ProjectionDirtyOffset=0x514UL;']
-for label,values in [('Il2CppAnchors',ia),('UnityAnchors',ua)]:
+for label,values in [('Il2CppAnchors',ia),('UnityAnchors',ua),('DerivationAnchors',da)]:
  cs.append('internal static readonly GameLayoutCheck[] '+label+'=new GameLayoutCheck[]{')
  cs.extend('new GameLayoutCheck("%s",0x%xUL,"%s"),'%v for v in values);cs.append('};')
 cs.append('} }');Path(a.reference).write_text('\n'.join(cs)+'\n')
-Path(a.evidence).write_text(json.dumps(dict(scope='CLEAN_NATIVE_CACHE_SEQUENCE_ONLY',view_cache_cell=hex(cells[0]),projection_cache_cell=hex(cells[1]),native_sequence_layout='UNVERIFIED',runtime_validation='PENDING',game_functions_invoked=False,il2cpp_anchors=ia,unity_anchors=ua),indent=2)+'\n')
+Path(a.evidence).write_text(json.dumps(dict(scope='CLEAN_NATIVE_CACHE_SEQUENCE_ONLY',view_cache_cell=hex(cells[0]),projection_cache_cell=hex(cells[1]),native_sequence_layout='UNVERIFIED',runtime_validation='PENDING',game_functions_invoked=False,il2cpp_anchors=ia,unity_anchors=ua,derivation_anchors=da),indent=2)+'\n')
 print('ProjectionReference=GENERATED StaticSource=PINNED Runtime=UNVERIFIED')

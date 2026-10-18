@@ -14,6 +14,7 @@ Add-Type @compileArguments
 [HeadBridge.Mapping.Tests.PlayerObjectTests]::RunPlayerCameraChecks()
 [HeadBridge.Mapping.Tests.PlayerObjectTests]::RunPlayerCameraIdentityChecks()
 [HeadBridge.Mapping.Tests.PlayerObjectTests]::RunPlayerProjectionChecks()
+[HeadBridge.Mapping.Tests.PlayerObjectTests]::RunDerivedViewChecks()
 
 if($KernelElfPath){
     [HeadBridge.Mapping.Tests.Checks]::Run($KernelElfPath)

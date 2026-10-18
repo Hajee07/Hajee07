@@ -1,4 +1,5 @@
 PASS: projection renderer status=SAMPLED_CLEAN_CACHE_READ_ONLY
+PASS: projection renderer status=DERIVED_VIEW_WITH_CLEAN_PROJECTION_READ_ONLY
 PASS: projection renderer status=NOT_READY_DIRTY_CACHE
 PASS: projection renderer status=NOT_READY_BINDING_UNINITIALIZED
 PASS: projection renderer status=NOT_READY_INVALID_MATRIX
@@ -13,3 +14,4 @@ PASS: Run-PlayerCamera.ps1 CompilerOptionsSupported=True Sources=34
 PASS: Run-Checks.ps1 CompilerOptionsSupported=False Sources=2
 PASS: Run-Checks.ps1 CompilerOptionsSupported=True Sources=2
 PackagedRunnerSyntax=PASS
+PackagedManifest=PASS

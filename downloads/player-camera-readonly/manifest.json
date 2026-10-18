@@ -1,5 +1,5 @@
 {
-  "scope": "PLAYER_POSE_SOURCE_IDENTITY_AND_OPTIONAL_CLEAN_NATIVE_PROJECTION_CACHE_RENDER_AND_AIM_UNVERIFIED",
+  "scope": "PLAYER_POSE_IDENTITY_AND_CLEAN_OR_DERIVED_VIEW_RENDER_AND_AIM_UNVERIFIED",
   "baseline_version": 52,
   "baseline_archive_sha256": "9e4ce6fbebf42e5e8398cc1dc7deb6ff238aa7760a82cb3bc0ea712ee5ef3279",
   "files": [
@@ -15,8 +15,8 @@
     },
     {
       "name": "Build-ProjectionReference.py",
-      "bytes": 3620,
-      "sha256": "0e24a6009e539df7cd32317062e2f3845d3dcfffcf2ab784c6ba8f5fa2a0769e"
+      "bytes": 4128,
+      "sha256": "9d1bc6553bcbcecf048368cacab213820ebf54135d756104eb6a79d9f9d7924f"
     },
     {
       "name": "Build-Reference.py",
@@ -27,6 +27,11 @@
       "name": "Compare-CameraCaptures.ps1",
       "bytes": 2812,
       "sha256": "f184f48886f7a6e288d3c6156dbb4fe793629cd259ec558e48ab18e4dda478b0"
+    },
+    {
+      "name": "Generate-DerivedViewGolden.py",
+      "bytes": 2037,
+      "sha256": "98d99e05d25ff7921a13d65db7450664fb17246658517aa5a11f08636e421bdd"
     },
     {
       "name": "GuestProcessMap.Diagnostics.cs",
@@ -40,8 +45,8 @@
     },
     {
       "name": "PlayerCameraProbe.cs",
-      "bytes": 23933,
-      "sha256": "8c0eb7d5f26fe7490d4aee6f7c922dc78ed2b1d879116e9099191c3149d55bd1"
+      "bytes": 28449,
+      "sha256": "4350cd96790de3676cf54f8d40176c644de268c1ca149b26564ebe4ee75f3695"
     },
     {
       "name": "PlayerCameraReference.cs",
@@ -50,18 +55,18 @@
     },
     {
       "name": "PlayerCameraTests.cs",
-      "bytes": 22131,
-      "sha256": "87c86ebcbdc9a75566d201b1687ccd218a369dcc4d68654b53c481148d79cc76"
+      "bytes": 119433,
+      "sha256": "8ffd8189b1a3eb8c2fafb70b56e857d439b1c58795e07cc3625465b692f0d17e"
     },
     {
       "name": "PlayerProjectionReference.cs",
-      "bytes": 4220,
-      "sha256": "308765b7c6f05685cd5799ca06b8626f44ec703069f5373bb9829b7e1072816e"
+      "bytes": 7807,
+      "sha256": "0f4100b4e8eb02daf3728f5009448157409370b30e2ad8806942c03b5b9995f3"
     },
     {
       "name": "README.md",
-      "bytes": 20786,
-      "sha256": "45ddc236be47fb20617bab10d6c12e380d877622a3482b71e341f3629da9ea3d"
+      "bytes": 24697,
+      "sha256": "56820031c15e8a20f04d1713887f3880dbc10d6c17b24ffd20f131a073b6d7ed"
     },
     {
       "name": "Run-CameraComparison.ps1",
@@ -70,13 +75,13 @@
     },
     {
       "name": "Run-Checks.ps1",
-      "bytes": 1557,
-      "sha256": "3a12ff19279898e0b0a829e33ea946a5a26b9a047b22bdf7b376966210e4d345"
+      "bytes": 1626,
+      "sha256": "ff3f51d45b8e615b8f514cb65b3b1b90b6ac6c3e16d333be5bcff75844f54753"
     },
     {
       "name": "Run-PlayerCamera.ps1",
-      "bytes": 31263,
-      "sha256": "04a7de006f862101dfc48d766373cb2b2cc66d99bded9be675dc5c99f4ad8dc4"
+      "bytes": 31350,
+      "sha256": "a78d7d5c8391574c7549a7f6f803b9b9ccf67ba34e40c15229f65c6f932c517d"
     },
     {
       "name": "Test-CameraComparison.ps1",
@@ -105,8 +110,8 @@
     },
     {
       "name": "Test-ProjectionRendering.ps1",
-      "bytes": 2789,
-      "sha256": "38f99dcc5abe8f79b8bbe4e463ac0e0d59484b4999f652d73147798d624ceaa6"
+      "bytes": 2913,
+      "sha256": "b2315f507fc216b44e3d76f3100c779221e1861329d7fa316c8c2416eb6c3c33"
     },
     {
       "name": "Test-RecordedCameraSession.ps1",
@@ -139,6 +144,11 @@
       "sha256": "446dd3641e2da964b5ef7ddb9ea88802edf1176a471da8eeca01b48e5cb8cd87"
     },
     {
+      "name": "evidence/derived-view-checks.txt",
+      "bytes": 14313,
+      "sha256": "6c2f3eacd995188f67212b23dfcc4dc9a4033e05d77cbdead1da74044536632d"
+    },
+    {
       "name": "evidence/full-checks.txt",
       "bytes": 74520,
       "sha256": "7dfedc702e7c7c41c2777a52a5563ad937315516b650521c14f73cfd7814026e"
@@ -155,8 +165,8 @@
     },
     {
       "name": "evidence/projection-cache-source.json",
-      "bytes": 4105,
-      "sha256": "13bd735ecd5d17b26463453be32d9f093dc2949f07e17f30284d6a1fe960a904"
+      "bytes": 7854,
+      "sha256": "253e0147dd788d5c4ca18e40a4169378b027cf742e55aa394fc03600fc2f51ee"
     },
     {
       "name": "evidence/projection-checks.txt",
@@ -170,8 +180,8 @@
     },
     {
       "name": "evidence/projection-render-tests.txt",
-      "bytes": 855,
-      "sha256": "90f74c0daecd236a64596fff979a9e89585e88023ba40e4d076e730af9185477"
+      "bytes": 955,
+      "sha256": "1782aad7bc672b836cd80e5359361db250d950b01050694c313b8f2febf93747"
     },
     {
       "name": "evidence/projection-static-audit.json",
@@ -209,5 +219,5 @@
       "sha256": "49d138c651b50edbaba3804c6879f45aa6c24c18148769422db98123a63445a2"
     }
   ],
-  "probe_version": 5
+  "probe_version": 6
 }

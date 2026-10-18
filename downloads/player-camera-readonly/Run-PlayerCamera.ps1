@@ -79,7 +79,7 @@ function RegisterValue([int] $Cpu, [string] $Name) {
 }
 if(!$RuntimeDirectory){$RuntimeDirectory=Join-Path $PSScriptRoot 'baseline';if(!(Test-Path -LiteralPath $RuntimeDirectory)){$RuntimeDirectory=Join-Path $PSScriptRoot '..\bluestacks-process-map'}}
 $runtimeRoot=(Resolve-Path -LiteralPath $RuntimeDirectory).Path
-Record 'PlayerCameraProbeVersion=5 BaseRunner=52 ReadOnly=1'
+Record 'PlayerCameraProbeVersion=6 BaseRunner=52 ReadOnly=1'
 if($ProbeCameraIdentity -and $ProbeProjection){throw 'Choose either ProbeCameraIdentity or ProbeProjection.'}
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
@@ -344,8 +344,8 @@ try {
                 $projection=$identity.Projection
                 $viewDirty=if($null-eq $projection.ViewDirty){'UNVERIFIED'}else{[string]$projection.ViewDirty}
                 $projectionDirty=if($null-eq $projection.ProjectionDirty){'UNVERIFIED'}else{[string]$projection.ProjectionDirty}
-                Record "CameraProjection Status=$($projection.Status) ViewDirty=$viewDirty ProjectionDirty=$projectionDirty Source=ORIGINAL_MAIN_NATIVE_CACHE"
-                if($projection.Status -ceq 'SAMPLED_CLEAN_CACHE_READ_ONLY'){
+                Record "CameraProjection Status=$($projection.Status) ViewDirty=$viewDirty ProjectionDirty=$projectionDirty Source=ORIGINAL_MAIN_NATIVE_CAMERA ViewSource=$($projection.ViewSource)"
+                if($projection.Status -in @('SAMPLED_CLEAN_CACHE_READ_ONLY','DERIVED_VIEW_WITH_CLEAN_PROJECTION_READ_ONLY')){
                     $culture=[Globalization.CultureInfo]::InvariantCulture
                     $viewValues=@($projection.ViewNativeSequence|ForEach-Object {$_.ToString('R',$culture)})
                     $projectionValues=@($projection.ProjectionNativeSequence|ForEach-Object {$_.ToString('R',$culture)})

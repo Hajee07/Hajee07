@@ -9,14 +9,14 @@ $captureStart='2026-10-18T00:00:00Z';$captureEnd='2026-10-18T00:00:01Z'
 $original=[Threading.Thread]::CurrentThread.CurrentCulture
 try{
     [Threading.Thread]::CurrentThread.CurrentCulture=[Globalization.CultureInfo]::GetCultureInfo('fr-FR')
-    foreach($status in @('SAMPLED_CLEAN_CACHE_READ_ONLY','NOT_READY_DIRTY_CACHE','NOT_READY_BINDING_UNINITIALIZED','NOT_READY_INVALID_MATRIX')){
+    foreach($status in @('SAMPLED_CLEAN_CACHE_READ_ONLY','DERIVED_VIEW_WITH_CLEAN_PROJECTION_READ_ONLY','NOT_READY_DIRTY_CACHE','NOT_READY_BINDING_UNINITIALIZED','NOT_READY_INVALID_MATRIX')){
         $values=[double[]]@(1.25,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1)
-        $identity=[pscustomobject]@{Status='RECHECKED_CAMERA_CACHE_INVENTORY';Projection=[pscustomobject]@{Status=$status;ViewDirty=0;ProjectionDirty=0;ViewNativeSequence=$values;ProjectionNativeSequence=$values}}
+        $identity=[pscustomobject]@{Status='RECHECKED_CAMERA_CACHE_INVENTORY';Projection=[pscustomobject]@{Status=$status;ViewSource='FIXTURE_SOURCE';ViewDirty=0;ProjectionDirty=0;ViewNativeSequence=$values;ProjectionNativeSequence=$values}}
         if($status -ceq 'NOT_READY_BINDING_UNINITIALIZED'){$identity.Projection.ViewDirty=$null;$identity.Projection.ProjectionDirty=$null}
         $failed=$false;$script:lines.Clear();. ([scriptblock]::Create($block))
         if($status -ceq 'NOT_READY_BINDING_UNINITIALIZED' -and @($script:lines|Where-Object {$_ -like '*ViewDirty=UNVERIFIED ProjectionDirty=UNVERIFIED*'}).Count-ne 1){throw 'Unknown flags rendered incorrectly'}
         $matrixLines=@($script:lines|Where-Object {$_ -match '^Camera(View|Projection)NativeSequence '})
-        if($status -ceq 'SAMPLED_CLEAN_CACHE_READ_ONLY'){
+        if($status -in @('SAMPLED_CLEAN_CACHE_READ_ONLY','DERIVED_VIEW_WITH_CLEAN_PROJECTION_READ_ONLY')){
             if($failed -or $matrixLines.Count-ne 2 -or $matrixLines[0] -notmatch 'Values=1\.25,'){throw 'Projection successful rendering/culture mismatch'}
             if(($matrixLines[0].Split('=')[1].Split(',')).Count-ne 16){throw 'Projection sequence length mismatch'}
         }elseif(!$failed -or $matrixLines.Count-ne 0){throw 'Unready projection leaked values'}
