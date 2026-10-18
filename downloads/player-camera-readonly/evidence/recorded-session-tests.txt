@@ -1,0 +1,7 @@
+PASS: no recording confirmation means no captures
+PASS: three fresh captures and complete journal without media claim
+PASS: journal is hashed in evidence bundle and remains unverified
+PASS: mismatched recording report hash rejected
+PASS: capture outside declared recording bracket rejected
+PASS: stage cancellation preserves incomplete journal
+PASS: failed live capture stops and preserves partial timeline

@@ -1,6 +1,6 @@
 {
-  "package_sha256": "37b43bfbfd73722b9c1468d837dd7bd41b19eed0fdac78980922a1cfd5e02ae8",
-  "extracted_extension_manifest_files": 28,
+  "package_sha256": "a871298e32cbac43d77802d9d37d111b241f5ae7a7deb24dcc4567bdbe64fd1b",
+  "extracted_extension_manifest_files": 30,
   "unchanged_baseline_files": 124,
   "extracted_camera_assertions": 27,
   "inherited_suite_pass_lines": 1028,
@@ -21,5 +21,9 @@
   "visual_assessment_cases": 9,
   "visual_evidence": "MISSING",
   "visual_bundle_windows_execution": "NOT_RUN",
-  "actual_rendered_camera": "UNVERIFIED"
+  "actual_rendered_camera": "UNVERIFIED",
+  "recorded_session_mock_cases": 7,
+  "recorded_session_windows_execution": "NOT_RUN",
+  "recording_capture": "USER_STARTED_EXTERNAL_RECORDER_REQUIRED",
+  "recorded_video": "NOT_SUPPLIED"
 }

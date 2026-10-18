@@ -25,8 +25,8 @@
     },
     {
       "name": "New-CameraEvidenceBundle.ps1",
-      "bytes": 3495,
-      "sha256": "6a4590c19dddde176e56c3a1b56c755e60919dad3c7b7c749533ab311b558f09"
+      "bytes": 6291,
+      "sha256": "20d2d6ee4cd54cbb4c05232c9447668bc27241c03db139c47f454d43b850e1ca"
     },
     {
       "name": "PlayerCameraProbe.cs",
@@ -45,13 +45,13 @@
     },
     {
       "name": "README.md",
-      "bytes": 10698,
-      "sha256": "2b50e91aaf5ba2ffa8d445ddd9874f5a0de789274a4a738c7613e570877e3ee2"
+      "bytes": 13197,
+      "sha256": "737eea53b6361fdd59860a0614efc244547059a782cb5e4efead20b421a993c3"
     },
     {
       "name": "Run-CameraComparison.ps1",
-      "bytes": 3446,
-      "sha256": "f7fa629f6126377f84fd7fe17f3e1bcf01af513faec8057ac80aae59f75ac780"
+      "bytes": 6427,
+      "sha256": "6cec402b69e321940b386d17a93f7447d1ff86aac85281f7971c128421b4b739"
     },
     {
       "name": "Run-Checks.ps1",
@@ -82,6 +82,11 @@
       "name": "Test-CompilerCompatibility.ps1",
       "bytes": 1534,
       "sha256": "9549b4f457e1195815d0174064e4d9347c90942f0b390423b2e577c6ddceee33"
+    },
+    {
+      "name": "Test-RecordedCameraSession.ps1",
+      "bytes": 6649,
+      "sha256": "abcc629a6673bb538509d54fa706c131e735126003f5925c1e0f3b800f9b159d"
     },
     {
       "name": "Test-Rendering.ps1",
@@ -117,6 +122,11 @@
       "name": "evidence/mapping-diagnostics.txt",
       "bytes": 245,
       "sha256": "b7d051ad4843f6dc0bbb57688cb6ddba979d1519bc1633007f25f069ae28eecc"
+    },
+    {
+      "name": "evidence/recorded-session-tests.txt",
+      "bytes": 407,
+      "sha256": "fbfe49e84c3ae59f7bf21bfd24b23e539b6a7e953d2f762a8a65e1712d48e016"
     },
     {
       "name": "evidence/rendering.txt",

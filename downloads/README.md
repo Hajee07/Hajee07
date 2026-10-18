@@ -14,7 +14,7 @@ Separate read-only source integration; no eight-stage prompts or saved captures.
 27 camera checks and 1028 inherited checks pass offline. Original V52 baseline
 bytes preserved. Actual rendered camera, LOS, shot direction and live aim output
 remain unverified; this new Windows reader path still needs a user capture.
-ZIP SHA-256: `37b43bfbfd73722b9c1468d837dd7bd41b19eed0fdac78980922a1cfd5e02ae8`.
+ZIP SHA-256: `a871298e32cbac43d77802d9d37d111b241f5ae7a7deb24dcc4567bdbe64fd1b`.
 
 ## Uploaded Phoenix DLL reference review
 
