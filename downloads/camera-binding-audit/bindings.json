@@ -1,0 +1,482 @@
+{
+  "scope": "STATIC_WRAPPER_BINDING_PATTERN_ONLY",
+  "il2cpp_sha256": "549093d79212873f26bc13f8957d06cc7575e92f24b53721eb13e8a0a53cb657",
+  "bindings": [
+    {
+      "method": "get_fieldOfView",
+      "wrapper_rva": "0x9f9e920",
+      "cache_cell_rva": "0xafb7248",
+      "resolver_argument_rva": "0x197d0fa",
+      "resolver_argument_prefix_hex": "e6d7e0edf4e4a9d2f8f2f5e4ecafc8eff5b2b3add2f8f2f5e4ecafc8eff5b2b3",
+      "resolver_argument_text": "UNVERIFIED",
+      "resolver_call_rva": "0xa354b98",
+      "wrapper_sha256": "bb1a4358ee0e45dd311b19089e0e1fd2d1919f866689ed8068130877e661ca08",
+      "interpretation": "FUNCTION_POINTER_CACHE_NOT_CAMERA_DATA",
+      "instructions": [
+        {
+          "rva": "0x9f9e920",
+          "mnemonic": "str",
+          "operands": "x30, [sp, #-0x20]!"
+        },
+        {
+          "rva": "0x9f9e924",
+          "mnemonic": "stp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": "0x9f9e928",
+          "mnemonic": "adrp",
+          "operands": "x20, #0xafb7000"
+        },
+        {
+          "rva": "0x9f9e92c",
+          "mnemonic": "ldr",
+          "operands": "x1, [x20, #0x248]"
+        },
+        {
+          "rva": "0x9f9e930",
+          "mnemonic": "mov",
+          "operands": "x19, x0"
+        },
+        {
+          "rva": "0x9f9e934",
+          "mnemonic": "cbnz",
+          "operands": "x1, #0x9f9e94c"
+        },
+        {
+          "rva": "0x9f9e938",
+          "mnemonic": "adrp",
+          "operands": "x0, #0x197d000"
+        },
+        {
+          "rva": "0x9f9e93c",
+          "mnemonic": "add",
+          "operands": "x0, x0, #0xfa"
+        },
+        {
+          "rva": "0x9f9e940",
+          "mnemonic": "bl",
+          "operands": "#0xa354b98"
+        },
+        {
+          "rva": "0x9f9e944",
+          "mnemonic": "mov",
+          "operands": "x1, x0"
+        },
+        {
+          "rva": "0x9f9e948",
+          "mnemonic": "str",
+          "operands": "x0, [x20, #0x248]"
+        },
+        {
+          "rva": "0x9f9e94c",
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "rva": "0x9f9e950",
+          "mnemonic": "ldp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": "0x9f9e954",
+          "mnemonic": "ldr",
+          "operands": "x30, [sp], #0x20"
+        },
+        {
+          "rva": "0x9f9e958",
+          "mnemonic": "br",
+          "operands": "x1"
+        }
+      ]
+    },
+    {
+      "method": "get_aspect",
+      "wrapper_rva": "0x9f9ed48",
+      "cache_cell_rva": "0xafb72c8",
+      "resolver_argument_rva": "0x1963cdc",
+      "resolver_argument_prefix_hex": "556e697479456e67696e652e43616d6572613a3a6765745f6173706563742829",
+      "resolver_argument_text": "UNVERIFIED",
+      "resolver_call_rva": "0xa354b98",
+      "wrapper_sha256": "43549c3f17f50ac507f403093d8b70472dd3b694bd5518577a1ae0fa0fb03496",
+      "interpretation": "FUNCTION_POINTER_CACHE_NOT_CAMERA_DATA",
+      "instructions": [
+        {
+          "rva": "0x9f9ed48",
+          "mnemonic": "str",
+          "operands": "x30, [sp, #-0x20]!"
+        },
+        {
+          "rva": "0x9f9ed4c",
+          "mnemonic": "stp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": "0x9f9ed50",
+          "mnemonic": "adrp",
+          "operands": "x20, #0xafb7000"
+        },
+        {
+          "rva": "0x9f9ed54",
+          "mnemonic": "ldr",
+          "operands": "x1, [x20, #0x2c8]"
+        },
+        {
+          "rva": "0x9f9ed58",
+          "mnemonic": "mov",
+          "operands": "x19, x0"
+        },
+        {
+          "rva": "0x9f9ed5c",
+          "mnemonic": "cbnz",
+          "operands": "x1, #0x9f9ed74"
+        },
+        {
+          "rva": "0x9f9ed60",
+          "mnemonic": "adrp",
+          "operands": "x0, #0x1963000"
+        },
+        {
+          "rva": "0x9f9ed64",
+          "mnemonic": "add",
+          "operands": "x0, x0, #0xcdc"
+        },
+        {
+          "rva": "0x9f9ed68",
+          "mnemonic": "bl",
+          "operands": "#0xa354b98"
+        },
+        {
+          "rva": "0x9f9ed6c",
+          "mnemonic": "mov",
+          "operands": "x1, x0"
+        },
+        {
+          "rva": "0x9f9ed70",
+          "mnemonic": "str",
+          "operands": "x0, [x20, #0x2c8]"
+        },
+        {
+          "rva": "0x9f9ed74",
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "rva": "0x9f9ed78",
+          "mnemonic": "ldp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": "0x9f9ed7c",
+          "mnemonic": "ldr",
+          "operands": "x30, [sp], #0x20"
+        },
+        {
+          "rva": "0x9f9ed80",
+          "mnemonic": "br",
+          "operands": "x1"
+        }
+      ]
+    },
+    {
+      "method": "get_pixelRect_Injected",
+      "wrapper_rva": "0x9f9f658",
+      "cache_cell_rva": "0xafb7420",
+      "resolver_argument_rva": "0x198617d",
+      "resolver_argument_prefix_hex": "556e697479456e67696e652e43616d6572613a3a6765745f706978656c526563",
+      "resolver_argument_text": "UNVERIFIED",
+      "resolver_call_rva": "0xa354b98",
+      "wrapper_sha256": "92a1f593cdcdaf2109ce88ff48d951ba455b83f77d698b36737b2e705e1e164a",
+      "interpretation": "FUNCTION_POINTER_CACHE_NOT_CAMERA_DATA",
+      "instructions": [
+        {
+          "rva": "0x9f9f658",
+          "mnemonic": "stp",
+          "operands": "x30, x21, [sp, #-0x20]!"
+        },
+        {
+          "rva": "0x9f9f65c",
+          "mnemonic": "stp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": "0x9f9f660",
+          "mnemonic": "adrp",
+          "operands": "x21, #0xafb7000"
+        },
+        {
+          "rva": "0x9f9f664",
+          "mnemonic": "ldr",
+          "operands": "x2, [x21, #0x420]"
+        },
+        {
+          "rva": "0x9f9f668",
+          "mnemonic": "mov",
+          "operands": "x19, x1"
+        },
+        {
+          "rva": "0x9f9f66c",
+          "mnemonic": "mov",
+          "operands": "x20, x0"
+        },
+        {
+          "rva": "0x9f9f670",
+          "mnemonic": "cbnz",
+          "operands": "x2, #0x9f9f688"
+        },
+        {
+          "rva": "0x9f9f674",
+          "mnemonic": "adrp",
+          "operands": "x0, #0x1986000"
+        },
+        {
+          "rva": "0x9f9f678",
+          "mnemonic": "add",
+          "operands": "x0, x0, #0x17d"
+        },
+        {
+          "rva": "0x9f9f67c",
+          "mnemonic": "bl",
+          "operands": "#0xa354b98"
+        },
+        {
+          "rva": "0x9f9f680",
+          "mnemonic": "mov",
+          "operands": "x2, x0"
+        },
+        {
+          "rva": "0x9f9f684",
+          "mnemonic": "str",
+          "operands": "x0, [x21, #0x420]"
+        },
+        {
+          "rva": "0x9f9f688",
+          "mnemonic": "mov",
+          "operands": "x0, x20"
+        },
+        {
+          "rva": "0x9f9f68c",
+          "mnemonic": "mov",
+          "operands": "x1, x19"
+        },
+        {
+          "rva": "0x9f9f690",
+          "mnemonic": "ldp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": "0x9f9f694",
+          "mnemonic": "ldp",
+          "operands": "x30, x21, [sp], #0x20"
+        },
+        {
+          "rva": "0x9f9f698",
+          "mnemonic": "br",
+          "operands": "x2"
+        }
+      ]
+    },
+    {
+      "method": "get_worldToCameraMatrix_Injected",
+      "wrapper_rva": "0x9f9f8ec",
+      "cache_cell_rva": "0xafb7430",
+      "resolver_argument_rva": "0x198e3a8",
+      "resolver_argument_prefix_hex": "81d4efe8f5f8c4efe6e8efe4afc0efe8ece0f5e8eeefbbbbd1ede0f8c5e4e7e0",
+      "resolver_argument_text": "UNVERIFIED",
+      "resolver_call_rva": "0xa354b98",
+      "wrapper_sha256": "da1fdd7fc0cde2a8a87ba3ea0e4860d38ebbe419357c51f57002fb53ed10bee4",
+      "interpretation": "FUNCTION_POINTER_CACHE_NOT_CAMERA_DATA",
+      "instructions": [
+        {
+          "rva": "0x9f9f8ec",
+          "mnemonic": "stp",
+          "operands": "x30, x21, [sp, #-0x20]!"
+        },
+        {
+          "rva": "0x9f9f8f0",
+          "mnemonic": "stp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": "0x9f9f8f4",
+          "mnemonic": "adrp",
+          "operands": "x21, #0xafb7000"
+        },
+        {
+          "rva": "0x9f9f8f8",
+          "mnemonic": "ldr",
+          "operands": "x2, [x21, #0x430]"
+        },
+        {
+          "rva": "0x9f9f8fc",
+          "mnemonic": "mov",
+          "operands": "x19, x1"
+        },
+        {
+          "rva": "0x9f9f900",
+          "mnemonic": "mov",
+          "operands": "x20, x0"
+        },
+        {
+          "rva": "0x9f9f904",
+          "mnemonic": "cbnz",
+          "operands": "x2, #0x9f9f91c"
+        },
+        {
+          "rva": "0x9f9f908",
+          "mnemonic": "adrp",
+          "operands": "x0, #0x198e000"
+        },
+        {
+          "rva": "0x9f9f90c",
+          "mnemonic": "add",
+          "operands": "x0, x0, #0x3a8"
+        },
+        {
+          "rva": "0x9f9f910",
+          "mnemonic": "bl",
+          "operands": "#0xa354b98"
+        },
+        {
+          "rva": "0x9f9f914",
+          "mnemonic": "mov",
+          "operands": "x2, x0"
+        },
+        {
+          "rva": "0x9f9f918",
+          "mnemonic": "str",
+          "operands": "x0, [x21, #0x430]"
+        },
+        {
+          "rva": "0x9f9f91c",
+          "mnemonic": "mov",
+          "operands": "x0, x20"
+        },
+        {
+          "rva": "0x9f9f920",
+          "mnemonic": "mov",
+          "operands": "x1, x19"
+        },
+        {
+          "rva": "0x9f9f924",
+          "mnemonic": "ldp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": "0x9f9f928",
+          "mnemonic": "ldp",
+          "operands": "x30, x21, [sp], #0x20"
+        },
+        {
+          "rva": "0x9f9f92c",
+          "mnemonic": "br",
+          "operands": "x2"
+        }
+      ]
+    },
+    {
+      "method": "get_projectionMatrix_Injected",
+      "wrapper_rva": "0x9f9fa24",
+      "cache_cell_rva": "0xafb7440",
+      "resolver_argument_rva": "0x197d157",
+      "resolver_argument_prefix_hex": "f5b2b3a881d4efe8f5f8c4efe6e8efe4afd2e9e0e5e4f3bbbbc6e4f5c6edeee3",
+      "resolver_argument_text": "UNVERIFIED",
+      "resolver_call_rva": "0xa354b98",
+      "wrapper_sha256": "0495e13443300e3917943c75c99a93876fcbdb078b3de850127c9487baa907a8",
+      "interpretation": "FUNCTION_POINTER_CACHE_NOT_CAMERA_DATA",
+      "instructions": [
+        {
+          "rva": "0x9f9fa24",
+          "mnemonic": "stp",
+          "operands": "x30, x21, [sp, #-0x20]!"
+        },
+        {
+          "rva": "0x9f9fa28",
+          "mnemonic": "stp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": "0x9f9fa2c",
+          "mnemonic": "adrp",
+          "operands": "x21, #0xafb7000"
+        },
+        {
+          "rva": "0x9f9fa30",
+          "mnemonic": "ldr",
+          "operands": "x2, [x21, #0x440]"
+        },
+        {
+          "rva": "0x9f9fa34",
+          "mnemonic": "mov",
+          "operands": "x19, x1"
+        },
+        {
+          "rva": "0x9f9fa38",
+          "mnemonic": "mov",
+          "operands": "x20, x0"
+        },
+        {
+          "rva": "0x9f9fa3c",
+          "mnemonic": "cbnz",
+          "operands": "x2, #0x9f9fa54"
+        },
+        {
+          "rva": "0x9f9fa40",
+          "mnemonic": "adrp",
+          "operands": "x0, #0x197d000"
+        },
+        {
+          "rva": "0x9f9fa44",
+          "mnemonic": "add",
+          "operands": "x0, x0, #0x157"
+        },
+        {
+          "rva": "0x9f9fa48",
+          "mnemonic": "bl",
+          "operands": "#0xa354b98"
+        },
+        {
+          "rva": "0x9f9fa4c",
+          "mnemonic": "mov",
+          "operands": "x2, x0"
+        },
+        {
+          "rva": "0x9f9fa50",
+          "mnemonic": "str",
+          "operands": "x0, [x21, #0x440]"
+        },
+        {
+          "rva": "0x9f9fa54",
+          "mnemonic": "mov",
+          "operands": "x0, x20"
+        },
+        {
+          "rva": "0x9f9fa58",
+          "mnemonic": "mov",
+          "operands": "x1, x19"
+        },
+        {
+          "rva": "0x9f9fa5c",
+          "mnemonic": "ldp",
+          "operands": "x20, x19, [sp, #0x10]"
+        },
+        {
+          "rva": "0x9f9fa60",
+          "mnemonic": "ldp",
+          "operands": "x30, x21, [sp], #0x20"
+        },
+        {
+          "rva": "0x9f9fa64",
+          "mnemonic": "br",
+          "operands": "x2"
+        }
+      ]
+    }
+  ],
+  "functions_invoked": false,
+  "native_data_layout": "UNVERIFIED",
+  "live_cache_targets": "NOT_READ",
+  "projection_values": "NOT_READ",
+  "actual_rendered_camera": "UNVERIFIED",
+  "aim_writes": "NONE"
+}
