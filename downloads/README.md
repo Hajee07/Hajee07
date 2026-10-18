@@ -210,4 +210,4 @@ or memory writes are used; live head Transform and world-position work is pendin
 
 [projection-evidence.zip](projection-evidence.zip) bundles the unchanged V6 camera reader with before/after ADB screenshot collection and a local viewport/landmark review page. Current scope is evidence capture first; independent world-coordinate landmarks are missing, so live screen accuracy remains pending. No automatic upload, game writes or render-frame synchronization claim.
 
-SHA256: `5427fa2f423f96b9f964b39ad5046a4f22833899181b5ea88eeb470fbac8d26f`.
+SHA256: `4b77010de0e46468cd7e0fe93fecfd59c18cc5c370a2bf73a7233666e052dcbf`.

@@ -11,6 +11,13 @@ PASS: PNG big-endian screenshot dimensions
 PASS: invalid PNG header rejected
 PASS: PowerShell syntax Capture-ProjectionEvidence.ps1
 PASS: PowerShell syntax ProjectionEvidence.ps1
+PASS: saved evidence recovery ready
+PASS: saved evidence recovery ambiguous
+PASS: saved evidence recovery timing
+PASS: saved evidence recovery unknownnoise
+PASS: saved evidence recovery otherfailure
+PASS: saved evidence recovery tampered
+PASS: authored screenshot expression suppresses internal task return object
 PASS: mocked collector ready status=PENDING_LANDMARKS
 PASS: mocked collector pidchange status=INCOMPLETE_CAPTURE
 PASS: mocked collector resize status=INCOMPLETE_CAPTURE

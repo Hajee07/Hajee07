@@ -33,7 +33,7 @@ function Screenshot([string]$Name){
         $copyTask=$process.StandardOutput.BaseStream.CopyToAsync($stream)
         if(!$process.WaitForExit(15000)){$process.Kill();throw 'Screenshot transport timed out'}
         if(!$copyTask.Wait(3000)){throw 'Screenshot stream did not finish'}
-        $copyTask.GetAwaiter().GetResult();$stream.Dispose();$stream=$null
+        [void]$copyTask.GetAwaiter().GetResult();$stream.Dispose();$stream=$null
         if($process.ExitCode-ne 0){throw ('Screenshot transport failed: '+$errorTask.Result)}
     }finally{if($stream){$stream.Dispose()};$process.Dispose()}
     $ended=[DateTimeOffset]::UtcNow;$file=Get-Item -LiteralPath $path

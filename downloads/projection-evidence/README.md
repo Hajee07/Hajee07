@@ -44,3 +44,19 @@ These screenshot requests bracket a multi-read memory probe; they are not atomic
 - The actual user-uploaded V6 report parses successfully as saved-report data. Windows screenshot capture and browser interaction on the user's laptop are pending.
 
 Developers can run test-core.js / test-review-ui.js with Node, and Test-ProjectionEvidence.ps1 / Test-CaptureOrchestration.ps1 with PowerShell 7. These test tools are not needed for the Windows capture command. No game getters/resolvers are called and no game memory is written by the new helper; the unchanged V6 reader performs its existing read-only diagnostics.
+
+## Screenshot metadata recovery (v2 helper)
+
+A user Windows run passed V6 and cleanup but failed collector metadata processing with "The property 'Width' cannot be found on this object." The screenshot copy task's GetResult call could emit an internal task-result object into PowerShell's success pipeline, producing an array instead of one screenshot record. The collector now explicitly suppresses that return with [void]. A regression test injects an object-valued awaiter result into the authored expression: old code emits two objects; fixed code emits only the metadata record. This reproduces the suspected pipeline cause on the host; actual Windows 5 task behavior remains to be confirmed by the saved JSON or fixed live capture.
+
+Do not repeat the successful V6 game probe just to repair this saved metadata. Run:
+
+```
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Recover-ProjectionEvidence.ps1 -SourceDirectory ORIGINAL_EVIDENCE_FOLDER
+```
+
+Recovery supports only the saved Schema 1 Width-metadata failure. It checks original files.json hashes, report digest and successful V6 report, PNG headers/dimensions, exactly one complete screenshot record per role and valid screenshot intervals bracketing the saved projection method. Only one empty/null serialized task artifact per role is ignored; unknown nonempty objects, competing metadata records, changed hashes/dimensions, bad timing or a different failure are rejected. No new game read, getter call, screenshot or write occurs. It does not re-query game PID or claim fresh process identity. The result is saved-files-only evidence.
+
+A new sibling folder/ZIP is created; original metadata is copied as original-evidence.json. Original source files are retained unchanged. Status becomes PENDING_LANDMARKS only if all saved-file checks pass. Render-frame alignment, camera authority and actual viewport remain unverified. If saved metadata cannot be recovered, retain/share the original evidence ZIP for diagnosis instead of editing it or forcing a success status.
+
+Seven host recovery/regression checks pass (valid recovery, ambiguous metadata, bad timing, unknown object, different failure, modified image, awaiter leakage suppression). The unchanged V6 package is still bundled. Windows saved-file recovery execution is pending.

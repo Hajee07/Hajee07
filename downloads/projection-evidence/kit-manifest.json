@@ -3,7 +3,7 @@
   "scope": "BRACKETED_SCREENSHOT_EVIDENCE_COLLECTION_NOT_FRAME_SYNC",
   "camera_package_sha256": "ba5cc2d65bf8a7a6cccb5e86f81b4ffe6bcc2b5b73b707752381274d6aedf12e",
   "world_landmarks": "MISSING_USER_CONFIRMED",
-  "windows_capture_execution": "NOT_RUN",
+  "windows_capture_execution": "USER_V1_V6_PASS_COLLECTOR_WIDTH_METADATA_FAILURE",
   "host_geometry_cases": 16,
   "mocked_collector_cases": 4,
   "review_ui_test_environment": "SIMULATED_DOM_NOT_REAL_BROWSER",
@@ -12,7 +12,7 @@
   "files": [
     {
       "name": "Capture-ProjectionEvidence.ps1",
-      "sha256": "641f34e0df3ba9f00731b5e0c2aaf548fae918735f0ebf25237f62bbd90cbb93"
+      "sha256": "0bdd5009db52424f737ff662980cfbc2bd498ddedc9b7a509b06e4799a0b56e4"
     },
     {
       "name": "ProjectionEvidence.ps1",
@@ -20,7 +20,11 @@
     },
     {
       "name": "README.md",
-      "sha256": "539b2ba5530a8385d1f4355f5dcea17d1789874588894b07fee298c030cc1553"
+      "sha256": "d2de601a7881388c2a21a84350de8cdd97314ad401651ad1abf0293ef5d9b015"
+    },
+    {
+      "name": "Recover-ProjectionEvidence.ps1",
+      "sha256": "06afc0d482ca499dff7de0c27d13ccfe5027068ad85a4d9e3c26e64ed69364bd"
     },
     {
       "name": "Test-CaptureOrchestration.ps1",
@@ -29,6 +33,10 @@
     {
       "name": "Test-ProjectionEvidence.ps1",
       "sha256": "b9301550e266b64dfa1135bb7a3c9a40afc774dc5b57a48b03e9b440100c6bc3"
+    },
+    {
+      "name": "Test-Recovery.ps1",
+      "sha256": "2ef5bed9e06069d4192a9a4949f96b9dfa7ffb4106d4b688cd2712d6b5f52806"
     },
     {
       "name": "landmarks-template.json",
@@ -48,11 +56,16 @@
     },
     {
       "name": "test-results.txt",
-      "sha256": "7551bcbd4f9239178742cf13a2a7338ca192742e83a6a9b2713893c1e2fb104d"
+      "sha256": "c44eab7285a08d276d0c5a8ac4f01f34a0270a38e8873fe8e7bfbf7c32c047c6"
     },
     {
       "name": "test-review-ui.js",
       "sha256": "bf75945c85499a3129e0c054170c513e2bff1adfa5e3d02c162cc47db02fcd07"
     }
-  ]
+  ],
+  "helper_version": 2,
+  "windows_saved_file_recovery_execution": "NOT_RUN",
+  "saved_recovery_and_awaiter_regression_checks": 7,
+  "task_result_suppression": "EXPLICIT_VOID",
+  "recovery_scope": "HASH_CHECKED_SAVED_FILES_ONLY"
 }
