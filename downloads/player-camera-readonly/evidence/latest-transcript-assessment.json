@@ -1,0 +1,116 @@
+{
+  "Schema": 1,
+  "Status": "VISUAL_EVIDENCE_REQUIRED",
+  "Identity": "17868/3133/0x737803436a80/0x7377fccae000/0x7377d10da000/0x7377fb4138c0/0x7377f0a60590",
+  "Samples": [
+    {
+      "Path": "extracted-capture-0.txt",
+      "SHA256": "77427E18985E4A4A0C483CE8A9D9EDE8EEA6E72AD5C1CB1A2E5394D7BF63D135",
+      "StartUtc": "2026-10-18T06:30:14.5339452+00:00",
+      "EndUtc": "2026-10-18T06:30:16.1902042+00:00",
+      "ReportedMethodDurationMs": 1650,
+      "Position": [
+        60.2028694152832,
+        12.680704116821289,
+        20.061635971069336
+      ],
+      "RawQuaternion": [
+        0.008340016007423401,
+        0.4035670757293701,
+        0.0036788044963032007,
+        -0.9149047136306763
+      ],
+      "RawNormSquared": 1.000000109105911,
+      "NormalizedForMathPositiveZBasis": [
+        -0.7383893965624752,
+        0.018229926670407452,
+        0.6741281545950261
+      ],
+      "BasisAzimuthDegrees": -47.604824936940446,
+      "BasisElevationDegrees": 1.0445557207358735
+    },
+    {
+      "Path": "extracted-capture-1.txt",
+      "SHA256": "2493046E1BC164EDA963F7373C316BDA6124D3CEEA30B967D5B130E0D3A212C2",
+      "StartUtc": "2026-10-18T06:30:44.4418823+00:00",
+      "EndUtc": "2026-10-18T06:30:46.2406233+00:00",
+      "ReportedMethodDurationMs": 1793,
+      "Position": [
+        59.910770416259766,
+        12.684062004089355,
+        19.695772171020508
+      ],
+      "RawQuaternion": [
+        0.00800753477960825,
+        0.3172374963760376,
+        0.0026787593960762024,
+        -0.948308527469635
+      ],
+      "RawNormSquared": 0.9999999887437127,
+      "NormalizedForMathPositiveZBasis": [
+        -0.6016351523471454,
+        0.016886833069517423,
+        0.7985924982925331
+      ],
+      "BasisAzimuthDegrees": -36.99325153767113,
+      "BasisElevationDegrees": 0.967590255108452
+    },
+    {
+      "Path": "extracted-capture-2.txt",
+      "SHA256": "66AF9E8461379B56E1618A65D6DD083C3DA78B9C0C85A16DFF05D42EB4BD17B6",
+      "StartUtc": "2026-10-18T06:31:16.6958941+00:00",
+      "EndUtc": "2026-10-18T06:31:18.2278675+00:00",
+      "ReportedMethodDurationMs": 1526,
+      "Position": [
+        59.89918518066406,
+        12.396929740905762,
+        19.71504020690918
+      ],
+      "RawQuaternion": [
+        0.06257926672697067,
+        0.3176582455635071,
+        0.021015668287873268,
+        -0.9459046125411987
+      ],
+      "RawNormSquared": 1.000000119938872,
+      "NormalizedForMathPositiveZBasis": [
+        -0.5983184373964291,
+        0.13173961892761468,
+        0.7903541739475425
+      ],
+      "BasisAzimuthDegrees": -37.12665825349907,
+      "BasisElevationDegrees": 7.570129818869673
+    }
+  ],
+  "Changes": [
+    {
+      "FromIndex": 0,
+      "ToIndex": 1,
+      "RotationDegrees": 10.611851710798641,
+      "TransformPositionDistance": 0.4681766982919676,
+      "DeclaredBasisAzimuthDeltaDegrees": 10.611573399269318,
+      "DeclaredBasisElevationDeltaDegrees": -0.07696546562742157
+    },
+    {
+      "FromIndex": 1,
+      "ToIndex": 2,
+      "RotationDegrees": 6.603885699931205,
+      "TransformPositionDistance": 0.2880111307775233,
+      "DeclaredBasisAzimuthDeltaDegrees": -0.13340671582794528,
+      "DeclaredBasisElevationDeltaDegrees": 6.602539563761221
+    }
+  ],
+  "BasisConvention": "MATHEMATICAL_POSITIVE_Z_ONLY_RENDER_CONVENTION_UNVERIFIED",
+  "TimingScope": "METHOD_INTERVAL_ONLY_NO_RENDER_FRAME_ALIGNMENT",
+  "TransformPositionMeaning": "CAMERA_TRANSFORM_POSITION_NOT_PLAYER_MOVEMENT",
+  "ActualRenderedCamera": "UNVERIFIED",
+  "ShotDirection": "UNVERIFIED",
+  "LOS": "UNVERIFIED",
+  "AimWrites": "NONE",
+  "Provenance": {
+    "Type": "USER_UPLOADED_CONSOLE_TRANSCRIPT",
+    "TranscriptSHA256": "6b8dc3cd556078e0d07ae6e5ae545e05ec6508b37c695f6be0c5969a234dfa64",
+    "OriginalWindowsReportBytes": "NOT_AVAILABLE",
+    "Extraction": "Three complete report sections, field values unchanged, line endings normalized to LF. Sample hashes identify extracted text, not original Windows files."
+  }
+}

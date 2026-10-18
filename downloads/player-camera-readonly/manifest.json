@@ -4,6 +4,11 @@
   "baseline_archive_sha256": "9e4ce6fbebf42e5e8398cc1dc7deb6ff238aa7760a82cb3bc0ea712ee5ef3279",
   "files": [
     {
+      "name": "Assess-CameraEvidence.ps1",
+      "bytes": 3784,
+      "sha256": "f009b86a0c9d6d4bd4d1e521b9b6fbfe913e9d32c9cbc1e47c22d1496e863fb1"
+    },
+    {
       "name": "Build-Reference.py",
       "bytes": 2278,
       "sha256": "2aa91ed418aa76499110fb44c7022ef25512c8a5cde006daeb95188a0c4354d4"
@@ -17,6 +22,11 @@
       "name": "GuestProcessMap.Diagnostics.cs",
       "bytes": 27981,
       "sha256": "8fc5f06d029bb61b7e834347b80f9aaf25f6c22d8aa345440e077564c6c1b712"
+    },
+    {
+      "name": "New-CameraEvidenceBundle.ps1",
+      "bytes": 3495,
+      "sha256": "6a4590c19dddde176e56c3a1b56c755e60919dad3c7b7c749533ab311b558f09"
     },
     {
       "name": "PlayerCameraProbe.cs",
@@ -35,8 +45,8 @@
     },
     {
       "name": "README.md",
-      "bytes": 8345,
-      "sha256": "b46debded03822cd03391528ce7ef62a3a85f46a6f7c5905b65bf18c792bf2a2"
+      "bytes": 10698,
+      "sha256": "2b50e91aaf5ba2ffa8d445ddd9874f5a0de789274a4a738c7613e570877e3ee2"
     },
     {
       "name": "Run-CameraComparison.ps1",
@@ -57,6 +67,11 @@
       "name": "Test-CameraComparison.ps1",
       "bytes": 1882,
       "sha256": "1861c33bb3fe3b4f0432b4227d67b4991f0b8070037906991696d2445cdd27f9"
+    },
+    {
+      "name": "Test-CameraEvidence.ps1",
+      "bytes": 4785,
+      "sha256": "fc5a1e6250940483c0416b79f4e216d954852cf16fb8ce11f0081e4583f705e8"
     },
     {
       "name": "Test-CameraResume.ps1",
@@ -94,6 +109,11 @@
       "sha256": "7dfedc702e7c7c41c2777a52a5563ad937315516b650521c14f73cfd7814026e"
     },
     {
+      "name": "evidence/latest-transcript-assessment.json",
+      "bytes": 3974,
+      "sha256": "13d217e4da1c8f308a0776ddb342ea2e5636183dab0173dba0a24df4febe4b6b"
+    },
+    {
       "name": "evidence/mapping-diagnostics.txt",
       "bytes": 245,
       "sha256": "b7d051ad4843f6dc0bbb57688cb6ddba979d1519bc1633007f25f069ae28eecc"
@@ -112,6 +132,11 @@
       "name": "evidence/validation.json",
       "bytes": 567,
       "sha256": "d36a3f34bf648801ca9445b811f6b6482b8e32163fc67d0e9f28ea1a386be8f8"
+    },
+    {
+      "name": "evidence/visual-tests.txt",
+      "bytes": 368,
+      "sha256": "ebc525585facf8b9dcff7d2ce36b4edf1bc936d3ccc866e612b446eb2fbc4bc5"
     },
     {
       "name": "reference.json",

@@ -1,0 +1,9 @@
+PASS: known +30 azimuth and +20 elevation
+PASS: math evidence cannot assert rendering or writes
+PASS: rejected duplicate
+PASS: rejected chronology
+PASS: rejected nonfinite
+PASS: rejected identity
+PASS: actual bundle preserves hashed reports and missing visual status
+PASS: incomplete visual set rejected
+PASS: supplied screenshot bytes remain unaligned and unverified
