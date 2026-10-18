@@ -231,6 +231,30 @@ namespace HeadBridge.Mapping
             if(v==null||p==null){result.Status="NOT_READY_INVALID_MATRIX";return result;}
             result.ViewNativeSequence=v;result.ProjectionNativeSequence=p;result.ViewSource="CLEAN_NATIVE_CACHE";result.Status="SAMPLED_CLEAN_CACHE_READ_ONLY";return result;
         }
+        public OtherHeadResult SampleCameraLandmarkCandidates(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)
+        {
+            CameraVerifiedInputs(module,layout);CameraDiagnosticStage="LANDMARK_SOURCE_CANDIDATES";
+            int allowance=Math.Min(14000,30000-PhysicalCalls-500);
+            if(allowance<1000)return new OtherHeadResult{StopReason="NO_SOURCE_BUDGET"};
+            using(PhysicalCallScope(allowance))
+            {
+                try
+                {
+                    Recheck(kernel,game);var reads=new ObjectReads(this,game.Root,true);
+                    var now=CameraLocalContext(reads,module,layout,progress);
+                    Expect(now.CurrentGame==core.CurrentGame&&now.Match==core.Match&&now.LocalPlayer==core.LocalPlayer,"landmark source context unchanged");
+                    ulong hotfix=RootClass(reads,module,layout,ObjectReference.HotfixCell,37332,progress);
+                    ulong wrappers=reads.Pointer(reads.Pointer(hotfix+0xb8,"landmark wrapper statics"),"landmark wrapper array"),length=reads.Value(wrappers+0x18);
+                    Expect(length<=1000000,"landmark wrapper bound");
+                    ReadMatchPlayerDictionary(game,module,layout,core,wrappers,length,progress);
+                    if(core.RosterStatus!="TYPED_COLLECTION_VERIFIED")return new OtherHeadResult{StopReason="ROSTER_"+core.RosterStatus};
+                    OtherHeadResult result=SampleOtherPlayerHeads(kernel,game,module,layout,core,progress);
+                    reads.Recheck();Recheck(kernel,game);return result;
+                }
+                catch(PhysicalScopeLimitException){return new OtherHeadResult{StopReason="SOURCE_PHASE_BUDGET_EXHAUSTED"};}
+                catch(ObjectObservationChangedException){return new OtherHeadResult{StopReason="SOURCE_CONTEXT_CHANGED"};}
+            }
+        }
         public PlayerCameraIdentityResult InspectPlayerCameraIdentity(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)
         {return InspectPlayerCameraInventory(kernel,game,module,layout,core,progress,false);}
         public PlayerCameraIdentityResult SamplePlayerCameraProjection(KernelContext kernel,GameProcess game,ModuleResult module,GameLayoutResult layout,PlayerObjectResult core,Action<string> progress)

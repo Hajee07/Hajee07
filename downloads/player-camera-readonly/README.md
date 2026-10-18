@@ -199,3 +199,14 @@ The game's dirty flag and caches are never written. Remaining limits are unchang
 Current host checks: 27 pose + 15 identity + 15 projection + 151 derivation checks (208 total). Derivation includes 137 C# comparisons with isolated ARM64 outputs, full live-reader fixtures with parent rotation/nonuniform/reflected scales, unknown type/job rejection, code/cycle rejection, TRS/job/projection mutation suppression, partial-capture budget exhaustion and fatal transport behavior. Six authored projection-renderer cases include the derived status and invariant numeric formatting. No live frame correctness is inferred from those tests.
 
 `Generate-DerivedViewGolden.py UNITY TRUSTED_MAPPER VERIFIER_DIRECTORY OUTPUT_FRAGMENT` reproduces the 137 C# math cases using the separately published dirty-view-verification package and its pinned Capstone/Unicorn dependencies. The output fragment was compared byte-for-byte to the compiled fixture source. Those dependencies are needed only to regenerate arithmetic evidence, not to run the Windows live reader.
+
+
+## V7 independent landmark-source candidates
+
+`Run-PlayerCamera.ps1 -ProbeLandmarkSources` is a separate optional mode, mutually exclusive with projection/identity switches. It reuses the already pinned typed roster, membership validation and native head-transform readers. Positions come from object hierarchy/TRS, independently of camera projection math. It does not run a camera matrix sample in the same invocation. Old camera matrices must not be silently paired with new source points.
+
+Source-only mode allows at most 14000 additional physical calls, reduced to leave 500 of the unchanged global 30000-call cap for completion. Underlying roster/head limits and at most two other sampled objects remain unchanged. Schema, transport and context failures retain their fail/withhold behavior. No targets are presumed visible, stationary, hostile or valid calibration landmarks. At most two head coordinates cannot meet the comparison tool's minimum four-point requirement.
+
+The output labels each point LandmarkWorldCandidate with roster index, source and selected-entry membership proof. It reports source method times, not render-frame synchronization. Source-mode screenshots can support manual object association later; projected screen locations must not be used as the sole evidence to identify which object supplied a world point. Static/visible association and fresh camera-frame pairing remain unverified. Zero candidates or a budget stop does not establish absence of objects.
+
+Three added host checks verify an independent coordinate oracle, partial-budget withholding and compatibility of the verified context with existing APIs. Together with the existing 208 checks, 211 selected host checks pass. Windows V7 source-mode execution is pending. All 124 baseline files remain unchanged.

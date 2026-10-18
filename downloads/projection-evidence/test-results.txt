@@ -44,3 +44,19 @@ PASS: saved evidence recovery tamperedmetadata
 PASS: saved evidence recovery manifestduplicate
 PASS: authored screenshot expression suppresses internal task return object
 PASS: full saved recovery and tamper rejection under emulated Windows PowerShell 5 JSON array semantics
+
+Landmark-source host checks:
+PASS: independent source report preserves candidate-only status
+PASS: reject invalid source duplicate
+PASS: reject invalid source count
+PASS: reject invalid source nonfinite
+PASS: reject invalid source membership
+PASS: reject invalid source reversed
+PASS: reject invalid source four
+PASS: zero-source report stays empty without fabricated coordinates
+PASS: source-only report cannot be reused as camera projection evidence
+PASS: mocked collector ready status=PENDING_LANDMARKS
+PASS: mocked collector pidchange status=INCOMPLETE_CAPTURE
+PASS: mocked collector resize status=INCOMPLETE_CAPTURE
+PASS: mocked collector notready status=INCOMPLETE_CAPTURE
+PASS: mocked collector source status=PENDING_CAMERA_AND_LANDMARK_ASSOCIATION

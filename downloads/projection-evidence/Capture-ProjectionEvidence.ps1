@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([string]$AdbPath='C:\Program Files\BlueStacks_nxt\HD-Adb.exe',[ValidatePattern('^(127\.0\.0\.1|localhost):[0-9]{1,5}$')][string]$Device='127.0.0.1:5555',[string]$MachineName='Pie64',[string]$OutputDirectory)
+param([string]$AdbPath='C:\Program Files\BlueStacks_nxt\HD-Adb.exe',[ValidatePattern('^(127\.0\.0\.1|localhost):[0-9]{1,5}$')][string]$Device='127.0.0.1:5555',[string]$MachineName='Pie64',[string]$OutputDirectory,[switch]$CollectLandmarkCandidates)
 Set-StrictMode -Version 2
 $ErrorActionPreference='Stop'
 . (Join-Path $PSScriptRoot 'ProjectionEvidence.ps1')
@@ -45,8 +45,9 @@ Write-Host 'Keep the Training scene and camera stationary. Capturing screenshots
 Write-Host (AdbText -Arguments @('connect',$Device));if((AdbText -Arguments @('-s',$Device,'get-state'))-cne 'device'){throw 'Selected device unavailable'}
 $guestBefore=AdbText -Arguments @('-s',$Device,'shell','pidof','com.dts.freefireth');if($guestBefore-cnotmatch '^\d+$'){throw 'Free Fire must be running'}
 $before=Screenshot 'view-before.png'
+$probeSwitch=if($CollectLandmarkCandidates){'-ProbeLandmarkSources'}else{'-ProbeProjection'}
 $probeStart=[DateTimeOffset]::UtcNow
-& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'camera\Run-PlayerCamera.ps1') -MachineName $MachineName -Device $Device -ProbeProjection | Tee-Object -Variable probeLines
+& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'camera\Run-PlayerCamera.ps1') -MachineName $MachineName -Device $Device $probeSwitch | Tee-Object -Variable probeLines
 $exit=$LASTEXITCODE;$probeEnd=[DateTimeOffset]::UtcNow
 $after=Screenshot 'view-after.png'
 try{$guestAfter=AdbText -Arguments @('-s',$Device,'shell','pidof','com.dts.freefireth')}catch{$guestAfter='UNAVAILABLE'}
@@ -55,16 +56,17 @@ $reportPath=$resultLine.Substring('ResultFile='.Length);if(!(Test-Path -LiteralP
 Copy-Item -LiteralPath $reportPath -Destination (Join-Path $output 'projection-report.txt')
 $reportHash=(Get-FileHash -LiteralPath (Join-Path $output 'projection-report.txt') -Algorithm SHA256).Hash
 if((Get-FileHash -LiteralPath $reportPath -Algorithm SHA256).Hash-cne $reportHash){throw 'Report changed while copying'}
-$status='PENDING_LANDMARKS';$parsed=$null;$reason=''
+$status='PENDING_LANDMARKS';$parsed=$null;$sourceCandidates=$null;$reason=''
 try{
     if($exit-ne 0){throw "V6 probe exit=$exit"}
-    $parsed=Get-ProjectionReport (Get-Content -LiteralPath (Join-Path $output 'projection-report.txt'))
-    if($guestBefore-cne $guestAfter-or [long]$guestBefore-ne $parsed.GuestPID){throw 'Game process identity changed'}
+    if($CollectLandmarkCandidates){$sourceCandidates=Get-LandmarkSourceReport (Get-Content -LiteralPath (Join-Path $output 'projection-report.txt'));$validated=$sourceCandidates;$status=if($sourceCandidates.Candidates.Count){'PENDING_CAMERA_AND_LANDMARK_ASSOCIATION'}else{'SOURCE_CANDIDATES_UNAVAILABLE'}}else{$parsed=Get-ProjectionReport (Get-Content -LiteralPath (Join-Path $output 'projection-report.txt'));$validated=$parsed}
+    if($guestBefore-cne $guestAfter-or [long]$guestBefore-ne $validated.GuestPID){throw 'Game process identity changed'}
     if($before.Width-ne $after.Width-or $before.Height-ne $after.Height){throw 'Screenshot dimensions changed'}
-    $sampleStart=[DateTimeOffset]::Parse($parsed.StartUtc);$sampleEnd=[DateTimeOffset]::Parse($parsed.EndUtc)
+    $sampleStart=[DateTimeOffset]::Parse($validated.StartUtc);$sampleEnd=[DateTimeOffset]::Parse($validated.EndUtc)
     if($sampleStart-lt $probeStart.AddSeconds(-1)-or $sampleEnd-gt $probeEnd.AddSeconds(1)){throw 'Report method interval is not within child invocation'}
-}catch{$status='INCOMPLETE_CAPTURE';$reason=$_.Exception.Message;$parsed=$null}
-$config=[pscustomobject]@{Schema=1;Status=$status;Reason=$reason;ReportSHA256=$reportHash;Matrices=$parsed;Before=$before;After=$after;ViewportStatus='NOT_MEASURED';Landmarks='MISSING';FrameAlignment='BRACKETED_ONLY_NOT_SYNCHRONIZED';ActualRenderedCamera='UNVERIFIED';AimWrites='NONE'}
+}catch{$status='INCOMPLETE_CAPTURE';$reason=$_.Exception.Message;$parsed=$null;$sourceCandidates=$null}
+$config=[pscustomobject]@{Schema=1;Status=$status;Reason=$reason;ReportSHA256=$reportHash;Matrices=$parsed;SourceCandidates=$sourceCandidates;Before=$before;After=$after;ViewportStatus='NOT_MEASURED';Landmarks='MISSING';FrameAlignment='BRACKETED_ONLY_NOT_SYNCHRONIZED';ActualRenderedCamera='UNVERIFIED';AimWrites='NONE'}
+if($null-ne $sourceCandidates){[pscustomobject]@{WorldCoordinateSource='RUNTIME_HEAD_TRANSFORMS_NOT_PROJECTION_INVERSION';Status='UNASSOCIATED_CANDIDATES_NOT_VALIDATED_LANDMARKS';Landmarks=@($sourceCandidates.Candidates)}|ConvertTo-Json -Depth 10|Set-Content -LiteralPath (Join-Path $output 'world-candidates.json') -Encoding UTF8}
 $json=$config|ConvertTo-Json -Depth 12
 $json|Set-Content -LiteralPath (Join-Path $output 'evidence.json') -Encoding UTF8
 $template=Get-Content -Raw -LiteralPath (Join-Path $PSScriptRoot 'review-template.html')

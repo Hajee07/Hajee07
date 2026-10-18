@@ -1,26 +1,26 @@
 {
   "schema": 1,
   "scope": "BRACKETED_SCREENSHOT_EVIDENCE_COLLECTION_NOT_FRAME_SYNC",
-  "camera_package_sha256": "ba5cc2d65bf8a7a6cccb5e86f81b4ffe6bcc2b5b73b707752381274d6aedf12e",
+  "camera_package_sha256": "80951f23e0d1f9e2c734e5bd8a3028475d3796780c1738566d88afb811fd1f8e",
   "world_landmarks": "MISSING_USER_CONFIRMED",
   "windows_capture_execution": "USER_V1_V6_PASS_COLLECTOR_WIDTH_METADATA_FAILURE",
   "host_geometry_cases": 16,
-  "mocked_collector_cases": 4,
+  "mocked_collector_cases": 5,
   "review_ui_test_environment": "SIMULATED_DOM_NOT_REAL_BROWSER",
   "actual_rendered_camera": "UNVERIFIED",
   "aim_writes": "NONE",
   "files": [
     {
       "name": "Capture-ProjectionEvidence.ps1",
-      "sha256": "0bdd5009db52424f737ff662980cfbc2bd498ddedc9b7a509b06e4799a0b56e4"
+      "sha256": "dd244ddd6b869b7705d8d946189f381894d4d4dad91d1793b3333d337f06e5fb"
     },
     {
       "name": "ProjectionEvidence.ps1",
-      "sha256": "1ffbf2d1937dd565e709aaeeb7fc091ec87915aef62c70059520d5ab4ff50d23"
+      "sha256": "e15cdac9cdb252083ad9902c8f88256dfbd889c9bf21683b7556788635d4b433"
     },
     {
       "name": "README.md",
-      "sha256": "fe9bce6f40675e58bbd20d2660d382ed1838ab489c6543c1e0cce2483d3f8c57"
+      "sha256": "bc1e3d50d2f4f06da680d4805ee1d7298697be19c69a42db4fe97c5474f7409d"
     },
     {
       "name": "Recover-ProjectionEvidence.ps1",
@@ -28,7 +28,11 @@
     },
     {
       "name": "Test-CaptureOrchestration.ps1",
-      "sha256": "9b0b1fffdbd91520a4b9c336329973388b51a215d3a4713ed9b8c16f8c466e27"
+      "sha256": "1448c341931bd97dd3e8f9ee347a75e408b43fe5bc39e0ba1e1d649ca91779c9"
+    },
+    {
+      "name": "Test-LandmarkReports.ps1",
+      "sha256": "838d26d245ed011b319bf4fbf6f146008b216c617cc8f617d87890400654be8e"
     },
     {
       "name": "Test-LegacyJsonArrays.ps1",
@@ -60,18 +64,23 @@
     },
     {
       "name": "test-results.txt",
-      "sha256": "18420bbf277e124e41f57cdd5640b9be106ed4ecf21f43172123554e42e95ad6"
+      "sha256": "49b2fcccd025077c2f1441291de60bdd10247ce0c6e9f51013db1e8ac15d8090"
     },
     {
       "name": "test-review-ui.js",
       "sha256": "bf75945c85499a3129e0c054170c513e2bff1adfa5e3d02c162cc47db02fcd07"
     }
   ],
-  "helper_version": 3,
+  "helper_version": 4,
   "windows_saved_file_recovery_execution": "USER_V2_INTEGRITY_GATE_FAILURE_V3_NOT_RUN",
   "saved_recovery_and_awaiter_regression_checks": 9,
   "task_result_suppression": "EXPLICIT_VOID",
   "recovery_scope": "HASH_CHECKED_SAVED_FILES_ONLY",
   "json_array_compatibility": "MODERN_AND_EMULATED_WINDOWS_POWERSHELL_5_PASS",
-  "manifest_parse_scope": "VALIDATED_FLAT_SCALAR_FILE_RECORDS"
+  "manifest_parse_scope": "VALIDATED_FLAT_SCALAR_FILE_RECORDS",
+  "camera_probe_version": 7,
+  "landmark_source_mode": "SEPARATE_INDEPENDENT_WORLD_CANDIDATES_NO_CAMERA_MATRICES",
+  "landmark_source_windows_execution": "NOT_RUN",
+  "landmark_source_max_objects": 2,
+  "source_report_parser_checks": 9
 }

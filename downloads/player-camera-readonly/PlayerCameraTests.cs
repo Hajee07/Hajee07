@@ -497,5 +497,17 @@ namespace HeadBridge.Mapping.Tests
             p=new float[]{5.874658326700323f,6.4000000953674316f,8.027690618936397f};q=new float[]{0f,0.3145664674964706f,0f,0.94923515511866829f};expected=new double[]{0.80209589004516602d,0d,-0.59719496965408325d,0d,0d,1d,0d,0d,-0.59719496965408325d,0d,-0.80209589004516602d,0d,0.082060337066650391d,-6.3999981880187988d,9.9472970962524414d,1d};
             actual=Reader.DeriveViewSequence(p,q);same=true;for(int i=0;i<16;i++)same &= Math.Abs(actual[i]-expected[i])<=.001+.0001*Math.Abs(expected[i]);CameraCheck(same,"derived C# versus isolated ARM64 depth_32");
         }
+        public static void RunLandmarkSourceChecks()
+        {
+            var f=ProjectionFixture();f.SetupRoster();f.SetupOtherHead(Fixture.Other,0x74000000,31);var core=f.CameraContext();var result=f.Reader.SampleCameraLandmarkCandidates(f.Kernel,f.Game,f.Module,f.Layout,core,f.Progress.Add);
+            Console.WriteLine("MEASURE LandmarkCount="+result.Sampled+" Stop="+result.StopReason);
+            CameraCheck(result.Sampled==1&&result.Samples[0].X==31&&result.Samples[0].MembershipProof=="SELECTED_ENTRY_REVALIDATED","independent head coordinate source sampled without projection inversion");
+            f=ProjectionFixture();core=f.CameraContext();f.Reader.Virtual(f.Game.Root,Fixture.Player,1);var noBudget=f.Reader;
+            using(noBudget.PhysicalCallScope(20)){result=noBudget.SampleCameraLandmarkCandidates(f.Kernel,f.Game,f.Module,f.Layout,core,f.Progress.Add);}
+            CameraCheck(result.Samples.Length==0&&result.Sampled==0,"landmark partial/budget failure withholds candidates");
+            f=ProjectionFixture();f.SetupRoster();f.SetupOtherHead(Fixture.Other,0x74000000,31);core=f.CameraContext();result=f.Reader.SampleCameraLandmarkCandidates(f.Kernel,f.Game,f.Module,f.Layout,core,f.Progress.Add);var projection=f.Reader.SamplePlayerCameraProjection(f.Kernel,f.Game,f.Module,f.Layout,core,f.Progress.Add);
+            CameraCheck(projection.Projection!=null&&projection.Projection.Status=="SAMPLED_CLEAN_CACHE_READ_ONLY"&&f.Reader.PhysicalCalls<30000,"source mode leaves verified context usable by existing APIs");
+            Console.WriteLine("LandmarkSourceChecks=PASS Cases=3 StaticAndScreenAssociation=UNVERIFIED");
+        }
     }
 }

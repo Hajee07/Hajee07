@@ -1,0 +1,222 @@
+PASS-PLAYER-CAMERA: stale cached mapping reads newly validated page
+PASS-PLAYER-CAMERA: mapping change during read remains fatal with diagnostic addresses
+PASS-PLAYER-CAMERA: failed mapping is evicted and fresh read uses current page
+PASS-PLAYER-CAMERA: verified field yields read-only pose
+PASS-PLAYER-CAMERA: rotated scaled hierarchy world position oracle
+PASS-PLAYER-CAMERA: parent rotation source math
+MEASURE PlayerCameraStableReads=3887
+PASS-PLAYER-CAMERA: phase and hierarchy bounds
+PASS-PLAYER-CAMERA: null field never yields a pose
+PASS-PLAYER-CAMERA: unresolved binding remains unknown
+PASS-PLAYER-CAMERA: pending job not synchronized or sampled
+PASS-PLAYER-CAMERA: wrong offset rejected
+PASS-PLAYER-CAMERA: wrong type descriptor rejected
+PASS-PLAYER-CAMERA: local context change rejected
+PASS-PLAYER-CAMERA: active original-path hotfix rejected
+PASS-PLAYER-CAMERA: wrong managed transform class rejected
+PASS-PLAYER-CAMERA: root backlink rejected
+PASS-PLAYER-CAMERA: hierarchy cycle rejected
+PASS-PLAYER-CAMERA: zero quaternion rejected
+PASS-PLAYER-CAMERA: invalid coordinate rejected
+PASS-PLAYER-CAMERA: no full-roster dependency or roster claim
+MEASURE MotionStatus=NOT_READY_READ_BUDGET Attempts=2 Reads=6000 Detail=Physical call scope exhausted; partial results only. Y=NA
+PASS-PLAYER-CAMERA: motion discards capture and fresh attempt stops at shared budget
+PASS-PLAYER-CAMERA: continuous motion stays unready within shared read/attempt bounds
+PASS-PLAYER-CAMERA: field pointer change on final recheck is fatal
+PASS-PLAYER-CAMERA: nested budget is respected without resetting counters
+PASS-PLAYER-CAMERA: transient job change discards and reacquires within shared budget
+PASS-PLAYER-CAMERA: context identity failure wins over simultaneous retryable job change
+PASS-PLAYER-CAMERA: transport failure is fatal without retry or stale pose
+PlayerCameraChecks=PASS Assertions=27 LiveCamera=UNVERIFIED
+MEASURE IdentityStatus=RECHECKED_IDENTITY_INVENTORY_ONLY Reads=4733
+PASS-PLAYER-CAMERA: identity typed Player/main/controller links match
+PASS-PLAYER-CAMERA: identity stays within separate bounded phase
+PASS-PLAYER-CAMERA: identity different Player transform is reported, not forced equal
+PASS-PLAYER-CAMERA: identity unresolved native binding remains unknown
+PASS-PLAYER-CAMERA: identity null controller field remains explicit
+PASS-PLAYER-CAMERA: identity uninitialized getter is not executed despite field match
+PASS-PLAYER-CAMERA: identity active game-getter branch stays separate from native selector
+PASS-PLAYER-CAMERA: identity false native predicate cannot select a camera
+PASS-PLAYER-CAMERA: identity predicate override is not executed or assumed true
+PASS-PLAYER-CAMERA: identity controller/native selector disagreement is preserved
+PASS-PLAYER-CAMERA: identity wrong native Camera owner rejects snapshot
+PASS-PLAYER-CAMERA: identity changed source anchor rejects snapshot
+PASS-PLAYER-CAMERA: identity changed local player rejects snapshot
+PASS-PLAYER-CAMERA: identity budget discards all tentative source data
+PASS-PLAYER-CAMERA: identity final recheck rejects changed native link
+PlayerCameraIdentityChecks=PASS Cases=15 ActualRenderedCamera=UNVERIFIED Projection=NOT_READ FunctionsInvoked=False
+MEASURE ProjectionStatus=RECHECKED_CAMERA_CACHE_INVENTORY Projection=SAMPLED_CLEAN_CACHE_READ_ONLY Reads=5147
+PASS-PLAYER-CAMERA: projection bounded clean-cache raw sequence sample
+PASS-PLAYER-CAMERA: projection raw float sequence preserved without transpose
+PASS-PLAYER-CAMERA: dirty view uses rechecked derivation
+PASS-PLAYER-CAMERA: projection dirty cache withheld
+PASS-PLAYER-CAMERA: projection uninitialized target is not resolved or invoked
+PASS-PLAYER-CAMERA: projection different function target withheld
+PASS-PLAYER-CAMERA: projection changed code anchor rejected
+PASS-PLAYER-CAMERA: projection player/main Transform disagreement withheld
+PASS-PLAYER-CAMERA: projection controller/native disagreement withheld
+PASS-PLAYER-CAMERA: projection NaN matrix withheld
+PASS-PLAYER-CAMERA: projection singular/zero matrix withheld
+PASS-PLAYER-CAMERA: projection changed matrix/dirty/context suppresses tentative data case 0
+PASS-PLAYER-CAMERA: projection changed matrix/dirty/context suppresses tentative data case 1
+PASS-PLAYER-CAMERA: projection changed matrix/dirty/context suppresses tentative data case 2
+PASS-PLAYER-CAMERA: projection nested budget discards all tentative data
+PlayerProjectionChecks=PASS Cases=15 ActualRenderedCamera=UNVERIFIED FunctionsInvoked=False
+PASS-PLAYER-CAMERA: derived live fixture translation and Z flip
+MEASURE DerivedViewReads=6272
+PASS-PLAYER-CAMERA: derived view missing type/job source withheld 0
+PASS-PLAYER-CAMERA: derived view missing type/job source withheld 1
+PASS-PLAYER-CAMERA: derived view missing type/job source withheld 2
+PASS-PLAYER-CAMERA: derived view missing type/job source withheld 3
+PASS-PLAYER-CAMERA: derived view code mismatch rejected
+PASS-PLAYER-CAMERA: derived view hierarchy cycle rejected
+PASS-PLAYER-CAMERA: derived view TRS/job/projection mutation suppressed 0
+PASS-PLAYER-CAMERA: derived view TRS/job/projection mutation suppressed 1
+PASS-PLAYER-CAMERA: derived view TRS/job/projection mutation suppressed 2
+PASS-PLAYER-CAMERA: derived live reader full parent-chain rotation/scale reflection=False
+PASS-PLAYER-CAMERA: derived live reader full parent-chain rotation/scale reflection=True
+PASS-PLAYER-CAMERA: derived partial-capture budget withholds all source data
+PASS-PLAYER-CAMERA: derived transport failure is fatal without fallback data
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 identity
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 translation
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 local_nonuniform_scale_ignored
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 parent_nonuniform_position
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 axis_rotation_0
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 axis_rotation_1
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 axis_rotation_2
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 reflection_0
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 reflection_1
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 reflection_2
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 reflection_3
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 reflection_4
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 reflection_5
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 reflection_6
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 reflection_7
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 negative_zero_parent
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_0
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_1
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_2
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_3
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_4
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_5
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_6
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_7
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_8
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_9
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_10
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_11
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_12
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_13
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_14
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_15
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_16
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_17
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_18
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_19
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_20
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_21
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_22
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_23
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_24
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_25
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_26
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_27
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_28
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_29
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_30
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_31
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_32
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_33
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_34
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_35
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_36
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_37
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_38
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_39
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_40
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_41
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_42
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_43
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_44
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_45
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_46
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_47
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_48
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_49
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_50
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_51
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_52
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_53
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_54
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_55
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_56
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_57
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_58
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_59
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_60
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_61
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_62
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_63
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_64
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_65
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_66
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_67
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_68
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_69
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_70
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_71
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_72
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_73
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_74
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_75
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_76
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_77
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_78
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_79
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_80
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_81
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_82
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_83
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_84
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_85
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_86
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_87
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_88
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_89
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_90
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_91
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_92
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_93
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_94
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_95
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_96
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_97
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_98
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_99
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_100
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_101
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_102
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_103
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_104
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_105
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_106
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_107
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_108
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_109
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_110
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_111
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_112
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_113
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_114
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_115
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_116
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_117
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_118
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 seeded_119
+PASS-PLAYER-CAMERA: derived C# versus isolated ARM64 depth_32
+DerivedViewChecks=PASS Cases=151 LiveFrame=UNVERIFIED
+MEASURE LandmarkCount=1 Stop=SELECTED_OBJECTS_EXHAUSTED
+PASS-PLAYER-CAMERA: independent head coordinate source sampled without projection inversion
+PASS-PLAYER-CAMERA: landmark partial/budget failure withholds candidates
+PASS-PLAYER-CAMERA: source mode leaves verified context usable by existing APIs
+LandmarkSourceChecks=PASS Cases=3 StaticAndScreenAssociation=UNVERIFIED

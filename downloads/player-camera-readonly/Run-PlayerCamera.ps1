@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([string]$MachineName='Pie64',[ValidatePattern('^[A-Za-z0-9_.:-]+$')][string]$Device='127.0.0.1:5555',[string]$RuntimeDirectory,[switch]$ProbeCameraIdentity,[switch]$ProbeProjection)
+param([string]$MachineName='Pie64',[ValidatePattern('^[A-Za-z0-9_.:-]+$')][string]$Device='127.0.0.1:5555',[string]$RuntimeDirectory,[switch]$ProbeCameraIdentity,[switch]$ProbeProjection,[switch]$ProbeLandmarkSources)
 Set-StrictMode -Version 2
 $ErrorActionPreference = 'Stop'
 $lines = [Collections.Generic.List[string]]::new()
@@ -79,7 +79,8 @@ function RegisterValue([int] $Cpu, [string] $Name) {
 }
 if(!$RuntimeDirectory){$RuntimeDirectory=Join-Path $PSScriptRoot 'baseline';if(!(Test-Path -LiteralPath $RuntimeDirectory)){$RuntimeDirectory=Join-Path $PSScriptRoot '..\bluestacks-process-map'}}
 $runtimeRoot=(Resolve-Path -LiteralPath $RuntimeDirectory).Path
-Record 'PlayerCameraProbeVersion=6 BaseRunner=52 ReadOnly=1'
+if($ProbeLandmarkSources -and ($ProbeProjection -or $ProbeCameraIdentity)){throw 'Landmark source mode must run separately'}
+Record 'PlayerCameraProbeVersion=7 BaseRunner=52 ReadOnly=1'
 if($ProbeCameraIdentity -and $ProbeProjection){throw 'Choose either ProbeCameraIdentity or ProbeProjection.'}
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or -not [Environment]::Is64BitProcess) {
@@ -318,6 +319,13 @@ try {
     $stage='PlayerCameraContext'
     $objects=$reader.VerifyPlayerCameraContext($kernel,$game,$module,$layout,$progress)
     Record "LocalPlayerObjects=PASS CurrentGame=0x$($objects.CurrentGame.ToString('x')) Match=0x$($objects.Match.ToString('x')) Player=0x$($objects.LocalPlayer.ToString('x')) Class=$($objects.PlayerClass) Scope=ORIGINAL_LOCAL_CONTEXT_ONLY FullRoster=NOT_REQUESTED"
+    $landmarkSources=$null
+    if($ProbeLandmarkSources){
+        $stage='LandmarkSourceCandidates';$landmarkStart=[DateTime]::UtcNow.ToString('o')
+        $landmarkSources=$reader.SampleCameraLandmarkCandidates($kernel,$game,$module,$layout,$objects,$progress)
+        $landmarkEnd=[DateTime]::UtcNow.ToString('o')
+    }
+    if(!$ProbeLandmarkSources){
     if($ProbeCameraIdentity -or $ProbeProjection){
         $stage='CameraIdentity'
         $captureStart=[DateTime]::UtcNow.ToString('o')
@@ -375,6 +383,18 @@ try {
         Record "PlayerCameraWorldRotation X=$($q[0]) Y=$($q[1]) Z=$($q[2]) W=$($q[3]) Normalized=False Source=VERIFIED_UNITY_TRANSFORM_MATH"
     }else{$failed=$true;Record "PlayerCameraDetail=$($pose.Detail)"}
     # END POSE RENDER
+    }
+    }
+    if($ProbeLandmarkSources){
+        if((Shell 'pidof com.dts.freefireth').Trim() -cne $gameProcessId){throw 'Game PID changed during source capture'}
+        $reader.Recheck($kernel,$game)
+        Record "LandmarkSourceCapture StartUtc=$landmarkStart EndUtc=$landmarkEnd TimingScope=STAGED_METHOD_INTERVAL_NOT_CAMERA_FRAME"
+        Record "LandmarkSourceCandidates Count=$($landmarkSources.Sampled) StopReason=$($landmarkSources.StopReason) MaximumObjects=2 WorldSource=VERIFIED_HEAD_TRANSFORM_MEMBERSHIP Static=UNVERIFIED ScreenAssociation=UNVERIFIED"
+        $candidateCulture=[Globalization.CultureInfo]::InvariantCulture
+        foreach($candidate in $landmarkSources.Samples){if($candidate.Status -ceq 'SAMPLED_READ_ONLY'){
+            Record "LandmarkWorldCandidate Id=roster-$($candidate.RosterIndex)-head X=$($candidate.X.ToString('R',$candidateCulture)) Y=$($candidate.Y.ToString('R',$candidateCulture)) Z=$($candidate.Z.ToString('R',$candidateCulture)) Membership=$($candidate.MembershipProof) Source=$($candidate.Source) Static=UNVERIFIED ScreenAssociation=UNVERIFIED"
+        }}
+        Record 'LandmarkValidation=PENDING MinimumIndependentPoints=4 FrameAlignment=UNVERIFIED AimWrites=NONE'
     }
     Record 'CameraSemantics ActualRenderedCamera=UNVERIFIED ShotDirection=UNVERIFIED LOS=UNVERIFIED GlobalAtomicFrame=NOT_ASSERTED FunctionsInvoked=False AimWrites=NONE'
 } catch { $failed = $true; Failure $stage $_.Exception }

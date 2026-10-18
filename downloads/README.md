@@ -14,7 +14,7 @@ Separate read-only source integration; no eight-stage prompts or saved captures.
 27 camera checks and 1028 inherited checks pass offline. Original V52 baseline
 bytes preserved. Actual rendered camera, LOS, shot direction and live aim output
 remain unverified; this new Windows reader path still needs a user capture.
-ZIP SHA-256: `ba5cc2d65bf8a7a6cccb5e86f81b4ffe6bcc2b5b73b707752381274d6aedf12e`.
+ZIP SHA-256: `80951f23e0d1f9e2c734e5bd8a3028475d3796780c1738566d88afb811fd1f8e`.
 
 ## Uploaded Phoenix DLL reference review
 
@@ -210,4 +210,6 @@ or memory writes are used; live head Transform and world-position work is pendin
 
 [projection-evidence.zip](projection-evidence.zip) bundles the unchanged V6 camera reader with before/after ADB screenshot collection and a local viewport/landmark review page. Current scope is evidence capture first; independent world-coordinate landmarks are missing, so live screen accuracy remains pending. No automatic upload, game writes or render-frame synchronization claim.
 
-SHA256: `fbdf66f20893c80f4d7058b7a1de4646b1cf8ccb1a84c9cfde2dda9199e0adbf`.
+SHA256: `1370b61af3025aa31dbf972e2e73a13db007ff855b34cc9be1c6cd164c2c0a98`.
+
+The current evidence kit additionally supports `-CollectLandmarkCandidates`: a separate V7 read-only head-coordinate source run, capped at two unassociated objects. It does not collect matching camera matrices or claim screen calibration.

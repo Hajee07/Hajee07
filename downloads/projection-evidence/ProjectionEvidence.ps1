@@ -5,7 +5,7 @@ function Get-UniqueProjectionLine([string[]]$Lines,[string]$Prefix){
 }
 function Get-ProjectionReport([string[]]$Lines){
     $version=Get-UniqueProjectionLine $Lines 'PlayerCameraProbeVersion='
-    if($version-cne 'PlayerCameraProbeVersion=6 BaseRunner=52 ReadOnly=1'){throw 'Expected V6 read-only projection report'}
+    if($version-cnotmatch '^PlayerCameraProbeVersion=(6|7) BaseRunner=52 ReadOnly=1$'){throw 'Expected pinned V6/V7 read-only report'}
     foreach($prefix in @('Preflight=','GameIdentity=','GameModuleIdentity=','GameLayoutRegistration=','LocalPlayerObjects=','PluginUnload=','HandlerCleanup=','SharedSession=')){
         $line=Get-UniqueProjectionLine $Lines $prefix
         $expected=if($prefix-ceq 'SharedSession='){'RELEASED'}else{'PASS'}
@@ -39,4 +39,34 @@ function Get-PngDimensions([byte[]]$Bytes){
     $height=[long]$Bytes[20]*16777216+[long]$Bytes[21]*65536+[long]$Bytes[22]*256+$Bytes[23]
     if($width-lt 1-or $height-lt 1-or $width-gt 16384-or $height-gt 16384){throw 'PNG dimensions outside bound'}
     [pscustomobject]@{Width=$width;Height=$height;Scope='PNG_IHDR_DIMENSIONS_ONLY'}
+}
+
+function Get-LandmarkSourceReport([string[]]$Lines){
+    $version=Get-UniqueProjectionLine $Lines 'PlayerCameraProbeVersion='
+    if($version-cne 'PlayerCameraProbeVersion=7 BaseRunner=52 ReadOnly=1'){throw 'Expected V7 independent source report'}
+    foreach($prefix in @('Preflight=','GameIdentity=','GameModuleIdentity=','GameLayoutRegistration=','LocalPlayerObjects=','PluginUnload=','HandlerCleanup=','SharedSession=')){
+        $line=Get-UniqueProjectionLine $Lines $prefix
+        $expected=if($prefix-ceq 'SharedSession='){'RELEASED'}else{'PASS'}
+        if($line -cnotmatch ('^'+[regex]::Escape($prefix+$expected)+'(?: |$)')){throw "Report gate failed: $prefix"}
+    }
+    if(@($Lines|Where-Object {$_ -cmatch '(?:^| )\w+=FAIL(?: |$)|^\w+=NOT_READY'}).Count){throw 'Failed report cannot be projection evidence'}
+
+    $capture=Get-UniqueProjectionLine $Lines 'LandmarkSourceCapture '
+    if($capture-cnotmatch '^LandmarkSourceCapture StartUtc=(\S+) EndUtc=(\S+) TimingScope=STAGED_METHOD_INTERVAL_NOT_CAMERA_FRAME$'){throw 'Missing source interval'}
+    $start=[DateTimeOffset]::Parse($Matches[1],[Globalization.CultureInfo]::InvariantCulture);$end=[DateTimeOffset]::Parse($Matches[2],[Globalization.CultureInfo]::InvariantCulture)
+    if($end-lt $start){throw 'Invalid source interval'}
+    $header=Get-UniqueProjectionLine $Lines 'LandmarkSourceCandidates '
+    if($header-cnotmatch '^LandmarkSourceCandidates Count=(\d+) StopReason=(\S+) MaximumObjects=2 '){throw 'Invalid source candidate header'}
+    $count=[int]$Matches[1];$stop=$Matches[2];if($count-gt 2){throw 'Source count exceeds bound'}
+    $points=@();$ids=[Collections.Generic.HashSet[string]]::new()
+    foreach($line in @($Lines|Where-Object {$_-clike 'LandmarkWorldCandidate *'})){
+        if($line-cnotmatch '^LandmarkWorldCandidate Id=(roster-\d+-head) X=(\S+) Y=(\S+) Z=(\S+) Membership=SELECTED_ENTRY_REVALIDATED Source=(\S+) Static=UNVERIFIED ScreenAssociation=UNVERIFIED$'){throw 'Invalid candidate record'}
+        $id=$Matches[1];$tokens=@($Matches[2],$Matches[3],$Matches[4]);$source=$Matches[5];$world=@()
+        if(!$ids.Add($id)){throw 'Duplicate candidate ID'}
+        foreach($token in $tokens){if($token-cnotmatch '^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$'){throw 'Invalid world coordinate'};$number=[double]::Parse($token,[Globalization.CultureInfo]::InvariantCulture);if([double]::IsNaN($number)-or [double]::IsInfinity($number)-or [Math]::Abs($number)-gt 1e7){throw 'World coordinate out of bounds'};$world+=,$number}
+        $points+=,[pscustomobject]@{Id=$id;World=$world;Source=$source;Membership='SELECTED_ENTRY_REVALIDATED';Static='UNVERIFIED';ScreenAssociation='UNVERIFIED'}
+    }
+    if($points.Count-ne $count){throw 'Candidate count differs from records'}
+    $game=Get-UniqueProjectionLine $Lines 'GameIdentity=';if($game-cnotmatch ' GuestPID=(\d+) '){throw 'Missing game identity'}
+    [pscustomobject]@{Status='INDEPENDENT_WORLD_SOURCE_CANDIDATES_ONLY';GuestPID=[long]$Matches[1];StartUtc=$start.ToString('o');EndUtc=$end.ToString('o');Candidates=$points;StopReason=$stop;CameraMatrices='NOT_CAPTURED_IN_SOURCE_MODE';FrameAlignment='UNVERIFIED';Static='UNVERIFIED';ScreenAssociation='UNVERIFIED'}
 }

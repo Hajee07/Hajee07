@@ -10,9 +10,9 @@ Keep the spawned Free Fire Training scene/camera stationary, and use 64-bit Admi
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Capture-ProjectionEvidence.ps1
 ```
 
-The download ZIP includes the unchanged checksum-pinned V6 camera package under camera/. No Python, Node, extra Windows SDK, new DLL or downloaded third-party DLL is needed for capture/review. The default ADB path is C:\Program Files\BlueStacks_nxt\HD-Adb.exe and endpoint is 127.0.0.1:5555. Pass -AdbPath / -Device only if your existing installation differs. The V6 runner retains all its build, identity, source, budget and cleanup checks.
+The download ZIP includes the checksum-pinned V7 camera extension with 124 unchanged V52 baseline files under camera/. No Python, Node, extra Windows SDK, new DLL or downloaded third-party DLL is needed for capture/review. The default ADB path is C:\Program Files\BlueStacks_nxt\HD-Adb.exe and endpoint is 127.0.0.1:5555. Pass -AdbPath / -Device only if your existing installation differs. The V7 runner retains all its build, identity, source, budget and cleanup checks.
 
-The helper connects to the existing local ADB endpoint, requires Free Fire running, captures a guest PNG, runs one V6 projection probe, and captures a second PNG. Binary screenshot transport uses exec-out, not PowerShell text redirection. ADB requests time out; PNG header dimensions and <=32 MiB size are checked. PNG header checks do not constitute a full image decode; the review page also requires the browser to decode the image.
+The helper connects to the existing local ADB endpoint, requires Free Fire running, captures a guest PNG, runs one projection probe, and captures a second PNG. Binary screenshot transport uses exec-out, not PowerShell text redirection. ADB requests time out; PNG header dimensions and <=32 MiB size are checked. PNG header checks do not constitute a full image decode; the review page also requires the browser to decode the image.
 
 Both screenshots and the report are hashed. Successful ready-report parsing, stable guest PID, stable image dimensions and report-method interval within child invocation are required. Changed PID/dimensions or an unready report produces INCOMPLETE_CAPTURE with no accepted matrix object. Files are retained for troubleshooting. Transport/preflight failures can leave a partial output folder; do not treat it as a completed bundle.
 
@@ -43,7 +43,7 @@ These screenshot requests bracket a multi-read memory probe; they are not atomic
 - Simulated DOM tests exercise natural-pixel canvas scaling, viewport export, manual landmark comparison and stale-result suppression. They are not a real-browser test.
 - The actual user-uploaded V6 report parses successfully as saved-report data. Windows screenshot capture and browser interaction on the user's laptop are pending.
 
-Developers can run test-core.js / test-review-ui.js with Node, and Test-ProjectionEvidence.ps1 / Test-CaptureOrchestration.ps1 with PowerShell 7. These test tools are not needed for the Windows capture command. No game getters/resolvers are called and no game memory is written by the new helper; the unchanged V6 reader performs its existing read-only diagnostics.
+Developers can run test-core.js / test-review-ui.js with Node, and Test-ProjectionEvidence.ps1 / Test-CaptureOrchestration.ps1 with PowerShell 7. These test tools are not needed for the Windows capture command. No game getters/resolvers are called and no game memory is written by the new helper; the bundled reader performs its existing read-only diagnostics.
 
 ## Screenshot metadata recovery (v2 helper)
 
@@ -59,7 +59,7 @@ Recovery supports only the saved Schema 1 Width-metadata failure. It checks orig
 
 A new sibling folder/ZIP is created; original metadata is copied as original-evidence.json. Original source files are retained unchanged. Status becomes PENDING_LANDMARKS only if all saved-file checks pass. Render-frame alignment, camera authority and actual viewport remain unverified. If saved metadata cannot be recovered, retain/share the original evidence ZIP for diagnosis instead of editing it or forcing a success status.
 
-Seven host recovery/regression checks pass (valid recovery, ambiguous metadata, bad timing, unknown object, different failure, modified image, awaiter leakage suppression). The unchanged V6 package is still bundled. Windows saved-file recovery execution is pending.
+Seven host recovery/regression checks pass (valid recovery, ambiguous metadata, bad timing, unknown object, different failure, modified image, awaiter leakage suppression). The source-mode update now bundles V7; the original V52 baseline remains unchanged. Windows saved-file recovery execution is pending.
 
 ## V3 recovery: Windows PowerShell 5 JSON root arrays
 
@@ -68,3 +68,18 @@ A subsequent user run stopped at the original evidence.json integrity check. The
 Recovery now assigns decoded JSON first, explicitly enumerates and validates scalar manifest records, requires exactly one entry per critical file, and compares the actual SHA256 against that entry's scalar digest. A genuine mismatch still stops recovery and reports Expected and Actual hashes. Nothing is rehashed into the old manifest to make a mismatch pass. Original files remain untouched.
 
 Nine saved-file/awaiter checks pass under both current and emulated Windows PowerShell 5 root-array behavior. Added cases reject modified evidence.json bytes and duplicate manifest entries. Legacy-mode tests also reproduce the old nested-array comparison. The actual Windows 5 updated recovery run remains pending; no compatibility claim is based on PowerShell 7 alone.
+
+
+## Helper V4: collect independent source candidates first
+
+The next research gate is independent world-coordinate evidence. Run the helper with `-CollectLandmarkCandidates` to bracket one V7 source-only probe with fresh screenshots. It does not repeat viewport measurement or pretend the supplied old matrix report belongs to the new scene/time.
+
+```
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Capture-ProjectionEvidence.ps1 -CollectLandmarkCandidates
+```
+
+When candidates are obtained, evidence.json is labeled PENDING_CAMERA_AND_LANDMARK_ASSOCIATION, Matrices is null, and world-candidates.json contains up to two independently read object-head world positions. A source with zero points yields SOURCE_CANDIDATES_UNAVAILABLE. An unready/failed transport or identity check still produces INCOMPLETE_CAPTURE. These statuses are not reprojection success.
+
+Do not load the two-point candidate file as if it were four independently identified static landmarks. The comparison page retains its four-point requirement and requires a ready camera report. New world candidates are not automatically merged with old camera matrices. The existing visual viewport candidate was [0,0,2560,1440], but that is not forced onto a new screenshot. Object identity in the image, stationarity, additional independent points and a compatible camera/frame observation remain pending. Share the newly generated ZIP for source inspection first.
+
+Host source parser checks reject duplicates, count disagreements, nonfinite coordinates, missing membership, invalid timing and excess points. A mocked candidate capture verifies that world points are saved without fabricating matrix data. Actual Windows source-mode execution is pending.

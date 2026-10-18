@@ -1,5 +1,5 @@
 {
-  "scope": "PLAYER_POSE_IDENTITY_AND_CLEAN_OR_DERIVED_VIEW_RENDER_AND_AIM_UNVERIFIED",
+  "scope": "CAMERA_DIAGNOSTICS_OR_INDEPENDENT_HEAD_SOURCE_CANDIDATES_RENDER_AUTHORITY_UNVERIFIED",
   "baseline_version": 52,
   "baseline_archive_sha256": "9e4ce6fbebf42e5e8398cc1dc7deb6ff238aa7760a82cb3bc0ea712ee5ef3279",
   "files": [
@@ -45,8 +45,8 @@
     },
     {
       "name": "PlayerCameraProbe.cs",
-      "bytes": 28449,
-      "sha256": "4350cd96790de3676cf54f8d40176c644de268c1ca149b26564ebe4ee75f3695"
+      "bytes": 30377,
+      "sha256": "45045cf7d7caa7927e2fc4b2285b32434186c8b7d3433a63e3f53fcad6f5eaca"
     },
     {
       "name": "PlayerCameraReference.cs",
@@ -55,8 +55,8 @@
     },
     {
       "name": "PlayerCameraTests.cs",
-      "bytes": 119433,
-      "sha256": "8ffd8189b1a3eb8c2fafb70b56e857d439b1c58795e07cc3625465b692f0d17e"
+      "bytes": 121098,
+      "sha256": "7c0bcffad7d1782676e288e1c6d90752971442e04b5468cec3c0aecaee034e36"
     },
     {
       "name": "PlayerProjectionReference.cs",
@@ -65,8 +65,8 @@
     },
     {
       "name": "README.md",
-      "bytes": 24697,
-      "sha256": "56820031c15e8a20f04d1713887f3880dbc10d6c17b24ffd20f131a073b6d7ed"
+      "bytes": 26500,
+      "sha256": "6aa8aeb22d403c4383b980dcec49081651d0c9cbb0f8dbae91ea12d149a0a5ff"
     },
     {
       "name": "Run-CameraComparison.ps1",
@@ -75,13 +75,13 @@
     },
     {
       "name": "Run-Checks.ps1",
-      "bytes": 1626,
-      "sha256": "ff3f51d45b8e615b8f514cb65b3b1b90b6ac6c3e16d333be5bcff75844f54753"
+      "bytes": 1698,
+      "sha256": "9eb9b87c27cc1b9c4049ea09a6d2153432336d518c2de52c5335798be1a2d8cb"
     },
     {
       "name": "Run-PlayerCamera.ps1",
-      "bytes": 31350,
-      "sha256": "a78d7d5c8391574c7549a7f6f803b9b9ccf67ba34e40c15229f65c6f932c517d"
+      "bytes": 33077,
+      "sha256": "916989df38e01b3d8eaac935ca513c7e122bcdcfc5fc26567832f32dc371a861"
     },
     {
       "name": "Test-CameraComparison.ps1",
@@ -154,6 +154,11 @@
       "sha256": "7dfedc702e7c7c41c2777a52a5563ad937315516b650521c14f73cfd7814026e"
     },
     {
+      "name": "evidence/landmark-source-checks.txt",
+      "bytes": 14686,
+      "sha256": "cf0fc6b1d421ef4905d6104b579dd47ec74db7c1b66f89f9315854860b20acde"
+    },
+    {
       "name": "evidence/latest-transcript-assessment.json",
       "bytes": 3974,
       "sha256": "13d217e4da1c8f308a0776ddb342ea2e5636183dab0173dba0a24df4febe4b6b"
@@ -219,5 +224,5 @@
       "sha256": "49d138c651b50edbaba3804c6879f45aa6c24c18148769422db98123a63445a2"
     }
   ],
-  "probe_version": 6
+  "probe_version": 7
 }
