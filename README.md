@@ -15,3 +15,9 @@ SHA-256: `5e0c1fdca3e05d2c48de5c088542ee737a55059b27cf92aee3aae872561a6488`
 [Download the 51-function Python package](python-buttons/NX-Recovered-Python-Buttons.zip), including individual control files, button IDs, recovered-source references and validation results.
 
 [Single Python file](python-buttons/all_functions.py). The translated menu dispatcher matched the supplied recovered ARM binary in 464 bounded emulation cases. Full protected Java/game-side feature implementations remain unrecovered, and live gameplay has not been verified.
+
+## ZYREN branded binary rebuild
+
+[Download ZYREN APK](zyren/ZYREN-rebuilt.apk) · [Recovered files and rebuild recipe](zyren/ZYREN-Recovered-Files.zip) · [Status and limitations](zyren/README.md).
+
+All 159 original packaged files are preserved in the recovery archive. The branded APK passed structural/signature checks and repeat builds; protected MainActivity/Menu source remains unrecovered, and successful Android startup/gameplay has not been verified.
