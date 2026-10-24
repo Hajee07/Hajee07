@@ -233,6 +233,30 @@ class HDPlayerInfo:
     threads:int
     name:str
 
+USER_REPORTED_BLUESTACKS_VERSION = '5.22.125.1001'
+
+def _windows_file_version(path):
+    """Read PE file-version metadata on Windows; it does not establish an ABI/memory map."""
+    if os.name!='nt':return None
+    api=ctypes.WinDLL('version.dll',use_last_error=True,winmode=0x800)
+    api.GetFileVersionInfoSizeW.argtypes=[ctypes.c_wchar_p,ctypes.POINTER(_DWORD)]
+    api.GetFileVersionInfoSizeW.restype=_DWORD
+    api.GetFileVersionInfoW.argtypes=[ctypes.c_wchar_p,_DWORD,_DWORD,_PTR]
+    api.GetFileVersionInfoW.restype=ctypes.c_int
+    api.VerQueryValueW.argtypes=[_PTR,ctypes.c_wchar_p,ctypes.POINTER(_PTR),ctypes.POINTER(_DWORD)]
+    api.VerQueryValueW.restype=ctypes.c_int
+    unused=_DWORD();size=api.GetFileVersionInfoSizeW(path,ctypes.byref(unused))
+    if not size:return None
+    data=ctypes.create_string_buffer(size)
+    if not api.GetFileVersionInfoW(path,0,size,data):return None
+    fixed=_PTR();length=_DWORD()
+    if not api.VerQueryValueW(data,'\\',ctypes.byref(fixed),ctypes.byref(length)):return None
+    if length.value<52 or not fixed.value:return None
+    fields=struct.unpack('<13I',ctypes.string_at(fixed.value,52))
+    if fields[0]!=0xfeef04bd:return None
+    ms,ls=fields[2:4]
+    return '.'.join(str(x) for x in (ms>>16,ms&65535,ls>>16,ls&65535))
+
 class _WindowsAPI:
     def __init__(self):
         if os.name!='nt':raise OSError('HD-Player connection requires Windows; run this file on the emulator host')
@@ -374,7 +398,16 @@ def main(argv=None):
             with HDPlayerProcess.attach(args.pid) as target:
                 result={'attached':True,'pid':target.pid,'image':target.image_path,'process_running':target.is_running(),
                         'access':'query/read','native_game_backend_connected':False}
-                if args.modules:result['windows_modules']=target.modules()
+                try:
+                    version=_windows_file_version(target.image_path)
+                    result['detected_exe_file_version']=version
+                    result['user_reported_bluestacks_version']=USER_REPORTED_BLUESTACKS_VERSION
+                    result['exe_file_version_matches_reported']=(version==USER_REPORTED_BLUESTACKS_VERSION) if version else None
+                except OSError as error:result['version_metadata_error']=str(error)
+                if args.modules:
+                    result['windows_modules']=target.modules()
+                    result['bstkvmm_loaded']=any(x['name'].casefold()=='bstkvmm.dll' for x in result['windows_modules'])
+                    result['unresolved_native_dependencies']=['runtime VM/CPU context','guest address translation bridge','native cached player/camera state','rotation helper and engine-write callback']
                 print(json.dumps(result,indent=2))
             return 0
         print(__doc__);parser.print_help();return 0

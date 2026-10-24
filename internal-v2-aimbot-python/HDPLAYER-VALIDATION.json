@@ -1,5 +1,5 @@
 {
-  "checks_passed": 12,
+  "checks_passed": 16,
   "checks": [
     "Windows x64 Toolhelp structure sizes568/1080",
     "Exact HD-Player match and snapshot handle closure",
@@ -12,7 +12,11 @@
     "PID reuse/different process rejected and handle closed",
     "Already-exited target rejected",
     "Access-denied preserved as an error",
-    "Unsupported host fails explicitly"
+    "Unsupported host fails explicitly",
+    "File-version DWORD decoding for5.22.125.1001",
+    "Missing file-version resource returns unknown",
+    "Truncated version resource rejected",
+    "Invalid version signature rejected"
   ],
   "scope": "Portable Windows structure checks and injected WinAPI mocks; no live HD-Player, Windows API or game was contacted.",
   "live_Windows_tested": false,
