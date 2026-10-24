@@ -1,0 +1,9 @@
+{
+  "packaged_recipe_build_completed": true,
+  "input_exe_sha256": "fb70eb9987a6a2f8a728b0eb8664c39458eafe2b566035f71808edfee4c065a0",
+  "reproduced_engine_payload_matches": true,
+  "reproduced_EXE_sha256": "7feb5b2ec0fcd37fcad40c0454a4b5a45de0da4dec02b41f6e572f9410af397a",
+  "release_EXE_sha256": "8bf21d30105db28aab6a72c98ffa991ab5504f74a26df5caeb61610b55443e44",
+  "reproduced_proxy_sha256": "eff73b5b62a39af6ae8004208335887e68ec7135e0877b20573537b7fe8b9643",
+  "Windows_execution_tested": false
+}

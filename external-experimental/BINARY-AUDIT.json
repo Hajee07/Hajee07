@@ -1,0 +1,3208 @@
+{
+  "components": [
+    {
+      "file": "NOVA-External-Experimental.exe",
+      "bytes": 28900352,
+      "sha256": "8bf21d30105db28aab6a72c98ffa991ab5504f74a26df5caeb61610b55443e44",
+      "imports": [
+        {
+          "dll": "bcrypt.dll",
+          "name": "BCryptCloseAlgorithmProvider"
+        },
+        {
+          "dll": "bcrypt.dll",
+          "name": "BCryptCreateHash"
+        },
+        {
+          "dll": "bcrypt.dll",
+          "name": "BCryptDestroyHash"
+        },
+        {
+          "dll": "bcrypt.dll",
+          "name": "BCryptFinishHash"
+        },
+        {
+          "dll": "bcrypt.dll",
+          "name": "BCryptGetProperty"
+        },
+        {
+          "dll": "bcrypt.dll",
+          "name": "BCryptHashData"
+        },
+        {
+          "dll": "bcrypt.dll",
+          "name": "BCryptOpenAlgorithmProvider"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "MessageBoxA"
+        },
+        {
+          "dll": "api-ms-win-crt-convert-l1-1-0.dll",
+          "name": "strtoul"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "_set_new_mode"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "calloc"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "free"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "malloc"
+        },
+        {
+          "dll": "api-ms-win-crt-private-l1-1-0.dll",
+          "name": "__C_specific_handler"
+        },
+        {
+          "dll": "api-ms-win-crt-private-l1-1-0.dll",
+          "name": "wcsrchr"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "__p___argc"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "__p___argv"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "__p___wargv"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_cexit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_configure_narrow_argv"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_configure_wide_argv"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_crt_at_quick_exit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_crt_atexit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_errno"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_exit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_fpreset"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initialize_narrow_environment"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initialize_wide_environment"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initterm"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_set_app_type"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_set_invalid_parameter_handler"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "abort"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "exit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "signal"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__acrt_iob_func"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__p__commode"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__p__fmode"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__stdio_common_vfprintf"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__stdio_common_vfwprintf"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__stdio_common_vsprintf"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__stdio_common_vswprintf"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fwrite"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "puts"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "setvbuf"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "_wcsicmp"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strlen"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strncmp"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "wcsncpy"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "CloseHandle"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "CreateDirectoryW"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "CreateFileW"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "CreateToolhelp32Snapshot"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "DeleteCriticalSection"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "EnterCriticalSection"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetCurrentProcessId"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetLastError"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetProcAddress"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetTempPathW"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetTickCount64"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "InitializeCriticalSection"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "LeaveCriticalSection"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "LoadLibraryExW"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "Module32FirstW"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "Module32NextW"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "Process32FirstW"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "Process32NextW"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "ReadFile"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "SetCurrentDirectoryW"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "SetDllDirectoryW"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "SetUnhandledExceptionFilter"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "Sleep"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "TlsGetValue"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "VirtualProtect"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "VirtualQuery"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "WriteFile"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "__setusermatherr"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "frexp"
+        },
+        {
+          "dll": "api-ms-win-crt-environment-l1-1-0.dll",
+          "name": "__p__environ"
+        },
+        {
+          "dll": "api-ms-win-crt-environment-l1-1-0.dll",
+          "name": "__p__wenviron"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "__daylight"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "__timezone"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "__tzname"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "_tzset"
+        }
+      ],
+      "exports": {},
+      "forbidden_injection_imports_found": []
+    },
+    {
+      "file": "BstkVMM.dll",
+      "bytes": 161280,
+      "sha256": "f3d3d2258f3dd5f02f8d822103a57c2749218b13313ce597c33a4aeace3fd34d",
+      "imports": [
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "_set_new_mode"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "calloc"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "free"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "malloc"
+        },
+        {
+          "dll": "api-ms-win-crt-private-l1-1-0.dll",
+          "name": "strrchr"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "__p___argc"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "__p___argv"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "__p___wargv"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_configure_narrow_argv"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_configure_wide_argv"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_crt_at_quick_exit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_crt_atexit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_execute_onexit_table"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_exit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initialize_narrow_environment"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initialize_onexit_table"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initialize_wide_environment"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initterm"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_register_onexit_function"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "abort"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "_stricmp"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strcmp"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strlen"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strncmp"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "CloseHandle"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "CreateThread"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "DeleteCriticalSection"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "EnterCriticalSection"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetCurrentProcessId"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetLastError"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetModuleHandleA"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetProcAddress"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetProcessIdOfThread"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetSystemInfo"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "GetTickCount64"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "InitializeCriticalSection"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "LeaveCriticalSection"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "OpenProcess"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "OpenThread"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "QueryFullProcessImageNameA"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "ReadProcessMemory"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "SetLastError"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "Sleep"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "TlsGetValue"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "VirtualProtect"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "VirtualQuery"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "VirtualQueryEx"
+        },
+        {
+          "dll": "KERNEL32.dll",
+          "name": "WriteProcessMemory"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__acrt_iob_func"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__stdio_common_vfprintf"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__stdio_common_vfwprintf"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fwrite"
+        },
+        {
+          "dll": "api-ms-win-crt-environment-l1-1-0.dll",
+          "name": "__p__environ"
+        },
+        {
+          "dll": "api-ms-win-crt-environment-l1-1-0.dll",
+          "name": "__p__wenviron"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "__daylight"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "__timezone"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "__tzname"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "_tzset"
+        }
+      ],
+      "exports": {
+        "AcquireSRWLockExclusive": {
+          "rva": "0x251bd",
+          "forwarder": "KERNEL32.AcquireSRWLockExclusive"
+        },
+        "AddVectoredExceptionHandler": {
+          "rva": "0x251de",
+          "forwarder": "KERNEL32.AddVectoredExceptionHandler"
+        },
+        "AreFileApisANSI": {
+          "rva": "0x25203",
+          "forwarder": "KERNEL32.AreFileApisANSI"
+        },
+        "CloseHandle": {
+          "rva": "0x2521c",
+          "forwarder": "KERNEL32.CloseHandle"
+        },
+        "CreateDirectoryA": {
+          "rva": "0x25231",
+          "forwarder": "KERNEL32.CreateDirectoryA"
+        },
+        "CreateDirectoryW": {
+          "rva": "0x2524b",
+          "forwarder": "KERNEL32.CreateDirectoryW"
+        },
+        "CreateFileA": {
+          "rva": "0x25265",
+          "forwarder": "KERNEL32.CreateFileA"
+        },
+        "CreateFileMappingA": {
+          "rva": "0x2527a",
+          "forwarder": "KERNEL32.CreateFileMappingA"
+        },
+        "CreateFileMappingW": {
+          "rva": "0x25296",
+          "forwarder": "KERNEL32.CreateFileMappingW"
+        },
+        "CreateFileW": {
+          "rva": "0x252b2",
+          "forwarder": "KERNEL32.CreateFileW"
+        },
+        "CreatePipe": {
+          "rva": "0x252c7",
+          "forwarder": "KERNEL32.CreatePipe"
+        },
+        "CreateProcessA": {
+          "rva": "0x252db",
+          "forwarder": "KERNEL32.CreateProcessA"
+        },
+        "CreateThread": {
+          "rva": "0x252f3",
+          "forwarder": "KERNEL32.CreateThread"
+        },
+        "CreateToolhelp32Snapshot": {
+          "rva": "0x25309",
+          "forwarder": "KERNEL32.CreateToolhelp32Snapshot"
+        },
+        "DeleteCriticalSection": {
+          "rva": "0x2532b",
+          "forwarder": "KERNEL32.DeleteCriticalSection"
+        },
+        "DisableThreadLibraryCalls": {
+          "rva": "0x2534a",
+          "forwarder": "KERNEL32.DisableThreadLibraryCalls"
+        },
+        "EnterCriticalSection": {
+          "rva": "0x2536d",
+          "forwarder": "KERNEL32.EnterCriticalSection"
+        },
+        "FindClose": {
+          "rva": "0x2538b",
+          "forwarder": "KERNEL32.FindClose"
+        },
+        "FindFirstFileW": {
+          "rva": "0x2539e",
+          "forwarder": "KERNEL32.FindFirstFileW"
+        },
+        "FlushInstructionCache": {
+          "rva": "0x253b6",
+          "forwarder": "KERNEL32.FlushInstructionCache"
+        },
+        "FormatMessageA": {
+          "rva": "0x253d5",
+          "forwarder": "KERNEL32.FormatMessageA"
+        },
+        "FormatMessageW": {
+          "rva": "0x253ed",
+          "forwarder": "KERNEL32.FormatMessageW"
+        },
+        "FreeConsole": {
+          "rva": "0x25405",
+          "forwarder": "KERNEL32.FreeConsole"
+        },
+        "FreeLibrary": {
+          "rva": "0x2541a",
+          "forwarder": "KERNEL32.FreeLibrary"
+        },
+        "FreeLibraryAndExitThread": {
+          "rva": "0x2542f",
+          "forwarder": "KERNEL32.FreeLibraryAndExitThread"
+        },
+        "GetCurrentDirectoryW": {
+          "rva": "0x25451",
+          "forwarder": "KERNEL32.GetCurrentDirectoryW"
+        },
+        "GetCurrentProcess": {
+          "rva": "0x2546f",
+          "forwarder": "KERNEL32.GetCurrentProcess"
+        },
+        "GetCurrentProcessId": {
+          "rva": "0x2548a",
+          "forwarder": "KERNEL32.GetCurrentProcessId"
+        },
+        "GetCurrentThreadId": {
+          "rva": "0x254a7",
+          "forwarder": "KERNEL32.GetCurrentThreadId"
+        },
+        "GetEnvironmentVariableA": {
+          "rva": "0x254c3",
+          "forwarder": "KERNEL32.GetEnvironmentVariableA"
+        },
+        "GetExitCodeProcess": {
+          "rva": "0x254e4",
+          "forwarder": "KERNEL32.GetExitCodeProcess"
+        },
+        "GetFileAttributesA": {
+          "rva": "0x25500",
+          "forwarder": "KERNEL32.GetFileAttributesA"
+        },
+        "GetFileAttributesExW": {
+          "rva": "0x2551c",
+          "forwarder": "KERNEL32.GetFileAttributesExW"
+        },
+        "GetFileAttributesW": {
+          "rva": "0x2553a",
+          "forwarder": "KERNEL32.GetFileAttributesW"
+        },
+        "GetFileInformationByHandleEx": {
+          "rva": "0x25556",
+          "forwarder": "KERNEL32.GetFileInformationByHandleEx"
+        },
+        "GetFileSizeEx": {
+          "rva": "0x2557c",
+          "forwarder": "KERNEL32.GetFileSizeEx"
+        },
+        "GetFileType": {
+          "rva": "0x25593",
+          "forwarder": "KERNEL32.GetFileType"
+        },
+        "GetLastError": {
+          "rva": "0x255a8",
+          "forwarder": "KERNEL32.GetLastError"
+        },
+        "GetLocaleInfoA": {
+          "rva": "0x255be",
+          "forwarder": "KERNEL32.GetLocaleInfoA"
+        },
+        "GetLocaleInfoEx": {
+          "rva": "0x255d6",
+          "forwarder": "KERNEL32.GetLocaleInfoEx"
+        },
+        "GetModuleFileNameA": {
+          "rva": "0x255ef",
+          "forwarder": "KERNEL32.GetModuleFileNameA"
+        },
+        "GetModuleFileNameW": {
+          "rva": "0x2560b",
+          "forwarder": "KERNEL32.GetModuleFileNameW"
+        },
+        "GetModuleHandleA": {
+          "rva": "0x25627",
+          "forwarder": "KERNEL32.GetModuleHandleA"
+        },
+        "GetModuleHandleW": {
+          "rva": "0x25641",
+          "forwarder": "KERNEL32.GetModuleHandleW"
+        },
+        "GetProcAddress": {
+          "rva": "0x10b0",
+          "forwarder": null
+        },
+        "GetProcessHeap": {
+          "rva": "0x2565b",
+          "forwarder": "KERNEL32.GetProcessHeap"
+        },
+        "GetStdHandle": {
+          "rva": "0x25673",
+          "forwarder": "KERNEL32.GetStdHandle"
+        },
+        "GetSystemDirectoryW": {
+          "rva": "0x25689",
+          "forwarder": "KERNEL32.GetSystemDirectoryW"
+        },
+        "GetSystemInfo": {
+          "rva": "0x256a6",
+          "forwarder": "KERNEL32.GetSystemInfo"
+        },
+        "GetSystemTimeAsFileTime": {
+          "rva": "0x256bd",
+          "forwarder": "KERNEL32.GetSystemTimeAsFileTime"
+        },
+        "GetThreadContext": {
+          "rva": "0x256de",
+          "forwarder": "KERNEL32.GetThreadContext"
+        },
+        "GetTickCount": {
+          "rva": "0x256f8",
+          "forwarder": "KERNEL32.GetTickCount"
+        },
+        "GlobalAlloc": {
+          "rva": "0x2570e",
+          "forwarder": "KERNEL32.GlobalAlloc"
+        },
+        "GlobalFree": {
+          "rva": "0x25723",
+          "forwarder": "KERNEL32.GlobalFree"
+        },
+        "GlobalLock": {
+          "rva": "0x25737",
+          "forwarder": "KERNEL32.GlobalLock"
+        },
+        "GlobalUnlock": {
+          "rva": "0x2574b",
+          "forwarder": "KERNEL32.GlobalUnlock"
+        },
+        "HeapAlloc": {
+          "rva": "0x25761",
+          "forwarder": "KERNEL32.HeapAlloc"
+        },
+        "HeapCreate": {
+          "rva": "0x25774",
+          "forwarder": "KERNEL32.HeapCreate"
+        },
+        "HeapDestroy": {
+          "rva": "0x25788",
+          "forwarder": "KERNEL32.HeapDestroy"
+        },
+        "HeapFree": {
+          "rva": "0x2579d",
+          "forwarder": "KERNEL32.HeapFree"
+        },
+        "HeapReAlloc": {
+          "rva": "0x257af",
+          "forwarder": "KERNEL32.HeapReAlloc"
+        },
+        "HeapSize": {
+          "rva": "0x257c4",
+          "forwarder": "KERNEL32.HeapSize"
+        },
+        "InitOnceBeginInitialize": {
+          "rva": "0x257d6",
+          "forwarder": "KERNEL32.InitOnceBeginInitialize"
+        },
+        "InitOnceComplete": {
+          "rva": "0x257f7",
+          "forwarder": "KERNEL32.InitOnceComplete"
+        },
+        "InitializeCriticalSection": {
+          "rva": "0x25811",
+          "forwarder": "KERNEL32.InitializeCriticalSection"
+        },
+        "InitializeCriticalSectionEx": {
+          "rva": "0x25834",
+          "forwarder": "KERNEL32.InitializeCriticalSectionEx"
+        },
+        "InitializeSListHead": {
+          "rva": "0x25859",
+          "forwarder": "KERNEL32.InitializeSListHead"
+        },
+        "IsDebuggerPresent": {
+          "rva": "0x25876",
+          "forwarder": "KERNEL32.IsDebuggerPresent"
+        },
+        "IsProcessorFeaturePresent": {
+          "rva": "0x25891",
+          "forwarder": "KERNEL32.IsProcessorFeaturePresent"
+        },
+        "LeaveCriticalSection": {
+          "rva": "0x258b4",
+          "forwarder": "KERNEL32.LeaveCriticalSection"
+        },
+        "LoadLibraryA": {
+          "rva": "0x258d2",
+          "forwarder": "KERNEL32.LoadLibraryA"
+        },
+        "LoadLibraryW": {
+          "rva": "0x258e8",
+          "forwarder": "KERNEL32.LoadLibraryW"
+        },
+        "LocalFree": {
+          "rva": "0x258fe",
+          "forwarder": "KERNEL32.LocalFree"
+        },
+        "MapViewOfFile": {
+          "rva": "0x25911",
+          "forwarder": "KERNEL32.MapViewOfFile"
+        },
+        "MoveFileExW": {
+          "rva": "0x25928",
+          "forwarder": "KERNEL32.MoveFileExW"
+        },
+        "MultiByteToWideChar": {
+          "rva": "0x2593d",
+          "forwarder": "KERNEL32.MultiByteToWideChar"
+        },
+        "NovaGetVM": {
+          "rva": "0x1c60",
+          "forwarder": null
+        },
+        "NovaInitialize": {
+          "rva": "0x1530",
+          "forwarder": null
+        },
+        "NovaStats": {
+          "rva": "0x1c70",
+          "forwarder": null
+        },
+        "OpenProcess": {
+          "rva": "0x1000",
+          "forwarder": null
+        },
+        "OpenThread": {
+          "rva": "0x1060",
+          "forwarder": null
+        },
+        "OutputDebugStringA": {
+          "rva": "0x2595a",
+          "forwarder": "KERNEL32.OutputDebugStringA"
+        },
+        "OutputDebugStringW": {
+          "rva": "0x25976",
+          "forwarder": "KERNEL32.OutputDebugStringW"
+        },
+        "PGMPhysGCPtr2GCPhys": {
+          "rva": "0x1260",
+          "forwarder": null
+        },
+        "PGMPhysRead": {
+          "rva": "0x12d0",
+          "forwarder": null
+        },
+        "PGMPhysSimpleWriteGCPhys": {
+          "rva": "0x13b0",
+          "forwarder": null
+        },
+        "PeekNamedPipe": {
+          "rva": "0x25992",
+          "forwarder": "KERNEL32.PeekNamedPipe"
+        },
+        "Process32FirstW": {
+          "rva": "0x259a9",
+          "forwarder": "KERNEL32.Process32FirstW"
+        },
+        "Process32NextW": {
+          "rva": "0x259c2",
+          "forwarder": "KERNEL32.Process32NextW"
+        },
+        "QueryFullProcessImageNameA": {
+          "rva": "0x259da",
+          "forwarder": "KERNEL32.QueryFullProcessImageNameA"
+        },
+        "QueryFullProcessImageNameW": {
+          "rva": "0x259fe",
+          "forwarder": "KERNEL32.QueryFullProcessImageNameW"
+        },
+        "QueryPerformanceCounter": {
+          "rva": "0x25a22",
+          "forwarder": "KERNEL32.QueryPerformanceCounter"
+        },
+        "QueryPerformanceFrequency": {
+          "rva": "0x25a43",
+          "forwarder": "KERNEL32.QueryPerformanceFrequency"
+        },
+        "ReadFile": {
+          "rva": "0x25a66",
+          "forwarder": "KERNEL32.ReadFile"
+        },
+        "ReadProcessMemory": {
+          "rva": "0x25a78",
+          "forwarder": "KERNEL32.ReadProcessMemory"
+        },
+        "ReleaseSRWLockExclusive": {
+          "rva": "0x25a93",
+          "forwarder": "KERNEL32.ReleaseSRWLockExclusive"
+        },
+        "ResumeThread": {
+          "rva": "0x25ab4",
+          "forwarder": "KERNEL32.ResumeThread"
+        },
+        "SetCurrentDirectoryA": {
+          "rva": "0x25aca",
+          "forwarder": "KERNEL32.SetCurrentDirectoryA"
+        },
+        "SetFileInformationByHandle": {
+          "rva": "0x25ae8",
+          "forwarder": "KERNEL32.SetFileInformationByHandle"
+        },
+        "SetHandleInformation": {
+          "rva": "0x25b0c",
+          "forwarder": "KERNEL32.SetHandleInformation"
+        },
+        "SetLastError": {
+          "rva": "0x25b2a",
+          "forwarder": "KERNEL32.SetLastError"
+        },
+        "SetPriorityClass": {
+          "rva": "0x25b40",
+          "forwarder": "KERNEL32.SetPriorityClass"
+        },
+        "SetThreadContext": {
+          "rva": "0x25b5a",
+          "forwarder": "KERNEL32.SetThreadContext"
+        },
+        "SetUnhandledExceptionFilter": {
+          "rva": "0x25b74",
+          "forwarder": "KERNEL32.SetUnhandledExceptionFilter"
+        },
+        "Sleep": {
+          "rva": "0x25b99",
+          "forwarder": "KERNEL32.Sleep"
+        },
+        "SleepConditionVariableSRW": {
+          "rva": "0x25ba8",
+          "forwarder": "KERNEL32.SleepConditionVariableSRW"
+        },
+        "SleepEx": {
+          "rva": "0x25bcb",
+          "forwarder": "KERNEL32.SleepEx"
+        },
+        "SuspendThread": {
+          "rva": "0x25bdc",
+          "forwarder": "KERNEL32.SuspendThread"
+        },
+        "TerminateProcess": {
+          "rva": "0x25bf3",
+          "forwarder": "KERNEL32.TerminateProcess"
+        },
+        "Thread32First": {
+          "rva": "0x25c0d",
+          "forwarder": "KERNEL32.Thread32First"
+        },
+        "Thread32Next": {
+          "rva": "0x25c24",
+          "forwarder": "KERNEL32.Thread32Next"
+        },
+        "UnhandledExceptionFilter": {
+          "rva": "0x25c3a",
+          "forwarder": "KERNEL32.UnhandledExceptionFilter"
+        },
+        "UnmapViewOfFile": {
+          "rva": "0x25c5c",
+          "forwarder": "KERNEL32.UnmapViewOfFile"
+        },
+        "VMMGetCpuById": {
+          "rva": "0x1230",
+          "forwarder": null
+        },
+        "VerSetConditionMask": {
+          "rva": "0x25c75",
+          "forwarder": "KERNEL32.VerSetConditionMask"
+        },
+        "VerifyVersionInfoW": {
+          "rva": "0x25c92",
+          "forwarder": "KERNEL32.VerifyVersionInfoW"
+        },
+        "VirtualAlloc": {
+          "rva": "0x25cae",
+          "forwarder": "KERNEL32.VirtualAlloc"
+        },
+        "VirtualFree": {
+          "rva": "0x25cc4",
+          "forwarder": "KERNEL32.VirtualFree"
+        },
+        "VirtualProtect": {
+          "rva": "0x25cd9",
+          "forwarder": "KERNEL32.VirtualProtect"
+        },
+        "VirtualProtectEx": {
+          "rva": "0x25cf1",
+          "forwarder": "KERNEL32.VirtualProtectEx"
+        },
+        "VirtualQuery": {
+          "rva": "0x25d0b",
+          "forwarder": "KERNEL32.VirtualQuery"
+        },
+        "VirtualQueryEx": {
+          "rva": "0x25d21",
+          "forwarder": "KERNEL32.VirtualQueryEx"
+        },
+        "WaitForMultipleObjects": {
+          "rva": "0x25d39",
+          "forwarder": "KERNEL32.WaitForMultipleObjects"
+        },
+        "WaitForSingleObject": {
+          "rva": "0x25d59",
+          "forwarder": "KERNEL32.WaitForSingleObject"
+        },
+        "WaitForSingleObjectEx": {
+          "rva": "0x25d76",
+          "forwarder": "KERNEL32.WaitForSingleObjectEx"
+        },
+        "WakeAllConditionVariable": {
+          "rva": "0x25d95",
+          "forwarder": "KERNEL32.WakeAllConditionVariable"
+        },
+        "WideCharToMultiByte": {
+          "rva": "0x25db7",
+          "forwarder": "KERNEL32.WideCharToMultiByte"
+        },
+        "WriteFile": {
+          "rva": "0x25dd4",
+          "forwarder": "KERNEL32.WriteFile"
+        },
+        "WriteProcessMemory": {
+          "rva": "0x25de7",
+          "forwarder": "KERNEL32.WriteProcessMemory"
+        }
+      },
+      "forbidden_injection_imports_found": []
+    },
+    {
+      "file": "engine.bin",
+      "bytes": 28582400,
+      "sha256": "ac625470cf00fe4ddb7ccc3cec542b7dbb849f399e2e617e01cac88b3ffcc5b7",
+      "imports": [
+        {
+          "dll": "d3d11.dll",
+          "name": "D3D11CreateDeviceAndSwapChain"
+        },
+        {
+          "dll": "D3DCOMPILER_43.dll",
+          "name": "D3DCompile"
+        },
+        {
+          "dll": "d3dx11_43.dll",
+          "name": "D3DX11CreateShaderResourceViewFromFileW"
+        },
+        {
+          "dll": "d3dx11_43.dll",
+          "name": "D3DX11CreateShaderResourceViewFromMemory"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "WriteFile"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "TerminateProcess"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CreatePipe"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "SetCurrentDirectoryA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "Process32NextW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "Process32FirstW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "WriteProcessMemory"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "OutputDebugStringA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "InitializeCriticalSectionEx"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetFileAttributesA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "VirtualProtectEx"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "DeleteCriticalSection"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "ReadProcessMemory"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CreateDirectoryA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "VirtualQueryEx"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetExitCodeProcess"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "QueryFullProcessImageNameW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetModuleFileNameW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CreateFileMappingW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "HeapSize"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "AddVectoredExceptionHandler"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CreateFileW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "LeaveCriticalSection"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "EnterCriticalSection"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "OutputDebugStringW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "InitializeSListHead"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetSystemTimeAsFileTime"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "IsDebuggerPresent"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "IsProcessorFeaturePresent"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "SetUnhandledExceptionFilter"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "UnhandledExceptionFilter"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "WakeAllConditionVariable"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "InitOnceBeginInitialize"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "InitOnceComplete"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "SleepConditionVariableSRW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetModuleFileNameA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "ReleaseSRWLockExclusive"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CreateFileMappingA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "UnmapViewOfFile"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "MapViewOfFile"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetProcessHeap"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetFileSizeEx"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CreateFileA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "LoadLibraryW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "SleepEx"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "ReadFile"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CreateProcessA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CreateThread"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "FreeConsole"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "DisableThreadLibraryCalls"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "QueryFullProcessImageNameA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "OpenProcess"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "FreeLibraryAndExitThread"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "WaitForSingleObject"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "MoveFileExW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "WaitForSingleObjectEx"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetEnvironmentVariableA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetStdHandle"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetFileType"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "PeekNamedPipe"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "WaitForMultipleObjects"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "VerifyVersionInfoW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "SetPriorityClass"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "OpenThread"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "SetThreadContext"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "FlushInstructionCache"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetModuleHandleW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetCurrentProcessId"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetThreadContext"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "HeapDestroy"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "HeapAlloc"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CloseHandle"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "HeapReAlloc"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetLastError"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "Sleep"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CreateToolhelp32Snapshot"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "ResumeThread"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "SuspendThread"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetCurrentThreadId"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "Thread32First"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "Thread32Next"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetCurrentProcess"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "HeapFree"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "VirtualProtect"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "HeapCreate"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "VirtualQuery"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetSystemInfo"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "VirtualAlloc"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "VirtualFree"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetFileAttributesW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "FormatMessageA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetLocaleInfoEx"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetCurrentDirectoryW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "CreateDirectoryW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "FindClose"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "FindFirstFileW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetFileAttributesExW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "SetFileInformationByHandle"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "AreFileApisANSI"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetFileInformationByHandleEx"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetTickCount"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "QueryPerformanceCounter"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "FreeLibrary"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "VerSetConditionMask"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetProcAddress"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "QueryPerformanceFrequency"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "LoadLibraryA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetLocaleInfoA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetModuleHandleA"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GlobalUnlock"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "WideCharToMultiByte"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GlobalLock"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GlobalFree"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GlobalAlloc"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "MultiByteToWideChar"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "SetLastError"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "FormatMessageW"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "SetHandleInformation"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "InitializeCriticalSection"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "LocalFree"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "AcquireSRWLockExclusive"
+        },
+        {
+          "dll": "BstkVMM.dll",
+          "name": "GetSystemDirectoryW"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetWindowRect"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "EnumWindows"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetClassNameA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "EnumChildWindows"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetWindowTextW"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "UnregisterClassA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "RegisterClassExA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "MessageBoxA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "SetForegroundWindow"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "SetWindowLongPtrA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "IsWindow"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "SetWindowPos"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "ShowWindow"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "MapWindowPoints"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "SetLayeredWindowAttributes"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "UpdateWindow"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "PostMessageA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetClipboardData"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "EmptyClipboard"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "FindWindowExA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetWindowThreadProcessId"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "DispatchMessageA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "MessageBoxW"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "CreateWindowExA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetWindowTextA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "SetWindowDisplayAffinity"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "TranslateMessage"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "PeekMessageA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "IsIconic"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "OpenClipboard"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetCursorInfo"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "MapVirtualKeyW"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetAsyncKeyState"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetCursorPos"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetKeyNameTextW"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetKeyState"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetMessageExtraInfo"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "LoadCursorA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "SetCursorPos"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "ReleaseCapture"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "ScreenToClient"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "SetClipboardData"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "IsWindowUnicode"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "MoveWindow"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetCapture"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "ClientToScreen"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "DefWindowProcA"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetClientRect"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "SetCursor"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "SetCapture"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetForegroundWindow"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "CloseClipboard"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "GetKeyboardLayout"
+        },
+        {
+          "dll": "USER32.dll",
+          "name": "TrackMouseEvent"
+        },
+        {
+          "dll": "GDI32.dll",
+          "name": "CreateSolidBrush"
+        },
+        {
+          "dll": "SHELL32.dll",
+          "name": "ShellExecuteA"
+        },
+        {
+          "dll": "SHELL32.dll",
+          "name": "SHGetFolderPathA"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_LogWorkItemCompleted@_TaskEventLogger@details@Concurrency@@QEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_LogWorkItemStarted@_TaskEventLogger@details@Concurrency@@QEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_LogTaskExecutionCompleted@_TaskEventLogger@details@Concurrency@@QEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_LogTaskCompleted@_TaskEventLogger@details@Concurrency@@QEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_LogCancelTask@_TaskEventLogger@details@Concurrency@@QEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_LogScheduleTask@_TaskEventLogger@details@Concurrency@@QEAAX_N@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Release_chore@details@Concurrency@@YAXPEAU_Threadpool_chore@12@@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?ReportUnhandledError@_ExceptionHolder@details@Concurrency@@AEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Capture@_ContextCallback@details@Concurrency@@AEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Reset@_ContextCallback@details@Concurrency@@AEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_CallInContext@_ContextCallback@details@Concurrency@@QEBAXV?$function@$$A6AXXZ@std@@_N@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??0task_continuation_context@Concurrency@@AEAA@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Cnd_unregister_at_thread_exit"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?__ExceptionPtrCreate@@YAXPEAX@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?__ExceptionPtrCopy@@YAXPEAXPEBX@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??1_Lockit@std@@QEAA@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??0_Lockit@std@@QEAA@H@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Getgloballocale@locale@std@@CAPEAV_Locimp@12@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Xbad_alloc@std@@YAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Id_cnt@id@locale@std@@0HA"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?id@?$codecvt@DDU_Mbstatet@@@std@@2V0locale@2@A"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Fiopen@std@@YAPEAU_iobuf@@PEBDHH@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Syserror_map@std@@YAPEBDH@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?__ExceptionPtrToBool@@YA_NPEBX@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?__ExceptionPtrDestroy@@YAXPEAX@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Mtx_lock"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?__ExceptionPtrCurrentException@@YAXPEAX@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?__ExceptionPtrRethrow@@YAXPEBX@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Cnd_register_at_thread_exit"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Cnd_wait"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Mtx_unlock"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Cnd_broadcast"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?getloc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEBA?AVlocale@2@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?sbumpc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEAAHXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?sgetc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEAAHXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Init@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??0?$basic_istream@DU?$char_traits@D@std@@@std@@QEAA@PEAV?$basic_streambuf@DU?$char_traits@D@std@@@1@_N@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?unshift@?$codecvt@DDU_Mbstatet@@@std@@QEBAHAEAU_Mbstatet@@PEAD1AEAPEAD@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Getcat@?$codecvt@DDU_Mbstatet@@@std@@SA_KPEAPEBVfacet@locale@2@PEBV42@@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?in@?$codecvt@DDU_Mbstatet@@@std@@QEBAHAEAU_Mbstatet@@PEBD1AEAPEBDPEAD3AEAPEAD@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?out@?$codecvt@DDU_Mbstatet@@@std@@QEBAHAEAU_Mbstatet@@PEBD1AEAPEBDPEAD3AEAPEAD@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??1?$basic_istream@DU?$char_traits@D@std@@@std@@UEAA@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?write@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@PEBD_J@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??7ios_base@std@@QEBA_NXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??Bios_base@std@@QEBA_NXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?always_noconv@codecvt_base@std@@QEBA_NXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Schedule_chore@details@Concurrency@@YAHPEAU_Threadpool_chore@12@@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_ReportUnobservedException@details@Concurrency@@YAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?GetCurrentThreadId@platform@details@Concurrency@@YAJXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?__ExceptionPtrAssign@@YAXPEAXPEBX@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Xbad_function_call@std@@YAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@K@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Xlength_error@std@@YAXPEBD@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Xout_of_range@std@@YAXPEBD@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Query_perf_frequency"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Throw_Cpp_error@std@@YAXH@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?cout@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?uncaught_exception@std@@YA_NXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Random_device@std@@YAIXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Cnd_do_broadcast_at_thread_exit"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Thrd_id"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Query_perf_counter"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Thrd_detach"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Thrd_join"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Osfx@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?setstate@?$basic_ios@DU?$char_traits@D@std@@@std@@QEAAXH_N@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "_Xtime_get_ticks"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Winerror_map@std@@YAHH@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??Bid@locale@std@@QEAA_KXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Getcat@?$ctype@D@std@@SA_KPEAPEBVfacet@locale@2@PEBV42@@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?getloc@ios_base@std@@QEBA?AVlocale@2@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?snextc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEAAHXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@_J@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Ipfx@?$basic_istream@DU?$char_traits@D@std@@@std@@QEAA_N_N@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?id@?$ctype@D@std@@2V0locale@2@A"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?rdbuf@?$basic_ios@DU?$char_traits@D@std@@@std@@QEBAPEAV?$basic_streambuf@DU?$char_traits@D@std@@@2@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?widen@?$basic_ios@DU?$char_traits@D@std@@@std@@QEBADD@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?sputc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEAAHD@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?sputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEAA_JPEBD_J@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?put@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@D@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?flush@?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV12@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@P6AAEAV01@AEAV01@@Z@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?width@ios_base@std@@QEAA_J_J@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?width@ios_base@std@@QEBA_JXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?good@ios_base@std@@QEBA_NXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?cerr@std@@3V?$basic_ostream@DU?$char_traits@D@std@@@1@A"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Xinvalid_argument@std@@YAXPEBD@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??0?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAA@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??0?$basic_ios@DU?$char_traits@D@std@@@std@@IEAA@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?setg@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAAXPEAD00@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?setp@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEAAXPEAD00@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@PEBX@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??6?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAAAEAV01@G@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??1?$basic_ostream@DU?$char_traits@D@std@@@std@@UEAA@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?imbue@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MEAAXAEBVlocale@2@@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?sync@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MEAAHXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?setbuf@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MEAAPEAV12@PEAD_J@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?xsputn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MEAA_JPEBD_J@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?xsgetn@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MEAA_JPEAD_J@Z"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?uflow@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MEAAHXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?showmanyc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@MEAA_JXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Unlock@?$basic_streambuf@DU?$char_traits@D@std@@@std@@UEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "?_Lock@?$basic_streambuf@DU?$char_traits@D@std@@@std@@UEAAXXZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??1?$basic_streambuf@DU?$char_traits@D@std@@@std@@UEAA@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??1?$basic_ios@DU?$char_traits@D@std@@@std@@UEAA@XZ"
+        },
+        {
+          "dll": "MSVCP140.dll",
+          "name": "??0?$basic_ostream@DU?$char_traits@D@std@@@std@@QEAA@PEAV?$basic_streambuf@DU?$char_traits@D@std@@@1@_N@Z"
+        },
+        {
+          "dll": "IMM32.dll",
+          "name": "ImmReleaseContext"
+        },
+        {
+          "dll": "IMM32.dll",
+          "name": "ImmSetCandidateWindow"
+        },
+        {
+          "dll": "IMM32.dll",
+          "name": "ImmGetContext"
+        },
+        {
+          "dll": "IMM32.dll",
+          "name": "ImmSetCompositionWindow"
+        },
+        {
+          "dll": "dwmapi.dll",
+          "name": "DwmExtendFrameIntoClientArea"
+        },
+        {
+          "dll": "VERSION.dll",
+          "name": "VerQueryValueA"
+        },
+        {
+          "dll": "VERSION.dll",
+          "name": "GetFileVersionInfoA"
+        },
+        {
+          "dll": "VERSION.dll",
+          "name": "GetFileVersionInfoSizeA"
+        },
+        {
+          "dll": "ntdll.dll",
+          "name": "RtlCaptureContext"
+        },
+        {
+          "dll": "ntdll.dll",
+          "name": "RtlLookupFunctionEntry"
+        },
+        {
+          "dll": "ntdll.dll",
+          "name": "RtlVirtualUnwind"
+        },
+        {
+          "dll": "ntdll.dll",
+          "name": "ZwReadVirtualMemory"
+        },
+        {
+          "dll": "WTSAPI32.dll",
+          "name": "WTSFreeMemoryExW"
+        },
+        {
+          "dll": "WTSAPI32.dll",
+          "name": "WTSEnumerateProcessesExW"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#1"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#8"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#57"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#151"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "inet_pton"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#13"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "freeaddrinfo"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "WSAIoctl"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#23"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#17"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#20"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#10"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#21"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#16"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#9"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#6"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#5"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#18"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#7"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#19"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "WSACloseEvent"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "WSACreateEvent"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "WSAEnumNetworkEvents"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#2"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "WSAEventSelect"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#116"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "WSAResetEvent"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "WSAWaitForMultipleEvents"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#3"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#111"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#115"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "inet_ntop"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#112"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#15"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "#4"
+        },
+        {
+          "dll": "WS2_32.dll",
+          "name": "getaddrinfo"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertOpenStore"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertFreeCertificateChain"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertGetCertificateChain"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertFreeCertificateChainEngine"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertCreateCertificateChainEngine"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CryptQueryObject"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertCloseStore"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertGetNameStringW"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertFindExtension"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertAddCertificateContextToStore"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CryptDecodeObjectEx"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "PFXImportCertStore"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CryptStringToBinaryW"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertFreeCertificateContext"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertFindCertificateInStore"
+        },
+        {
+          "dll": "CRYPT32.dll",
+          "name": "CertEnumCertificatesInStore"
+        },
+        {
+          "dll": "urlmon.dll",
+          "name": "URLDownloadToFileA"
+        },
+        {
+          "dll": "VCRUNTIME140_1.dll",
+          "name": "__CxxFrameHandler4"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "__std_terminate"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "strstr"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "_purecall"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "strrchr"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "longjmp"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "memcpy"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "memmove"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "memset"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "__std_exception_copy"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "memcmp"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "__C_specific_handler"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "__current_exception"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "__current_exception_context"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "__intrinsic_setjmp"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "_CxxThrowException"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "__std_exception_destroy"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "__std_type_info_destroy_list"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "strchr"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "wcschr"
+        },
+        {
+          "dll": "VCRUNTIME140.dll",
+          "name": "memchr"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_popen"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_pclose"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fgets"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__acrt_iob_func"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fflush"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__stdio_common_vfprintf"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fclose"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fputs"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "feof"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__stdio_common_vswprintf_s"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__stdio_common_vsscanf"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_wopen"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fseek"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fread"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "__stdio_common_vsprintf"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_lseeki64"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fwrite"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_close"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_fileno"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_get_stream_buffer_pointers"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_fseeki64"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fsetpos"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "ungetc"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fputc"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "setvbuf"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fgetpos"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fgetc"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_wfopen"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "fopen"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_write"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "_read"
+        },
+        {
+          "dll": "api-ms-win-crt-stdio-l1-1-0.dll",
+          "name": "ftell"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_invoke_watson"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_beginthreadex"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_crt_atexit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "terminate"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_errno"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "abort"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_seh_filter_dll"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_configure_narrow_argv"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initialize_narrow_environment"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initialize_onexit_table"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_register_onexit_function"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_execute_onexit_table"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_wassert"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_cexit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initterm"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_initterm_e"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_invalid_parameter_noinfo"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_invalid_parameter_noinfo_noreturn"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "_resetstkoflw"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "exit"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "__sys_nerr"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "__sys_errlist"
+        },
+        {
+          "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+          "name": "system"
+        },
+        {
+          "dll": "api-ms-win-crt-utility-l1-1-0.dll",
+          "name": "srand"
+        },
+        {
+          "dll": "api-ms-win-crt-utility-l1-1-0.dll",
+          "name": "rand"
+        },
+        {
+          "dll": "api-ms-win-crt-utility-l1-1-0.dll",
+          "name": "qsort"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strcmp"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "_stricmp"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "towlower"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "wcsncpy"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strpbrk"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "wcsncmp"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strspn"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "_wcsicmp"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "wcspbrk"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strcspn"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "tolower"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "_wcsdup"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strncpy"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strncmp"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "_strdup"
+        },
+        {
+          "dll": "api-ms-win-crt-string-l1-1-0.dll",
+          "name": "strncpy_s"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "free"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "realloc"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "calloc"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "_msize"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "_callnewh"
+        },
+        {
+          "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+          "name": "malloc"
+        },
+        {
+          "dll": "api-ms-win-crt-convert-l1-1-0.dll",
+          "name": "strtol"
+        },
+        {
+          "dll": "api-ms-win-crt-convert-l1-1-0.dll",
+          "name": "strtod"
+        },
+        {
+          "dll": "api-ms-win-crt-convert-l1-1-0.dll",
+          "name": "strtoll"
+        },
+        {
+          "dll": "api-ms-win-crt-convert-l1-1-0.dll",
+          "name": "strtoul"
+        },
+        {
+          "dll": "api-ms-win-crt-convert-l1-1-0.dll",
+          "name": "wcstombs"
+        },
+        {
+          "dll": "api-ms-win-crt-convert-l1-1-0.dll",
+          "name": "strtoull"
+        },
+        {
+          "dll": "api-ms-win-crt-convert-l1-1-0.dll",
+          "name": "atof"
+        },
+        {
+          "dll": "api-ms-win-crt-convert-l1-1-0.dll",
+          "name": "atoi"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "atan2f"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "logf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "log"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "ceilf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "_fdopen"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "powf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "floorf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "copysignf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "pow"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "fmodf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "cosf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "sqrtf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "_fdclass"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "_hypotf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "acosf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "roundf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "sinf"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "sqrt"
+        },
+        {
+          "dll": "api-ms-win-crt-math-l1-1-0.dll",
+          "name": "_dsign"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "_time64"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "_gmtime64"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "_localtime64"
+        },
+        {
+          "dll": "api-ms-win-crt-time-l1-1-0.dll",
+          "name": "strftime"
+        },
+        {
+          "dll": "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "name": "_lock_file"
+        },
+        {
+          "dll": "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "name": "_wstat64"
+        },
+        {
+          "dll": "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "name": "_fstat64"
+        },
+        {
+          "dll": "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "name": "remove"
+        },
+        {
+          "dll": "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "name": "_unlock_file"
+        },
+        {
+          "dll": "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "name": "_unlink"
+        },
+        {
+          "dll": "api-ms-win-crt-environment-l1-1-0.dll",
+          "name": "getenv"
+        },
+        {
+          "dll": "api-ms-win-crt-locale-l1-1-0.dll",
+          "name": "___lc_codepage_func"
+        },
+        {
+          "dll": "api-ms-win-crt-locale-l1-1-0.dll",
+          "name": "localeconv"
+        },
+        {
+          "dll": "USERENV.dll",
+          "name": "UnloadUserProfile"
+        },
+        {
+          "dll": "bcrypt.dll",
+          "name": "BCryptGenRandom"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "CryptCreateHash"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "OpenProcessToken"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "AddAccessAllowedAce"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "GetLengthSid"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "GetTokenInformation"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "InitializeAcl"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "IsValidSid"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "RegCreateKeyExA"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "RegDeleteKeyA"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "SetSecurityInfo"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "CopySid"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "ConvertSidToStringSidA"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "CryptAcquireContextW"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "CryptReleaseContext"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "CryptGetHashParam"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "CryptHashData"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "CryptDestroyHash"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "SystemFunction036"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "CryptDestroyKey"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "CryptImportKey"
+        },
+        {
+          "dll": "ADVAPI32.dll",
+          "name": "CryptEncrypt"
+        },
+        {
+          "dll": "PSAPI.DLL",
+          "name": "GetModuleInformation"
+        },
+        {
+          "dll": "SHLWAPI.dll",
+          "name": "PathFindFileNameW"
+        }
+      ],
+      "exports": {},
+      "forbidden_injection_imports_found": []
+    }
+  ],
+  "embedded_engine_exact_match": true,
+  "embedded_proxy_exact_match": true,
+  "engine_kernel32_imports_redirected_before_TLS_DllMain": 122,
+  "all_redirected_imports_have_proxy_exports": true,
+  "critical_guards_are_code_exports_not_forwarders": true,
+  "new_host_and_proxy_have_no_remote_code_loading_api_imports": true,
+  "Windows_BlueStacks_or_game_runtime_tested": false,
+  "scope": "Static PE/import/payload audit, not live process-module tracing."
+}

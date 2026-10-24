@@ -1,0 +1,20 @@
+{
+  "native_sdk_vectors_passed": 13,
+  "checks": [
+    "actual SDK VMR3GetVM magic/alignment (426772515, 0)",
+    "actual SDK VMR3GetVM magic/alignment (0, 0)",
+    "actual SDK VMR3GetVM magic/alignment (426772515, 1)",
+    "actual SDK CPU slot 0",
+    "actual SDK CPU slot 1",
+    "actual SDK CPU slot 2",
+    "actual SDK CPU slot 4294967295",
+    "actual SDK contiguous RAM mapping 0x0",
+    "actual SDK contiguous RAM mapping 0x1234",
+    "actual SDK contiguous RAM mapping 0x3fffff",
+    "actual SDK existing chunk-map cache 0",
+    "actual SDK existing chunk-map cache 18",
+    "actual SDK existing chunk-map cache 511"
+  ],
+  "scope": "Bounded Unicorn x64 execution of uploaded SDK getter/RAM-mapping machine code with synthetic memory. No Windows API, host-native SDK, emulator or game execution.",
+  "live_target_verified": false
+}

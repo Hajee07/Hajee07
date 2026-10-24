@@ -1,0 +1,9 @@
+{
+  "ZIP_bytes": 23639539,
+  "ZIP_sha256": "cb06b54cb6805defc3a9e18f38c387fc79db1e3e390dd0d5848c5d2da161d084",
+  "entries": 18,
+  "CRC_and_all_file_hashes_passed": true,
+  "EXE_bytes": 28900352,
+  "EXE_sha256": "8bf21d30105db28aab6a72c98ffa991ab5504f74a26df5caeb61610b55443e44",
+  "all_features_working_verified": false
+}

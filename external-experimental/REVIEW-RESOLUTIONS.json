@@ -1,0 +1,21 @@
+{
+  "static_reviewer_findings_resolved": [
+    {
+      "finding": "Engine initialized before post-load guards",
+      "fix": "Kernel32 import-provider redirected in file; loader resolves local guarded exports before engine TLS/DllMain",
+      "verified": "122 redirected imports all have proxy exports;3 critical bindings are local code exports"
+    },
+    {
+      "finding": "Unsupported page kind7 accepted",
+      "fix": "Explicit normal-RAM-kind1 allowlist before mapping shortcuts",
+      "verified": "Synthetic test rejects both read and write for kind7;21 total core checks passed"
+    },
+    {
+      "finding": "Rebuild recipe had truncated input-DLL SHA256",
+      "fix": "Correct64-character source hash and exercise packaged rebuild recipe",
+      "verified": "Packaged recipe completed; extracted/patched engine bytes match release input"
+    }
+  ],
+  "review_scope": "Static source review only; no Windows execution",
+  "leak_sanitizer_note": "This container uses ptrace; leak detection was disabled for the static-array core fixture. AddressSanitizer and UBSan remained enabled."
+}

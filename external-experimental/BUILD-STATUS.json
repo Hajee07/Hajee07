@@ -1,0 +1,18 @@
+{
+  "name": "NOVA External Experimental",
+  "architecture": "Windows x64 external host",
+  "SDK_SHA256": "09fcc9048aaeb610104110a1cf7a533603e423eb681f2e3db61d601869cd095a",
+  "host_EXE_sha256": "8bf21d30105db28aab6a72c98ffa991ab5504f74a26df5caeb61610b55443e44",
+  "host_EXE_bytes": 28900352,
+  "core_fixture_checks": 21,
+  "SDK_native_vectors": 13,
+  "live_Windows_BlueStacks_game_tested": false,
+  "all_features_working_verified": false,
+  "no_remote_DLL_or_helper_load_by_design": true,
+  "runtime_no_injection_trace_verified": false,
+  "compiler": "Zig0.13.0 PyPI ziglang wheel",
+  "compiler_wheel_sha256": "3ce0c9f16547e5d61b32e0d226926e9a2552ef4b91fccf7ab5ea1a623a77824b",
+  "engine_function_code_preserved_except_two_login_branches": true,
+  "engine_kernel32_import_provider_redirected": true,
+  "pre_execution_guarded_imports": 122
+}
