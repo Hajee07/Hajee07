@@ -1,0 +1,45 @@
+{
+  "checks_passed": 7,
+  "checks": [
+    {
+      "test": "original embedded login gate",
+      "ZF": false,
+      "target": "0x1800b3bd6"
+    },
+    {
+      "test": "patched embedded main-panel jump",
+      "ZF": false,
+      "target": "0x1800b3bd6"
+    },
+    {
+      "test": "original embedded login gate",
+      "ZF": true,
+      "target": "0x1800b341c"
+    },
+    {
+      "test": "patched embedded main-panel jump",
+      "ZF": true,
+      "target": "0x1800b3bd6"
+    },
+    {
+      "test": "original outer zero-initialized page state",
+      "current_page": 0,
+      "target_page": 0,
+      "alpha": 1.0
+    },
+    {
+      "test": "patched outer zero-initialized page state",
+      "current_page": 1,
+      "target_page": 1,
+      "alpha": 0.0
+    },
+    {
+      "test": "auth initialization call replaced with fallthrough NOPs",
+      "address": "0x1800b1758",
+      "original_call_target": "0x18013c850",
+      "patched_next_instruction": "0x1800b175d"
+    }
+  ],
+  "scope": "Bounded x86-64 instruction snippets under Unicorn; zeroed modeled UI state matches the preexisting constructor memset. No Windows APIs, authentication services, complete application or game executed.",
+  "Windows_runtime_tested": false
+}

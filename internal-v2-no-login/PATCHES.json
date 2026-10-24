@@ -1,0 +1,55 @@
+{
+  "source": "NOVA XITERS INTERNAL V2.exe",
+  "original_sha256": "fb70eb9987a6a2f8a728b0eb8664c39458eafe2b566035f71808edfee4c065a0",
+  "scope": "Local launcher and embedded panel login/navigation patches; existing main interfaces are used.",
+  "Windows_runtime_tested": false,
+  "patches": [
+    {
+      "name": "outer_1",
+      "component": "launcher",
+      "image_virtual_address": "0x140700028",
+      "outer_file_offset": "0x6ff428",
+      "before": "48897b0c",
+      "after": "83430c01",
+      "purpose": "Initial current UI page1 from zero-filled state"
+    },
+    {
+      "name": "outer_2",
+      "component": "launcher",
+      "image_virtual_address": "0x14070002c",
+      "outer_file_offset": "0x6ff42c",
+      "before": "c743140000803f",
+      "after": "c7431001000000",
+      "purpose": "Initial target UI page1; fade alpha remains zero and existing animation increases it"
+    },
+    {
+      "name": "outer_3",
+      "component": "launcher",
+      "image_virtual_address": "0x14070003a",
+      "outer_file_offset": "0x6ff43a",
+      "before": "40887b20",
+      "after": "c6432001",
+      "purpose": "Initialize the UI success flag used by original post-license success path"
+    },
+    {
+      "name": "embedded_1",
+      "component": "embedded_panel",
+      "image_virtual_address": "0x1800b1758",
+      "embedded_file_offset": "0xb0b58",
+      "outer_file_offset": "0xb0a4c0",
+      "before": "e8f3b00800",
+      "after": "9090909090",
+      "purpose": "Skip startup call to KeyAuth initialization routine0x18013c850; preserve C++ once guard release and rest of window setup"
+    },
+    {
+      "name": "embedded_2",
+      "component": "embedded_panel",
+      "image_virtual_address": "0x1800b3416",
+      "embedded_file_offset": "0xb2816",
+      "outer_file_offset": "0xb0c17e",
+      "before": "0f85ba070000",
+      "after": "e9bb07000090",
+      "purpose": "Replace successful-login conditional gate with direct jump to existing main panel0x1800b3bd6; login screen and worker spawning block are skipped"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "review_passed": true,
+  "actual_output_sha256": "069d76f5392843bb99ce034a1f8a4de6f8b714f8c94bef16995ff13fc88b7297",
+  "file_size_unchanged": true,
+  "changed_bytes": 22,
+  "no_unlisted_changes": true,
+  "actual_output_outer_ctor_state": {
+    "current_page": 1,
+    "target_page": 1,
+    "alpha": 0.0,
+    "success_flag": 1
+  },
+  "patch_checks": [
+    {
+      "name": "outer_1",
+      "bytes_matched_manifest": true,
+      "instructions": [
+        {
+          "address": "0x140700028",
+          "instruction": "add dword ptr [rbx + 0xc], 1"
+        }
+      ]
+    },
+    {
+      "name": "outer_2",
+      "bytes_matched_manifest": true,
+      "instructions": [
+        {
+          "address": "0x14070002c",
+          "instruction": "mov dword ptr [rbx + 0x10], 1"
+        }
+      ]
+    },
+    {
+      "name": "outer_3",
+      "bytes_matched_manifest": true,
+      "instructions": [
+        {
+          "address": "0x14070003a",
+          "instruction": "mov byte ptr [rbx + 0x20], 1"
+        }
+      ]
+    },
+    {
+      "name": "embedded_1",
+      "bytes_matched_manifest": true,
+      "instructions": [
+        {
+          "address": "0x1800b1758",
+          "instruction": "nop "
+        },
+        {
+          "address": "0x1800b1759",
+          "instruction": "nop "
+        },
+        {
+          "address": "0x1800b175a",
+          "instruction": "nop "
+        },
+        {
+          "address": "0x1800b175b",
+          "instruction": "nop "
+        },
+        {
+          "address": "0x1800b175c",
+          "instruction": "nop "
+        }
+      ]
+    },
+    {
+      "name": "embedded_2",
+      "bytes_matched_manifest": true,
+      "instructions": [
+        {
+          "address": "0x1800b3416",
+          "instruction": "jmp 0x1800b3bd6"
+        },
+        {
+          "address": "0x1800b341b",
+          "instruction": "nop "
+        }
+      ]
+    }
+  ],
+  "Windows_EXE_executed": false,
+  "scope": "Independent diff, exact manifest byte matches, disassembly, bounded outer constructor instruction emulation after modeled zero-allocation only"
+}

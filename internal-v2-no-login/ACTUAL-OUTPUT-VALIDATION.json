@@ -1,0 +1,62 @@
+{
+  "output_sha256": "069d76f5392843bb99ce034a1f8a4de6f8b714f8c94bef16995ff13fc88b7297",
+  "checks_passed": 8,
+  "checks": [
+    "All five actual output patch ranges match reviewed replacements",
+    "original real constructor segment yields (0, 0, 1.0, 1, 0)",
+    "modified real constructor segment yields (1, 1, 0.0, 1, 1)",
+    "Actual embedded jump reaches existing main panel with ZF=False",
+    "Actual embedded jump reaches existing main panel with ZF=True",
+    "Actual embedded startup call falls through without entering auth initializer",
+    "Embedded DLL PE headers, resource length and section ranges preserved",
+    "Outer EXE PE headers, entry point and resource descriptors preserved"
+  ],
+  "decoded_replacements": [
+    {
+      "name": "outer_1",
+      "virtual_address": "0x140700028",
+      "instructions": [
+        "add dword ptr [rbx + 0xc], 1"
+      ]
+    },
+    {
+      "name": "outer_2",
+      "virtual_address": "0x14070002c",
+      "instructions": [
+        "mov dword ptr [rbx + 0x10], 1"
+      ]
+    },
+    {
+      "name": "outer_3",
+      "virtual_address": "0x14070003a",
+      "instructions": [
+        "mov byte ptr [rbx + 0x20], 1"
+      ]
+    },
+    {
+      "name": "embedded_1",
+      "virtual_address": "0x1800b1758",
+      "instructions": [
+        "nop ",
+        "nop ",
+        "nop ",
+        "nop ",
+        "nop "
+      ]
+    },
+    {
+      "name": "embedded_2",
+      "virtual_address": "0x1800b3416",
+      "instructions": [
+        "jmp 0x1800b3bd6",
+        "nop "
+      ]
+    }
+  ],
+  "embedded_output_sha256": "a7aa35f53b4e9a9d6aff6b48cc1d8faafc26160e856057411e2b8f78068f16e9",
+  "bounded_modeled_instruction_execution_only": true,
+  "Windows_runtime_tested": false,
+  "full_application_or_gameplay_tested": false,
+  "no_host_native_PE_execution": true,
+  "scope": "Actual output bytes were checked and small constructor/gate/init snippets emulated. No Windows APIs or auth services were called."
+}
