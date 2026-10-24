@@ -1,0 +1,19 @@
+{
+  "prior_aim_core_definitions_unchanged": true,
+  "definitions_checked": [
+    "NativeBackendRequired",
+    "NativeBackend",
+    "f32",
+    "add",
+    "sub",
+    "mul",
+    "div",
+    "sqrt_native",
+    "projection_180067e80",
+    "RecoveredAimbot"
+  ],
+  "prior_modeled_x64_comparisons": 41,
+  "new_file_sha256": "0eed930ae401f5be80388aec71d33e688842f62994e477bc9df9a0144c539d58",
+  "HDPlayer_Windows_live_tested": false,
+  "all_native_dependencies_connected": false
+}

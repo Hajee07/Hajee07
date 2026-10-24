@@ -1,0 +1,20 @@
+{
+  "checks_passed": 12,
+  "checks": [
+    "Windows x64 Toolhelp structure sizes568/1080",
+    "Exact HD-Player match and snapshot handle closure",
+    "Query/read OpenProcess rights",
+    "Exact ReadProcessMemory bytes",
+    "Windows module base preserved at64 bits",
+    "Partial reads rejected",
+    "Context manager and idempotent close",
+    "Multiple instances require explicit PID",
+    "PID reuse/different process rejected and handle closed",
+    "Already-exited target rejected",
+    "Access-denied preserved as an error",
+    "Unsupported host fails explicitly"
+  ],
+  "scope": "Portable Windows structure checks and injected WinAPI mocks; no live HD-Player, Windows API or game was contacted.",
+  "live_Windows_tested": false,
+  "full_game_backend_connected": false
+}
