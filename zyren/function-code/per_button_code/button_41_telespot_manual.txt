@@ -1,0 +1,34 @@
+CONTROL 41: BRTL / TeleSpot [MANUAL]
+NATIVE OPTION ID: 59910
+
+Send command 59910; byte is int(u32(value) == 1).
+
+PYTHON MENU HANDLER:
+"""BRTL / TeleSpot [MANUAL] — recovered menu ID 59910.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 307-311.
+Send command 59910; byte is int(u32(value) == 1).
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_41_telespot_manual(runtime: MenuRuntime, value: int) -> None:
+    runtime.request(59910, int(u32(value) == 1))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 59910 / 0xea06
+Set TeleSpot manual server byte.
+          if ((int)uStack_29d8 == 0xea06) {
+            *(char *)(iRam1012f784 + 0x1012eb03) = uStack_29d8._4_1_;
+          }
+          else {
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

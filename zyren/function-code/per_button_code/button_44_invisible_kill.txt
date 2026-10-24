@@ -1,0 +1,33 @@
+CONTROL 44: BRTL / Invisible Kill
+NATIVE OPTION ID: 532
+
+Send command 532; byte is int(u32(value) == 1).
+
+PYTHON MENU HANDLER:
+"""BRTL / Invisible Kill — recovered menu ID 532.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 1677-1680.
+Send command 532; byte is int(u32(value) == 1).
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_44_invisible_kill(runtime: MenuRuntime, value: int) -> None:
+    runtime.request(532, int(u32(value) == 1))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 532 / 0x214
+Set Invisible Kill server byte.
+        case 0x214:
+          *(char *)(iRam1012ed84 + 0x1012de29) = uStack_29d8._4_1_;
+          break;
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

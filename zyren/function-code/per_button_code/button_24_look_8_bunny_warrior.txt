@@ -1,0 +1,41 @@
+CONTROL 24: LOOK / Look 8 - Bunny Warrior
+NATIVE OPTION ID: 7109
+
+Send command 7109 only when value == 1; otherwise no native action.
+
+PYTHON MENU HANDLER:
+"""LOOK / Look 8 - Bunny Warrior — recovered menu ID 7109.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 1154-1179,530-532,2881-2886.
+Send command 7109 only when value == 1; otherwise no native action.
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_24_look_8_bunny_warrior(runtime: MenuRuntime, value: int) -> None:
+    # No disable/reset request exists in this recovered branch.
+    if u32(value) == 1:
+        runtime.request(7109, 1)
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 7109 / 0x1bc5
+On nonzero request byte, enable/dirty Look state and store preset index 7.
+          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {
+            if (uStack_29d8._4_1_ != '\0') {
+              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;
+              *(undefined *)(iVar12 + 0x1012e980) = 1;
+              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;
+            }
+            goto LAB_1012eafc;
+          }
+          if (0x437 < (int)uStack_29d8) {
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

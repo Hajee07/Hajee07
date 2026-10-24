@@ -1,0 +1,30 @@
+CONTROL 48: SET / Show Keybinds
+NATIVE OPTION ID: 6002
+
+No action in the recovered native dispatcher. Java keybind behavior has not been recovered.
+
+PYTHON MENU HANDLER:
+"""SET / Show Keybinds — recovered menu ID 6002.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 1180-1190,3134-3140.
+No action in the recovered native dispatcher. Java keybind behavior has not been recovered.
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_48_show_keybinds(runtime: MenuRuntime, value: int) -> None:
+    # No matching ChangesID branch was recovered for this ID.
+    # The original protected Java keybind implementation remains unavailable.
+    return None
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+No remote server case is applicable/established for this control; see the scope below.
+
+RECOVERY SCOPE:
+No matching action in the recovered native ChangesID function; original Java keybind handling is unavailable.
+Unrecovered protected Java behavior; do not interpret the native fallthrough as proof the whole app button does nothing.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

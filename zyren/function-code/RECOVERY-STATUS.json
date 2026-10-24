@@ -1,0 +1,38 @@
+{
+  "input": "NX AIMKILL PVT 1.2.apk",
+  "original_apk_sha256": "55e3514b0ba0be5658a64d07771644c41fe4ffad5009a6d3f363be28c2dc4644",
+  "prepared_date": "2026-10-24",
+  "brand": "ZYREN",
+  "menu_controls": 51,
+  "per_control_code_files": 51,
+  "controls_mapped_to_inferred_native_dispatch_cases": 41,
+  "distinct_menu_request_ids": 43,
+  "native_dispatch_cases_including_LockPlayer": 44,
+  "jni_helper_translations": [
+    "LockPlayer",
+    "getEnemyList",
+    "getMatchTimerStatus"
+  ],
+  "fresh_native_snapshots": 2,
+  "unpack_replay_byte_identical": true,
+  "fresh_core_high_level_pseudocode_functions": 4,
+  "main_thread_high_level_C_recovered": false,
+  "main_thread_assembly_instructions": 11047,
+  "main_thread_pcode_operations": 76944,
+  "validation": {
+    "menu_ARM_comparison_cases_passed": 464,
+    "fresh_wrapper_ARM_comparisons_passed": 12,
+    "helper_byte_vectors_passed": 10,
+    "synthetic_Unix_IPC_checks_passed": 10,
+    "menu_Unix_integration_checks_passed": 1,
+    "python_files_parsed": 75,
+    "syntax_failures": 0
+  },
+  "original_high_level_source_identity_verified": false,
+  "full_protected_java_recovered": false,
+  "full_gameplay_implementation_recovered": false,
+  "live_Android_or_BlueStacks_tested": false,
+  "complete_rebuildable_project": false,
+  "no_new_runtime_verified_APK_in_this_delivery": true,
+  "inherited_static_analysis": "Retained separately with original quality reports; not a measure of full original recovery."
+}

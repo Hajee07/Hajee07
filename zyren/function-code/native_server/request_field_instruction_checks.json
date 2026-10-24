@@ -1,0 +1,65 @@
+{
+  "scope": "Bounded real ARM blocks only; no live server/game execution",
+  "results": [
+    {
+      "command_id": 104,
+      "instruction_start": "0x1012e348",
+      "stop_before": "0x1012e35c",
+      "input_word": "0x7d0",
+      "output_pointer": "0x101f7160",
+      "output_word": "0x44fa0000",
+      "output_int": 1157234688,
+      "output_float": 2000.0
+    },
+    {
+      "command_id": 104,
+      "instruction_start": "0x1012e348",
+      "stop_before": "0x1012e35c",
+      "input_word": "0x44fa0000",
+      "output_pointer": "0x101f7160",
+      "output_word": "0x4e89f400",
+      "output_int": 1317663744,
+      "output_float": 1157234688.0
+    },
+    {
+      "command_id": 5660,
+      "instruction_start": "0x1012e544",
+      "stop_before": "0x1012e564",
+      "input_word": "0xf",
+      "output_pointer": "0x101f7148",
+      "output_word": "0xf",
+      "output_int": 15,
+      "output_float": 2.1019476964872256e-44
+    },
+    {
+      "command_id": 5660,
+      "instruction_start": "0x1012e544",
+      "stop_before": "0x1012e564",
+      "input_word": "0x41700000",
+      "output_pointer": "0x101f7148",
+      "output_word": "0x64",
+      "output_int": 100,
+      "output_float": 1.401298464324817e-43
+    },
+    {
+      "command_id": 5660,
+      "instruction_start": "0x1012e544",
+      "stop_before": "0x1012e564",
+      "input_word": "0x64",
+      "output_pointer": "0x101f7148",
+      "output_word": "0x64",
+      "output_int": 100,
+      "output_float": 1.401298464324817e-43
+    },
+    {
+      "command_id": 5660,
+      "instruction_start": "0x1012e544",
+      "stop_before": "0x1012e564",
+      "input_word": "0x42c80000",
+      "output_pointer": "0x101f7148",
+      "output_word": "0x64",
+      "output_int": 100,
+      "output_float": 1.401298464324817e-43
+    }
+  ]
+}

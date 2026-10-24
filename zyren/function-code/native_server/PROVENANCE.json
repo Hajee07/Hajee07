@@ -1,0 +1,40 @@
+{
+  "tool": "Ghidra11.0.3",
+  "archive": "ghidra_11.0.3_PUBLIC_20240410.zip",
+  "archive_sha256": "2462a2d0ab11e30f9e907cd3b4aa6b48dd2642f325617e3d922c28e752be6761",
+  "sha256_confirmed_on_official_release_page": true,
+  "official_release_page": "https://github.com/NationalSecurityAgency/ghidra/releases/tag/Ghidra_11.0.3_build",
+  "snapshot_sha256": "45b7fbbc87036bb137128c1127580dce2b28d57442cac29313ca0fb5d776032f",
+  "snapshot_base": "0x10000000",
+  "autoanalysis": false,
+  "cpu_cap": 2,
+  "targets": [
+    {
+      "address": "0x10177c20",
+      "mode": "ARM",
+      "timeout_seconds": 90
+    },
+    {
+      "address": "0x1012d110",
+      "mode": "ARM",
+      "timeout_seconds": 90
+    },
+    {
+      "address": "0x10189534",
+      "mode": "ARM",
+      "timeout_seconds": 90
+    },
+    {
+      "address": "0x1010e708",
+      "mode": "Thumb",
+      "timeout_seconds": 180
+    },
+    {
+      "address": "0x10111bfc",
+      "mode": "Thumb",
+      "timeout_seconds": 180
+    }
+  ],
+  "original_source_identity_claimed": false,
+  "android_game_execution": false
+}

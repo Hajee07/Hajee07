@@ -1,0 +1,33 @@
+CONTROL 05: AIM / Speed Run
+NATIVE OPTION ID: 507
+
+Send command 507; byte is int(u32(value) != 0).
+
+PYTHON MENU HANDLER:
+"""AIM / Speed Run — recovered menu ID 507.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 1547-1549,2868-2874.
+Send command 507; byte is int(u32(value) != 0).
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_05_speed_run(runtime: MenuRuntime, value: int) -> None:
+    runtime.request(507, int(u32(value) != 0))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 507 / 0x1fb
+Set server state byte in fallback switch.
+          case 0x1fb:
+            *(char *)(iRam1012f7e0 + 0x1012eb11) = uStack_29d8._4_1_;
+            break;
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

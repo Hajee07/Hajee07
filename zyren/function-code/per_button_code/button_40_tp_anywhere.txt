@@ -1,0 +1,45 @@
+CONTROL 40: BRTL / Tp Anywhere
+NATIVE OPTION ID: 5198
+
+Ignore argument; XOR previous byte at 0x1010DDD4 with 1; send command 5198.
+
+PYTHON MENU HANDLER:
+"""BRTL / Tp Anywhere — recovered menu ID 5198.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 452-472.
+Ignore argument; XOR previous byte at 0x1010DDD4 with 1; send command 5198.
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_40_tp_anywhere(runtime: MenuRuntime, value: int) -> None:
+    # The native handler ignores value and XORs its previous byte with 1.
+    enabled = runtime.read_u8(0x1010DDD4) ^ 1
+    runtime.write_u8(0x1010DDD4, enabled)
+    runtime.request(5198, enabled)
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 5198 / 0x144e
+When enabled and game helper succeeds, get three-component position, add1.5 to third field and store; clear another flag.
+                  if ((int)uStack_29d8 == 0x144e) {
+                    if ((uStack_29d8._4_1_ != '\0') && (iVar17 = func_0x10121720(), iVar17 != 0)) {
+                      uVar21 = func_0x101178e0();
+                      func_0x10116860(&uStack_29b8,uVar21);
+                      fStack_29b0 = fStack_29b0 + 1.5;
+                      *(undefined *)(iRam1012f7ac + 0x1012eba4) = 1;
+                      iVar17 = iRam1012f7b0;
+                      *(ulonglong *)(iRam1012f7b0 + 0x1012eba4) = CONCAT44(uStack_29b4,uStack_29b8);
+                      *(float *)(iVar17 + 0x1012ebac) = fStack_29b0;
+                    }
+                    *(undefined *)(iRam1012f7b4 + 0x1012ebc3) = 0;
+                    break;
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

@@ -1,0 +1,49 @@
+CONTROL 37: BRTL / Fly Lock
+NATIVE OPTION ID: 5194
+
+Ignore argument; XOR previous byte at 0x1010DDDC with 1; send command 5194.
+
+PYTHON MENU HANDLER:
+"""BRTL / Fly Lock — recovered menu ID 5194.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 1537-1542,469-472.
+Ignore argument; XOR previous byte at 0x1010DDDC with 1; send command 5194.
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_37_fly_lock(runtime: MenuRuntime, value: int) -> None:
+    # The native handler ignores value and XORs its previous byte with 1.
+    enabled = runtime.read_u8(0x1010DDDC) ^ 1
+    runtime.write_u8(0x1010DDDC, enabled)
+    runtime.request(5194, enabled)
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 5194 / 0x144a
+Set Fly Lock server byte; native menu supplies an XOR toggle result.
+                if ((int)uStack_29d8 != 0x144a) {
+                  if ((int)uStack_29d8 == 0x144e) {
+                    if ((uStack_29d8._4_1_ != '\0') && (iVar17 = func_0x10121720(), iVar17 != 0)) {
+                      uVar21 = func_0x101178e0();
+                      func_0x10116860(&uStack_29b8,uVar21);
+                      fStack_29b0 = fStack_29b0 + 1.5;
+                      *(undefined *)(iRam1012f7ac + 0x1012eba4) = 1;
+                      iVar17 = iRam1012f7b0;
+                      *(ulonglong *)(iRam1012f7b0 + 0x1012eba4) = CONCAT44(uStack_29b4,uStack_29b8);
+                      *(float *)(iVar17 + 0x1012ebac) = fStack_29b0;
+                    }
+                    *(undefined *)(iRam1012f7b4 + 0x1012ebc3) = 0;
+                    break;
+                  }
+                  goto LAB_1012e854;
+                }
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

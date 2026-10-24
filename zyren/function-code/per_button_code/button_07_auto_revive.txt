@@ -1,0 +1,36 @@
+CONTROL 07: AIM / Auto Revive
+NATIVE OPTION ID: 7896
+
+Send command 7896; byte is int(u32(value) == 1).
+
+PYTHON MENU HANDLER:
+"""AIM / Auto Revive — recovered menu ID 7896.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 430-433.
+Send command 7896; byte is int(u32(value) == 1).
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_07_auto_revive(runtime: MenuRuntime, value: int) -> None:
+    runtime.request(7896, int(u32(value) == 1))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 7896 / 0x1ed8
+Set server state byte after exact-ID test.
+              }
+              else {
+                if ((int)uStack_29d8 != 0x1ed8) goto LAB_1012e854;
+                *(char *)(iRam1012f7bc + 0x1012ecb5) = uStack_29d8._4_1_;
+              }
+            }
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

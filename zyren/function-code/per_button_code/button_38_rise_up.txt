@@ -1,0 +1,34 @@
+CONTROL 38: BRTL / Rise Up
+NATIVE OPTION ID: 111
+
+Send command 5657; byte is int(u32(value) == 1).
+
+PYTHON MENU HANDLER:
+"""BRTL / Rise Up — recovered menu ID 111.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 2858-2861.
+Send command 5657; byte is int(u32(value) == 1).
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_38_rise_up(runtime: MenuRuntime, value: int) -> None:
+    runtime.request(5657, int(u32(value) == 1))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 5657 / 0x1619
+Set Rise Up server byte via shared label.
+      case 0x6f:
+LAB_1012dd78:
+        *(char *)(iRam1012ed68 + 0x1012dd8e) = uStack_29d8._4_1_;
+      }
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

@@ -1,0 +1,33 @@
+CONTROL 03: AIM / Speed Timer
+NATIVE OPTION ID: 517
+
+Send command 517; byte is int(u32(value) == 1).
+
+PYTHON MENU HANDLER:
+"""AIM / Speed Timer — recovered menu ID 517.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 1606-1609.
+Send command 517; byte is int(u32(value) == 1).
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_03_speed_timer(runtime: MenuRuntime, value: int) -> None:
+    runtime.request(517, int(u32(value) == 1))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 517 / 0x205
+Set server state byte in fallback switch.
+          case 0x205:
+            *(char *)(iRam1012f7d4 + 0x1012ed50) = uStack_29d8._4_1_;
+            break;
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

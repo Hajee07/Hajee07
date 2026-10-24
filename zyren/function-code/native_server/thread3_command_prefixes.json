@@ -1,0 +1,270 @@
+{
+  "source": "stable DT_INIT snapshot",
+  "scope": "ASCII uppercase/underscore command-comparison constants",
+  "commands": [
+    {
+      "string_address": "0x101e674b",
+      "literal_address": "0x10189e40",
+      "pc_base": "0x10189668",
+      "comparison_bytes": 14,
+      "command_prefix": "ENABLE_ALL_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e676c",
+      "literal_address": "0x10189e48",
+      "pc_base": "0x10189684",
+      "comparison_bytes": 15,
+      "command_prefix": "ENABLE_ALL_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e678f",
+      "literal_address": "0x10189e50",
+      "pc_base": "0x101896a0",
+      "comparison_bytes": 14,
+      "command_prefix": "SILENT_AIM_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e67b0",
+      "literal_address": "0x10189e58",
+      "pc_base": "0x101896bc",
+      "comparison_bytes": 15,
+      "command_prefix": "SILENT_AIM_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e67d3",
+      "literal_address": "0x10189e60",
+      "pc_base": "0x101896d8",
+      "comparison_bytes": 14,
+      "command_prefix": "COVER_PULL_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e67f4",
+      "literal_address": "0x10189e68",
+      "pc_base": "0x101896f4",
+      "comparison_bytes": 15,
+      "command_prefix": "COVER_PULL_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6817",
+      "literal_address": "0x10189e70",
+      "pc_base": "0x10189710",
+      "comparison_bytes": 11,
+      "command_prefix": "AIMLOCK_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6832",
+      "literal_address": "0x10189e78",
+      "pc_base": "0x1018972c",
+      "comparison_bytes": 12,
+      "command_prefix": "AIMLOCK_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e684f",
+      "literal_address": "0x10189e80",
+      "pc_base": "0x10189748",
+      "comparison_bytes": 15,
+      "command_prefix": "TARGET_LOCK_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6872",
+      "literal_address": "0x10189e88",
+      "pc_base": "0x10189764",
+      "comparison_bytes": 16,
+      "command_prefix": "TARGET_LOCK_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6897",
+      "literal_address": "0x10189e90",
+      "pc_base": "0x10189780",
+      "comparison_bytes": 16,
+      "command_prefix": "AUTO_EXECUTE_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e68bc",
+      "literal_address": "0x10189e98",
+      "pc_base": "0x1018979c",
+      "comparison_bytes": 17,
+      "command_prefix": "AUTO_EXECUTE_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e68e3",
+      "literal_address": "0x10189ea0",
+      "pc_base": "0x101897b8",
+      "comparison_bytes": 11,
+      "command_prefix": "SNAPFLY_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e68fe",
+      "literal_address": "0x10189ea8",
+      "pc_base": "0x101897d4",
+      "comparison_bytes": 12,
+      "command_prefix": "SNAPFLY_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e691b",
+      "literal_address": "0x10189eb0",
+      "pc_base": "0x101897f0",
+      "comparison_bytes": 15,
+      "command_prefix": "AUTO_REVIVE_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e693e",
+      "literal_address": "0x10189eb8",
+      "pc_base": "0x1018980c",
+      "comparison_bytes": 16,
+      "command_prefix": "AUTO_REVIVE_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6963",
+      "literal_address": "0x10189ec0",
+      "pc_base": "0x10189828",
+      "comparison_bytes": 15,
+      "command_prefix": "SPEED_TIMER_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6986",
+      "literal_address": "0x10189ec8",
+      "pc_base": "0x10189844",
+      "comparison_bytes": 16,
+      "command_prefix": "SPEED_TIMER_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e69ab",
+      "literal_address": "0x10189ed0",
+      "pc_base": "0x10189860",
+      "comparison_bytes": 19,
+      "command_prefix": "AUTOFIRE_ALLGUN_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e69d6",
+      "literal_address": "0x10189ed8",
+      "pc_base": "0x1018987c",
+      "comparison_bytes": 20,
+      "command_prefix": "AUTOFIRE_ALLGUN_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6a03",
+      "literal_address": "0x10189ee0",
+      "pc_base": "0x10189898",
+      "comparison_bytes": 23,
+      "command_prefix": "AUTOFIRE_WINCHESTER_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6a36",
+      "literal_address": "0x10189ee8",
+      "pc_base": "0x101898b4",
+      "comparison_bytes": 24,
+      "command_prefix": "AUTOFIRE_WINCHESTER_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6a6b",
+      "literal_address": "0x10189ef0",
+      "pc_base": "0x101898d0",
+      "comparison_bytes": 13,
+      "command_prefix": "FAST_FIRE_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6a8a",
+      "literal_address": "0x10189ef8",
+      "pc_base": "0x101898ec",
+      "comparison_bytes": 14,
+      "command_prefix": "FAST_FIRE_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6aab",
+      "literal_address": "0x10189f00",
+      "pc_base": "0x10189908",
+      "comparison_bytes": 11,
+      "command_prefix": "FLYHACK_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6ac6",
+      "literal_address": "0x10189f08",
+      "pc_base": "0x10189924",
+      "comparison_bytes": 12,
+      "command_prefix": "FLYHACK_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6ae3",
+      "literal_address": "0x10189f10",
+      "pc_base": "0x10189940",
+      "comparison_bytes": 16,
+      "command_prefix": "MAP_TELEPORT_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6b08",
+      "literal_address": "0x10189f18",
+      "pc_base": "0x1018995c",
+      "comparison_bytes": 17,
+      "command_prefix": "MAP_TELEPORT_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6b2f",
+      "literal_address": "0x10189f20",
+      "pc_base": "0x10189978",
+      "comparison_bytes": 18,
+      "command_prefix": "TELEPORT_ENEMY_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6b58",
+      "literal_address": "0x10189f28",
+      "pc_base": "0x10189994",
+      "comparison_bytes": 19,
+      "command_prefix": "TELEPORT_ENEMY_OFF",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6b83",
+      "literal_address": "0x10189f30",
+      "pc_base": "0x101899b0",
+      "comparison_bytes": 11,
+      "command_prefix": "SET_AIMFOV ",
+      "comparison_includes_nul": false
+    },
+    {
+      "string_address": "0x101e6b9f",
+      "literal_address": "0x10189f38",
+      "pc_base": "0x101899cc",
+      "comparison_bytes": 19,
+      "command_prefix": "SAFE_SILENT_AIM_ON",
+      "comparison_includes_nul": true
+    },
+    {
+      "string_address": "0x101e6bca",
+      "literal_address": "0x10189f40",
+      "pc_base": "0x101899e8",
+      "comparison_bytes": 20,
+      "command_prefix": "SAFE_SILENT_AIM_OFF",
+      "comparison_includes_nul": true
+    }
+  ]
+}

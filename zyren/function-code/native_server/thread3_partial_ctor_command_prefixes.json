@@ -1,0 +1,14 @@
+{
+  "source": "partial after initializers snapshot, DT_INIT+ctor0 complete; ctor1 incomplete",
+  "scope": "ASCII SET_ comparison constants only",
+  "commands": [
+    {
+      "literal_address": "0x10189f30",
+      "pc_base": "0x101899b0",
+      "string_address": "0x101e6b83",
+      "comparison_bytes": 11,
+      "command_prefix": "SET_AIMFOV ",
+      "comparison_includes_nul": false
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "scope": "Fresh root-model import pointers, verified against original ELF dynsym; no host syscall executed",
+  "imports": [
+    {
+      "plt_wrapper": "0x1010a988",
+      "modeled_import_target": "0x500004f0",
+      "symbol": "socket"
+    },
+    {
+      "plt_wrapper": "0x1010a994",
+      "modeled_import_target": "0x50000440",
+      "symbol": "listen"
+    },
+    {
+      "plt_wrapper": "0x1010a9a0",
+      "modeled_import_target": "0x500004c0",
+      "symbol": "setsockopt"
+    },
+    {
+      "plt_wrapper": "0x1010a9ac",
+      "modeled_import_target": "0x500003d0",
+      "symbol": "bind"
+    },
+    {
+      "plt_wrapper": "0x1010a9f4",
+      "modeled_import_target": "0x500003a0",
+      "symbol": "accept"
+    },
+    {
+      "plt_wrapper": "0x1010aa00",
+      "modeled_import_target": "0x50000430",
+      "symbol": "inet_ntop"
+    },
+    {
+      "plt_wrapper": "0x1010a9dc",
+      "modeled_import_target": "0x500004b0",
+      "symbol": "read"
+    },
+    {
+      "plt_wrapper": "0x1010a9d0",
+      "modeled_import_target": "0x50000590",
+      "symbol": "write"
+    },
+    {
+      "plt_wrapper": "0x1010a9c4",
+      "modeled_import_target": "0x50000360",
+      "symbol": "__strlen_chk"
+    },
+    {
+      "plt_wrapper": "0x1010a940",
+      "modeled_import_target": "0x50000470",
+      "symbol": "memcmp"
+    }
+  ],
+  "thread3_transport": {
+    "family": "AF_INET",
+    "family_value": 2,
+    "type": "SOCK_STREAM",
+    "bind_address": "0.0.0.0",
+    "port": 21405,
+    "listen_backlog": 3,
+    "runtime_reachability_unverified": true,
+    "is_code_download": false
+  }
+}

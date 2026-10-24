@@ -1,5 +1,13 @@
 # ZYREN recovery and binary rebuild
 
+## New function-code recovery — 2026-10-24
+
+[Download the recovered function-code ZIP](function-code/ZYREN-Actual-Function-Code.zip) or [read its current recovery status](function-code/README.md).
+
+51 controls now have separate code files. 41 are mapped to inferred native request-dispatch cases; separate JNI helpers and two original-APK-derived native memory images are included. The large main thread has assembly/P-code but no recovered high-level C. Protected Java, full gameplay code and live Android startup remain unresolved. This is not 100% original source or a newly verified working APK.
+
+The older rebuild/archive described below remains available. Its earlier request for native snapshots from the larger ZIP has been superseded for the two menu/core libraries: fresh snapshots were independently recovered from the original APK. Historical runtime evidence from the unavailable larger ZIP was not obtained.
+
 This package contains every original APK ZIP entry, the available recovered
 code, audit evidence and a tested, repeatable ZYREN rebuild recipe.
 

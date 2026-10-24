@@ -1,0 +1,35 @@
+CONTROL 06: AIM / Auto Target
+NATIVE OPTION ID: 34834
+
+Send command 34834; byte is int(u32(value) == 1).
+
+PYTHON MENU HANDLER:
+"""AIM / Auto Target — recovered menu ID 34834.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 438-443.
+Send command 34834; byte is int(u32(value) == 1).
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_06_auto_target(runtime: MenuRuntime, value: int) -> None:
+    runtime.request(34834, int(u32(value) == 1))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 34834 / 0x8812
+Set server state byte after exact-ID test.
+            else {
+              if ((int)uStack_29d8 != 0x8812) goto LAB_1012e854;
+              *(char *)(iRam1012f7c0 + 0x1012ec02) = uStack_29d8._4_1_;
+            }
+            goto LAB_1012eafc;
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

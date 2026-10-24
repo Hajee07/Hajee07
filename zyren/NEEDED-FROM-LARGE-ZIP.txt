@@ -1,3 +1,7 @@
+# HISTORICAL INVENTORY - update 2026-10-24
+# The two native memory images have now been independently recovered from the original APK; see function-code/.
+# They are no longer blocking this native analysis. The earlier runtime evidence listed below was not obtained.
+
 # Files needed from NX-APK-Recovery-20261023.zip
 # Paths below are relative to its 04_supplied_prior_recovery/ folder.
 # Preserve directory names. This subset is 49 files / 10,146,642 bytes.

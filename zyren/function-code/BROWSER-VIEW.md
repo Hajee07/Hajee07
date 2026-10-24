@@ -1,0 +1,1 @@
+The complete 8,145-file package is in ZYREN-Actual-Function-Code.zip. This GitHub directory exposes the per-control Python/text and selected core files for browsing; analysis snapshots, inherited analysis, protected payload and validation tools are in the ZIP. See README.md for recovery limits.

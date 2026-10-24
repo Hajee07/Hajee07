@@ -1,0 +1,39 @@
+CONTROL 16: LOOK / Show For Others (OS)
+NATIVE OPTION ID: 7101
+
+Send command 7101; byte is int(u32(value) == 1).
+
+PYTHON MENU HANDLER:
+"""LOOK / Show For Others (OS) — recovered menu ID 7101.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 1150-1153.
+Send command 7101; byte is int(u32(value) == 1).
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_16_show_for_others_os(runtime: MenuRuntime, value: int) -> None:
+    runtime.request(7101, int(u32(value) == 1))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 7101 / 0x1bbd
+Set show-for-others byte and mark dirty if changer is enabled.
+            *(undefined *)(iVar10 + 0x1012eaec) = 1;
+          }
+LAB_1012eafc:
+          auStack_29a8[0] = 1;
+          goto LAB_1012e854;
+        case 0x1bbd:
+          pcVar1 = (char *)(iRam1012f798 + 0x1012e9e0);
+          *(char *)(iRam1012f798 + 0x1012e9e1) = uStack_29d8._4_1_;
+          if (*pcVar1 != '\0') {
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

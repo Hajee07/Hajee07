@@ -1,0 +1,28 @@
+CONTROL 08: ESP / ESP Line
+NATIVE OPTION ID: 1
+
+Write one byte at snapshot 0x100E3A68; true only when value == 1.
+
+PYTHON MENU HANDLER:
+"""ESP / ESP Line — recovered menu ID 1.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 1705-1707.
+Write one byte at snapshot 0x100E3A68; true only when value == 1.
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_08_esp_line(runtime: MenuRuntime, value: int) -> None:
+    runtime.write_u8(0x100E3A68, int(u32(value) == 1))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+No remote server case is applicable/established for this control; see the scope below.
+
+RECOVERY SCOPE:
+Local display flag controls the recovered overlay-line drawing path.
+Response production/game-side data acquisition is not implemented by this display control.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

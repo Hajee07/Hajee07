@@ -1,0 +1,50 @@
+CONTROL 02: AIM / Aimkill MultiTarget
+NATIVE OPTION ID: 110
+
+Send 1049, then 1048; write 2000.0/0.0 locally; send float command 104. No invented aiming algorithm.
+
+PYTHON MENU HANDLER:
+"""AIM / Aimkill MultiTarget — recovered menu ID 110.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 2345-2353,2594-2602,2843-2857.
+Send 1049, then 1048; write 2000.0/0.0 locally; send float command 104. No invented aiming algorithm.
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_02_aimkill_multitarget(runtime: MenuRuntime, value: int) -> None:
+    enabled = int(u32(value) == 1)
+    runtime.request(1049, enabled)
+    runtime.request(1048, enabled)
+    amount = 2000.0 if enabled else 0.0
+    runtime.write_f32(0x100E1004, amount)
+    runtime.request(104, 0, amount)
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 1049 / 0x419
+Set one server state byte from request offset4.
+            case 0x419:
+              *(char *)(iRam1012f450 + 0x1012e4d8) = uStack_29d8._4_1_;
+              break;
+
+Request 1048 / 0x418
+Set one server state byte from request offset4.
+            case 0x418:
+              *(char *)(iRam1012f4dc + 0x1012e53b) = uStack_29d8._4_1_;
+              break;
+
+Request 104 / 0x68
+Decompiler represents request offset8 as signed integer converted to float; wire-type consistency is unverified.
+      case 0x68:
+        *(float *)(iRam1012f354 + 0x1012e37c) = (float)(longlong)(int)uStack_29d0;
+        break;
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

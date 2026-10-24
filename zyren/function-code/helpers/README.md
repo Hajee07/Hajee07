@@ -1,0 +1,15 @@
+# Newly resolved native wrappers and control evidence
+
+The fresh DT_INIT-derived menu memory image independently matches the supplied recovered JNI machine-code bodies. This directory resolves additional constants and translates wrapper logic that the earlier generic example did not recover.
+
+- `get_enemy_list.py`: actual 1920x1080 fetch wrapper and response decoding. Output is alternating name/unsigned64-ID strings; a zero status or count yields None (native NULL). Name format is `%s`, ID format `%llu`. Explicit Python bounds and encoding validation are documented additions.
+- `lock_player.py`: command525, a zero-initialized32-byte request, two target words at offsets24/28, and conditional reply read. It does not implement the game server's targeting algorithm.
+- `get_match_timer_status.py`: JNI int[2] populated from two real native-state globals. It includes only the exact OnDrawLoad trailer-to-global assignments, not a clock/countdown or complete renderer.
+- `PER-CONTROL-IMPLEMENTATION.md/json`: all51 recovered menu controls, exact client request IDs, and newly recovered native server-dispatch cases for41 controls. All emitted IDs on the enabled client paths now have a corresponding inferred server case. Source warnings and the offset8 float/integer interpretation discrepancy are retained; a dispatcher case is not the complete hooked gameplay feature.
+- Four `.source.c/.source.asm` pairs retain supplied recovered evidence. `.annotated.c` adds comments resolving snapshot-relative constants; they are pseudocode, not original compilable source.
+- `jni.h.reference` and `jni-offset-verification.json` verify JNI table offsets against the official OpenJDK header. In particular,0x2CC/0x34C are NewIntArray/SetIntArrayRegion, not float-array APIs.
+- `HELPER-RECOVERY.json` records the exact fresh snapshot hash, offsets and body comparisons. Snapshot addresses are analysis addresses, not addresses to assume in a running BlueStacks process.
+
+Run `python3 validate_helpers.py` for10 crafted byte-vector checks. Additionally, `verify_wrappers_against_arm.py --snapshot /path/to/libNOVA_MENU.so.dt_init_memory.bin` passed12 comparisons against the freshly recovered ARM wrapper bodies with modeled JNI, response producer, formatting and transport operations (requires Unicorn). Results are in `helper-validation.json` and `arm-wrapper-validation.json`. These checks verify the wrapper translations under documented inputs, not a live app, game, Android drawing layer or external server. Full protected Java and full game-side implementation remain separate recovery work.
+
+`local_unix_ipc.py` adds the actual recovered abstract Unix client endpoint and framing adapter. Ten synthetic local Unix-stream checks passed, plus one end-to-end integration with the existing Enable All handler (commands102 then3). See `LOCAL-IPC.md`, `local-ipc-validation.json`, `menu-runtime-integration.json` and `local-ipc-source-verification.json`. No actual game server or Internet was contacted by these tests.

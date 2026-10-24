@@ -1,0 +1,28 @@
+CONTROL 14: ESP / Draw FOV
+NATIVE OPTION ID: 16
+
+Write one byte at snapshot 0x100E3A6C; true only when value == 1.
+
+PYTHON MENU HANDLER:
+"""ESP / Draw FOV — recovered menu ID 16.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 1775-1777.
+Write one byte at snapshot 0x100E3A6C; true only when value == 1.
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_14_draw_fov(runtime: MenuRuntime, value: int) -> None:
+    runtime.write_u8(0x100E3A6C, int(u32(value) == 1))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+No remote server case is applicable/established for this control; see the scope below.
+
+RECOVERY SCOPE:
+Local display flag controls the FOV-circle rendering path; this is not an aiming algorithm.
+Response production/game-side data acquisition is not implemented by this display control.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

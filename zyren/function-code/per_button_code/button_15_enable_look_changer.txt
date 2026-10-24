@@ -1,0 +1,46 @@
+CONTROL 15: LOOK / Enable Look Changer
+NATIVE OPTION ID: 7100
+
+Send command 7100; byte is int(u32(value) == 1).
+
+PYTHON MENU HANDLER:
+"""LOOK / Enable Look Changer — recovered menu ID 7100.
+
+Python translation of the supplied recovered dispatcher branch.
+Source: evidence/Java_com_NovaX_Menu_ChangesID.c, lines 1146-1149.
+Send command 7100; byte is int(u32(value) == 1).
+Native game-side execution is not implemented or verified here.
+"""
+from runtime import MenuRuntime, u32, s32
+
+
+def button_15_enable_look_changer(runtime: MenuRuntime, value: int) -> None:
+    runtime.request(7100, int(u32(value) == 1))
+
+
+RECOVERED NATIVE SERVER CASES (C-LIKE PSEUDOCODE):
+
+Request 7100 / 0x1bbc
+Set Look Changer byte; normalize invalid stored index and mark dirty on enable.
+          if (uStack_29d8._4_1_ == '\0') {
+            *(undefined2 *)(iVar9 + 0x1012e909) = 0;
+          }
+          else {
+            *(undefined *)(iVar9 + 0x1012e90a) = 1;
+            *(undefined *)(iVar9 + 0x1012e902) = 1;
+            *(undefined *)(iVar9 + 0x1012e984) = 1;
+          }
+          goto LAB_1012eafc;
+        case 0x1bbc:
+          *(char *)(iRam1012f794 + 0x1012eae4) = uStack_29d8._4_1_;
+          if (uStack_29d8._4_1_ != '\0') {
+            iVar17 = *(int *)(iVar10 + 0x1012eae8);
+            if (iVar17 == -1 || iVar17 + 1 < 0 != SCARRY4(iVar17,1)) {
+              *(undefined4 *)(iVar10 + 0x1012eae8) = 0;
+            }
+
+RECOVERY SCOPE:
+Recovered native client request construction and local writes, as shown in client_handler_logic.
+Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.
+
+Dispatcher pseudocode includes unresolved instruction/control-flow warnings; full live gameplay behavior is unverified.

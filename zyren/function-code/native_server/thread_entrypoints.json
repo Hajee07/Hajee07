@@ -1,0 +1,20 @@
+[
+  {
+    "literal_address": "0x1018a0bc",
+    "relative_word": "0xfffedbb0",
+    "thread_entry_pointer": "0x10177c20",
+    "instruction_mode": "ARM"
+  },
+  {
+    "literal_address": "0x1018a0c0",
+    "relative_word": "0xfffa3088",
+    "thread_entry_pointer": "0x1012d110",
+    "instruction_mode": "ARM"
+  },
+  {
+    "literal_address": "0x1018a0c4",
+    "relative_word": "0xfffff494",
+    "thread_entry_pointer": "0x10189534",
+    "instruction_mode": "ARM"
+  }
+]

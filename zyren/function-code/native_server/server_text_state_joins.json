@@ -1,0 +1,116 @@
+[
+  {
+    "request_id": 3,
+    "matching_text_commands": [
+      "ENABLE_ALL_ON",
+      "ENABLE_ALL_OFF"
+    ],
+    "server_write_addresses": [
+      "0x101f7164"
+    ]
+  },
+  {
+    "request_id": 104,
+    "matching_text_commands": [
+      "SET_AIMFOV "
+    ],
+    "server_write_addresses": [
+      "0x101f7160"
+    ]
+  },
+  {
+    "request_id": 517,
+    "matching_text_commands": [
+      "SPEED_TIMER_ON",
+      "SPEED_TIMER_OFF"
+    ],
+    "server_write_addresses": [
+      "0x101f719c"
+    ]
+  },
+  {
+    "request_id": 525,
+    "matching_text_commands": [
+      "TARGET_LOCK_ON",
+      "TARGET_LOCK_OFF"
+    ],
+    "server_write_addresses": [
+      "0x101f7340",
+      "0x101f71a0",
+      "0x101f71a0",
+      "0x101f8e30",
+      "0x101f8e31",
+      "0x101f8e32",
+      "0x101f8e20",
+      "0x101f8e44",
+      "0x101f8e3c",
+      "0x101f8e3d",
+      "0x101f8e3e",
+      "0x101f8e3f",
+      "0x101f8e40",
+      "0x101f8e41",
+      "0x101f8e42",
+      "0x101f8e43",
+      "0x101f8e57",
+      "0x101f8e50",
+      "0x101f8e51",
+      "0x101f8e52",
+      "0x101f8e68",
+      "0x101f73c4"
+    ]
+  },
+  {
+    "request_id": 5194,
+    "matching_text_commands": [
+      "MAP_TELEPORT_ON",
+      "MAP_TELEPORT_OFF"
+    ],
+    "server_write_addresses": [
+      "0x101f714c",
+      "0x101f73c8",
+      "0x101f714f"
+    ]
+  },
+  {
+    "request_id": 5198,
+    "matching_text_commands": [
+      "MAP_TELEPORT_ON",
+      "MAP_TELEPORT_OFF"
+    ],
+    "server_write_addresses": [
+      "0x101f714c",
+      "0x101f73c8",
+      "0x101f714f"
+    ]
+  },
+  {
+    "request_id": 5657,
+    "matching_text_commands": [
+      "FLYHACK_ON",
+      "FLYHACK_OFF"
+    ],
+    "server_write_addresses": [
+      "0x101f7146"
+    ]
+  },
+  {
+    "request_id": 7896,
+    "matching_text_commands": [
+      "AUTO_REVIVE_ON",
+      "AUTO_REVIVE_OFF"
+    ],
+    "server_write_addresses": [
+      "0x101f718d"
+    ]
+  },
+  {
+    "request_id": 34834,
+    "matching_text_commands": [
+      "AIMLOCK_ON",
+      "AIMLOCK_OFF"
+    ],
+    "server_write_addresses": [
+      "0x101f7142"
+    ]
+  }
+]

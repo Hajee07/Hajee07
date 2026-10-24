@@ -1,0 +1,1286 @@
+{
+  "entry": "0x1012d110",
+  "source_has_bad_instruction_warnings": true,
+  "source_decompilation_completed": true,
+  "full_gameplay_logic_recovered": false,
+  "wire_offset4": "raw enable byte",
+  "wire_offset8": "payload field; inferred server type may disagree with menu float packing",
+  "mapping": [
+    {
+      "request_id": 3,
+      "request_id_hex": "0x3",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1397,
+        1399
+      ],
+      "summary": "Set one server state byte from request offset4.",
+      "literal_references": [
+        {
+          "literal": "0x1012eaf0",
+          "pc_base": "0x1012db34",
+          "resolved_snapshot_address": "0x101f7164"
+        }
+      ],
+      "source_excerpt": "      case 3:\n        *(char *)(iRam1012eaf0 + 0x1012db34) = uStack_29d8._4_1_;\n        break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 33,
+      "request_id_hex": "0x21",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1409,
+        1411
+      ],
+      "summary": "Set server state byte from request offset4.",
+      "literal_references": [
+        {
+          "literal": "0x1012f2a4",
+          "pc_base": "0x1012e391",
+          "resolved_snapshot_address": "0x101f71dd"
+        }
+      ],
+      "source_excerpt": "      case 0x21:\n        *(char *)(iRam1012f2a4 + 0x1012e391) = uStack_29d8._4_1_;\n        break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 102,
+      "request_id_hex": "0x66",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1425,
+        1427
+      ],
+      "summary": "Set one server state byte from request offset4.",
+      "literal_references": [
+        {
+          "literal": "0x1012f2a0",
+          "pc_base": "0x1012e37e",
+          "resolved_snapshot_address": "0x101f71de"
+        }
+      ],
+      "source_excerpt": "      case 0x66:\n        *(char *)(iRam1012f2a0 + 0x1012e37e) = uStack_29d8._4_1_;\n        break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 104,
+      "request_id_hex": "0x68",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1428,
+        1430
+      ],
+      "summary": "Decompiler represents request offset8 as signed integer converted to float; wire-type consistency is unverified.",
+      "literal_references": [
+        {
+          "literal": "0x1012f354",
+          "pc_base": "0x1012e37c",
+          "resolved_snapshot_address": "0x101f7160"
+        }
+      ],
+      "source_excerpt": "      case 0x68:\n        *(float *)(iRam1012f354 + 0x1012e37c) = (float)(longlong)(int)uStack_29d0;\n        break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 504,
+      "request_id_hex": "0x1f8",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        781,
+        787
+      ],
+      "summary": "Set four related server bytes from request offset4.",
+      "literal_references": [
+        {
+          "literal": "0x1012ed94",
+          "pc_base": "0x1012de15",
+          "resolved_snapshot_address": "0x101f7155"
+        }
+      ],
+      "source_excerpt": "        case 0x1f8:\n          *(char *)(iRam1012ed94 + 0x1012de15) = uStack_29d8._4_1_;\n          *(char *)(iVar17 + 0x1012de14) = uStack_29d8._4_1_;\n          *(char *)(iVar17 + 0x1012de05) = uStack_29d8._4_1_;\n          *(char *)(iVar17 + 0x1012de04) = uStack_29d8._4_1_;\n          break;\n        case 0x1f9:",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 507,
+      "request_id_hex": "0x1fb",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1167,
+        1169
+      ],
+      "summary": "Set server state byte in fallback switch.",
+      "literal_references": [
+        {
+          "literal": "0x1012f7e0",
+          "pc_base": "0x1012eb11",
+          "resolved_snapshot_address": "0x101f7165"
+        }
+      ],
+      "source_excerpt": "          case 0x1fb:\n            *(char *)(iRam1012f7e0 + 0x1012eb11) = uStack_29d8._4_1_;\n            break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 517,
+      "request_id_hex": "0x205",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1188,
+        1190
+      ],
+      "summary": "Set server state byte in fallback switch.",
+      "literal_references": [
+        {
+          "literal": "0x1012f7d4",
+          "pc_base": "0x1012ed50",
+          "resolved_snapshot_address": "0x101f719c"
+        }
+      ],
+      "source_excerpt": "          case 0x205:\n            *(char *)(iRam1012f7d4 + 0x1012ed50) = uStack_29d8._4_1_;\n            break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 525,
+      "request_id_hex": "0x20d",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        793,
+        926
+      ],
+      "summary": "Select target using low32 bits at request offset24; complex game lookup/string-decrypt path remains inferred.",
+      "literal_references": [
+        {
+          "literal": "0x1012eda0",
+          "pc_base": "0x1012de60",
+          "resolved_snapshot_address": "0x101f7340"
+        },
+        {
+          "literal": "0x1012f74c",
+          "pc_base": "0x1012e840",
+          "resolved_snapshot_address": "0x101f71a0"
+        },
+        {
+          "literal": "0x1012f750",
+          "pc_base": "0x1012e7ec",
+          "resolved_snapshot_address": "0x101f7344"
+        },
+        {
+          "literal": "0x1012eda4",
+          "pc_base": "0x1012ded4",
+          "resolved_snapshot_address": "0x101f71a0"
+        },
+        {
+          "literal": "0x1012eda8",
+          "pc_base": "0x1012de80",
+          "resolved_snapshot_address": "0x101f8e38"
+        },
+        {
+          "literal": "0x1012f6fc",
+          "pc_base": "0x1012f2e0",
+          "resolved_snapshot_address": "0x101f8e38"
+        },
+        {
+          "literal": "0x1012f700",
+          "pc_base": "0x1012f2fc",
+          "resolved_snapshot_address": "0x101f8e20"
+        },
+        {
+          "literal": "0x1012f704",
+          "pc_base": "0x1012f340",
+          "resolved_snapshot_address": "0x1018bb64"
+        },
+        {
+          "literal": "0x1012f708",
+          "pc_base": "0x1012f344",
+          "resolved_snapshot_address": "0x101f2b30"
+        },
+        {
+          "literal": "0x1012f70c",
+          "pc_base": "0x1012f350",
+          "resolved_snapshot_address": "0x101f8e38"
+        },
+        {
+          "literal": "0x1012edac",
+          "pc_base": "0x1012deac",
+          "resolved_snapshot_address": "0x101f8e34"
+        },
+        {
+          "literal": "0x1012edac",
+          "pc_base": "0x1012deab",
+          "resolved_snapshot_address": "0x101f8e33"
+        },
+        {
+          "literal": "0x1012edac",
+          "pc_base": "0x1012de98",
+          "resolved_snapshot_address": "0x101f8e20"
+        },
+        {
+          "literal": "0x1012edb4",
+          "pc_base": "0x1012dee5",
+          "resolved_snapshot_address": "0x101f8e31"
+        },
+        {
+          "literal": "0x1012edb8",
+          "pc_base": "0x1012def6",
+          "resolved_snapshot_address": "0x101f8e32"
+        },
+        {
+          "literal": "0x1012edbc",
+          "pc_base": "0x1012df00",
+          "resolved_snapshot_address": "0x101f8e30"
+        },
+        {
+          "literal": "0x1012edb0",
+          "pc_base": "0x1012ded4",
+          "resolved_snapshot_address": "0x101f8e30"
+        },
+        {
+          "literal": "0x1012edc0",
+          "pc_base": "0x1012df11",
+          "resolved_snapshot_address": "0x101f8e31"
+        },
+        {
+          "literal": "0x1012edc4",
+          "pc_base": "0x1012df22",
+          "resolved_snapshot_address": "0x101f8e32"
+        },
+        {
+          "literal": "0x1012edc8",
+          "pc_base": "0x1012df24",
+          "resolved_snapshot_address": "0x101f8e20"
+        },
+        {
+          "literal": "0x1012edcc",
+          "pc_base": "0x1012df34",
+          "resolved_snapshot_address": "0x101f8e4c"
+        },
+        {
+          "literal": "0x1012f710",
+          "pc_base": "0x1012f37c",
+          "resolved_snapshot_address": "0x101f8e4c"
+        },
+        {
+          "literal": "0x1012f714",
+          "pc_base": "0x1012f398",
+          "resolved_snapshot_address": "0x101f8e3c"
+        },
+        {
+          "literal": "0x1012f714",
+          "pc_base": "0x1012f3a0",
+          "resolved_snapshot_address": "0x101f8e44"
+        },
+        {
+          "literal": "0x1012f718",
+          "pc_base": "0x1012f3c8",
+          "resolved_snapshot_address": "0x1018bb7c"
+        },
+        {
+          "literal": "0x1012f71c",
+          "pc_base": "0x1012f3cc",
+          "resolved_snapshot_address": "0x101f2b30"
+        },
+        {
+          "literal": "0x1012f720",
+          "pc_base": "0x1012f3d8",
+          "resolved_snapshot_address": "0x101f8e4c"
+        },
+        {
+          "literal": "0x1012edd0",
+          "pc_base": "0x1012df59",
+          "resolved_snapshot_address": "0x101f8e49"
+        },
+        {
+          "literal": "0x1012edd4",
+          "pc_base": "0x1012df69",
+          "resolved_snapshot_address": "0x101f8e3d"
+        },
+        {
+          "literal": "0x1012edd8",
+          "pc_base": "0x1012df76",
+          "resolved_snapshot_address": "0x101f8e3e"
+        },
+        {
+          "literal": "0x1012eddc",
+          "pc_base": "0x1012df83",
+          "resolved_snapshot_address": "0x101f8e3f"
+        },
+        {
+          "literal": "0x1012ede0",
+          "pc_base": "0x1012df91",
+          "resolved_snapshot_address": "0x101f8e41"
+        },
+        {
+          "literal": "0x1012ede4",
+          "pc_base": "0x1012dfa0",
+          "resolved_snapshot_address": "0x101f8e40"
+        },
+        {
+          "literal": "0x1012ede8",
+          "pc_base": "0x1012dfae",
+          "resolved_snapshot_address": "0x101f8e42"
+        },
+        {
+          "literal": "0x1012edec",
+          "pc_base": "0x1012dfb8",
+          "resolved_snapshot_address": "0x101f8e3c"
+        },
+        {
+          "literal": "0x1012edd0",
+          "pc_base": "0x1012df4c",
+          "resolved_snapshot_address": "0x101f8e3c"
+        },
+        {
+          "literal": "0x1012edf0",
+          "pc_base": "0x1012dfcf",
+          "resolved_snapshot_address": "0x101f8e43"
+        },
+        {
+          "literal": "0x1012edf4",
+          "pc_base": "0x1012dfd9",
+          "resolved_snapshot_address": "0x101f8e3d"
+        },
+        {
+          "literal": "0x1012edf8",
+          "pc_base": "0x1012dff0",
+          "resolved_snapshot_address": "0x101f8e44"
+        },
+        {
+          "literal": "0x1012edfc",
+          "pc_base": "0x1012dff6",
+          "resolved_snapshot_address": "0x101f8e3e"
+        },
+        {
+          "literal": "0x1012ee00",
+          "pc_base": "0x1012e00d",
+          "resolved_snapshot_address": "0x101f8e45"
+        },
+        {
+          "literal": "0x1012ee04",
+          "pc_base": "0x1012e013",
+          "resolved_snapshot_address": "0x101f8e3f"
+        },
+        {
+          "literal": "0x1012ee08",
+          "pc_base": "0x1012e024",
+          "resolved_snapshot_address": "0x101f8e40"
+        },
+        {
+          "literal": "0x1012ee0c",
+          "pc_base": "0x1012e039",
+          "resolved_snapshot_address": "0x101f8e41"
+        },
+        {
+          "literal": "0x1012ee10",
+          "pc_base": "0x1012e04e",
+          "resolved_snapshot_address": "0x101f8e42"
+        },
+        {
+          "literal": "0x1012ee14",
+          "pc_base": "0x1012e063",
+          "resolved_snapshot_address": "0x101f8e43"
+        },
+        {
+          "literal": "0x1012ee18",
+          "pc_base": "0x1012e0a0",
+          "resolved_snapshot_address": "0x101f8e58"
+        },
+        {
+          "literal": "0x1012f724",
+          "pc_base": "0x1012f3fc",
+          "resolved_snapshot_address": "0x101f8e58"
+        },
+        {
+          "literal": "0x1012f728",
+          "pc_base": "0x1012f418",
+          "resolved_snapshot_address": "0x101f8e50"
+        },
+        {
+          "literal": "0x1012f72c",
+          "pc_base": "0x1012f434",
+          "resolved_snapshot_address": "0x1018bb94"
+        },
+        {
+          "literal": "0x1012f730",
+          "pc_base": "0x1012f438",
+          "resolved_snapshot_address": "0x101f2b30"
+        },
+        {
+          "literal": "0x1012f734",
+          "pc_base": "0x1012f444",
+          "resolved_snapshot_address": "0x101f8e58"
+        },
+        {
+          "literal": "0x1012ee1c",
+          "pc_base": "0x1012e0bf",
+          "resolved_snapshot_address": "0x101f8e57"
+        },
+        {
+          "literal": "0x1012ee1c",
+          "pc_base": "0x1012e0b8",
+          "resolved_snapshot_address": "0x101f8e50"
+        },
+        {
+          "literal": "0x1012ee1c",
+          "pc_base": "0x1012e0b9",
+          "resolved_snapshot_address": "0x101f8e51"
+        },
+        {
+          "literal": "0x1012ee20",
+          "pc_base": "0x1012e0da",
+          "resolved_snapshot_address": "0x101f8e52"
+        },
+        {
+          "literal": "0x1012ee24",
+          "pc_base": "0x1012e0e7",
+          "resolved_snapshot_address": "0x101f8e53"
+        },
+        {
+          "literal": "0x1012ee28",
+          "pc_base": "0x1012e0f5",
+          "resolved_snapshot_address": "0x101f8e55"
+        },
+        {
+          "literal": "0x1012ee2c",
+          "pc_base": "0x1012e107",
+          "resolved_snapshot_address": "0x101f8e57"
+        },
+        {
+          "literal": "0x1012ee30",
+          "pc_base": "0x1012e110",
+          "resolved_snapshot_address": "0x101f8e54"
+        },
+        {
+          "literal": "0x1012ee34",
+          "pc_base": "0x1012e11e",
+          "resolved_snapshot_address": "0x101f8e56"
+        },
+        {
+          "literal": "0x1012ee38",
+          "pc_base": "0x1012e128",
+          "resolved_snapshot_address": "0x101f8e50"
+        },
+        {
+          "literal": "0x1012ee3c",
+          "pc_base": "0x1012e139",
+          "resolved_snapshot_address": "0x101f8e51"
+        },
+        {
+          "literal": "0x1012ee40",
+          "pc_base": "0x1012e14a",
+          "resolved_snapshot_address": "0x101f8e52"
+        },
+        {
+          "literal": "0x1012ee44",
+          "pc_base": "0x1012e17c",
+          "resolved_snapshot_address": "0x101f8e70"
+        },
+        {
+          "literal": "0x1012f738",
+          "pc_base": "0x1012f470",
+          "resolved_snapshot_address": "0x101f8e70"
+        },
+        {
+          "literal": "0x1012f73c",
+          "pc_base": "0x1012f48c",
+          "resolved_snapshot_address": "0x101f8e5c"
+        },
+        {
+          "literal": "0x1012f73c",
+          "pc_base": "0x1012f498",
+          "resolved_snapshot_address": "0x101f8e68"
+        },
+        {
+          "literal": "0x1012f740",
+          "pc_base": "0x1012f4c8",
+          "resolved_snapshot_address": "0x1018bba4"
+        },
+        {
+          "literal": "0x1012f744",
+          "pc_base": "0x1012f4cc",
+          "resolved_snapshot_address": "0x101f2b30"
+        },
+        {
+          "literal": "0x1012f748",
+          "pc_base": "0x1012f4d8",
+          "resolved_snapshot_address": "0x101f8e70"
+        },
+        {
+          "literal": "0x1012ee48",
+          "pc_base": "0x1012e194",
+          "resolved_snapshot_address": "0x101f8e5c"
+        },
+        {
+          "literal": "0x1012ee4c",
+          "pc_base": "0x1012e1a8",
+          "resolved_snapshot_address": "0x101f8e20"
+        },
+        {
+          "literal": "0x1012ee50",
+          "pc_base": "0x1012e1b0",
+          "resolved_snapshot_address": "0x101f8e3c"
+        },
+        {
+          "literal": "0x1012ee54",
+          "pc_base": "0x1012e1b4",
+          "resolved_snapshot_address": "0x101f8e50"
+        },
+        {
+          "literal": "0x1012ee58",
+          "pc_base": "0x1012e1b8",
+          "resolved_snapshot_address": "0x101f8e5c"
+        },
+        {
+          "literal": "0x1012ee5c",
+          "pc_base": "0x1012e1cc",
+          "resolved_snapshot_address": "0x101f73c4"
+        },
+        {
+          "literal": "0x1012ee60",
+          "pc_base": "0x1012e1f0",
+          "resolved_snapshot_address": "0x101f73c4"
+        },
+        {
+          "literal": "0x1012ee64",
+          "pc_base": "0x1012e20c",
+          "resolved_snapshot_address": "0x101f7344"
+        },
+        {
+          "literal": "0x1012ee68",
+          "pc_base": "0x1012e218",
+          "resolved_snapshot_address": "0x101f73c4"
+        }
+      ],
+      "source_excerpt": "        case 0x20d:\n          iVar17 = (int)uStack_29c0;\n          *(int *)(iRam1012eda0 + 0x1012de60) = (int)uStack_29c0;\n          if ((int)uStack_29c0 == 0) {\n            *(undefined *)(iRam1012f74c + 0x1012e840) = 0;\n            puVar20 = (undefined *)(iRam1012f750 + 0x1012e7ec);\n          }\n          else {\n            *(undefined *)(iRam1012eda4 + 0x1012ded4) = 1;\n            DataMemoryBarrier(0xb);\n            if (((*(byte *)(iRam1012eda8 + 0x1012de80) & 1) == 0) &&\n               (iVar23 = func_0x1010a874(iRam1012f6fc + 0x1012f2e0), iVar18 = iRam1012f700,\n               iVar23 != 0)) {\n              puVar25 = (undefined4 *)(iRam1012f700 + 0x1012f2fc);\n              *puVar25 = 0x52d2548a;\n              *(undefined4 *)(iVar18 + 0x1012f300) = 0x6e0b81e8;\n              *(undefined4 *)(iVar18 + 0x1012f304) = 0x5ff264e6;\n              *(undefined4 *)(iVar18 + 0x1012f308) = 0x391791e4;\n              *(undefined4 *)(iVar18 + 0x1012f30c) = 0x37cd4baf;\n              *(undefined *)(iVar18 + 0x1012f310) = 1;\n              func_0x1010a7c0(iRam1012f704 + 0x1012f340,puVar25,iRam1012f708 + 0x1012f344);\n              func_0x1010a880(iRam1012f70c + 0x1012f350);\n            }\n            if (*(char *)(iRam1012edac + 0x1012deac) != '\\0') {\n              auVar32._8_8_ = uRam1012e288;\n              auVar32._0_8_ = uRam1012e280;\n              pbVar19 = (byte *)(iRam1012edac + 0x1012deab);\n              auVar32 = *(undefined (*) [16])(iRam1012edac + 0x1012de98) ^ auVar32;\n              bVar2 = *(byte *)(iRam1012edb4 + 0x1012dee5);\n              bVar3 = *pbVar19;\n              bVar4 = *(byte *)(iRam1012edb8 + 0x1012def6);\n              *(byte *)(iRam1012edbc + 0x1012df00) = *(byte *)(iRam1012edb0 + 0x1012ded4) ^ 0xcb;\n              *(byte *)(iRam1012edc0 + 0x1012df11) = bVar2 ^ 0x27;\n              *(byte *)(iRam1012edc4 + 0x1012df22) = bVar4 ^ 0xa1;\n              *pbVar19 = bVar3 ^ 0x37;\n              iVar18 = iRam1012edc8;\n              *(longlong *)(iRam1012edc8 + 0x1012df24) = auVar32._0_8_;\n              *(longlong *)(iVar18 + 0x1012df2c) = auVar32._8_8_;\n              *(undefined *)(iVar18 + 0x1012df38) = 0;\n            }\n            DataMemoryBarrier(0xb);\n            if (((*(byte *)(iRam1012edcc + 0x1012df34) & 1) == 0) &&\n               (iVar23 = func_0x1010a874(iRam1012f710 + 0x1012f37c), iVar18 = iRam1012f714,\n               iVar23 != 0)) {\n              puVar25 = (undefined4 *)(iRam1012f714 + 0x1012f398);\n              *(undefined4 *)(iRam1012f714 + 0x1012f3a0) = 0x4ec04b9b;\n              *(undefined4 *)(iVar18 + 0x1012f39c) = 0x720a82c2;\n              *puVar25 = 0x19f66888;\n              *(undefined2 *)(iVar18 + 0x1012f3a4) = 0x185;\n              func_0x1010a7c0(iRam1012f718 + 0x1012f3c8,puVar25,iRam1012f71c + 0x1012f3cc);\n              func_0x1010a880(iRam1012f720 + 0x1012f3d8);\n            }\n            if (*(char *)(iRam1012edd0 + 0x1012df59) != '\\0') {\n              bVar2 = *(byte *)(iRam1012edd4 + 0x1012df69);\n              bVar3 = *(byte *)(iRam1012edd8 + 0x1012df76);\n              bVar4 = *(byte *)(iRam1012eddc + 0x1012df83);\n              bVar5 = *(byte *)(iRam1012ede0 + 0x1012df91);\n              bVar6 = *(byte *)(iRam1012ede4 + 0x1012dfa0);\n              bVar7 = *(byte *)(iRam1012ede8 + 0x1012dfae);\n              *(byte *)(iRam1012edec + 0x1012dfb8) = *(byte *)(iRam1012edd0 + 0x1012df4c) ^ 0xcb;\n              bVar8 = *(byte *)(iRam1012edf0 + 0x1012dfcf);\n              *(byte *)(iRam1012edf4 + 0x1012dfd9) = bVar2 ^ 0x27;\n              bVar2 = *(byte *)(iRam1012edf8 + 0x1012dff0);\n              *(byte *)(iRam1012edfc + 0x1012dff6) = bVar3 ^ 0xa1;\n              bVar3 = *(byte *)(iRam1012ee00 + 0x1012e00d);\n              *(byte *)(iRam1012ee04 + 0x1012e013) = bVar4 ^ 0x37;\n              *(byte *)(iRam1012ee08 + 0x1012e024) = bVar6 ^ 0x85;\n              *(byte *)(iRam1012ee0c + 0x1012e039) = bVar5 ^ 0xe3;\n              *(byte *)(iRam1012ee10 + 0x1012e04e) = bVar7 ^ 0x67;\n              iVar18 = iRam1012ee14;\n              *(byte *)(iRam1012ee14 + 0x1012e063) = bVar8 ^ 0x17;\n              *(byte *)(iVar18 + 0x1012e064) = bVar2 ^ 0xcb;\n              *(byte *)(iVar18 + 0x1012e065) = bVar3 ^ 0x27;\n              *(byte *)(iVar18 + 0x1012e066) = *(byte *)(iVar18 + 0x1012e066) ^ 0xa1;\n              *(byte *)(iVar18 + 0x1012e067) = *(byte *)(iVar18 + 0x1012e067) ^ 0x37;\n              *(undefined *)(iVar18 + 0x1012e069) = 0;\n              *(byte *)(iVar18 + 0x1012e068) = *(byte *)(iVar18 + 0x1012e068) ^ 0x85;\n            }\n            DataMemoryBarrier(0xb);\n            if (((*(byte *)(iRam1012ee18 + 0x1012e0a0) & 1) == 0) &&\n               (iVar23 = func_0x1010a874(iRam1012f724 + 0x1012f3fc), iVar18 = iRam1012f728,\n               iVar23 != 0)) {\n              puVar25 = (undefined4 *)(iRam1012f728 + 0x1012f418);\n              *puVar25 = 0x4ec04b9b;\n              *(undefined4 *)(iVar18 + 0x1012f41c) = 0x16791e0;\n              func_0x1010a7c0(iRam1012f72c + 0x1012f434,puVar25,iRam1012f730 + 0x1012f438);\n              func_0x1010a880(iRam1012f734 + 0x1012f444);\n            }\n            if (*(char *)(iRam1012ee1c + 0x1012e0bf) != '\\0') {\n              bVar2 = *(byte *)(iRam1012ee1c + 0x1012e0b8);\n              bVar3 = *(byte *)(iRam1012ee1c + 0x1012e0b9);\n              bVar4 = *(byte *)(iRam1012ee20 + 0x1012e0da);\n              bVar5 = *(byte *)(iRam1012ee24 + 0x1012e0e7);\n              bVar6 = *(byte *)(iRam1012ee28 + 0x1012e0f5);\n              *(undefined *)(iRam1012ee2c + 0x1012e107) = 0;\n              bVar7 = *(byte *)(iRam1012ee30 + 0x1012e110);\n              bVar8 = *(byte *)(iRam1012ee34 + 0x1012e11e);\n              *(byte *)(iRam1012ee38 + 0x1012e128) = bVar2 ^ 0xcb;\n              *(byte *)(iRam1012ee3c + 0x1012e139) = bVar3 ^ 0x27;\n              iVar18 = iRam1012ee40;\n              *(byte *)(iRam1012ee40 + 0x1012e14a) = bVar4 ^ 0xa1;\n              *(byte *)(iVar18 + 0x1012e14b) = bVar5 ^ 0x37;\n              *(byte *)(iVar18 + 0x1012e14c) = bVar7 ^ 0x85;\n              *(byte *)(iVar18 + 0x1012e14d) = bVar6 ^ 0xe3;\n              *(byte *)(iVar18 + 0x1012e14e) = bVar8 ^ 0x67;\n            }\n            DataMemoryBarrier(0xb);\n            if (((*(byte *)(iRam1012ee44 + 0x1012e17c) & 1) == 0) &&\n               (iVar23 = func_0x1010a874(iRam1012f738 + 0x1012f470), iVar18 = iRam1012f73c,\n               iVar23 != 0)) {\n              puVar25 = (undefined4 *)(iRam1012f73c + 0x1012f48c);\n              *(undefined4 *)(iRam1012f73c + 0x1012f498) = 0x720a82cb;\n              *(undefined4 *)(iVar18 + 0x1012f494) = 0x5cc24e85;\n              *(undefined4 *)(iVar18 + 0x1012f490) = 0x7b068dec;\n              *puVar25 = 0x50c85584;\n              *(undefined2 *)(iVar18 + 0x1012f49c) = 0x1cb;\n              func_0x1010a7c0(iRam1012f740 + 0x1012f4c8,puVar25,iRam1012f744 + 0x1012f4cc);\n              func_0x1010a880(iRam1012f748 + 0x1012f4d8);\n            }\n            func_0x10198ef0(iRam1012ee48 + 0x1012e194);\n            iVar18 = func_0x101a4900(iRam1012ee4c + 0x1012e1a8,iRam1012ee50 + 0x1012e1b0,\n                                     iRam1012ee54 + 0x1012e1b4,iRam1012ee58 + 0x1012e1b8);\n            iVar17 = *(int *)(iVar18 + iVar17);\n            puVar20 = (undefined *)(iRam1012ee5c + 0x1012e1cc);\n            if (iVar17 != 0) {\n              iVar18 = func_0x101278d0(iVar17);\n              puVar20 = (undefined *)(iRam1012ee60 + 0x1012e1f0);\n              if (iVar18 != 0) {\n                uVar21 = func_0x101278d0(iVar17);\n                func_0x1010a8a4(iRam1012ee64 + 0x1012e20c,uVar21,0x7f);\n                *(undefined *)(iRam1012ee68 + 0x1012e218) = 0;\n                break;\n              }\n            }",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 532,
+      "request_id_hex": "0x214",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        942,
+        944
+      ],
+      "summary": "Set Invisible Kill server byte.",
+      "literal_references": [
+        {
+          "literal": "0x1012ed84",
+          "pc_base": "0x1012de29",
+          "resolved_snapshot_address": "0x101f71b9"
+        }
+      ],
+      "source_excerpt": "        case 0x214:\n          *(char *)(iRam1012ed84 + 0x1012de29) = uStack_29d8._4_1_;\n          break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 1048,
+      "request_id_hex": "0x418",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        609,
+        611
+      ],
+      "summary": "Set one server state byte from request offset4.",
+      "literal_references": [
+        {
+          "literal": "0x1012f4dc",
+          "pc_base": "0x1012e53b",
+          "resolved_snapshot_address": "0x101f7193"
+        }
+      ],
+      "source_excerpt": "            case 0x418:\n              *(char *)(iRam1012f4dc + 0x1012e53b) = uStack_29d8._4_1_;\n              break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 1049,
+      "request_id_hex": "0x419",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        612,
+        614
+      ],
+      "summary": "Set one server state byte from request offset4.",
+      "literal_references": [
+        {
+          "literal": "0x1012f450",
+          "pc_base": "0x1012e4d8",
+          "resolved_snapshot_address": "0x101f7194"
+        }
+      ],
+      "source_excerpt": "            case 0x419:\n              *(char *)(iRam1012f450 + 0x1012e4d8) = uStack_29d8._4_1_;\n              break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 1099,
+      "request_id_hex": "0x44b",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1115,
+        1121
+      ],
+      "summary": "Set server flag; clear adjacent state on disable.",
+      "literal_references": [
+        {
+          "literal": "0x1012f7a8",
+          "pc_base": "0x1012ec42",
+          "resolved_snapshot_address": "0x101f714e"
+        }
+      ],
+      "source_excerpt": "                  if ((int)uStack_29d8 != 1099) goto LAB_1012e854;\n                  *(char *)(iRam1012f7a8 + 0x1012ec42) = uStack_29d8._4_1_;\n                  if (uStack_29d8._4_1_ == '\\0') {\n                    *(undefined *)(iVar14 + 0x1012ec41) = 0;\n                  }\n                }\n              }",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 5194,
+      "request_id_hex": "0x144a",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1142,
+        1143
+      ],
+      "summary": "Set Fly Lock server byte; selector test is source line1126 (request ID0x144a). Native menu supplies an XOR toggle result.",
+      "literal_references": [
+        {
+          "literal": "0x1012f7a4",
+          "pc_base": "0x1012ebb4",
+          "resolved_snapshot_address": "0x101f71c8"
+        }
+      ],
+      "source_excerpt": "                *(char *)(iRam1012f7a4 + 0x1012ebb4) = uStack_29d8._4_1_;\n              }",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 5198,
+      "request_id_hex": "0x144e",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1127,
+        1138
+      ],
+      "summary": "When enabled and game helper succeeds, get three-component position, add1.5 to third field and store; clear another flag.",
+      "literal_references": [
+        {
+          "literal": "0x1012f7ac",
+          "pc_base": "0x1012eba4",
+          "resolved_snapshot_address": "0x101f714c"
+        },
+        {
+          "literal": "0x1012f7b0",
+          "pc_base": "0x1012eba4",
+          "resolved_snapshot_address": "0x101f73c8"
+        },
+        {
+          "literal": "0x1012f7b4",
+          "pc_base": "0x1012ebc3",
+          "resolved_snapshot_address": "0x101f714f"
+        }
+      ],
+      "source_excerpt": "                  if ((int)uStack_29d8 == 0x144e) {\n                    if ((uStack_29d8._4_1_ != '\\0') && (iVar17 = func_0x10121720(), iVar17 != 0)) {\n                      uVar21 = func_0x101178e0();\n                      func_0x10116860(&uStack_29b8,uVar21);\n                      fStack_29b0 = fStack_29b0 + 1.5;\n                      *(undefined *)(iRam1012f7ac + 0x1012eba4) = 1;\n                      iVar17 = iRam1012f7b0;\n                      *(ulonglong *)(iRam1012f7b0 + 0x1012eba4) = CONCAT44(uStack_29b4,uStack_29b8);\n                      *(float *)(iVar17 + 0x1012ebac) = fStack_29b0;\n                    }\n                    *(undefined *)(iRam1012f7b4 + 0x1012ebc3) = 0;\n                    break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 5657,
+      "request_id_hex": "0x1619",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1437,
+        1440
+      ],
+      "summary": "Set Rise Up server byte via shared label.",
+      "literal_references": [
+        {
+          "literal": "0x1012ed68",
+          "pc_base": "0x1012dd8e",
+          "resolved_snapshot_address": "0x101f7146"
+        }
+      ],
+      "source_excerpt": "      case 0x6f:\nLAB_1012dd78:\n        *(char *)(iRam1012ed68 + 0x1012dd8e) = uStack_29d8._4_1_;\n      }",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 5660,
+      "request_id_hex": "0x161c",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        660,
+        684
+      ],
+      "summary": "Clamp integer interpreted at request offset8 to15..100; optionally call game helpers; clear three state fields.",
+      "literal_references": [
+        {
+          "literal": "0x1012f4f0",
+          "pc_base": "0x1012e568",
+          "resolved_snapshot_address": "0x101f7148"
+        },
+        {
+          "literal": "0x1012f574",
+          "pc_base": "0x1012e598",
+          "resolved_snapshot_address": "0x101f78e1"
+        },
+        {
+          "literal": "0x1012f578",
+          "pc_base": "0x1012e5ac",
+          "resolved_snapshot_address": "0x101f78e4"
+        },
+        {
+          "literal": "0x1012f6e8",
+          "pc_base": "0x1012e834",
+          "resolved_snapshot_address": "0x101f78e4"
+        },
+        {
+          "literal": "0x1012f6ec",
+          "pc_base": "0x1012e840",
+          "resolved_snapshot_address": "0x101f78e1"
+        },
+        {
+          "literal": "0x1012f6f0",
+          "pc_base": "0x1012e84c",
+          "resolved_snapshot_address": "0x101f78e8"
+        },
+        {
+          "literal": "0x1012ed44",
+          "pc_base": "0x1012dd9d",
+          "resolved_snapshot_address": "0x101f7169"
+        }
+      ],
+      "source_excerpt": "            if ((int)uStack_29d8 == 0x161c) {\n              iVar17 = (int)uStack_29d0;\n              if ((int)uStack_29d0 < 0x10) {\n                iVar17 = 0xf;\n              }\n              if (99 < iVar17) {\n                iVar17 = 100;\n              }\n              *(int *)(iRam1012f4f0 + 0x1012e568) = iVar17;\n              iVar17 = func_0x10119490();\n              if ((iVar17 != 0) && (iVar17 = func_0x101178e0(), iVar17 != 0)) {\n                func_0x10116860(&uStack_29b8);\n                if (*(char *)(iRam1012f574 + 0x1012e598) != '\\0') {\n                  uStack_29b4 = *(undefined4 *)(iRam1012f578 + 0x1012e5ac);\n                }\n                func_0x1011e690(iVar17,uStack_29b8,uStack_29b4,fStack_29b0);\n              }\n              *(undefined4 *)(iRam1012f6e8 + 0x1012e834) = 0;\n              *(undefined *)(iRam1012f6ec + 0x1012e840) = 0;\n              *(undefined4 *)(iRam1012f6f0 + 0x1012e84c) = 0;\n            }\n            else {\n              if ((int)uStack_29d8 != 0x1eb9) goto LAB_1012e610;\n              *(char *)(iRam1012ed44 + 0x1012dd9d) = uStack_29d8._4_1_;\n            }",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7001,
+      "request_id_hex": "0x1b59",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        971,
+        973
+      ],
+      "summary": "Set Black Sky server byte.",
+      "literal_references": [
+        {
+          "literal": "0x1012f758",
+          "pc_base": "0x1012e85a",
+          "resolved_snapshot_address": "0x101f71ca"
+        }
+      ],
+      "source_excerpt": "        case 0x1b59:\n          *(char *)(iRam1012f758 + 0x1012e85a) = uStack_29d8._4_1_;\n          break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7003,
+      "request_id_hex": "0x1b5b",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        977,
+        979
+      ],
+      "summary": "Set Wide Camera server byte.",
+      "literal_references": [
+        {
+          "literal": "0x1012f760",
+          "pc_base": "0x1012e9e4",
+          "resolved_snapshot_address": "0x101f71cc"
+        }
+      ],
+      "source_excerpt": "        case 0x1b5b:\n          *(char *)(iRam1012f760 + 0x1012e9e4) = uStack_29d8._4_1_;\n          break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7100,
+      "request_id_hex": "0x1bbc",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1368,
+        1379
+      ],
+      "summary": "Set Look Changer byte; normalize invalid stored index and mark dirty on enable.",
+      "literal_references": [
+        {
+          "literal": "0x1012f794",
+          "pc_base": "0x1012eae4",
+          "resolved_snapshot_address": "0x101f71e8"
+        }
+      ],
+      "source_excerpt": "        case 0x1bbc:\n          *(char *)(iRam1012f794 + 0x1012eae4) = uStack_29d8._4_1_;\n          if (uStack_29d8._4_1_ != '\\0') {\n            iVar17 = *(int *)(iVar10 + 0x1012eae8);\n            if (iVar17 == -1 || iVar17 + 1 < 0 != SCARRY4(iVar17,1)) {\n              *(undefined4 *)(iVar10 + 0x1012eae8) = 0;\n            }\n            *(undefined *)(iVar10 + 0x1012eaec) = 1;\n          }\nLAB_1012eafc:\n          auStack_29a8[0] = 1;\n          goto LAB_1012e854;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7101,
+      "request_id_hex": "0x1bbd",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1380,
+        1386
+      ],
+      "summary": "Set show-for-others byte and mark dirty if changer is enabled.",
+      "literal_references": [
+        {
+          "literal": "0x1012f798",
+          "pc_base": "0x1012e9e0",
+          "resolved_snapshot_address": "0x101f71e8"
+        },
+        {
+          "literal": "0x1012f798",
+          "pc_base": "0x1012e9e1",
+          "resolved_snapshot_address": "0x101f71e9"
+        }
+      ],
+      "source_excerpt": "        case 0x1bbd:\n          pcVar1 = (char *)(iRam1012f798 + 0x1012e9e0);\n          *(char *)(iRam1012f798 + 0x1012e9e1) = uStack_29d8._4_1_;\n          if (*pcVar1 != '\\0') {\n            *(undefined *)(iVar11 + 0x1012e9e8) = 1;\n          }\n          break;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7102,
+      "request_id_hex": "0x1bbe",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 0.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7103,
+      "request_id_hex": "0x1bbf",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 1.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7104,
+      "request_id_hex": "0x1bc0",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 2.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7105,
+      "request_id_hex": "0x1bc1",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 3.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7106,
+      "request_id_hex": "0x1bc2",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 4.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7107,
+      "request_id_hex": "0x1bc3",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 5.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7108,
+      "request_id_hex": "0x1bc4",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 6.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7109,
+      "request_id_hex": "0x1bc5",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 7.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7110,
+      "request_id_hex": "0x1bc6",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 8.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7111,
+      "request_id_hex": "0x1bc7",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 9.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7112,
+      "request_id_hex": "0x1bc8",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 10.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7113,
+      "request_id_hex": "0x1bc9",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 11.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7114,
+      "request_id_hex": "0x1bca",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 12.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7115,
+      "request_id_hex": "0x1bcb",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 13.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7116,
+      "request_id_hex": "0x1bcc",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 14.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7117,
+      "request_id_hex": "0x1bcd",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 15.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7118,
+      "request_id_hex": "0x1bce",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 16.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7119,
+      "request_id_hex": "0x1bcf",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 17.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7120,
+      "request_id_hex": "0x1bd0",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 18.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7121,
+      "request_id_hex": "0x1bd1",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1096,
+        1104
+      ],
+      "summary": "On nonzero request byte, enable/dirty Look state and store preset index 19.",
+      "literal_references": [
+        {
+          "literal": "0x1012f79c",
+          "pc_base": "0x1012e988",
+          "resolved_snapshot_address": "0x101f71f0"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 7896,
+      "request_id_hex": "0x1ed8",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1148,
+        1153
+      ],
+      "summary": "Set server state byte after exact-ID test.",
+      "literal_references": [
+        {
+          "literal": "0x1012f7bc",
+          "pc_base": "0x1012ecb5",
+          "resolved_snapshot_address": "0x101f718d"
+        }
+      ],
+      "source_excerpt": "              }\n              else {\n                if ((int)uStack_29d8 != 0x1ed8) goto LAB_1012e854;\n                *(char *)(iRam1012f7bc + 0x1012ecb5) = uStack_29d8._4_1_;\n              }\n            }",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 34834,
+      "request_id_hex": "0x8812",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1160,
+        1164
+      ],
+      "summary": "Set server state byte after exact-ID test.",
+      "literal_references": [
+        {
+          "literal": "0x1012f7c0",
+          "pc_base": "0x1012ec02",
+          "resolved_snapshot_address": "0x101f7142"
+        }
+      ],
+      "source_excerpt": "            else {\n              if ((int)uStack_29d8 != 0x8812) goto LAB_1012e854;\n              *(char *)(iRam1012f7c0 + 0x1012ec02) = uStack_29d8._4_1_;\n            }\n            goto LAB_1012eafc;",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 59910,
+      "request_id_hex": "0xea06",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1388,
+        1391
+      ],
+      "summary": "Set TeleSpot manual server byte.",
+      "literal_references": [
+        {
+          "literal": "0x1012f784",
+          "pc_base": "0x1012eb03",
+          "resolved_snapshot_address": "0x101f71df"
+        }
+      ],
+      "source_excerpt": "          if ((int)uStack_29d8 == 0xea06) {\n            *(char *)(iRam1012f784 + 0x1012eb03) = uStack_29d8._4_1_;\n          }\n          else {",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    },
+    {
+      "request_id": 59912,
+      "request_id_hex": "0xea08",
+      "source_file": "native_server/1012d110.c",
+      "source_lines": [
+        1392,
+        1395
+      ],
+      "summary": "Set TeleSpot auto server byte.",
+      "literal_references": [
+        {
+          "literal": "0x1012f754",
+          "pc_base": "0x1012e94c",
+          "resolved_snapshot_address": "0x101f71e0"
+        }
+      ],
+      "source_excerpt": "            if ((int)uStack_29d8 != 0xea08) goto LAB_1012e8b0;\n            *(char *)(iRam1012f754 + 0x1012e94c) = uStack_29d8._4_1_;\n          }\n        }",
+      "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+    }
+  ]
+}

@@ -1,0 +1,1848 @@
+[
+  {
+    "number": 1,
+    "id": 102,
+    "tab": "AIM",
+    "label": "Enable All",
+    "file": "buttons/button_01_enable_all.py",
+    "function": "button_01_enable_all",
+    "source_lines": "1797-1807,2048-2066",
+    "client_handler_logic": "Write local flag; send commands 102 and 3, in that order. Does not enable every ESP flag.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      102,
+      3
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 102,
+        "request_id_hex": "0x66",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1425,
+          1427
+        ],
+        "summary": "Set one server state byte from request offset4.",
+        "literal_references": [
+          {
+            "literal": "0x1012f2a0",
+            "pc_base": "0x1012e37e",
+            "resolved_snapshot_address": "0x101f71de"
+          }
+        ],
+        "source_excerpt": "      case 0x66:\n        *(char *)(iRam1012f2a0 + 0x1012e37e) = uStack_29d8._4_1_;\n        break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      },
+      {
+        "request_id": 3,
+        "request_id_hex": "0x3",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1397,
+          1399
+        ],
+        "summary": "Set one server state byte from request offset4.",
+        "literal_references": [
+          {
+            "literal": "0x1012eaf0",
+            "pc_base": "0x1012db34",
+            "resolved_snapshot_address": "0x101f7164"
+          }
+        ],
+        "source_excerpt": "      case 3:\n        *(char *)(iRam1012eaf0 + 0x1012db34) = uStack_29d8._4_1_;\n        break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 2,
+    "id": 110,
+    "tab": "AIM",
+    "label": "Aimkill MultiTarget",
+    "file": "buttons/button_02_aimkill_multitarget.py",
+    "function": "button_02_aimkill_multitarget",
+    "source_lines": "2345-2353,2594-2602,2843-2857",
+    "client_handler_logic": "Send 1049, then 1048; write 2000.0/0.0 locally; send float command 104. No invented aiming algorithm.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      1049,
+      1048,
+      104
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 1049,
+        "request_id_hex": "0x419",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          612,
+          614
+        ],
+        "summary": "Set one server state byte from request offset4.",
+        "literal_references": [
+          {
+            "literal": "0x1012f450",
+            "pc_base": "0x1012e4d8",
+            "resolved_snapshot_address": "0x101f7194"
+          }
+        ],
+        "source_excerpt": "            case 0x419:\n              *(char *)(iRam1012f450 + 0x1012e4d8) = uStack_29d8._4_1_;\n              break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      },
+      {
+        "request_id": 1048,
+        "request_id_hex": "0x418",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          609,
+          611
+        ],
+        "summary": "Set one server state byte from request offset4.",
+        "literal_references": [
+          {
+            "literal": "0x1012f4dc",
+            "pc_base": "0x1012e53b",
+            "resolved_snapshot_address": "0x101f7193"
+          }
+        ],
+        "source_excerpt": "            case 0x418:\n              *(char *)(iRam1012f4dc + 0x1012e53b) = uStack_29d8._4_1_;\n              break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      },
+      {
+        "request_id": 104,
+        "request_id_hex": "0x68",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1428,
+          1430
+        ],
+        "summary": "Decompiler represents request offset8 as signed integer converted to float; wire-type consistency is unverified.",
+        "literal_references": [
+          {
+            "literal": "0x1012f354",
+            "pc_base": "0x1012e37c",
+            "resolved_snapshot_address": "0x101f7160"
+          }
+        ],
+        "source_excerpt": "      case 0x68:\n        *(float *)(iRam1012f354 + 0x1012e37c) = (float)(longlong)(int)uStack_29d0;\n        break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified.",
+    "wire_type_warning": "Server pseudocode interprets request offset8 as signed integer converted to float, whereas client builds float32 there. This apparent discrepancy is preserved as unverified; no silent fix is made."
+  },
+  {
+    "number": 3,
+    "id": 517,
+    "tab": "AIM",
+    "label": "Speed Timer",
+    "file": "buttons/button_03_speed_timer.py",
+    "function": "button_03_speed_timer",
+    "source_lines": "1606-1609",
+    "client_handler_logic": "Send command 517; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      517
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 517,
+        "request_id_hex": "0x205",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1188,
+          1190
+        ],
+        "summary": "Set server state byte in fallback switch.",
+        "literal_references": [
+          {
+            "literal": "0x1012f7d4",
+            "pc_base": "0x1012ed50",
+            "resolved_snapshot_address": "0x101f719c"
+          }
+        ],
+        "source_excerpt": "          case 0x205:\n            *(char *)(iRam1012f7d4 + 0x1012ed50) = uStack_29d8._4_1_;\n            break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 4,
+    "id": 1099,
+    "tab": "AIM",
+    "label": "Speed Slow V2",
+    "file": "buttons/button_04_speed_slow_v2.py",
+    "function": "button_04_speed_slow_v2",
+    "source_lines": "1254-1258",
+    "client_handler_logic": "Send command 1099; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      1099
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 1099,
+        "request_id_hex": "0x44b",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1115,
+          1121
+        ],
+        "summary": "Set server flag; clear adjacent state on disable.",
+        "literal_references": [
+          {
+            "literal": "0x1012f7a8",
+            "pc_base": "0x1012ec42",
+            "resolved_snapshot_address": "0x101f714e"
+          }
+        ],
+        "source_excerpt": "                  if ((int)uStack_29d8 != 1099) goto LAB_1012e854;\n                  *(char *)(iRam1012f7a8 + 0x1012ec42) = uStack_29d8._4_1_;\n                  if (uStack_29d8._4_1_ == '\\0') {\n                    *(undefined *)(iVar14 + 0x1012ec41) = 0;\n                  }\n                }\n              }",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 5,
+    "id": 507,
+    "tab": "AIM",
+    "label": "Speed Run",
+    "file": "buttons/button_05_speed_run.py",
+    "function": "button_05_speed_run",
+    "source_lines": "1547-1549,2868-2874",
+    "client_handler_logic": "Send command 507; byte is int(u32(value) != 0).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      507
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 507,
+        "request_id_hex": "0x1fb",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1167,
+          1169
+        ],
+        "summary": "Set server state byte in fallback switch.",
+        "literal_references": [
+          {
+            "literal": "0x1012f7e0",
+            "pc_base": "0x1012eb11",
+            "resolved_snapshot_address": "0x101f7165"
+          }
+        ],
+        "source_excerpt": "          case 0x1fb:\n            *(char *)(iRam1012f7e0 + 0x1012eb11) = uStack_29d8._4_1_;\n            break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 6,
+    "id": 34834,
+    "tab": "AIM",
+    "label": "Auto Target",
+    "file": "buttons/button_06_auto_target.py",
+    "function": "button_06_auto_target",
+    "source_lines": "438-443",
+    "client_handler_logic": "Send command 34834; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      34834
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 34834,
+        "request_id_hex": "0x8812",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1160,
+          1164
+        ],
+        "summary": "Set server state byte after exact-ID test.",
+        "literal_references": [
+          {
+            "literal": "0x1012f7c0",
+            "pc_base": "0x1012ec02",
+            "resolved_snapshot_address": "0x101f7142"
+          }
+        ],
+        "source_excerpt": "            else {\n              if ((int)uStack_29d8 != 0x8812) goto LAB_1012e854;\n              *(char *)(iRam1012f7c0 + 0x1012ec02) = uStack_29d8._4_1_;\n            }\n            goto LAB_1012eafc;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 7,
+    "id": 7896,
+    "tab": "AIM",
+    "label": "Auto Revive",
+    "file": "buttons/button_07_auto_revive.py",
+    "function": "button_07_auto_revive",
+    "source_lines": "430-433",
+    "client_handler_logic": "Send command 7896; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7896
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7896,
+        "request_id_hex": "0x1ed8",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1148,
+          1153
+        ],
+        "summary": "Set server state byte after exact-ID test.",
+        "literal_references": [
+          {
+            "literal": "0x1012f7bc",
+            "pc_base": "0x1012ecb5",
+            "resolved_snapshot_address": "0x101f718d"
+          }
+        ],
+        "source_excerpt": "              }\n              else {\n                if ((int)uStack_29d8 != 0x1ed8) goto LAB_1012e854;\n                *(char *)(iRam1012f7bc + 0x1012ecb5) = uStack_29d8._4_1_;\n              }\n            }",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 8,
+    "id": 1,
+    "tab": "ESP",
+    "label": "ESP Line",
+    "file": "buttons/button_08_esp_line.py",
+    "function": "button_08_esp_line",
+    "source_lines": "1705-1707",
+    "client_handler_logic": "Write one byte at snapshot 0x100E3A68; true only when value == 1.",
+    "display_flag": "0x100E3A68",
+    "display_source": "OnDrawLoad line1411 onward",
+    "verified_method_names": "DrawLine",
+    "actual_recovered_scope": "Local display flag controls the recovered overlay-line drawing path.",
+    "game_effect_status": "Response production/game-side data acquisition is not implemented by this display control.",
+    "emitted_request_ids_enabled_path": [],
+    "recovered_server_dispatch_cases": [],
+    "request_ids_without_resolved_server_case": []
+  },
+  {
+    "number": 9,
+    "id": 2,
+    "tab": "ESP",
+    "label": "ESP Box",
+    "file": "buttons/button_09_esp_box.py",
+    "function": "button_09_esp_box",
+    "source_lines": "1708-1710",
+    "client_handler_logic": "Write one byte at snapshot 0x100E3A69; true only when value == 1.",
+    "display_flag": "0x100E3A69",
+    "display_source": "OnDrawLoad line671 onward",
+    "verified_method_names": "DrawLine / FUN_1009cb34",
+    "actual_recovered_scope": "Local display flag controls recovered box/corner-outline paths.",
+    "game_effect_status": "Response production/game-side data acquisition is not implemented by this display control.",
+    "emitted_request_ids_enabled_path": [],
+    "recovered_server_dispatch_cases": [],
+    "request_ids_without_resolved_server_case": []
+  },
+  {
+    "number": 10,
+    "id": 3,
+    "tab": "ESP",
+    "label": "ESP Health",
+    "file": "buttons/button_10_esp_health.py",
+    "function": "button_10_esp_health",
+    "source_lines": "1711-1713",
+    "client_handler_logic": "Write one byte at snapshot 0x100E3A6B; true only when value == 1.",
+    "display_flag": "0x100E3A6B",
+    "display_source": "OnDrawLoad line947 onward",
+    "verified_method_names": "DrawFilledRect",
+    "actual_recovered_scope": "Local display flag controls health-bar rendering from response health data.",
+    "game_effect_status": "Response production/game-side data acquisition is not implemented by this display control.",
+    "emitted_request_ids_enabled_path": [],
+    "recovered_server_dispatch_cases": [],
+    "request_ids_without_resolved_server_case": []
+  },
+  {
+    "number": 11,
+    "id": 32,
+    "tab": "ESP",
+    "label": "ESP Weapon Icon",
+    "file": "buttons/button_11_esp_weapon_icon.py",
+    "function": "button_11_esp_weapon_icon",
+    "source_lines": "1784-1786",
+    "client_handler_logic": "Write one byte at snapshot 0x100E3A82; true only when value == 1.",
+    "display_flag": "0x100E3A82",
+    "display_source": "OnDrawLoad line1119 onward",
+    "verified_method_names": "DrawWeaponIcon",
+    "actual_recovered_scope": "Local display flag controls weapon-ID-to-icon mapping and icon drawing.",
+    "game_effect_status": "Response production/game-side data acquisition is not implemented by this display control.",
+    "emitted_request_ids_enabled_path": [],
+    "recovered_server_dispatch_cases": [],
+    "request_ids_without_resolved_server_case": []
+  },
+  {
+    "number": 12,
+    "id": 4,
+    "tab": "ESP",
+    "label": "ESP Distance",
+    "file": "buttons/button_12_esp_distance.py",
+    "function": "button_12_esp_distance",
+    "source_lines": "1714-1716",
+    "client_handler_logic": "Write one byte at snapshot 0x100E3A6A; true only when value == 1.",
+    "display_flag": "0x100E3A6A",
+    "display_source": "OnDrawLoad line1018 onward",
+    "verified_method_names": "DrawTextCenter; [%.2fm]",
+    "actual_recovered_scope": "Local display flag controls formatted response-distance text.",
+    "game_effect_status": "Response production/game-side data acquisition is not implemented by this display control.",
+    "emitted_request_ids_enabled_path": [],
+    "recovered_server_dispatch_cases": [],
+    "request_ids_without_resolved_server_case": []
+  },
+  {
+    "number": 13,
+    "id": 33,
+    "tab": "ESP",
+    "label": "ESP Grenade",
+    "file": "buttons/button_13_esp_grenade.py",
+    "function": "button_13_esp_grenade",
+    "source_lines": "1787-1792,2878-2886",
+    "client_handler_logic": "Write local grenade flag and send command 33.",
+    "display_flag": "0x100E3A8D",
+    "display_source": "OnDrawLoad line1515 onward",
+    "verified_method_names": "DrawLine / DrawTextCenter",
+    "actual_recovered_scope": "Local flag controls recovered throwable-marker rendering; dispatcher also sends33.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      33
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 33,
+        "request_id_hex": "0x21",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1409,
+          1411
+        ],
+        "summary": "Set server state byte from request offset4.",
+        "literal_references": [
+          {
+            "literal": "0x1012f2a4",
+            "pc_base": "0x1012e391",
+            "resolved_snapshot_address": "0x101f71dd"
+          }
+        ],
+        "source_excerpt": "      case 0x21:\n        *(char *)(iRam1012f2a4 + 0x1012e391) = uStack_29d8._4_1_;\n        break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 14,
+    "id": 16,
+    "tab": "ESP",
+    "label": "Draw FOV",
+    "file": "buttons/button_14_draw_fov.py",
+    "function": "button_14_draw_fov",
+    "source_lines": "1775-1777",
+    "client_handler_logic": "Write one byte at snapshot 0x100E3A6C; true only when value == 1.",
+    "display_flag": "0x100E3A6C",
+    "display_source": "OnDrawLoad line1354 onward",
+    "verified_method_names": "DrawCircle",
+    "actual_recovered_scope": "Local display flag controls the FOV-circle rendering path; this is not an aiming algorithm.",
+    "game_effect_status": "Response production/game-side data acquisition is not implemented by this display control.",
+    "emitted_request_ids_enabled_path": [],
+    "recovered_server_dispatch_cases": [],
+    "request_ids_without_resolved_server_case": []
+  },
+  {
+    "number": 15,
+    "id": 7100,
+    "tab": "LOOK",
+    "label": "Enable Look Changer",
+    "file": "buttons/button_15_enable_look_changer.py",
+    "function": "button_15_enable_look_changer",
+    "source_lines": "1146-1149",
+    "client_handler_logic": "Send command 7100; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7100
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7100,
+        "request_id_hex": "0x1bbc",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1359,
+          1374
+        ],
+        "summary": "Set Look Changer byte; normalize invalid stored index and mark dirty on enable.",
+        "literal_references": [
+          {
+            "literal": "0x1012f794",
+            "pc_base": "0x1012eae4",
+            "resolved_snapshot_address": "0x101f71e8"
+          }
+        ],
+        "source_excerpt": "          if (uStack_29d8._4_1_ == '\\0') {\n            *(undefined2 *)(iVar9 + 0x1012e909) = 0;\n          }\n          else {\n            *(undefined *)(iVar9 + 0x1012e90a) = 1;\n            *(undefined *)(iVar9 + 0x1012e902) = 1;\n            *(undefined *)(iVar9 + 0x1012e984) = 1;\n          }\n          goto LAB_1012eafc;\n        case 0x1bbc:\n          *(char *)(iRam1012f794 + 0x1012eae4) = uStack_29d8._4_1_;\n          if (uStack_29d8._4_1_ != '\\0') {\n            iVar17 = *(int *)(iVar10 + 0x1012eae8);\n            if (iVar17 == -1 || iVar17 + 1 < 0 != SCARRY4(iVar17,1)) {\n              *(undefined4 *)(iVar10 + 0x1012eae8) = 0;\n            }",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 16,
+    "id": 7101,
+    "tab": "LOOK",
+    "label": "Show For Others (OS)",
+    "file": "buttons/button_16_show_for_others_os.py",
+    "function": "button_16_show_for_others_os",
+    "source_lines": "1150-1153",
+    "client_handler_logic": "Send command 7101; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7101
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7101,
+        "request_id_hex": "0x1bbd",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1375,
+          1383
+        ],
+        "summary": "Set show-for-others byte and mark dirty if changer is enabled.",
+        "literal_references": [
+          {
+            "literal": "0x1012f798",
+            "pc_base": "0x1012e9e0",
+            "resolved_snapshot_address": "0x101f71e8"
+          },
+          {
+            "literal": "0x1012f798",
+            "pc_base": "0x1012e9e1",
+            "resolved_snapshot_address": "0x101f71e9"
+          }
+        ],
+        "source_excerpt": "            *(undefined *)(iVar10 + 0x1012eaec) = 1;\n          }\nLAB_1012eafc:\n          auStack_29a8[0] = 1;\n          goto LAB_1012e854;\n        case 0x1bbd:\n          pcVar1 = (char *)(iRam1012f798 + 0x1012e9e0);\n          *(char *)(iRam1012f798 + 0x1012e9e1) = uStack_29d8._4_1_;\n          if (*pcVar1 != '\\0') {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 17,
+    "id": 7102,
+    "tab": "LOOK",
+    "label": "Look 1 - Rampage",
+    "file": "buttons/button_17_look_1_rampage.py",
+    "function": "button_17_look_1_rampage",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7102 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7102
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7102,
+        "request_id_hex": "0x1bbe",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 0.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 18,
+    "id": 7103,
+    "tab": "LOOK",
+    "label": "Look 2 - Cobra",
+    "file": "buttons/button_18_look_2_cobra.py",
+    "function": "button_18_look_2_cobra",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7103 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7103
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7103,
+        "request_id_hex": "0x1bbf",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 1.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 19,
+    "id": 7104,
+    "tab": "LOOK",
+    "label": "Look 3 - Criminal Red",
+    "file": "buttons/button_19_look_3_criminal_red.py",
+    "function": "button_19_look_3_criminal_red",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7104 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7104
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7104,
+        "request_id_hex": "0x1bc0",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 2.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 20,
+    "id": 7105,
+    "tab": "LOOK",
+    "label": "Look 4 - Sakura",
+    "file": "buttons/button_20_look_4_sakura.py",
+    "function": "button_20_look_4_sakura",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7105 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7105
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7105,
+        "request_id_hex": "0x1bc1",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 3.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 21,
+    "id": 7106,
+    "tab": "LOOK",
+    "label": "Look 5 - Venom",
+    "file": "buttons/button_21_look_5_venom.py",
+    "function": "button_21_look_5_venom",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7106 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7106
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7106,
+        "request_id_hex": "0x1bc2",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 4.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 22,
+    "id": 7107,
+    "tab": "LOOK",
+    "label": "Look 6 - Titan",
+    "file": "buttons/button_22_look_6_titan.py",
+    "function": "button_22_look_6_titan",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7107 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7107
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7107,
+        "request_id_hex": "0x1bc3",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 5.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 23,
+    "id": 7108,
+    "tab": "LOOK",
+    "label": "Look 7 - Hip Hop",
+    "file": "buttons/button_23_look_7_hip_hop.py",
+    "function": "button_23_look_7_hip_hop",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7108 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7108
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7108,
+        "request_id_hex": "0x1bc4",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 6.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 24,
+    "id": 7109,
+    "tab": "LOOK",
+    "label": "Look 8 - Bunny Warrior",
+    "file": "buttons/button_24_look_8_bunny_warrior.py",
+    "function": "button_24_look_8_bunny_warrior",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7109 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7109
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7109,
+        "request_id_hex": "0x1bc5",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 7.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 25,
+    "id": 7110,
+    "tab": "LOOK",
+    "label": "Look 9 - Breakdancer",
+    "file": "buttons/button_25_look_9_breakdancer.py",
+    "function": "button_25_look_9_breakdancer",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7110 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7110
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7110,
+        "request_id_hex": "0x1bc6",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 8.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 26,
+    "id": 7111,
+    "tab": "LOOK",
+    "label": "Look 10 - Arctic Blue",
+    "file": "buttons/button_26_look_10_arctic_blue.py",
+    "function": "button_26_look_10_arctic_blue",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7111 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7111
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7111,
+        "request_id_hex": "0x1bc7",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 9.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 27,
+    "id": 7112,
+    "tab": "LOOK",
+    "label": "Look 11 - Naruto",
+    "file": "buttons/button_27_look_11_naruto.py",
+    "function": "button_27_look_11_naruto",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7112 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7112
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7112,
+        "request_id_hex": "0x1bc8",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 10.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 28,
+    "id": 7113,
+    "tab": "LOOK",
+    "label": "Look 12 - Sasuke",
+    "file": "buttons/button_28_look_12_sasuke.py",
+    "function": "button_28_look_12_sasuke",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7113 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7113
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7113,
+        "request_id_hex": "0x1bc9",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 11.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 29,
+    "id": 7114,
+    "tab": "LOOK",
+    "label": "Look 13 - Kakashi",
+    "file": "buttons/button_29_look_13_kakashi.py",
+    "function": "button_29_look_13_kakashi",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7114 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7114
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7114,
+        "request_id_hex": "0x1bca",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 12.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 30,
+    "id": 7115,
+    "tab": "LOOK",
+    "label": "Look 14 - Saitama",
+    "file": "buttons/button_30_look_14_saitama.py",
+    "function": "button_30_look_14_saitama",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7115 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7115
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7115,
+        "request_id_hex": "0x1bcb",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 13.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 31,
+    "id": 7116,
+    "tab": "LOOK",
+    "label": "Look 15 - Dino",
+    "file": "buttons/button_31_look_15_dino.py",
+    "function": "button_31_look_15_dino",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7116 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7116
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7116,
+        "request_id_hex": "0x1bcc",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 14.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 32,
+    "id": 7117,
+    "tab": "LOOK",
+    "label": "Look 16 - Old Man",
+    "file": "buttons/button_32_look_16_old_man.py",
+    "function": "button_32_look_16_old_man",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7117 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7117
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7117,
+        "request_id_hex": "0x1bcd",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 15.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 33,
+    "id": 7118,
+    "tab": "LOOK",
+    "label": "Look 17 - Criminal Blue",
+    "file": "buttons/button_33_look_17_criminal_blue.py",
+    "function": "button_33_look_17_criminal_blue",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7118 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7118
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7118,
+        "request_id_hex": "0x1bce",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 16.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 34,
+    "id": 7119,
+    "tab": "LOOK",
+    "label": "Look 18 - Criminal Green",
+    "file": "buttons/button_34_look_18_criminal_green.py",
+    "function": "button_34_look_18_criminal_green",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7119 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7119
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7119,
+        "request_id_hex": "0x1bcf",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 17.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 35,
+    "id": 7120,
+    "tab": "LOOK",
+    "label": "Look 19 - Angelic Set",
+    "file": "buttons/button_35_look_19_angelic_set.py",
+    "function": "button_35_look_19_angelic_set",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7120 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7120
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7120,
+        "request_id_hex": "0x1bd0",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 18.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 36,
+    "id": 7121,
+    "tab": "LOOK",
+    "label": "Look 20 - Galaxy Set",
+    "file": "buttons/button_36_look_20_galaxy_set.py",
+    "function": "button_36_look_20_galaxy_set",
+    "source_lines": "1154-1179,530-532,2881-2886",
+    "client_handler_logic": "Send command 7121 only when value == 1; otherwise no native action.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7121
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7121,
+        "request_id_hex": "0x1bd1",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1096,
+          1104
+        ],
+        "summary": "On nonzero request byte, enable/dirty Look state and store preset index 19.",
+        "literal_references": [
+          {
+            "literal": "0x1012f79c",
+            "pc_base": "0x1012e988",
+            "resolved_snapshot_address": "0x101f71f0"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 - 0x1bbeU < 0x14) {\n            if (uStack_29d8._4_1_ != '\\0') {\n              *(undefined *)(iRam1012f79c + 0x1012e988) = 1;\n              *(undefined *)(iVar12 + 0x1012e980) = 1;\n              *(uint *)(iVar12 + 0x1012e984) = (int)uStack_29d8 - 0x1bbeU;\n            }\n            goto LAB_1012eafc;\n          }\n          if (0x437 < (int)uStack_29d8) {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 37,
+    "id": 5194,
+    "tab": "BRTL",
+    "label": "Fly Lock",
+    "file": "buttons/button_37_fly_lock.py",
+    "function": "button_37_fly_lock",
+    "source_lines": "1537-1542,469-472",
+    "client_handler_logic": "Ignore argument; XOR previous byte at 0x1010DDDC with 1; send command 5194.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      5194
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 5194,
+        "request_id_hex": "0x144a",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1126,
+          1141
+        ],
+        "summary": "Set Fly Lock server byte; native menu supplies an XOR toggle result.",
+        "literal_references": [
+          {
+            "literal": "0x1012f7ac",
+            "pc_base": "0x1012eba4",
+            "resolved_snapshot_address": "0x101f714c"
+          },
+          {
+            "literal": "0x1012f7b0",
+            "pc_base": "0x1012eba4",
+            "resolved_snapshot_address": "0x101f73c8"
+          },
+          {
+            "literal": "0x1012f7b4",
+            "pc_base": "0x1012ebc3",
+            "resolved_snapshot_address": "0x101f714f"
+          }
+        ],
+        "source_excerpt": "                if ((int)uStack_29d8 != 0x144a) {\n                  if ((int)uStack_29d8 == 0x144e) {\n                    if ((uStack_29d8._4_1_ != '\\0') && (iVar17 = func_0x10121720(), iVar17 != 0)) {\n                      uVar21 = func_0x101178e0();\n                      func_0x10116860(&uStack_29b8,uVar21);\n                      fStack_29b0 = fStack_29b0 + 1.5;\n                      *(undefined *)(iRam1012f7ac + 0x1012eba4) = 1;\n                      iVar17 = iRam1012f7b0;\n                      *(ulonglong *)(iRam1012f7b0 + 0x1012eba4) = CONCAT44(uStack_29b4,uStack_29b8);\n                      *(float *)(iVar17 + 0x1012ebac) = fStack_29b0;\n                    }\n                    *(undefined *)(iRam1012f7b4 + 0x1012ebc3) = 0;\n                    break;\n                  }\n                  goto LAB_1012e854;\n                }",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 38,
+    "id": 111,
+    "tab": "BRTL",
+    "label": "Rise Up",
+    "file": "buttons/button_38_rise_up.py",
+    "function": "button_38_rise_up",
+    "source_lines": "2858-2861",
+    "client_handler_logic": "Send command 5657; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      5657
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 5657,
+        "request_id_hex": "0x1619",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1437,
+          1440
+        ],
+        "summary": "Set Rise Up server byte via shared label.",
+        "literal_references": [
+          {
+            "literal": "0x1012ed68",
+            "pc_base": "0x1012dd8e",
+            "resolved_snapshot_address": "0x101f7146"
+          }
+        ],
+        "source_excerpt": "      case 0x6f:\nLAB_1012dd78:\n        *(char *)(iRam1012ed68 + 0x1012dd8e) = uStack_29d8._4_1_;\n      }",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 39,
+    "id": 5660,
+    "tab": "BRTL",
+    "label": "Rise Up New Height",
+    "file": "buttons/button_39_rise_up_new_height.py",
+    "function": "button_39_rise_up_new_height",
+    "source_lines": "1180-1185,493-507",
+    "client_handler_logic": "Convert signed 32-bit value to float32; send command 5660. UI declares 15..100 M.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      5660
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 5660,
+        "request_id_hex": "0x161c",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          660,
+          684
+        ],
+        "summary": "Clamp integer interpreted at request offset8 to15..100; optionally call game helpers; clear three state fields.",
+        "literal_references": [
+          {
+            "literal": "0x1012f4f0",
+            "pc_base": "0x1012e568",
+            "resolved_snapshot_address": "0x101f7148"
+          },
+          {
+            "literal": "0x1012f574",
+            "pc_base": "0x1012e598",
+            "resolved_snapshot_address": "0x101f78e1"
+          },
+          {
+            "literal": "0x1012f578",
+            "pc_base": "0x1012e5ac",
+            "resolved_snapshot_address": "0x101f78e4"
+          },
+          {
+            "literal": "0x1012f6e8",
+            "pc_base": "0x1012e834",
+            "resolved_snapshot_address": "0x101f78e4"
+          },
+          {
+            "literal": "0x1012f6ec",
+            "pc_base": "0x1012e840",
+            "resolved_snapshot_address": "0x101f78e1"
+          },
+          {
+            "literal": "0x1012f6f0",
+            "pc_base": "0x1012e84c",
+            "resolved_snapshot_address": "0x101f78e8"
+          },
+          {
+            "literal": "0x1012ed44",
+            "pc_base": "0x1012dd9d",
+            "resolved_snapshot_address": "0x101f7169"
+          }
+        ],
+        "source_excerpt": "            if ((int)uStack_29d8 == 0x161c) {\n              iVar17 = (int)uStack_29d0;\n              if ((int)uStack_29d0 < 0x10) {\n                iVar17 = 0xf;\n              }\n              if (99 < iVar17) {\n                iVar17 = 100;\n              }\n              *(int *)(iRam1012f4f0 + 0x1012e568) = iVar17;\n              iVar17 = func_0x10119490();\n              if ((iVar17 != 0) && (iVar17 = func_0x101178e0(), iVar17 != 0)) {\n                func_0x10116860(&uStack_29b8);\n                if (*(char *)(iRam1012f574 + 0x1012e598) != '\\0') {\n                  uStack_29b4 = *(undefined4 *)(iRam1012f578 + 0x1012e5ac);\n                }\n                func_0x1011e690(iVar17,uStack_29b8,uStack_29b4,fStack_29b0);\n              }\n              *(undefined4 *)(iRam1012f6e8 + 0x1012e834) = 0;\n              *(undefined *)(iRam1012f6ec + 0x1012e840) = 0;\n              *(undefined4 *)(iRam1012f6f0 + 0x1012e84c) = 0;\n            }\n            else {\n              if ((int)uStack_29d8 != 0x1eb9) goto LAB_1012e610;\n              *(char *)(iRam1012ed44 + 0x1012dd9d) = uStack_29d8._4_1_;\n            }",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified.",
+    "wire_type_warning": "Server pseudocode interprets request offset8 as signed integer converted to float, whereas client builds float32 there. This apparent discrepancy is preserved as unverified; no silent fix is made."
+  },
+  {
+    "number": 40,
+    "id": 5198,
+    "tab": "BRTL",
+    "label": "Tp Anywhere",
+    "file": "buttons/button_40_tp_anywhere.py",
+    "function": "button_40_tp_anywhere",
+    "source_lines": "452-472",
+    "client_handler_logic": "Ignore argument; XOR previous byte at 0x1010DDD4 with 1; send command 5198.",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      5198
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 5198,
+        "request_id_hex": "0x144e",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1127,
+          1138
+        ],
+        "summary": "When enabled and game helper succeeds, get three-component position, add1.5 to third field and store; clear another flag.",
+        "literal_references": [
+          {
+            "literal": "0x1012f7ac",
+            "pc_base": "0x1012eba4",
+            "resolved_snapshot_address": "0x101f714c"
+          },
+          {
+            "literal": "0x1012f7b0",
+            "pc_base": "0x1012eba4",
+            "resolved_snapshot_address": "0x101f73c8"
+          },
+          {
+            "literal": "0x1012f7b4",
+            "pc_base": "0x1012ebc3",
+            "resolved_snapshot_address": "0x101f714f"
+          }
+        ],
+        "source_excerpt": "                  if ((int)uStack_29d8 == 0x144e) {\n                    if ((uStack_29d8._4_1_ != '\\0') && (iVar17 = func_0x10121720(), iVar17 != 0)) {\n                      uVar21 = func_0x101178e0();\n                      func_0x10116860(&uStack_29b8,uVar21);\n                      fStack_29b0 = fStack_29b0 + 1.5;\n                      *(undefined *)(iRam1012f7ac + 0x1012eba4) = 1;\n                      iVar17 = iRam1012f7b0;\n                      *(ulonglong *)(iRam1012f7b0 + 0x1012eba4) = CONCAT44(uStack_29b4,uStack_29b8);\n                      *(float *)(iVar17 + 0x1012ebac) = fStack_29b0;\n                    }\n                    *(undefined *)(iRam1012f7b4 + 0x1012ebc3) = 0;\n                    break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 41,
+    "id": 59910,
+    "tab": "BRTL",
+    "label": "TeleSpot [MANUAL]",
+    "file": "buttons/button_41_telespot_manual.py",
+    "function": "button_41_telespot_manual",
+    "source_lines": "307-311",
+    "client_handler_logic": "Send command 59910; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      59910
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 59910,
+        "request_id_hex": "0xea06",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1388,
+          1391
+        ],
+        "summary": "Set TeleSpot manual server byte.",
+        "literal_references": [
+          {
+            "literal": "0x1012f784",
+            "pc_base": "0x1012eb03",
+            "resolved_snapshot_address": "0x101f71df"
+          }
+        ],
+        "source_excerpt": "          if ((int)uStack_29d8 == 0xea06) {\n            *(char *)(iRam1012f784 + 0x1012eb03) = uStack_29d8._4_1_;\n          }\n          else {",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 42,
+    "id": 59912,
+    "tab": "BRTL",
+    "label": "TeleSpot [AUTO]",
+    "file": "buttons/button_42_telespot_auto.py",
+    "function": "button_42_telespot_auto",
+    "source_lines": "302-305,311",
+    "client_handler_logic": "Send command 59912; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      59912
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 59912,
+        "request_id_hex": "0xea08",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1392,
+          1395
+        ],
+        "summary": "Set TeleSpot auto server byte.",
+        "literal_references": [
+          {
+            "literal": "0x1012f754",
+            "pc_base": "0x1012e94c",
+            "resolved_snapshot_address": "0x101f71e0"
+          }
+        ],
+        "source_excerpt": "            if ((int)uStack_29d8 != 0xea08) goto LAB_1012e8b0;\n            *(char *)(iRam1012f754 + 0x1012e94c) = uStack_29d8._4_1_;\n          }\n        }",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 43,
+    "id": 7003,
+    "tab": "BRTL",
+    "label": "Wide Camera",
+    "file": "buttons/button_43_wide_camera.py",
+    "function": "button_43_wide_camera",
+    "source_lines": "481-484",
+    "client_handler_logic": "Send command 7003; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7003
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7003,
+        "request_id_hex": "0x1b5b",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          977,
+          979
+        ],
+        "summary": "Set Wide Camera server byte.",
+        "literal_references": [
+          {
+            "literal": "0x1012f760",
+            "pc_base": "0x1012e9e4",
+            "resolved_snapshot_address": "0x101f71cc"
+          }
+        ],
+        "source_excerpt": "        case 0x1b5b:\n          *(char *)(iRam1012f760 + 0x1012e9e4) = uStack_29d8._4_1_;\n          break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 44,
+    "id": 532,
+    "tab": "BRTL",
+    "label": "Invisible Kill",
+    "file": "buttons/button_44_invisible_kill.py",
+    "function": "button_44_invisible_kill",
+    "source_lines": "1677-1680",
+    "client_handler_logic": "Send command 532; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      532
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 532,
+        "request_id_hex": "0x214",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          942,
+          944
+        ],
+        "summary": "Set Invisible Kill server byte.",
+        "literal_references": [
+          {
+            "literal": "0x1012ed84",
+            "pc_base": "0x1012de29",
+            "resolved_snapshot_address": "0x101f71b9"
+          }
+        ],
+        "source_excerpt": "        case 0x214:\n          *(char *)(iRam1012ed84 + 0x1012de29) = uStack_29d8._4_1_;\n          break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 45,
+    "id": 7001,
+    "tab": "BRTL",
+    "label": "Black Sky",
+    "file": "buttons/button_45_black_sky.py",
+    "function": "button_45_black_sky",
+    "source_lines": "2326-2329",
+    "client_handler_logic": "Send command 7001; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      7001
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 7001,
+        "request_id_hex": "0x1b59",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          971,
+          973
+        ],
+        "summary": "Set Black Sky server byte.",
+        "literal_references": [
+          {
+            "literal": "0x1012f758",
+            "pc_base": "0x1012e85a",
+            "resolved_snapshot_address": "0x101f71ca"
+          }
+        ],
+        "source_excerpt": "        case 0x1b59:\n          *(char *)(iRam1012f758 + 0x1012e85a) = uStack_29d8._4_1_;\n          break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 46,
+    "id": 5658,
+    "tab": "BRTL",
+    "label": "Downkill",
+    "file": "buttons/button_46_downkill.py",
+    "function": "button_46_downkill",
+    "source_lines": "452-464",
+    "client_handler_logic": "Send command 504; byte is int(u32(value) == 1).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      504
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 504,
+        "request_id_hex": "0x1f8",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          781,
+          787
+        ],
+        "summary": "Set four related server bytes from request offset4.",
+        "literal_references": [
+          {
+            "literal": "0x1012ed94",
+            "pc_base": "0x1012de15",
+            "resolved_snapshot_address": "0x101f7155"
+          }
+        ],
+        "source_excerpt": "        case 0x1f8:\n          *(char *)(iRam1012ed94 + 0x1012de15) = uStack_29d8._4_1_;\n          *(char *)(iVar17 + 0x1012de14) = uStack_29d8._4_1_;\n          *(char *)(iVar17 + 0x1012de05) = uStack_29d8._4_1_;\n          *(char *)(iVar17 + 0x1012de04) = uStack_29d8._4_1_;\n          break;\n        case 0x1f9:",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 47,
+    "id": 114,
+    "tab": "BRTL",
+    "label": "Joystick Speed",
+    "file": "buttons/button_47_joystick_speed.py",
+    "function": "button_47_joystick_speed",
+    "source_lines": "2866-2874",
+    "client_handler_logic": "Send command 507; byte is int(u32(value) != 0).",
+    "actual_recovered_scope": "Recovered native client request construction and local writes, as shown in client_handler_logic.",
+    "game_effect_status": "Server-side dispatch operations recovered, listed below; this does not establish the complete gameplay feature or live effect.",
+    "emitted_request_ids_enabled_path": [
+      507
+    ],
+    "recovered_server_dispatch_cases": [
+      {
+        "request_id": 507,
+        "request_id_hex": "0x1fb",
+        "source_file": "native_server/1012d110.c",
+        "source_lines": [
+          1167,
+          1169
+        ],
+        "summary": "Set server state byte in fallback switch.",
+        "literal_references": [
+          {
+            "literal": "0x1012f7e0",
+            "pc_base": "0x1012eb11",
+            "resolved_snapshot_address": "0x101f7165"
+          }
+        ],
+        "source_excerpt": "          case 0x1fb:\n            *(char *)(iRam1012f7e0 + 0x1012eb11) = uStack_29d8._4_1_;\n            break;",
+        "confidence": "fresh inferred dispatcher pseudocode; not verified game behavior"
+      }
+    ],
+    "request_ids_without_resolved_server_case": [],
+    "server_recovery_scope": "Fresh inferred request-dispatch cases now recovered; source contains a bad-instruction/control-flow warning. Full hook/game effect and live operation remain unverified."
+  },
+  {
+    "number": 48,
+    "id": 6002,
+    "tab": "SET",
+    "label": "Show Keybinds",
+    "file": "buttons/button_48_show_keybinds.py",
+    "function": "button_48_show_keybinds",
+    "source_lines": "1180-1190,3134-3140",
+    "client_handler_logic": "No action in the recovered native dispatcher. Java keybind behavior has not been recovered.",
+    "actual_recovered_scope": "No matching action in the recovered native ChangesID function; original Java keybind handling is unavailable.",
+    "game_effect_status": "Unrecovered protected Java behavior; do not interpret the native fallthrough as proof the whole app button does nothing.",
+    "emitted_request_ids_enabled_path": [],
+    "recovered_server_dispatch_cases": [],
+    "request_ids_without_resolved_server_case": []
+  },
+  {
+    "number": 49,
+    "id": 6000,
+    "tab": "SET",
+    "label": "Enable Keybind System",
+    "file": "buttons/button_49_enable_keybind_system.py",
+    "function": "button_49_enable_keybind_system",
+    "source_lines": "1180-1190,3134-3140",
+    "client_handler_logic": "No action in the recovered native dispatcher. Java keybind behavior has not been recovered.",
+    "actual_recovered_scope": "No matching action in the recovered native ChangesID function; original Java keybind handling is unavailable.",
+    "game_effect_status": "Unrecovered protected Java behavior; do not interpret the native fallthrough as proof the whole app button does nothing.",
+    "emitted_request_ids_enabled_path": [],
+    "recovered_server_dispatch_cases": [],
+    "request_ids_without_resolved_server_case": []
+  },
+  {
+    "number": 50,
+    "id": 6003,
+    "tab": "SET",
+    "label": "Show Match Timer",
+    "file": "buttons/button_50_show_match_timer.py",
+    "function": "button_50_show_match_timer",
+    "source_lines": "1187-1190",
+    "client_handler_logic": "Write one byte at snapshot 0x100E3A83; true only when value == 1.",
+    "actual_recovered_scope": "Sets local Show Match Timer byte0x100E3A83. Separate getMatchTimerStatus wrapper copies two actual native integers; no countdown was invented.",
+    "game_effect_status": "How protected Java consumes the display flag remains unverified.",
+    "emitted_request_ids_enabled_path": [],
+    "recovered_server_dispatch_cases": [],
+    "request_ids_without_resolved_server_case": []
+  },
+  {
+    "number": 51,
+    "id": 6001,
+    "tab": "SET",
+    "label": "Clear All Keybinds",
+    "file": "buttons/button_51_clear_all_keybinds.py",
+    "function": "button_51_clear_all_keybinds",
+    "source_lines": "1180-1190,3134-3140",
+    "client_handler_logic": "No action in the recovered native dispatcher. Java keybind behavior has not been recovered.",
+    "actual_recovered_scope": "No matching action in the recovered native ChangesID function; original Java keybind handling is unavailable.",
+    "game_effect_status": "Unrecovered protected Java behavior; do not interpret the native fallthrough as proof the whole app button does nothing.",
+    "emitted_request_ids_enabled_path": [],
+    "recovered_server_dispatch_cases": [],
+    "request_ids_without_resolved_server_case": []
+  }
+]
