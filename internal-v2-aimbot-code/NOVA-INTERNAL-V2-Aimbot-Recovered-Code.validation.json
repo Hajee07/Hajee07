@@ -1,0 +1,10 @@
+{
+  "filename": "NOVA-INTERNAL-V2-Aimbot-Recovered-Code.zip",
+  "bytes": 589190,
+  "sha256": "0a849ce1c86ab4590c571a22d4a7d23af284c628380c441725eb81b740a8656a",
+  "functions": 151,
+  "file_count": 314,
+  "CRC_and_all_file_hashes_passed": true,
+  "files_with_any_decompiler_warning": 99,
+  "Windows_runtime_tested": false
+}

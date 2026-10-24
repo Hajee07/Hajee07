@@ -1,0 +1,15 @@
+{
+  "input_EXE_sha256": "fb70eb9987a6a2f8a728b0eb8664c39458eafe2b566035f71808edfee4c065a0",
+  "embedded_DLL_offset": "0xa59968",
+  "embedded_DLL_bytes": 28582400,
+  "embedded_DLL_sha256": "c7a2d29ba5a9a01376ee78d0b91693794a39c9f1847309c9c561b946410035af",
+  "architecture": "Windows x86-64 native",
+  "tool": "Ghidra 11.0.3, no automatic analysis, targeted disassembly/decompilation",
+  "target_functions_exported": 151,
+  "C_outputs_emitted": 151,
+  "original_Cpp_source_recovered": false,
+  "standalone_compilable_project": false,
+  "Windows_or_game_runtime_tested": false,
+  "auth_services_contacted": false,
+  "selection": "Aim UI/global-state references and selected application call dependencies; includes shared/adjacent routines. Not 151 independent Aimbot features."
+}

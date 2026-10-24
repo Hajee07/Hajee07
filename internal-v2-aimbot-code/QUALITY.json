@@ -1,0 +1,1119 @@
+[
+  {
+    "address": "0x180066c80",
+    "C_bytes": 530,
+    "assembly_bytes": 461,
+    "warnings": []
+  },
+  {
+    "address": "0x180066cc0",
+    "C_bytes": 1051,
+    "assembly_bytes": 577,
+    "warnings": []
+  },
+  {
+    "address": "0x180066d80",
+    "C_bytes": 849,
+    "assembly_bytes": 194,
+    "warnings": []
+  },
+  {
+    "address": "0x180066e40",
+    "C_bytes": 699,
+    "assembly_bytes": 844,
+    "warnings": []
+  },
+  {
+    "address": "0x180066ec0",
+    "C_bytes": 2457,
+    "assembly_bytes": 886,
+    "warnings": []
+  },
+  {
+    "address": "0x180067040",
+    "C_bytes": 1162,
+    "assembly_bytes": 1668,
+    "warnings": []
+  },
+  {
+    "address": "0x1800676d0",
+    "C_bytes": 1968,
+    "assembly_bytes": 708,
+    "warnings": []
+  },
+  {
+    "address": "0x180067850",
+    "C_bytes": 934,
+    "assembly_bytes": 496,
+    "warnings": []
+  },
+  {
+    "address": "0x1800678e0",
+    "C_bytes": 1868,
+    "assembly_bytes": 324,
+    "warnings": []
+  },
+  {
+    "address": "0x180067b60",
+    "C_bytes": 346,
+    "assembly_bytes": 113,
+    "warnings": []
+  },
+  {
+    "address": "0x180067b80",
+    "C_bytes": 929,
+    "assembly_bytes": 1543,
+    "warnings": []
+  },
+  {
+    "address": "0x180067cc0",
+    "C_bytes": 2071,
+    "assembly_bytes": 3418,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180067e80",
+    "C_bytes": 1291,
+    "assembly_bytes": 258,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180069360",
+    "C_bytes": 950,
+    "assembly_bytes": 785,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800693e0",
+    "C_bytes": 965,
+    "assembly_bytes": 673,
+    "warnings": []
+  },
+  {
+    "address": "0x1800694f0",
+    "C_bytes": 2109,
+    "assembly_bytes": 541,
+    "warnings": []
+  },
+  {
+    "address": "0x180069a10",
+    "C_bytes": 4713,
+    "assembly_bytes": 626,
+    "warnings": []
+  },
+  {
+    "address": "0x180069ac0",
+    "C_bytes": 3407,
+    "assembly_bytes": 4228,
+    "warnings": []
+  },
+  {
+    "address": "0x18006a2a0",
+    "C_bytes": 4354,
+    "assembly_bytes": 5723,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18006aad0",
+    "C_bytes": 346,
+    "assembly_bytes": 113,
+    "warnings": []
+  },
+  {
+    "address": "0x18006b2f0",
+    "C_bytes": 569,
+    "assembly_bytes": 756,
+    "warnings": []
+  },
+  {
+    "address": "0x18006b9b0",
+    "C_bytes": 5312,
+    "assembly_bytes": 6941,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18006bd40",
+    "C_bytes": 5080,
+    "assembly_bytes": 9200,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18006c300",
+    "C_bytes": 29154,
+    "assembly_bytes": 44795,
+    "warnings": [
+      "/* WARNING: Removing unreachable block (ram,0x00018006d893) */",
+      "/* WARNING: Type propagation algorithm not settling */",
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18006e7e0",
+    "C_bytes": 1252,
+    "assembly_bytes": 1630,
+    "warnings": []
+  },
+  {
+    "address": "0x18006e930",
+    "C_bytes": 1019,
+    "assembly_bytes": 1031,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18006eb70",
+    "C_bytes": 8966,
+    "assembly_bytes": 311,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18006f2b0",
+    "C_bytes": 861,
+    "assembly_bytes": 913,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18006f9b0",
+    "C_bytes": 2346,
+    "assembly_bytes": 3010,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18006fb50",
+    "C_bytes": 12189,
+    "assembly_bytes": 454,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800705d0",
+    "C_bytes": 585,
+    "assembly_bytes": 710,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180070640",
+    "C_bytes": 2669,
+    "assembly_bytes": 2746,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800707c0",
+    "C_bytes": 8419,
+    "assembly_bytes": 13600,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180070fd0",
+    "C_bytes": 1493,
+    "assembly_bytes": 1582,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180071220",
+    "C_bytes": 1379,
+    "assembly_bytes": 2336,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180071340",
+    "C_bytes": 1385,
+    "assembly_bytes": 1728,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180071430",
+    "C_bytes": 1858,
+    "assembly_bytes": 3880,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180071610",
+    "C_bytes": 872,
+    "assembly_bytes": 1149,
+    "warnings": []
+  },
+  {
+    "address": "0x1800717e0",
+    "C_bytes": 3508,
+    "assembly_bytes": 4771,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180071ae0",
+    "C_bytes": 7463,
+    "assembly_bytes": 672,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800721a0",
+    "C_bytes": 6422,
+    "assembly_bytes": 4707,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180072400",
+    "C_bytes": 3672,
+    "assembly_bytes": 527,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180072454",
+    "C_bytes": 5656,
+    "assembly_bytes": 882,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800727b0",
+    "C_bytes": 5077,
+    "assembly_bytes": 3029,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180072bf0",
+    "C_bytes": 6541,
+    "assembly_bytes": 1456,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180072d7f",
+    "C_bytes": 5312,
+    "assembly_bytes": 3110,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800731b0",
+    "C_bytes": 4284,
+    "assembly_bytes": 205,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18007326a",
+    "C_bytes": 3915,
+    "assembly_bytes": 3564,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180073610",
+    "C_bytes": 3381,
+    "assembly_bytes": 225,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800736cb",
+    "C_bytes": 2965,
+    "assembly_bytes": 3368,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180073970",
+    "C_bytes": 6065,
+    "assembly_bytes": 700,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180073bf4",
+    "C_bytes": 3381,
+    "assembly_bytes": 3296,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180073f10",
+    "C_bytes": 49598,
+    "assembly_bytes": 67071,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800767b0",
+    "C_bytes": 13686,
+    "assembly_bytes": 16183,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180077c40",
+    "C_bytes": 1369,
+    "assembly_bytes": 1645,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180077d30",
+    "C_bytes": 950,
+    "assembly_bytes": 808,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180077e30",
+    "C_bytes": 1877,
+    "assembly_bytes": 2017,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180077f30",
+    "C_bytes": 1791,
+    "assembly_bytes": 2443,
+    "warnings": [
+      "/* WARNING: Removing unreachable block (ram,0x000180078034) */",
+      "/* WARNING: Removing unreachable block (ram,0x000180078041) */",
+      "/* WARNING: Removing unreachable block (ram,0x000180078046) */"
+    ]
+  },
+  {
+    "address": "0x180078100",
+    "C_bytes": 907,
+    "assembly_bytes": 851,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180078170",
+    "C_bytes": 2026,
+    "assembly_bytes": 2114,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180078290",
+    "C_bytes": 4349,
+    "assembly_bytes": 224,
+    "warnings": []
+  },
+  {
+    "address": "0x180078370",
+    "C_bytes": 1921,
+    "assembly_bytes": 2270,
+    "warnings": []
+  },
+  {
+    "address": "0x1800785e0",
+    "C_bytes": 1692,
+    "assembly_bytes": 1362,
+    "warnings": []
+  },
+  {
+    "address": "0x180078780",
+    "C_bytes": 1502,
+    "assembly_bytes": 951,
+    "warnings": []
+  },
+  {
+    "address": "0x180078870",
+    "C_bytes": 3335,
+    "assembly_bytes": 4214,
+    "warnings": []
+  },
+  {
+    "address": "0x180078a40",
+    "C_bytes": 4165,
+    "assembly_bytes": 5371,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180078f90",
+    "C_bytes": 4570,
+    "assembly_bytes": 6060,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180079270",
+    "C_bytes": 1277,
+    "assembly_bytes": 779,
+    "warnings": []
+  },
+  {
+    "address": "0x180079580",
+    "C_bytes": 3059,
+    "assembly_bytes": 3359,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180079700",
+    "C_bytes": 1096,
+    "assembly_bytes": 1026,
+    "warnings": []
+  },
+  {
+    "address": "0x180079780",
+    "C_bytes": 698,
+    "assembly_bytes": 918,
+    "warnings": []
+  },
+  {
+    "address": "0x180079c40",
+    "C_bytes": 3874,
+    "assembly_bytes": 2440,
+    "warnings": []
+  },
+  {
+    "address": "0x180079e50",
+    "C_bytes": 2488,
+    "assembly_bytes": 819,
+    "warnings": []
+  },
+  {
+    "address": "0x18007a050",
+    "C_bytes": 1955,
+    "assembly_bytes": 513,
+    "warnings": []
+  },
+  {
+    "address": "0x18007a480",
+    "C_bytes": 802,
+    "assembly_bytes": 1515,
+    "warnings": []
+  },
+  {
+    "address": "0x18007a550",
+    "C_bytes": 11638,
+    "assembly_bytes": 12604,
+    "warnings": []
+  },
+  {
+    "address": "0x18007ac10",
+    "C_bytes": 3682,
+    "assembly_bytes": 898,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18007add0",
+    "C_bytes": 3530,
+    "assembly_bytes": 408,
+    "warnings": []
+  },
+  {
+    "address": "0x18007b0b0",
+    "C_bytes": 57868,
+    "assembly_bytes": 99424,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18007e960",
+    "C_bytes": 735,
+    "assembly_bytes": 212,
+    "warnings": []
+  },
+  {
+    "address": "0x18007e980",
+    "C_bytes": 556,
+    "assembly_bytes": 623,
+    "warnings": []
+  },
+  {
+    "address": "0x18007ea60",
+    "C_bytes": 731,
+    "assembly_bytes": 623,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18007eac0",
+    "C_bytes": 1033,
+    "assembly_bytes": 1262,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18007eb60",
+    "C_bytes": 52919,
+    "assembly_bytes": 36238,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18007fe70",
+    "C_bytes": 5639,
+    "assembly_bytes": 6402,
+    "warnings": []
+  },
+  {
+    "address": "0x180080190",
+    "C_bytes": 1706,
+    "assembly_bytes": 1587,
+    "warnings": []
+  },
+  {
+    "address": "0x180080250",
+    "C_bytes": 657,
+    "assembly_bytes": 159,
+    "warnings": []
+  },
+  {
+    "address": "0x1800802c0",
+    "C_bytes": 4258,
+    "assembly_bytes": 813,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180080590",
+    "C_bytes": 5070,
+    "assembly_bytes": 5472,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180080860",
+    "C_bytes": 2836,
+    "assembly_bytes": 286,
+    "warnings": []
+  },
+  {
+    "address": "0x180080a40",
+    "C_bytes": 8439,
+    "assembly_bytes": 954,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180081370",
+    "C_bytes": 4849,
+    "assembly_bytes": 779,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180081850",
+    "C_bytes": 5115,
+    "assembly_bytes": 902,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180081e00",
+    "C_bytes": 5024,
+    "assembly_bytes": 822,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180082360",
+    "C_bytes": 85346,
+    "assembly_bytes": 75404,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180084f20",
+    "C_bytes": 1744,
+    "assembly_bytes": 2964,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180085090",
+    "C_bytes": 3311,
+    "assembly_bytes": 389,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180085390",
+    "C_bytes": 1513,
+    "assembly_bytes": 898,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180085590",
+    "C_bytes": 1801,
+    "assembly_bytes": 2497,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180085710",
+    "C_bytes": 3899,
+    "assembly_bytes": 5620,
+    "warnings": []
+  },
+  {
+    "address": "0x180085a10",
+    "C_bytes": 2571,
+    "assembly_bytes": 3344,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180085cb0",
+    "C_bytes": 1487,
+    "assembly_bytes": 1909,
+    "warnings": []
+  },
+  {
+    "address": "0x180085d80",
+    "C_bytes": 5161,
+    "assembly_bytes": 6037,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800898f0",
+    "C_bytes": 4080,
+    "assembly_bytes": 4511,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180089b40",
+    "C_bytes": 2194,
+    "assembly_bytes": 3182,
+    "warnings": []
+  },
+  {
+    "address": "0x18008bca0",
+    "C_bytes": 6589,
+    "assembly_bytes": 2952,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18008c0f0",
+    "C_bytes": 32126,
+    "assembly_bytes": 31020,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18008d1e0",
+    "C_bytes": 2325,
+    "assembly_bytes": 815,
+    "warnings": []
+  },
+  {
+    "address": "0x18008d390",
+    "C_bytes": 10536,
+    "assembly_bytes": 11546,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180094470",
+    "C_bytes": 3218,
+    "assembly_bytes": 903,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180095090",
+    "C_bytes": 2868,
+    "assembly_bytes": 2919,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180095290",
+    "C_bytes": 1843,
+    "assembly_bytes": 2334,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800953a0",
+    "C_bytes": 1862,
+    "assembly_bytes": 1863,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800954f0",
+    "C_bytes": 4222,
+    "assembly_bytes": 5460,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800957d0",
+    "C_bytes": 4854,
+    "assembly_bytes": 4341,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800959f0",
+    "C_bytes": 2301,
+    "assembly_bytes": 3131,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180095b80",
+    "C_bytes": 7766,
+    "assembly_bytes": 8444,
+    "warnings": []
+  },
+  {
+    "address": "0x180095fb0",
+    "C_bytes": 4966,
+    "assembly_bytes": 6764,
+    "warnings": []
+  },
+  {
+    "address": "0x1800963a0",
+    "C_bytes": 12228,
+    "assembly_bytes": 16303,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180096f60",
+    "C_bytes": 26111,
+    "assembly_bytes": 27183,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800985e0",
+    "C_bytes": 1226,
+    "assembly_bytes": 2174,
+    "warnings": []
+  },
+  {
+    "address": "0x180098800",
+    "C_bytes": 6040,
+    "assembly_bytes": 9640,
+    "warnings": [
+      "/* WARNING: Removing unreachable block (ram,0x000180098af2) */",
+      "/* WARNING: Removing unreachable block (ram,0x000180098a82) */",
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x180098ef0",
+    "C_bytes": 3149,
+    "assembly_bytes": 5448,
+    "warnings": []
+  },
+  {
+    "address": "0x180099200",
+    "C_bytes": 9413,
+    "assembly_bytes": 2548,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18009a390",
+    "C_bytes": 7662,
+    "assembly_bytes": 10843,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18009a990",
+    "C_bytes": 1043,
+    "assembly_bytes": 1715,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18009aa70",
+    "C_bytes": 881,
+    "assembly_bytes": 1053,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18009ab00",
+    "C_bytes": 3513,
+    "assembly_bytes": 3277,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18009acc0",
+    "C_bytes": 2419,
+    "assembly_bytes": 3650,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18009b020",
+    "C_bytes": 1378,
+    "assembly_bytes": 2137,
+    "warnings": []
+  },
+  {
+    "address": "0x18009b420",
+    "C_bytes": 3164,
+    "assembly_bytes": 4813,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x18009bbb0",
+    "C_bytes": 3649,
+    "assembly_bytes": 4216,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800a4920",
+    "C_bytes": 432,
+    "assembly_bytes": 216,
+    "warnings": []
+  },
+  {
+    "address": "0x1800a8c60",
+    "C_bytes": 798,
+    "assembly_bytes": 939,
+    "warnings": []
+  },
+  {
+    "address": "0x1800a8cf0",
+    "C_bytes": 937,
+    "assembly_bytes": 1473,
+    "warnings": []
+  },
+  {
+    "address": "0x1800a8dd0",
+    "C_bytes": 10634,
+    "assembly_bytes": 13710,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800a9510",
+    "C_bytes": 9316,
+    "assembly_bytes": 10701,
+    "warnings": [
+      "/* WARNING: Removing unreachable block (ram,0x0001800a9683) */",
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800a9bf0",
+    "C_bytes": 6713,
+    "assembly_bytes": 8882,
+    "warnings": [
+      "/* WARNING: Removing unreachable block (ram,0x0001800a9dcf) */",
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800abdc0",
+    "C_bytes": 2737,
+    "assembly_bytes": 3760,
+    "warnings": []
+  },
+  {
+    "address": "0x1800ad030",
+    "C_bytes": 3163,
+    "assembly_bytes": 3681,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800ad260",
+    "C_bytes": 6987,
+    "assembly_bytes": 8310,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800ad6a0",
+    "C_bytes": 17846,
+    "assembly_bytes": 24538,
+    "warnings": [
+      "/* WARNING: Removing unreachable block (ram,0x0001800aded0) */",
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800ae560",
+    "C_bytes": 4667,
+    "assembly_bytes": 5786,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800aeb50",
+    "C_bytes": 5987,
+    "assembly_bytes": 8333,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800aefe0",
+    "C_bytes": 5497,
+    "assembly_bytes": 493,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800af0d6",
+    "C_bytes": 4178,
+    "assembly_bytes": 9009,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800af710",
+    "C_bytes": 1451,
+    "assembly_bytes": 3783,
+    "warnings": [
+      "/* WARNING: Could not recover jumptable at 0x0001800af9bd. Too many branches */",
+      "/* WARNING: Treating indirect jump as call */"
+    ]
+  },
+  {
+    "address": "0x1800afa60",
+    "C_bytes": 9894,
+    "assembly_bytes": 8401,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */",
+      "/* WARNING: Could not recover jumptable at 0x0001800afeab. Too many branches */",
+      "/* WARNING: Treating indirect jump as call */"
+    ]
+  },
+  {
+    "address": "0x1800b16a0",
+    "C_bytes": 4062,
+    "assembly_bytes": 5204,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800b1990",
+    "C_bytes": 71371,
+    "assembly_bytes": 102660,
+    "warnings": [
+      "/* WARNING: Type propagation algorithm not settling */",
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  },
+  {
+    "address": "0x1800acfd0",
+    "C_bytes": 743,
+    "assembly_bytes": 647,
+    "warnings": [
+      "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+    ]
+  }
+]
